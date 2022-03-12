@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dot Game</title>
+    <link rel="stylesheet" href="main.css" />
+</head>
+<body>
+<div class="config">
+    <div class="data">
+        <div class="rowCol">
+            <div class="rowInput">
+                <label for="row">Row: </label>
+                <input type="number" name="row" class="row" value="3" />
+            </div>
+                
+            <div class="colInput">
+                <label for="col">Col: </label>
+                <input type="number" name="col" class="col" value="3" />
+            </div>
+        </div>
+    </div>
+    <div class="action">
+        <p class="alert hidden">Start the game first -></p>
+        <button class="startB">Done</button>
+    </div>
+
+    <div class="playersc gone">
+        <div class="head">
+            <label for="pc">No. of players: </label>
+            <input type="number" name="pc" class="pc" value="2" />
+        </div>
+        <div class="players"></div>
+            
+        <div class="foot">
+            <button class="startG">Start Game</button>
+        </div>
+    </div>
+</div>
+
+<div class="svgC">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="rect"></svg>
+</div>
+
+<div class="winBoard gone">
+    <div class="head">Winner</div>
+    <div class="winners"></div>
+</div>
+
+<div class="bottom">
+    <p class="turnInfo"></p>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>

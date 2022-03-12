@@ -1,0 +1,189 @@
+*{
+    box-sizing: border-box;
+    outline-style: none;
+}
+
+body{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+.config{
+    display: flex;
+    flex-direction: column;
+}
+
+.data{
+    display: flex;
+}
+
+.data > div{
+    flex: 1;
+}
+
+.rowInput, .colInput{
+    display: flex;
+}
+
+.rowInput *, .colInput *{
+    flex: 1;
+}
+
+.choice{
+    height: fit-content;
+}
+
+.rowCol, .choice{
+    padding: 8px;
+}
+
+.choice{
+    padding: 12px;
+}
+
+.rowCol div{
+    width: 100%;
+    padding: 4px;
+}
+
+.config input{
+    width: 50px;
+    padding: 0 2px;
+}
+
+.action{
+    padding: 8px;
+    display: flex;
+}
+
+.alert{
+    flex: 1;
+}
+
+.hidden{
+    visibility: hidden;
+}
+
+.startB{
+    height: 42px;
+    border: 2px solid;
+    padding: 8px;
+}
+
+.svgC{
+    width: 100%;
+    height: 90%;
+    position: relative;
+    background-color: #eee;
+}
+
+svg{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.dot{
+    fill: #000000;
+}
+
+.doth{
+    fill: #eee;
+    stroke: black;
+}
+
+.invisible{
+    stroke: #eee;
+}
+
+.bottom{
+    height: 100px;
+}
+
+.playersc{
+    height: 70%;
+    background-color: #eee;
+    display: flex;
+    flex-direction: column;
+    min-width: 50vw;
+    width: 80%;
+    min-height: 10%;
+    max-height: 80%;
+    box-shadow: 0.5px 0.5px 2px -1px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+.playersc .head{
+    display: flex;
+    height: 30px;
+}
+
+.playersc .head label{
+    padding: 5px;
+}
+
+.pc{
+    flex: 1;
+}
+
+.player{
+    display: flex;
+    height: 30px;
+}
+
+.icolor{
+    height: 100%;
+}
+
+.iname{
+    flex: 1;
+}
+
+.playersc .foot{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.playersc .foot button{
+    position: absolute;
+    bottom: 0;
+}
+
+.winBoard{
+    width: 90%;
+    height: 50%;
+    background-color: #eee;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0.5px 0.5px 2px 0.5px;
+}
+
+.winBoard .head{
+    height: 50px;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 50px;
+    border-bottom: 2px solid;
+}
+
+.gone{
+    display: none;
+}
+
+.turnInfo{
+    text-align: center;
+    font-size: 17px;
+}
