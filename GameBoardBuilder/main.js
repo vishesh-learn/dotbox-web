@@ -20,6 +20,7 @@ class GameBoard{
     this.svgPaddingY = 30;
     this.row = this.minRow;
     this.col = this.minCol;
+    this.x = 130;
   }
 }
 
@@ -30,21 +31,14 @@ window.onload = () => {
 
   startupVariables();
 
+  GameBoardBuilder();
+
+  loadGameBoard();
+
   $aEL(backButton, "click", () => window.location.href = "../index.html")
   $aEL(window, "resize", startupVariables);
   $aEL(svg, "pointerdown", pointHandler);
   $aEL(svg, "pointerup", () => $rEL(window, "pointermove", pointHandler));
-}
-
-function pointHandler(){
-  var pointX = event.offsetX;
-  var pointY = event.offsetY;
-
-  var nearDot = nearestDot(pointX, pointY);
-
-  optedDots(nearDot.cx.baseVal.value, nearDot.cy.baseVal.value);
-
-  $aEL(window, "pointermove", pointHandler);
 }
 
 function startupVariables(){
@@ -56,13 +50,11 @@ function startupVariables(){
     getComputedStyle($(".svgC"), null).getPropertyValue("width")
   ) - (gameBoard.svgPaddingX * 2);
 
-  gameBoard.maxRow = length_to_dotCount(cH, gameBoard.gap);
-  gameBoard.maxCol = length_to_dotCount(cW, gameBoard.gap);
-
-  GameBoardBuilder(gameBoard.gap, gameBoard.minRow, gameBoard.minCol, gameBoard.maxRow, gameBoard.maxCol, gameBoard.svgPaddingX, gameBoard.svgPaddingY);
+  gameBoard.maxRow = length_to_dotCount(cH);
+  gameBoard.maxCol = length_to_dotCount(cW);
 }
 
-function GameBoardBuilder(gap, minRow, minCol, maxRow, maxCol, svgPaddingX, svgPaddingY){
+function GameBoardBuilder(){
 
     var svg = $("svg");
     var dots = $All("circle");
@@ -71,11 +63,11 @@ function GameBoardBuilder(gap, minRow, minCol, maxRow, maxCol, svgPaddingX, svgP
         o.remove();
     }
 
-    if(maxRow >= minRow && maxCol >= minCol){
-        for(let i = 0;i < maxRow;i++){
-            for(let j = 0;j < maxCol;j++){
-                var cx = (gap * j + svgPaddingX).toString(10);
-                var cy = (gap * i + svgPaddingY).toString(10);
+    if(gameBoard.maxRow >= gameBoard.minRow && gameBoard.maxCol >= gameBoard.minCol){
+        for(let i = 0;i < gameBoard.maxRow;i++){
+            for(let j = 0;j < gameBoard.maxCol;j++){
+                var cx = (gameBoard.gap * j + gameBoard.svgPaddingX).toString(10);
+                var cy = (gameBoard.gap * i + gameBoard.svgPaddingY).toString(10);
 
                 let dot = $cENS("circle");
                 dot.setAttribute("class", "dot hidden");
@@ -97,24 +89,51 @@ function GameBoardBuilder(gap, minRow, minCol, maxRow, maxCol, svgPaddingX, svgP
         }
     }
 
-    svgResize(gap, maxRow, maxCol, svgPaddingX, svgPaddingY);
+    svgResize();
 }
 
-function svgResize(gap, maxRow, maxCol, svgPaddingX, svgPaddingY){
+function svgResize(){
     var svg = $("svg");
 
-    var width = ((maxCol - 1) * gap) + (svgPaddingX * 2);
-    var height = ((maxRow - 1) * gap) + (svgPaddingY * 2);
+    var width = ((gameBoard.maxCol - 1) * gameBoard.gap) + (gameBoard.svgPaddingX * 2);
+    var height = ((gameBoard.maxRow - 1) * gameBoard.gap) + (gameBoard.svgPaddingY * 2);
 
     svg.style.width = width + "px";
     svg.style.height = height + "px";
 }
 
-function length_to_dotCount(length, gap){
-  return (length - length % gap + gap) / gap;
+function pointHandler(){
+  var pointX = event.offsetX;
+  var pointY = event.offsetY;
+
+  var nearDot = nearestDot(pointX, pointY);
+
+  optedXnY(nearDot.cx.baseVal.value, nearDot.cy.baseVal.value);
+
+  $aEL(window, "pointermove", pointHandler);
 }
 
-function optedDots(x, y){
+function length_to_dotCount(length){
+  //values of 'length % gameBoard.gap' and 'svgPadding' are equal
+  return (length - length % gameBoard.gap + gameBoard.gap) / gameBoard.gap;
+}
+
+function dotCount_to_length(dotCount, svgPadding){
+  return (dotCount * gameBoard.gap) - gameBoard.gap + svgPadding;
+}
+
+function t(dotCount){
+  var length = dotCount_to_length(dotCount);
+  return length_to_dotCount(length);
+}
+
+function optedCnR(){
+  var x = dotCount_to_length(gameBoard.col, gameBoard.svgPaddingX);
+  var y = dotCount_to_length(gameBoard.row, gameBoard.svgPaddingY);
+  optedXnY(x, y);
+}
+
+function optedXnY(x, y){
     var dotEs = $All(".dot");
     const rowAndColInfoE = $("#rowAndColInfo");
 
@@ -135,9 +154,20 @@ function optedDots(x, y){
         gameBoard.row = length_to_dotCount(y, gameBoard.gap);
 
         rowAndColInfoE.innerHTML = gameBoard.col + " x " + gameBoard.row;
+
+        saveGameBoard(gameBoard);
     } else {
-        console.log("no x and y");
+        console.log("invalid x or y");
     }
+}
+
+function saveGameBoard(){
+  localStorage.gameBoard = JSON.stringify(gameBoard);
+}
+
+function loadGameBoard(){
+  gameBoard = JSON.parse(localStorage.gameBoard);
+  optedCnR();
 }
 
 function nearestDot(x, y){
