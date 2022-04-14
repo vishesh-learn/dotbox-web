@@ -25,7 +25,7 @@ class GameBoard{
 }
 
 window.onload = () => {
-  const svg = $("svg"), backButton = $("#backButton");
+  const svg = $("svg"), backButton = $("#backButton"), nextButton = $("#nextButton");
 
   gameBoard = new GameBoard();
 
@@ -38,7 +38,9 @@ window.onload = () => {
   $aEL(backButton, "click", () => window.location.href = "../index.html")
   $aEL(window, "resize", startupVariables);
   $aEL(svg, "pointerdown", pointHandler);
-  $aEL(svg, "pointerup", () => $rEL(window, "pointermove", pointHandler));
+  $aEL(svg, "pointerup", () => $rEL(svg, "pointermove", pointHandler));
+
+  $aEL(nextButton, "click", () => window.location.href = "../PlayerSetup/index.html")
 }
 
 function startupVariables(){
@@ -103,6 +105,8 @@ function svgResize(){
 }
 
 function pointHandler(){
+  var svg = $("svg");
+
   var pointX = event.offsetX;
   var pointY = event.offsetY;
 
@@ -110,7 +114,7 @@ function pointHandler(){
 
   optedXnY(nearDot.cx.baseVal.value, nearDot.cy.baseVal.value);
 
-  $aEL(window, "pointermove", pointHandler);
+  $aEL(svg, "pointermove", pointHandler);
 }
 
 function length_to_dotCount(length){
@@ -120,11 +124,6 @@ function length_to_dotCount(length){
 
 function dotCount_to_length(dotCount, svgPadding){
   return (dotCount * gameBoard.gap) - gameBoard.gap + svgPadding;
-}
-
-function t(dotCount){
-  var length = dotCount_to_length(dotCount);
-  return length_to_dotCount(length);
 }
 
 function optedCnR(){

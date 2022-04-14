@@ -1,0 +1,9 @@
+<svg version="1.1"
+xmlns="http://www.w3.org/2000/svg"
+width="10" height="10" 
+preserveAspectRation="none" >
+    
+    <polyline points="0,0 10,10" style="stroke: black; stroke"/>
+    <polyline points="10,0 0,10" style="stroke: black"/>
+
+</svg>

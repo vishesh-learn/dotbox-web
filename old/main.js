@@ -632,7 +632,7 @@ function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
 
-const randomColor = () => {
+function randomColor() {
     var colors = [];
 
     for(var o of players){
