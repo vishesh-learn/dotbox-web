@@ -11,7 +11,7 @@ var gameBoard, playerList, currPlayer;
 
 var initDot, finalDot, orient, lineWidth = 6;
 
-var Made = {"lineMade": null, "boxMade": 0, "allLines": false};
+var made = {"lineMade": null, "boxMade": 0, "allLines": false};
 
 window.onload = () => {
     const dotSVG = $(".dotSVG");
@@ -64,7 +64,7 @@ function pointerUp(){ // apply condition here for 'draw only when this x,y is ga
 
   var x = event.offsetX, y = event.offsetY;
 
-    Made = {"lineMade": null, "boxMade": 0, "allLines": false};
+    made = {"lineMade": null, "boxMade": 0, "allLines": false};
 
     let x_cx = difference(x, initDot.cx);
     let y_cy = difference(y, initDot.cy);
@@ -75,7 +75,7 @@ function pointerUp(){ // apply condition here for 'draw only when this x,y is ga
     }
 
     if((x_cx < (gameBoard.gap - 7)) && (y_cy < (gameBoard.gap - 7))){
-        return Made;
+        return made;
     }
 
     if(initDot && x && y){
@@ -87,7 +87,26 @@ function pointerUp(){ // apply condition here for 'draw only when this x,y is ga
         console.log("no x and y");
     }
 
-    return Made;
+    gameEvent();
+}
+
+function gameEvent(){
+  if(made.lineMade != null){
+    if(made.boxMade > 0){
+        currPlayer.score += boxes;
+    } else {
+        playerTurn();
+    }
+
+    if(made.allLines){
+        //resultButton.setOnClickListener(view -> goToWinBoard());
+        goToWinBoard();
+    } else {
+      if(currPlayer.isAlgo){
+        autoDrawLine();
+      }
+    }
+  }
 }
 
 function linePrev(){
@@ -320,7 +339,7 @@ function lineMaker(line){
             line.playerId = currPlayer.id;
         }
 
-        Made.lineMade = line;
+        made.lineMade = line;
     }
 
     isEnd();
@@ -459,19 +478,19 @@ function whetherSquare(line){
 
     if(square.orient == "horizontal"){
         if(square.top.length == 4){
-            Made.boxMade++;
+            made.boxMade++;
         }
         if(square.bottom.length == 4){
-            Made.boxMade++;
+            made.boxMade++;
         }
     }
 
     if(square.orient == "vertical"){
         if(square.left.length == 4){
-            Made.boxMade++;
+            made.boxMade++;
         }
         if(square.right.length == 4){
-            Made.boxMade++;
+            made.boxMade++;
         }
     }
 
@@ -645,16 +664,9 @@ const lineExists = (line) => {
 }
 
 function isEnd(){
-//    var maxSquares = (gameBoard.row - 1) * (gameBoard.col - 1);
-//    var squaresE = $All(".winBox");
-//
-//    var squaresC = squaresE.length;
-
-//    if(maxSquares == squaresC){
-//        Made.allLines = true;
-//    }
-
-    if(getAllPossibleLines().length <= 0){Made.allLines = true}
+    if(getAllPossibleLines().length <= 0){
+      made.allLines = true
+    }
 }
 
 function dotEToJSON(dotE){
@@ -685,20 +697,20 @@ function getAllPossibleLines(){
 }
 
 function autoDrawLine(){ console.log(JSON.stringify(currPlayer));
-    Made = {"lineMade": null, "boxMade": 0, "allLines": false};
+    made = {"lineMade": null, "boxMade": 0, "allLines": false};
 
     var dotEs = $All(".dot"), allPossibleLines = getAllPossibleLines(), currSafeMoves = [];
 
     if(allPossibleLines.length <= 0){
-        Made.allLines = true;
-        console.log(Made.allLines);
-        return Made;
+        made.allLines = true;
+        console.log(made.allLines);
+        return made;
     }
 
     for(var possibleLine of allPossibleLines){
         if(doesMakesSquare(possibleLine)){
             lineMaker(possibleLine, currPlayer.color);
-            return Made;
+            return made;
         }
     }
 
@@ -713,8 +725,8 @@ function autoDrawLine(){ console.log(JSON.stringify(currPlayer));
     } else {
         lineMaker(allPossibleLines[randi(allPossibleLines.length - 1)], currPlayer.color);
     }
-    console.log(JSON.stringify(Made.lineMade));
-    return Made;
+
+    return made;
 }
 
 function doesMakesSquare(middleLine){
@@ -781,7 +793,23 @@ function loadGameBoard(){
 function loadPlayerList(){
   if(localStorage.playerList != undefined){
     playerList = JSON.parse(localStorage.playerList);
-  }
 
-  currPlayer = playerList[0];
+    playerTurn();
+  }
+}
+
+function playerTurn(){
+  if (currPlayer != undefined) {
+    var currIndex = playerList.indexOf(currPlayer);
+
+    if (currIndex == playerList.length - 1) {
+      console.log("last");
+    }
+  } else {
+    currPlayer = playerList[0];
+  }
+}
+
+function goToWinBoard(){
+  console.log("winBoard");
 }
