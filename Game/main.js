@@ -55,13 +55,12 @@ function pointerDown(){
         initDot = nearestDot(x, y);
         initDot = dotEToJSON(initDot);
 
-        console.log(initDot);
-        $aEL($(".dotSVG"), "mousemove", linePrev);
+        $aEL($(".dotSVG"), "pointermove", linePrev);
     }
 }
 
 function pointerUp(){ // apply condition here for 'draw only when this x,y is gap distance away from initDot
-  $rEL($("svg"), "mousemove", linePrev);
+  $rEL($(".dotSVG"), "pointermove", linePrev);
 
   var x = event.offsetX, y = event.offsetY;
 
@@ -304,7 +303,7 @@ function drawLine(x1, y1, x2, y2){
 
 function lineMaker(line){
     const svg = $(".lineSVG");
-    console.log(currPlayer.color);
+
     var lineE = getSVGLine("line", line, lineWidth.toString());
 
     if(lineE && !lineExists(lineEToJSON(lineE))){
@@ -321,7 +320,6 @@ function lineMaker(line){
             line.playerId = currPlayer.id;
         }
 
-        console.log([line.x1, line.y1, line.x2, line.y2]);
         Made.lineMade = line;
     }
 
