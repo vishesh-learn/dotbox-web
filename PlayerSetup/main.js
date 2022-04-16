@@ -43,6 +43,8 @@ function addPlayer() {
   playerListUI.append(playerUI);
 
   Player.playerList.push(player);
+
+  savePlayerList();
 }
 
 function updatePlayer(){
@@ -54,9 +56,17 @@ function updatePlayer(){
     const targetPlayerIndex = getIndexOfDom(targetPlayer);
 
     Player.playerList[targetPlayerIndex].name = name;
-
-    console.log(Player.playerList);
   }
+
+  if (target.className.includes("isAlgo")) {
+    var isAlgo = target.checked;
+    const targetPlayer = target.parentElement;
+    const targetPlayerIndex = getIndexOfDom(targetPlayer);
+
+    Player.playerList[targetPlayerIndex].isAlgo = isAlgo;
+  }
+
+  savePlayerList();
 }
 
 function removePlayer(){
@@ -70,7 +80,7 @@ function removePlayer(){
 
     targetPlayer.remove();
 
-    console.log(Player.playerList);
+    savePlayerList();
   }
 }
 
@@ -81,10 +91,11 @@ function getIndexOfDom(childDom){
 }
 
 function setupPlayerListUI(){
+  loadPlayerList();
+
   while (Player.playerList.length < Player.minPlayer) {
     Player.playerList.push(new Player());
   }
-  console.log(Player.playerList);
 
   const playerListUI = $("#playerList");
   var playerUI;
@@ -109,11 +120,13 @@ function createPlayerUI(player){
   const playerName = document.createElement("input");
   playerName.classList = "playerName";
   playerName.placeholder = "player name here...";
+  playerName.value = player.name;
   playerUI.append(playerName);
 
   const isAlgo = document.createElement("input");
   isAlgo.classList = "isAlgo";
   isAlgo.type = "checkbox";
+  isAlgo.checked = player.isAlgo;
   playerUI.append(isAlgo);
 
   const removePlayerB = document.createElement("button");
@@ -121,4 +134,14 @@ function createPlayerUI(player){
   playerUI.append(removePlayerB);
 
   return playerUI;
+}
+
+function savePlayerList(){
+  localStorage.playerList = JSON.stringify(Player.playerList);
+}
+
+function loadPlayerList(){
+  if(localStorage.playerList != undefined){
+    Player.playerList = JSON.parse(localStorage.playerList);
+  }
 }
