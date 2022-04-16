@@ -7,7 +7,7 @@ $cE = (tN) => document.createElement(tN);
 var nS = 'http://www.w3.org/2000/svg';
 $cENS = (tN) => document.createElementNS(nS, tN);
 
-var gameBoard;
+var gameBoard, playerList, currPlayer;
 
 var initDot, finalDot, orient, lineWidth = 6;
 
@@ -17,8 +17,11 @@ window.onload = () => {
     const dotSVG = $(".dotSVG");
 
     loadGameBoard();
+    loadPlayerList();
 
     $aEL(dotSVG, "pointerover", pointerOver);
+    $aEL(dotSVG, "pointerdown", pointerDown);
+    $aEL(dotSVG, "pointerup", pointerUp);
 }
 
 class Line{
@@ -27,40 +30,6 @@ class Line{
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2;
-    }
-}
-
-function pointerUp(x, y, color, playerId){ // apply condition here for 'draw only when this x,y is gap distance away from initDot
-    Made = {"lineMade": null, "boxMade": 0, "allLines": false};
-
-    let x_cx = difference(x, initDot.cx);
-    let y_cy = difference(y, initDot.cy);
-
-    var prevLines = $All(".prevLine");
-    for(let o of prevLines){
-        o.remove();
-    }
-
-    if((x_cx < (gameBoard.gap - 7)) && (y_cy < (gameBoard.gap - 7))){
-        return Made;
-    }
-
-    if(initDot && x && y){
-        finalDot = nearDot(x, y);
-        if(validateLines(finalDot)){
-            lineMaker(dotsToLine(initDot, finalDot), color, playerId);
-        }
-    } else {
-        console.log("no x and y");
-    }
-
-    return Made;
-}
-
-function pointerDown(cx, cy){
-    if(cx && cy){
-        initDot = nearestDot(cx, cy);
-        initDot = dotEToJSON(initDot);
     }
 }
 
@@ -79,36 +48,77 @@ function pointerOver(){
     }
 }
 
-function linePrev(cx , cy, color){
+function pointerDown(){
+  var x = event.offsetX, y = event.offsetY;
+
+    if(x && y){
+        initDot = nearestDot(x, y);
+        initDot = dotEToJSON(initDot);
+
+        console.log(initDot);
+        $aEL($(".dotSVG"), "mousemove", linePrev);
+    }
+}
+
+function pointerUp(){ // apply condition here for 'draw only when this x,y is gap distance away from initDot
+  $rEL($("svg"), "mousemove", linePrev);
+
+  var x = event.offsetX, y = event.offsetY;
+
+    Made = {"lineMade": null, "boxMade": 0, "allLines": false};
+
+    let x_cx = difference(x, initDot.cx);
+    let y_cy = difference(y, initDot.cy);
+
+    var prevLines = $All(".prevLine");
+    for(let o of prevLines){
+        o.remove();
+    }
+
+    if((x_cx < (gameBoard.gap - 7)) && (y_cy < (gameBoard.gap - 7))){
+        return Made;
+    }
+
+    if(initDot && x && y){
+        finalDot = nearDot(x, y);
+        if(validateLines(finalDot)){
+            lineMaker(dotsToLine(initDot, finalDot));
+        }
+    } else {
+        console.log("no x and y");
+    }
+
+    return Made;
+}
+
+function linePrev(){
+  var x = event.offsetX, y = event.offsetY;
+
     if(initDot){
         var left = initDot.cx - gameBoard.gap;
         var top = initDot.cy - gameBoard.gap;
         var bottom = initDot.cy + gameBoard.gap;
         var right = initDot.cx + gameBoard.gap;
 
-        if(cx < left){
-            cx = left;
+        if(x < left){
+            x = left;
         }
 
-        if(cx > right){
-            cx = right;
+        if(x > right){
+            x = right;
         }
 
-        if(cy < top){
-            cy = top;
+        if(y < top){
+            y = top;
         }
 
-        if(cy > bottom){
-            cy = bottom;
+        if(y > bottom){
+            y = bottom;
         }
 
-        var pseudoDot = {"cx": cx, "cy": cy};
+        var pseudoDot = {"cx": x, "cy": y};
 
-        if(!color || color.length < 7){
-            color = "#000000";
-        }
-
-        prevLineMaker(dotsToLine(initDot, pseudoDot), color);
+        prevLineMaker(dotsToLine(initDot, pseudoDot));
     }
 }
 
@@ -184,7 +194,7 @@ const nearestDot = (x, y) => {
     return nearDot;
 }
 
-function prevLineMaker(line, color){
+function prevLineMaker(line){
     var svg = $(".lineSVG");
     var prevLines = $All(".prevLine");
 
@@ -192,12 +202,12 @@ function prevLineMaker(line, color){
         o.remove();
     }
 
-    let lineE = getSVGLine("prevLine", line, lineWidth.toString(), color);
+    let lineE = getSVGLine("prevLine", line, lineWidth.toString());
 
     svg.appendChild(lineE);
 }
 
-function getSVGLine(theClass, line, strokeWidth, color, id){
+function getSVGLine(theClass, line, strokeWidth){
     let lineE = $cENS("line");
 
     lineE.setAttribute("class", theClass);
@@ -209,14 +219,14 @@ function getSVGLine(theClass, line, strokeWidth, color, id){
 
     lineE.setAttribute("stroke-width", strokeWidth);
 
-    if(color){
-        lineE.setAttribute("stroke", color);
+    if(currPlayer.color){
+        lineE.setAttribute("stroke", currPlayer.color);
     } else {
         console.log("color not found");
     }
 
-    if(id){
-        lineE.setAttribute("byPlayer", id);
+    if(currPlayer.id){
+        lineE.setAttribute("byPlayer", currPlayer.id);
     }
 
     return lineE;
@@ -288,27 +298,27 @@ function validateLines(finalDot){
     return false;
 }
 
-function drawLine(x1, y1, x2, y2, color, playerId){
-    lineMaker(new Line(x1, y1, x2, y2), color, playerId);
+function drawLine(x1, y1, x2, y2){
+    lineMaker(new Line(x1, y1, x2, y2));
 }
 
-function lineMaker(line, color, playerId){
+function lineMaker(line){
     const svg = $(".lineSVG");
-    console.log(color);
-    var lineE = getSVGLine("line", line, lineWidth.toString(), color, playerId);
+    console.log(currPlayer.color);
+    var lineE = getSVGLine("line", line, lineWidth.toString());
 
     if(lineE && !lineExists(lineEToJSON(lineE))){
 
         svg.appendChild(lineE);
 
 
-        squareXY(whetherSquare(lineEToJSON(lineE)), color, playerId);
+        squareXY(whetherSquare(lineEToJSON(lineE)));
 
-        if(color){
-            line.color = color;
+        if(currPlayer.color){
+            line.color = currPlayer.color;
         }
-        if(playerId){
-            line.playerId = playerId;
+        if(currPlayer.id){
+            line.playerId = currPlayer.id;
         }
 
         console.log([line.x1, line.y1, line.x2, line.y2]);
@@ -527,7 +537,7 @@ function getSurroundingLines(line){
         return square;
 }
 
-function squareXY(square, color, playerId){
+function squareXY(square){
     var l, xy = new Object();
 
     if(square.orient == "horizontal"){
@@ -536,12 +546,12 @@ function squareXY(square, color, playerId){
         if(square.top.length == 4){
             xy.y = Math.min(l.y1, l.y2) - gameBoard.gap;
 
-            squareMaker(xy, color, playerId);
+            squareMaker(xy);
         }
         if(square.bottom.length == 4){
             xy.y = Math.min(l.y1, l.y2);
 
-            squareMaker(xy, color, playerId);
+            squareMaker(xy);
         }
     }
 
@@ -551,17 +561,17 @@ function squareXY(square, color, playerId){
         if(square.left.length == 4){
             xy.x = Math.min(l.x1, l.x2) - gameBoard.gap;
 
-            squareMaker(xy, color, playerId);
+            squareMaker(xy);
         }
         if(square.right.length == 4){
             xy.x = Math.min(l.x1, l.x2);
 
-            squareMaker(xy, color, playerId);
+            squareMaker(xy);
         }
     }
 }
 
-function squareMaker(xy, color, playerId){
+function squareMaker(xy){
     const svg = $(".boxSVG");
 
     if(xy.x && xy.y){
@@ -572,12 +582,12 @@ function squareMaker(xy, color, playerId){
         squareE.setAttribute("width", gameBoard.gap - lineWidth);
         squareE.setAttribute("height", gameBoard.gap - lineWidth);
 
-        if(color){
-            squareE.setAttribute("fill", color);
+        if(currPlayer.color){
+            squareE.setAttribute("fill", currPlayer.color);
         }
 
-        if(playerId){
-            squareE.setAttribute("byPlayer", playerId);
+        if(currPlayer.id){
+            squareE.setAttribute("byPlayer", currPlayer.id);
         }
 
         svg.appendChild(squareE);
@@ -768,4 +778,12 @@ function loadGameBoard(){
   gameBoard = JSON.parse(localStorage.gameBoard);
 
   gameBoardBuilder();
+}
+
+function loadPlayerList(){
+  if(localStorage.playerList != undefined){
+    playerList = JSON.parse(localStorage.playerList);
+  }
+
+  currPlayer = playerList[0];
 }
