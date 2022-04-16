@@ -7,12 +7,16 @@ $cE = (tN) => document.createElement(tN);
 var nS = 'http://www.w3.org/2000/svg';
 $cENS = (tN) => document.createElementNS(nS, tN);
 
-var row, col, gap, initDot, finalDot, orient, lineWidth = 6, padding = 20;
+var gameBoard;
+
+var initDot, finalDot, orient, lineWidth = 6;
 
 var Made = {"lineMade": null, "boxMade": 0, "allLines": false};
 
 window.onload = () => {
-    var dotSVG = $(".dotSVG");
+    const dotSVG = $(".dotSVG");
+
+    loadGameBoard();
 
     $aEL(dotSVG, "pointerover", pointerOver);
 }
@@ -37,7 +41,7 @@ function pointerUp(x, y, color, playerId){ // apply condition here for 'draw onl
         o.remove();
     }
 
-    if((x_cx < (gap - 7)) && (y_cy < (gap - 7))){
+    if((x_cx < (gameBoard.gap - 7)) && (y_cy < (gameBoard.gap - 7))){
         return Made;
     }
 
@@ -77,10 +81,10 @@ function pointerOver(){
 
 function linePrev(cx , cy, color){
     if(initDot){
-        var left = initDot.cx - gap;
-        var top = initDot.cy - gap;
-        var bottom = initDot.cy + gap;
-        var right = initDot.cx + gap;
+        var left = initDot.cx - gameBoard.gap;
+        var top = initDot.cy - gameBoard.gap;
+        var bottom = initDot.cy + gameBoard.gap;
+        var right = initDot.cx + gameBoard.gap;
 
         if(cx < left){
             cx = left;
@@ -111,10 +115,10 @@ function linePrev(cx , cy, color){
 function difference(a, b) { return Math.abs(a - b); }
 
 function getValidFinalDots(initDot){
-    var left = {"side": "left", "cx": initDot.cx - gap, "cy": initDot.cy};
-    var top = {"side": "top", "cx": initDot.cx, "cy": initDot.cy - gap};
-    var bottom = {"side": "bottom", "cx": initDot.cx, "cy": initDot.cy + gap};
-    var right = {"side": "right", "cx": initDot.cx + gap, "cy": initDot.cy};
+    var left = {"side": "left", "cx": initDot.cx - gameBoard.gap, "cy": initDot.cy};
+    var top = {"side": "top", "cx": initDot.cx, "cy": initDot.cy - gameBoard.gap};
+    var bottom = {"side": "bottom", "cx": initDot.cx, "cy": initDot.cy + gameBoard.gap};
+    var right = {"side": "right", "cx": initDot.cx + gameBoard.gap, "cy": initDot.cy};
 
     var options = [top, right, bottom, left];
     var validFinalDots = [];
@@ -218,21 +222,31 @@ function getSVGLine(theClass, line, strokeWidth, color, id){
     return lineE;
 }
 
-function GameBoardBuilder(row, col, gapP, paddingX, paddingY) {
+function svgResize(){
+    const svgList = $All("svg");
+
+    var width = ((gameBoard.col - 1) * gameBoard.gap) + (gameBoard.svgPaddingX * 2);
+    var height = ((gameBoard.row - 1) * gameBoard.gap) + (gameBoard.svgPaddingY * 2);
+
+    for (var svg of svgList) {
+      svg.style.width = width + "px";
+      svg.style.height = height + "px";
+    }
+}
+
+function gameBoardBuilder() {
     var svg = $(".dotSVG");
     var dots = $All("circle");
-
-    gap = gapP;
 
     for(let o of dots){
         o.remove();
     }
 
-    if(row >= 2 && col >= 2){
-        for(let i = 0;i < row;i++){
-            for(let j = 0;j < col;j++){
-                var cx = (gap * j + paddingX).toString(10);
-                var cy = (gap * i + paddingY).toString(10);
+    if(gameBoard.row >= 2 && gameBoard.col >= 2){
+        for(let i = 0;i < gameBoard.row;i++){
+            for(let j = 0;j < gameBoard.col;j++){
+                var cx = (gameBoard.gap * j + gameBoard.svgPaddingX).toString(10);
+                var cy = (gameBoard.gap * i + gameBoard.svgPaddingY).toString(10);
 
                 let dot = $cENS("circle");
                 dot.setAttribute("class", "dot");
@@ -253,6 +267,8 @@ function GameBoardBuilder(row, col, gapP, paddingX, paddingY) {
             }
         }
     }
+
+    svgResize();
 }
 
 function validateLines(finalDot){
@@ -260,9 +276,9 @@ function validateLines(finalDot){
         var deltaX = Math.abs(initDot.cx - finalDot.cx);
         var deltaY = Math.abs(initDot.cy - finalDot.cy);
 
-        if((initDot.cx == finalDot.cx) && (deltaY == gap)){
+        if((initDot.cx == finalDot.cx) && (deltaY == gameBoard.gap)){
             return true;
-        }else if((initDot.cy == finalDot.cy) && (deltaX == gap)){
+        }else if((initDot.cy == finalDot.cy) && (deltaX == gameBoard.gap)){
             return true;
         }else{
             return false;
@@ -312,44 +328,44 @@ const getRectLines = (middle) => {
 
     if(orient == "vertical"){
         var left = {
-            "x1": middle.x1 - gap,
+            "x1": middle.x1 - gameBoard.gap,
             "y1": middle.y1,
-            "x2": middle.x2 - gap,
+            "x2": middle.x2 - gameBoard.gap,
             "y2": middle.y2
         };
 
         var right = {
-            "x1": middle.x1 + gap,
+            "x1": middle.x1 + gameBoard.gap,
             "y1": middle.y1,
-            "x2": middle.x2 + gap,
+            "x2": middle.x2 + gameBoard.gap,
             "y2": middle.y2
         };
 
         var leftTop = {
             "x1": middle.x1,
             "y1": middle.y1,
-            "x2": middle.x1 - gap,
+            "x2": middle.x1 - gameBoard.gap,
             "y2": middle.y1
         };
 
         var leftBottom = {
             "x1": middle.x2,
             "y1": middle.y2,
-            "x2": middle.x2 - gap,
+            "x2": middle.x2 - gameBoard.gap,
             "y2": middle.y2
         };
 
         var rightTop = {
             "x1": middle.x1,
             "y1": middle.y1,
-            "x2": middle.x1 + gap,
+            "x2": middle.x1 + gameBoard.gap,
             "y2": middle.y1
         };
 
         var rightBottom = {
             "x1": middle.x2,
             "y1": middle.y2,
-            "x2": middle.x2 + gap,
+            "x2": middle.x2 + gameBoard.gap,
             "y2": middle.y2
         };
 
@@ -362,44 +378,44 @@ const getRectLines = (middle) => {
     }else if(orient == "horizontal"){
         var top = {
             "x1": middle.x1,
-            "y1": middle.y1 - gap,
+            "y1": middle.y1 - gameBoard.gap,
             "x2": middle.x2,
-            "y2": middle.y2 - gap
+            "y2": middle.y2 - gameBoard.gap
         };
 
         var topRight = {
             "x1": middle.x2,
             "y1": middle.y2,
             "x2": middle.x2,
-            "y2": middle.y2 - gap
+            "y2": middle.y2 - gameBoard.gap
         };
 
         var topLeft = {
             "x1": middle.x1,
             "y1": middle.y1,
             "x2": middle.x1,
-            "y2": middle.y1 - gap
+            "y2": middle.y1 - gameBoard.gap
         };
 
         var bottomRight = {
             "x1": middle.x2,
             "y1": middle.y2,
             "x2": middle.x2,
-            "y2": middle.y2 + gap
+            "y2": middle.y2 + gameBoard.gap
         };
 
         var bottom = {
             "x1": middle.x1,
-            "y1": middle.y1 + gap,
+            "y1": middle.y1 + gameBoard.gap,
             "x2": middle.x2,
-            "y2": middle.y2 + gap
+            "y2": middle.y2 + gameBoard.gap
         };
 
         var bottomLeft = {
             "x1": middle.x1,
             "y1": middle.y1,
             "x2": middle.x1,
-            "y2": middle.y1 + gap
+            "y2": middle.y1 + gameBoard.gap
         };
 
         return {
@@ -518,7 +534,7 @@ function squareXY(square, color, playerId){
         l = square.hline;
         xy.x = Math.min(l.x1, l.x2);
         if(square.top.length == 4){
-            xy.y = Math.min(l.y1, l.y2) - gap;
+            xy.y = Math.min(l.y1, l.y2) - gameBoard.gap;
 
             squareMaker(xy, color, playerId);
         }
@@ -533,7 +549,7 @@ function squareXY(square, color, playerId){
         l = square.vline;
         xy.y = Math.min(l.y1, l.y2);
         if(square.left.length == 4){
-            xy.x = Math.min(l.x1, l.x2) - gap;
+            xy.x = Math.min(l.x1, l.x2) - gameBoard.gap;
 
             squareMaker(xy, color, playerId);
         }
@@ -553,8 +569,8 @@ function squareMaker(xy, color, playerId){
         squareE.setAttribute("class", "winBox");
         squareE.setAttribute("x", xy.x + lineWidth/2);
         squareE.setAttribute("y", xy.y + lineWidth/2);
-        squareE.setAttribute("width", gap - lineWidth);
-        squareE.setAttribute("height", gap - lineWidth);
+        squareE.setAttribute("width", gameBoard.gap - lineWidth);
+        squareE.setAttribute("height", gameBoard.gap - lineWidth);
 
         if(color){
             squareE.setAttribute("fill", color);
@@ -621,7 +637,7 @@ const lineExists = (line) => {
 }
 
 function isEnd(){
-//    var maxSquares = (row - 1) * (col - 1);
+//    var maxSquares = (gameBoard.row - 1) * (gameBoard.col - 1);
 //    var squaresE = $All(".winBox");
 //
 //    var squaresC = squaresE.length;
@@ -742,4 +758,14 @@ function resetBoard(){
 
 function randi(upto){
     return Math.floor(Math.random() * upto);
+}
+
+function saveGameBoard(){
+  localStorage.gameBoard = JSON.stringify(gameBoard);
+}
+
+function loadGameBoard(){
+  gameBoard = JSON.parse(localStorage.gameBoard);
+
+  gameBoardBuilder();
 }

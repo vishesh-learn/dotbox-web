@@ -57,7 +57,6 @@ function startupVariables(){
 }
 
 function GameBoardBuilder(){
-
     var svg = $("svg");
     var dots = $All("circle");
 
