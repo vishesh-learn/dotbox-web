@@ -9,6 +9,7 @@ $cENS = (tN) => document.createElementNS(nS, tN);
 
 class Player {
   static playerList = [];
+  static minPlayer = 2;
 
   constructor() {
     this.id = 0;
@@ -25,39 +26,66 @@ window.onload = () => {
   const backButton = $("#backButton"), nextButton = $("#nextButton");
   const addPlayerB = $("#addb"), playerListUI = $("#playerList");
 
+  setupPlayerListUI();
+
   $aEL(backButton, "click", () => window.location.href = "../GameBoardBuilder/index.html");
 
   $aEL(addPlayerB, "click", addPlayer);
-
+  $aEL(playerListUI, "input", updatePlayer);
   $aEL(playerListUI, "click", removePlayer);
 }
 
 function addPlayer() {
-  let player = new Player();
-  Player.playerList.push(player);
+  const playerListUI = $("#playerList"),
+        player = new Player();
+        playerUI = createPlayerUI(player);
 
-  setupPlayerListUI();
+  playerListUI.append(playerUI);
+
+  Player.playerList.push(player);
+}
+
+function updatePlayer(){
+  const target = event.target;
+
+  if(target.className.includes("playerName")){
+    var name = target.value;
+    const targetPlayer = target.parentElement;
+    const targetPlayerIndex = getIndexOfDom(targetPlayer);
+
+    Player.playerList[targetPlayerIndex].name = name;
+
+    console.log(Player.playerList);
+  }
 }
 
 function removePlayer(){
   const target = event.target;
-  const players = $All(".player");
 
   if(target.className.includes("removePlayerB")){
-
     const targetPlayer = target.parentElement;
-    
-    for (let i = 0; i < players.length; i++) {
-      if(players[i] == targetPlayer){
-        Player.playerList.splice(i, 1);
-      }
-    }
+    const targetPlayerIndex = getIndexOfDom(targetPlayer);
 
-    setupPlayerListUI();
+    Player.playerList.splice(targetPlayerIndex, 1);
+
+    targetPlayer.remove();
+
+    console.log(Player.playerList);
   }
 }
 
+function getIndexOfDom(childDom){
+  const parentDom = childDom.parentElement;
+
+  return Array.prototype.indexOf.call(parentDom.children, childDom);
+}
+
 function setupPlayerListUI(){
+  while (Player.playerList.length < Player.minPlayer) {
+    Player.playerList.push(new Player());
+  }
+  console.log(Player.playerList);
+
   const playerListUI = $("#playerList");
   var playerUI;
 
