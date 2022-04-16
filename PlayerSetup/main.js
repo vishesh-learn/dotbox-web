@@ -14,7 +14,7 @@ class Player {
   constructor() {
     this.id = 0;
     this.name = "";
-    this.color = "";
+    this.color = randomColor(Player.playerList);
     this.isAlgo = false;
     this.rank = 0;
     this.score = 0;
@@ -115,6 +115,7 @@ function createPlayerUI(player){
 
   const avatarUI = document.createElement("button");
   avatarUI.classList = "avatar";
+  avatarUI.style.backgroundColor = player.color;
   playerUI.append(avatarUI);
 
   const playerName = document.createElement("input");
