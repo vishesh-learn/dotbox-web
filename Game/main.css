@@ -1,5 +1,7 @@
 :root{
     --brown: #4c191b;
+    --headerHeight: 50px;
+    --playerTurnHeight: 50px;
 }
 
 *{
@@ -19,6 +21,33 @@ body{
 
 .hidden{
     visibility: hidden;
+}
+
+header{
+  display: flex;
+  height: var(--headerHeight);
+  display: flex;
+  padding: 10px 20px;
+}
+
+#backButton{
+  width: 50px;
+  background-color: inherit;
+  border-style: none;
+  padding: 0;
+  background-size: contain;
+  background-image: url("../images/back_button.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.playerTurn{
+  height: var(--playerTurnHeight);
+}
+
+.svgC{
+  height: calc(100% - 100px);
+  background-color: yellow;
 }
 
 svg{

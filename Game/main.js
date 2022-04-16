@@ -81,7 +81,7 @@ function linePrev(cx , cy, color){
         var top = initDot.cy - gap;
         var bottom = initDot.cy + gap;
         var right = initDot.cx + gap;
-    
+
         if(cx < left){
             cx = left;
         }
@@ -247,7 +247,7 @@ function GameBoardBuilder(row, col, gapP, paddingX, paddingY) {
                 doth.setAttribute("r", "9");
                 doth.setAttribute("cx", cx);
                 doth.setAttribute("cy", cy);
-                
+
                 svg.appendChild(doth);
                 svg.appendChild(dot);
             }
@@ -358,7 +358,7 @@ const getRectLines = (middle) => {
             "leftSqr": [left, leftBottom, leftTop, middle],
             "rightSqr": [middle, rightBottom, right, rightTop]
         };
-     
+
     }else if(orient == "horizontal"){
         var top = {
             "x1": middle.x1,
@@ -513,7 +513,7 @@ function getSurroundingLines(line){
 
 function squareXY(square, color, playerId){
     var l, xy = new Object();
-    
+
     if(square.orient == "horizontal"){
         l = square.hline;
         xy.x = Math.min(l.x1, l.x2);
