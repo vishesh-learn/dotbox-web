@@ -75,7 +75,7 @@ function pointerUp(){ // apply condition here for 'draw only when this x,y is ga
     }
 
     if((x_cx < (gameBoard.gap - 7)) && (y_cy < (gameBoard.gap - 7))){
-        return made;
+        gameEvent();
     }
 
     if(initDot && x && y){
@@ -93,7 +93,7 @@ function pointerUp(){ // apply condition here for 'draw only when this x,y is ga
 function gameEvent(){
   if(made.lineMade != null){
     if(made.boxMade > 0){
-        currPlayer.score += boxes;
+        currPlayer.score += made.boxMade;
     } else {
         playerTurn();
     }
@@ -696,7 +696,7 @@ function getAllPossibleLines(){
     return allPossibleLines;
 }
 
-function autoDrawLine(){ console.log(JSON.stringify(currPlayer));
+function autoDrawLine(){
     made = {"lineMade": null, "boxMade": 0, "allLines": false};
 
     var dotEs = $All(".dot"), allPossibleLines = getAllPossibleLines(), currSafeMoves = [];
@@ -704,13 +704,13 @@ function autoDrawLine(){ console.log(JSON.stringify(currPlayer));
     if(allPossibleLines.length <= 0){
         made.allLines = true;
         console.log(made.allLines);
-        return made;
+        gameEvent();
     }
 
     for(var possibleLine of allPossibleLines){
         if(doesMakesSquare(possibleLine)){
             lineMaker(possibleLine, currPlayer.color);
-            return made;
+            gameEvent();
         }
     }
 
@@ -720,13 +720,13 @@ function autoDrawLine(){ console.log(JSON.stringify(currPlayer));
         }
     }
 
-    if(currSafeMoves.length > 0){console.log(currSafeMoves.length);
+    if(currSafeMoves.length > 0){
         lineMaker(currSafeMoves[randi(currSafeMoves.length - 1)], currPlayer.color);
     } else {
         lineMaker(allPossibleLines[randi(allPossibleLines.length - 1)], currPlayer.color);
     }
 
-    return made;
+    gameEvent();
 }
 
 function doesMakesSquare(middleLine){
@@ -803,7 +803,9 @@ function playerTurn(){
     var currIndex = playerList.indexOf(currPlayer);
 
     if (currIndex == playerList.length - 1) {
-      console.log("last");
+      currPlayer = playerList[0];
+    } else {
+      currPlayer = playerList[currIndex + 1];
     }
   } else {
     currPlayer = playerList[0];
