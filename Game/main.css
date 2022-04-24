@@ -1,7 +1,7 @@
 :root{
     --brown: #4c191b;
     --headerHeight: 50px;
-    --playerTurnHeight: 50px;
+    --playerTurnHeight: 60px;
 }
 
 *{
@@ -46,14 +46,49 @@ header{
 }
 
 .frame{
-  width: 150px;
-  height: 40px;
+  width: 300px;
+  height: 56px;
   border: 2px solid var(--brown);
-  border-radius: 25px;
+  border-radius: 30px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.playerList{
+  width: 400px;
+  height: 100%;
+  padding: 5px;
+  position: absolute;
+  left: 0;
+  transition: left 1s;
+}
+
+.slideLeft{
+  left: 50px;
+}
+
+.player{
+  width: 90px;
+  height: 100%;
+  float: left;
+}
+
+.avatar{
+  width: 20px;
+  height: 20px;
+  background-color: #69cb97;
+  border-radius: 50%;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.playerName{
+  width: 100%;
+  height: 30px;
+  text-align: center;
 }
 
 .svgC{

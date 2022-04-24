@@ -799,8 +799,13 @@ function loadPlayerList(){
 }
 
 function playerTurn(){
+  var a = [];
+  var currIndex;
+
+  console.log(a);
+
   if (currPlayer != undefined) {
-    var currIndex = playerList.indexOf(currPlayer);
+    currIndex = playerList.indexOf(currPlayer);
 
     if (currIndex == playerList.length - 1) {
       currPlayer = playerList[0];
@@ -809,9 +814,69 @@ function playerTurn(){
     }
   } else {
     currPlayer = playerList[0];
+    currIndex = playerList.indexOf(currPlayer);
   }
+
+  if (currIndex == 0) {
+      prevIndex = playerList.length - 1;
+  } else {
+      prevIndex = currIndex - 1;
+  }
+
+  if (currIndex <= playerList.length - 2) {
+    
+  }
+
+  if (currIndex == playerList.length - 1) {
+      nextIndex = 0;
+      nextIndex = 1;
+  } else if (currIndex == playerList.length - 2) {
+      nextIndex = currIndex + 1;
+      nextIndex2 = 0;
+  } else {
+      nextIndex = currIndex + 1;
+      nextIndex2 = currIndex + 2;
+  }
+
+  a.push(playerList[prevIndex]);
+  a.push(playerList[currIndex]);
+  a.push(playerList[nextIndex]);
+  a.push(playerList[nextIndex2]);
+
+  setupPlayerTurnListUI(a);
 }
 
 function goToWinBoard(){
   console.log("winBoard");
+}
+
+function setupPlayerTurnListUI(playerTurnList){
+
+  const frame = $(".playerList");
+  var playerUI;
+
+  frame.innerHTML = "";
+
+  for(let player of playerTurnList){
+    playerUI = createPlayerUI(player);
+
+    frame.append(playerUI);
+  }
+}
+
+function createPlayerUI(player){
+  const playerUI = document.createElement("div");
+  playerUI.classList = "player";
+
+  const avatarUI = document.createElement("div");
+  avatarUI.classList = "avatar";
+  avatarUI.style.backgroundColor = player.color;
+  playerUI.append(avatarUI);
+
+  const playerName = document.createElement("div");
+  playerName.classList = "playerName";
+  playerName.innerText = player.name;
+  playerUI.append(playerName);
+
+  return playerUI;
 }
