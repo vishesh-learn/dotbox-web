@@ -139,12 +139,23 @@ function createPlayerUI(player){
   return playerUI;
 }
 
+function assignID(){
+  for (var player of Player.playerList) {
+    player.id = Player.playerList.indexOf(player);
+  }
+}
+
 function savePlayerList(){
+  assignID();
   localStorage.playerList = JSON.stringify(Player.playerList);
 }
 
 function loadPlayerList(){
   if(localStorage.playerList != undefined){
     Player.playerList = JSON.parse(localStorage.playerList);
+
+    assignID();
+
+    savePlayerList();
   }
 }

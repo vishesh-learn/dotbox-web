@@ -798,56 +798,54 @@ function loadPlayerList(){
   }
 }
 
-function playerTurn(){
-  var a = [];
-  var currIndex;
-
-  console.log(a);
-
+function playerTurn(){ console.log(playerList);
   if (currPlayer != undefined) {
-    currIndex = playerList.indexOf(currPlayer);
-
-    if (currIndex == playerList.length - 1) {
+    if (currPlayer.id == playerList.length - 1) {
       currPlayer = playerList[0];
     } else {
-      currPlayer = playerList[currIndex + 1];
+      currPlayer = playerList[currPlayer.id + 1];
     }
   } else {
     currPlayer = playerList[0];
-    currIndex = playerList.indexOf(currPlayer);
   }
 
-  if (currIndex == 0) {
-      prevIndex = playerList.length - 1;
-  } else {
-      prevIndex = currIndex - 1;
-  }
-
-  if (currIndex <= playerList.length - 2) {
-    
-  }
-
-  if (currIndex == playerList.length - 1) {
-      nextIndex = 0;
-      nextIndex = 1;
-  } else if (currIndex == playerList.length - 2) {
-      nextIndex = currIndex + 1;
-      nextIndex2 = 0;
-  } else {
-      nextIndex = currIndex + 1;
-      nextIndex2 = currIndex + 2;
-  }
-
-  a.push(playerList[prevIndex]);
-  a.push(playerList[currIndex]);
-  a.push(playerList[nextIndex]);
-  a.push(playerList[nextIndex2]);
-
-  setupPlayerTurnListUI(a);
+  setupPlayerTurnList();
 }
 
 function goToWinBoard(){
   console.log("winBoard");
+}
+
+function setupPlayerTurnList(){
+  var a = [];
+
+  if (currPlayer.id == 0) {
+      prevIndex = playerList.length - 1;
+  } else {
+      prevIndex = currPlayer.id - 1;
+  }
+
+  if (currPlayer.id <= playerList.length - 2) {
+
+  }
+
+  if (currPlayer.id == playerList.length - 1) {
+      nextIndex = 0;
+      nextIndex2 = 1;
+  } else if (currPlayer.id == playerList.length - 2) {
+      nextIndex = currPlayer.id + 1;
+      nextIndex2 = 0;
+  } else {
+      nextIndex = currPlayer.id + 1;
+      nextIndex2 = currPlayer.id + 2;
+  }
+
+  a.push(playerList[prevIndex]);
+  a.push(playerList[currPlayer.id]);
+  a.push(playerList[nextIndex]);
+  a.push(playerList[nextIndex2]);
+
+  setupPlayerTurnListUI(a);
 }
 
 function setupPlayerTurnListUI(playerTurnList){
