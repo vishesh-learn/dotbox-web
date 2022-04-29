@@ -56,7 +56,7 @@ header{
   transform: translate(-50%, -50%);
 }
 
-.playerList{
+.playerTurnList{
   width: 400px;
   height: 100%;
   padding: 5px;
@@ -69,13 +69,13 @@ header{
   left: -90px;
 }
 
-.player{
+.playerTurnList .player{
   width: 90px;
   height: 100%;
   float: left;
 }
 
-.avatar{
+.playerTurnList .player .avatar{
   width: 20px;
   height: 20px;
   background-color: #69cb97;
@@ -85,7 +85,7 @@ header{
   transform: translateX(-50%);
 }
 
-.playerName{
+.playerTurnList .player .playerName{
   width: 100%;
   height: 30px;
   text-align: center;
@@ -147,4 +147,39 @@ svg{
 
 .noneDisplay{
   display: none;
+}
+
+.playerRankList{
+  max-width: 400px;
+  margin: auto;
+}
+
+.playerRankList .player {
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.playerRankList .player .rank {
+  width: 25px;
+  text-align: center;
+}
+
+.playerRankList .player .avatar {
+  width: 25px;
+  height: 25px;
+  background-color: #69cb97;
+  border-radius: 50%;
+  margin: 0 15px;
+}
+
+.playerRankList .player .playerName{
+  background-color: inherit;
+  padding: 10px;
+  flex: 1;
+}
+
+.playerRankList .player .score {
+  width: 25px;
+  text-align: center;
 }

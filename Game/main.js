@@ -14,7 +14,7 @@ var initDot, finalDot, orient, lineWidth = 6;
 var made = {"lineMade": null, "boxMade": 0, "allLines": false};
 
 window.onload = () => {
-    const dotSVG = $(".dotSVG"), frame = $(".playerList"), backButton = $("#backButton");
+    const dotSVG = $(".dotSVG"), frame = $(".playerTurnList"), backButton = $("#backButton");
 
     loadGameBoard();
     loadPlayerList();
@@ -103,8 +103,7 @@ function gameEvent(){
     }
 
     if(made.allLines){
-        //resultButton.setOnClickListener(view -> goToWinBoard());
-        goToWinBoard();
+        winBoard();
     }
   }
 }
@@ -820,10 +819,6 @@ function playerTurn(){
   }
 }
 
-function goToWinBoard(){
-  console.log("winBoard");
-}
-
 function setupPlayerTurnList(){
   playerTurnList = [];
 
@@ -855,13 +850,13 @@ function setupPlayerTurnList(){
 }
 
 function slideLeft() {
-  const frame = $(".playerList");
+  const frame = $(".playerTurnList");
 
   frame.classList.add("slideLeft");
 }
 
 function setupPlayerTurnListUI(){
-  const frame = $(".playerList");
+  const frame = $(".playerTurnList");
   var playerUI;
 
   frame.innerHTML = "";
@@ -888,6 +883,71 @@ function createPlayerUI(player){
   playerName.classList = "playerName";
   playerName.innerText = player.name;
   playerUI.append(playerName);
+
+  return playerUI;
+}
+
+function winBoard(){
+  const winBoardUI = $(".winBoard");
+
+  winBoardUI.classList.remove("noneDisplay");
+
+  setupPlayerRankList();
+  setupPlayerRankListUI();
+}
+
+function setupPlayerRankList() {
+  playerList.sort((a, b) => {
+    if (a.score > b.score) {
+      return -1;
+    }
+
+    if (a.score < b.score) {
+      return 1;
+    }
+
+    return 0;
+  });
+}
+
+function setupPlayerRankListUI(){
+  const playerRankListUI = $(".playerRankList");
+  var playerUI;
+
+  playerRankListUI.innerHTML = "";
+
+  for(let i = 0; i < playerList.length; i++){
+    playerList[i].rank = i + 1;
+
+    playerUI = createRankPlayerUI(playerList[i]);
+
+    playerRankListUI.append(playerUI);
+  }
+}
+
+function createRankPlayerUI(player) {
+  const playerUI = document.createElement("div");
+  playerUI.classList = "player";
+
+  const rank = document.createElement("div");
+  rank.classList = "rank";
+  rank.innerText = player.rank;
+  playerUI.append(rank);
+
+  const avatarUI = document.createElement("div");
+  avatarUI.classList = "avatar";
+  avatarUI.style.backgroundColor = player.color;
+  playerUI.append(avatarUI);
+
+  const playerName = document.createElement("div");
+  playerName.classList = "playerName";
+  playerName.innerText = player.name;
+  playerUI.append(playerName);
+
+  const score = document.createElement("div");
+  score.classList = "score";
+  score.innerText = player.score;
+  playerUI.append(score);
 
   return playerUI;
 }
