@@ -7,7 +7,7 @@ $cE = (tN) => document.createElement(tN);
 var nS = 'http://www.w3.org/2000/svg';
 $cENS = (tN) => document.createElementNS(nS, tN);
 
-var gameBoard, playerList, currPlayer;
+var gameBoard, playerList, currPlayer, playerTurnList;
 
 var initDot, finalDot, orient, lineWidth = 6;
 
@@ -15,6 +15,7 @@ var made = {"lineMade": null, "boxMade": 0, "allLines": false};
 
 window.onload = () => {
     const dotSVG = $(".dotSVG");
+    const frame = $(".playerList");
 
     loadGameBoard();
     loadPlayerList();
@@ -22,6 +23,8 @@ window.onload = () => {
     $aEL(dotSVG, "pointerover", pointerOver);
     $aEL(dotSVG, "pointerdown", pointerDown);
     $aEL(dotSVG, "pointerup", pointerUp);
+
+    $aEL(frame, "transitionend", setupPlayerTurnListUI);
 }
 
 class Line{
@@ -798,18 +801,23 @@ function loadPlayerList(){
   }
 }
 
-function playerTurn(){ console.log(playerList);
+function playerTurn(){
   if (currPlayer != undefined) {
     if (currPlayer.id == playerList.length - 1) {
       currPlayer = playerList[0];
     } else {
       currPlayer = playerList[currPlayer.id + 1];
     }
+
+    setupPlayerTurnList();
+    slideLeft();
+    //setupPlayerTurnListUI();
   } else {
     currPlayer = playerList[0];
-  }
 
-  setupPlayerTurnList();
+    setupPlayerTurnList();
+    setupPlayerTurnListUI();
+  }
 }
 
 function goToWinBoard(){
@@ -817,7 +825,7 @@ function goToWinBoard(){
 }
 
 function setupPlayerTurnList(){
-  var a = [];
+  playerTurnList = [];
 
   if (currPlayer.id == 0) {
       prevIndex = playerList.length - 1;
@@ -840,16 +848,19 @@ function setupPlayerTurnList(){
       nextIndex2 = currPlayer.id + 2;
   }
 
-  a.push(playerList[prevIndex]);
-  a.push(playerList[currPlayer.id]);
-  a.push(playerList[nextIndex]);
-  a.push(playerList[nextIndex2]);
-
-  setupPlayerTurnListUI(a);
+  playerTurnList.push(playerList[prevIndex]);
+  playerTurnList.push(playerList[currPlayer.id]);
+  playerTurnList.push(playerList[nextIndex]);
+  playerTurnList.push(playerList[nextIndex2]);
 }
 
-function setupPlayerTurnListUI(playerTurnList){
+function slideLeft() {
+  const frame = $(".playerList");
 
+  frame.classList.add("slideLeft");
+}
+
+function setupPlayerTurnListUI(){
   const frame = $(".playerList");
   var playerUI;
 
@@ -860,6 +871,8 @@ function setupPlayerTurnListUI(playerTurnList){
 
     frame.append(playerUI);
   }
+
+  frame.classList.remove("slideLeft");
 }
 
 function createPlayerUI(player){

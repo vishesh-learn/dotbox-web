@@ -62,11 +62,11 @@ header{
   padding: 5px;
   position: absolute;
   left: 0;
-  transition: left 1s;
 }
 
 .slideLeft{
-  left: 50px;
+  transition: left 0.5s;
+  left: -90px;
 }
 
 .player{
