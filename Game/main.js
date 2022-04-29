@@ -14,8 +14,7 @@ var initDot, finalDot, orient, lineWidth = 6;
 var made = {"lineMade": null, "boxMade": 0, "allLines": false};
 
 window.onload = () => {
-    const dotSVG = $(".dotSVG");
-    const frame = $(".playerList");
+    const dotSVG = $(".dotSVG"), frame = $(".playerList"), backButton = $("#backButton");
 
     loadGameBoard();
     loadPlayerList();
@@ -25,6 +24,8 @@ window.onload = () => {
     $aEL(dotSVG, "pointerup", pointerUp);
 
     $aEL(frame, "transitionend", setupPlayerTurnListUI);
+
+    $aEL(backButton, "click", () => window.location.href = "../PlayerSetup/index.html");
 }
 
 class Line{
@@ -104,10 +105,6 @@ function gameEvent(){
     if(made.allLines){
         //resultButton.setOnClickListener(view -> goToWinBoard());
         goToWinBoard();
-    } else {
-      if(currPlayer.isAlgo){
-        autoDrawLine();
-      }
     }
   }
 }
@@ -811,12 +808,15 @@ function playerTurn(){
 
     setupPlayerTurnList();
     slideLeft();
-    //setupPlayerTurnListUI();
   } else {
     currPlayer = playerList[0];
 
     setupPlayerTurnList();
     setupPlayerTurnListUI();
+  }
+
+  if(currPlayer.isAlgo){
+    autoDrawLine();
   }
 }
 

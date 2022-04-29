@@ -36,7 +36,7 @@ window.onload = () => {
   $aEL(svg, "pointerdown", pointHandler);
   $aEL(svg, "pointerup", () => $rEL(svg, "pointermove", pointHandler));
 
-  $aEL(nextButton, "click", () => window.location.href = "../PlayerSetup/index.html")
+  $aEL(nextButton, "click", () => window.location.href = "../PlayerSetup/index.html");
 }
 
 function setupGameBoard(){
