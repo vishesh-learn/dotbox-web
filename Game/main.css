@@ -130,3 +130,21 @@ svg{
 .gone{
     display: none;
 }
+
+.popUp{
+  width: calc(100% - 150px);
+  min-height: 50%;
+  max-height: calc(100% - 150px);
+
+  box-shadow: 0px 0px 50px 50px #ffffff75;
+
+  background-color: #ffffff75;
+  position: fixed;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+}
+
+.noneDisplay{
+  display: none;
+}
