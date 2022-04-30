@@ -14,7 +14,10 @@ var initDot, finalDot, orient, lineWidth = 6;
 var made = {"lineMade": null, "boxMade": 0, "allLines": false};
 
 window.onload = () => {
-    const dotSVG = $(".dotSVG"), frame = $(".playerTurnList"), backButton = $("#backButton");
+    const dotSVG = $(".dotSVG"),
+    frame = $(".playerTurnList"),
+    backButton = $("#backButton"),
+    svgC = $(".svgC");
 
     loadGameBoard();
     loadPlayerList();
@@ -53,20 +56,26 @@ function pointerOver(){
 }
 
 function pointerDown(){
+  const dotSVG = $(".dotSVG"), svgC = $(".svgC");
   var x = event.offsetX, y = event.offsetY;
 
     if(x && y){
         initDot = nearestDot(x, y);
         initDot = dotEToJSON(initDot);
 
-        $aEL($(".dotSVG"), "pointermove", linePrev);
+        $aEL(dotSVG, "pointermove", linePrev);
+        $aEL(svgC, "pointerup", pointerUp);
     }
 }
 
 function pointerUp(){ // apply condition here for 'draw only when this x,y is gap distance away from initDot
-  $rEL($(".dotSVG"), "pointermove", linePrev);
+  const dotSVG = $(".dotSVG"), svgC = $(".svgC");
+
+  $rEL(dotSVG, "pointermove", linePrev);
+  $rEL(svgC, "pointerup", pointerUp);
 
   var x = event.offsetX, y = event.offsetY;
+  console.log([event.target, x, y]);
 
     made = {"lineMade": null, "boxMade": 0, "allLines": false};
 

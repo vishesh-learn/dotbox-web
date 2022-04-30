@@ -132,7 +132,7 @@ svg{
 }
 
 .popUp{
-  width: calc(100% - 150px);
+  width: 450px;
   min-height: 50%;
   max-height: calc(100% - 150px);
 
@@ -141,7 +141,7 @@ svg{
   background-color: #ffffff75;
   position: fixed;
   left: 50%;
-  top: 40%;
+  top: 45%;
   transform: translate(-50%, -50%);
 }
 
@@ -150,7 +150,7 @@ svg{
 }
 
 .playerRankList{
-  max-width: 400px;
+  max-width: 300px;
   margin: auto;
 }
 
