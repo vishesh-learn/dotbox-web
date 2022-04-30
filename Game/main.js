@@ -75,7 +75,6 @@ function pointerUp(){ // apply condition here for 'draw only when this x,y is ga
   $rEL(svgC, "pointerup", pointerUp);
 
   var x = event.offsetX, y = event.offsetY;
-  console.log([event.target, x, y]);
 
     made = {"lineMade": null, "boxMade": 0, "allLines": false};
 
@@ -897,9 +896,9 @@ function createPlayerUI(player){
 }
 
 function winBoard(){
-  const winBoardUI = $(".winBoard");
+  const winBoardUI = $("body");
 
-  winBoardUI.classList.remove("noneDisplay");
+  winBoardUI.classList.add("popUp");
 
   setupPlayerRankList();
   setupPlayerRankListUI();
