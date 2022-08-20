@@ -336,7 +336,6 @@ function lineMaker(line){
 
         svg.appendChild(lineE);
 
-
         squareXY(whetherSquare(lineEToJSON(lineE)));
 
         if(currPlayer.color){
@@ -659,13 +658,16 @@ function dotExists(dot){
     return false;
 }
 
-const lineExists = (line) => {
+function lineExists(line){
     var linesE = lineEsToJSON();
 
     for(let l of linesE){
-        if(compareLineObj(line, l))
-            return true;
+        if(compareLineObj(line, l)){
+          return true;
+        }
     }
+
+    console.log(line);
 
     return false;
 }
@@ -683,7 +685,7 @@ function dotEToJSON(dotE){
     }
 }
 
-function getAllPossibleLines(){
+function getAllPossibleLines(){console.clear();
     var dotEs = $All(".dot");
     var allPossibleLines = [];
 
@@ -694,8 +696,12 @@ function getAllPossibleLines(){
         for(var dot2 of validFinalDots){
             var possibleLine = dotsToLine(dot1, dot2);
 
-            if(!lineExists(possibleLine) && !allPossibleLines.includes(possibleLine)){
+            if(lineExists(possibleLine) == false && allPossibleLines.includes(possibleLine) == false){
+
+
                 allPossibleLines.push(possibleLine);
+            } else {
+              console.log("abc");
             }
         }
     }
@@ -728,9 +734,9 @@ function autoDrawLine(){
     }
 
     if(currSafeMoves.length > 0){
-        lineMaker(currSafeMoves[randi(currSafeMoves.length - 1)], currPlayer.color);
+        lineMaker(currSafeMoves[randi(currSafeMoves.length - 1)]);
     } else {
-        lineMaker(allPossibleLines[randi(allPossibleLines.length - 1)], currPlayer.color);
+        lineMaker(allPossibleLines[randi(allPossibleLines.length - 1)]);
     }
 
     gameEvent();
