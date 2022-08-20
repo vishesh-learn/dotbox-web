@@ -1,8 +1,23 @@
-#startButton{
-  position: fixed;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+:root {
+  --skyBlue: #d1fdff;
+  --green: #00B85E;
+}
+
+body {
+  background: #48c789;
+}
+
+#startButton {
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30%;
+    font-size: 50px;
+    background: none;
+    font-family: cursive;
+    border: none;
+    cursor: pointer;
 }
 
 #backButton{
@@ -15,4 +30,13 @@
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
+}
+
+footer {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  height: 30px;
+  font-family: cursive;
 }
