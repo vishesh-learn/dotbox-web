@@ -9,21 +9,6 @@ $cENS = (tN) => document.createElementNS(nS, tN);
 
 var gameBoard;
 
-class GameBoard{
-  constructor(){
-    this.gap = 50;
-    this.minRow = 3;
-    this.minCol = 3;
-    this.maxRow = this.minRow;
-    this.maxCol = this.minCol;
-    this.svgPaddingX = 30;
-    this.svgPaddingY = 30;
-    this.row = this.minRow;
-    this.col = this.minCol;
-    this.x = 130;
-  }
-}
-
 window.onload = () => {
   const svg = $("svg"), backButton = $("#backButton"), nextButton = $("#nextButton");
 
@@ -183,7 +168,7 @@ function saveGameBoard(){
 }
 
 function loadGameBoard(){
-  gameBoard = JSON.parse(localStorage.gameBoard);
+  localStorage.gameBoard ? gameBoard = JSON.parse(localStorage.gameBoard) : new GameBoard();
 }
 
 function nearestDot(x, y){

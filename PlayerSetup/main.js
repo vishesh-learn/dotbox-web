@@ -7,21 +7,6 @@ $cE = (tN) => document.createElement(tN);
 var nS = 'http://www.w3.org/2000/svg';
 $cENS = (tN) => document.createElementNS(nS, tN);
 
-class Player {
-  static playerList = [];
-  static minPlayer = 2;
-
-  constructor() {
-    this.id = 0;
-    this.name = "";
-    this.color = randomColor(Player.playerList);
-    this.isAlgo = false;
-    this.rank = 0;
-    this.score = 0;
-    this.avatar = "";
-  }
-}
-
 window.onload = () => {
   const backButton = $("#backButton"), nextButton = $("#nextButton");
   const addPlayerB = $("#addb"), playerListUI = $("#playerList");
@@ -95,10 +80,6 @@ function getIndexOfDom(childDom){
 function setupPlayerListUI(){
   loadPlayerList();
 
-  while (Player.playerList.length < Player.minPlayer) {
-    Player.playerList.push(new Player());
-  }
-
   const playerListUI = $("#playerList");
   var playerUI;
 
@@ -137,25 +118,4 @@ function createPlayerUI(player){
   playerUI.append(removePlayerB);
 
   return playerUI;
-}
-
-function assignID(){
-  for (var player of Player.playerList) {
-    player.id = Player.playerList.indexOf(player);
-  }
-}
-
-function savePlayerList(){
-  assignID();
-  localStorage.playerList = JSON.stringify(Player.playerList);
-}
-
-function loadPlayerList(){
-  if(localStorage.playerList != undefined){
-    Player.playerList = JSON.parse(localStorage.playerList);
-
-    assignID();
-
-    savePlayerList();
-  }
 }

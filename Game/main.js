@@ -22,6 +22,10 @@ window.onload = () => {
     loadGameBoard();
     loadPlayerList();
 
+    playerList = Player.playerList;
+
+    playerTurn();
+
     $aEL(dotSVG, "pointerover", pointerOver);
     $aEL(dotSVG, "pointerdown", pointerDown);
     $aEL(dotSVG, "pointerup", pointerUp);
@@ -667,7 +671,7 @@ function lineExists(line){
         }
     }
 
-    console.log(line);
+    //console.log(line);
 
     return false;
 }
@@ -798,17 +802,9 @@ function saveGameBoard(){
 }
 
 function loadGameBoard(){
-  gameBoard = JSON.parse(localStorage.gameBoard);
+  gameBoard = localStorage.gameBoard ? JSON.parse(localStorage.gameBoard) : new GameBoard();
 
   gameBoardBuilder();
-}
-
-function loadPlayerList(){
-  if(localStorage.playerList != undefined){
-    playerList = JSON.parse(localStorage.playerList);
-
-    playerTurn();
-  }
 }
 
 function playerTurn(){
