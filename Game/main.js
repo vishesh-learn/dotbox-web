@@ -62,6 +62,7 @@ function pointerOver(){
 function pointerDown(){
   const dotSVG = $(".dotSVG"), svgC = $(".svgC");
   var x = event.offsetX, y = event.offsetY;
+  console.log("down", x, y);
 
     if(x && y){
         initDot = nearestDot(x, y);
@@ -72,13 +73,15 @@ function pointerDown(){
     }
 }
 
-function pointerUp(){ // apply condition here for 'draw only when this x,y is gap distance away from initDot
+function pointerUp(){
+  // apply condition here for 'draw only when this x,y is gap distance away from initDot
   const dotSVG = $(".dotSVG"), svgC = $(".svgC");
 
   $rEL(dotSVG, "pointermove", linePrev);
   $rEL(svgC, "pointerup", pointerUp);
 
   var x = event.offsetX, y = event.offsetY;
+  console.log("up", x, y);
 
     made = {"lineMade": null, "boxMade": 0, "allLines": false};
 
@@ -122,6 +125,7 @@ function gameEvent(){
 
 function linePrev(){
   var x = event.offsetX, y = event.offsetY;
+  console.log("move", event, x, y);
 
     if(initDot){
         var left = initDot.cx - gameBoard.gap;
@@ -689,7 +693,7 @@ function dotEToJSON(dotE){
     }
 }
 
-function getAllPossibleLines(){console.clear();
+function getAllPossibleLines(){ //console.clear();
     var dotEs = $All(".dot");
     var allPossibleLines = [];
 
@@ -705,7 +709,7 @@ function getAllPossibleLines(){console.clear();
 
                 allPossibleLines.push(possibleLine);
             } else {
-              console.log("abc");
+              //console.log("abc");
             }
         }
     }

@@ -9,7 +9,7 @@
 }
 
 body{
-    background-color: #d1fdff;
+    background-color: var(--skyBlue);
     width: 100vw;
     height: 100vh;
     margin: 0;
@@ -59,7 +59,7 @@ svg{
 }
 
 .doth{
-    fill: #d1fdff; /*background*/
+    fill: var(--skyBlue); /*background*/
     stroke: #4C191B;
 }
 

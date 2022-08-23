@@ -1,5 +1,5 @@
 :root {
-  --skyBlue: #d1fdff;
+  --skyBlue: #b3fcff;
   --green: #00B85E;
 }
 
@@ -15,9 +15,10 @@ body {
     width: 30%;
     font-size: 50px;
     background: none;
-    font-family: cursive;
+    font-family: "Comic Sans MS";
     border: none;
     cursor: pointer;
+    user-select: none;
 }
 
 #backButton{

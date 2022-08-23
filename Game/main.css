@@ -87,6 +87,7 @@ header{
 .svgC{
   height: calc(100% - 100px);
   position: relative;
+  touch-action: none;
 }
 
 .popUp .svgC{
