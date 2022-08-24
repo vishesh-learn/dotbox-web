@@ -1,10 +1,21 @@
 :root {
   --skyBlue: #b3fcff;
   --green: #00B85E;
+  --brown: #4C191B;
+}
+
+* {
+  font-family: comic;
 }
 
 body {
   background: #48c789;
+}
+
+button:focus-visible {
+    outline: 2px solid black;
+    border-radius: 4px;
+    outline-style: dashed;
 }
 
 #startButton {
@@ -12,10 +23,9 @@ body {
     top: 35%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 30%;
     font-size: 50px;
     background: none;
-    font-family: "Comic Sans MS";
+    font-family: comic;
     border: none;
     cursor: pointer;
     user-select: none;
@@ -39,5 +49,25 @@ footer {
   bottom: 0;
   transform: translateX(-50%);
   height: 30px;
-  font-family: cursive;
+  font-family: comic;
+}
+
+#nextButton{
+  width: 100%;
+  height: var(--nextButtonHeight);
+  color: #ffffff;
+  border: none;
+  font-weight: bold;
+  font-family: comic;
+  background-color: #00B85E;
+}
+
+@font-face {
+    font-family: Itim-Regular;
+    src: url(fonts/Itim-Regular.ttf);
+}
+
+@font-face {
+    font-family: comic;
+    src: url(fonts/comic.ttf);
 }

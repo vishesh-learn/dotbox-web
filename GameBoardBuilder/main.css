@@ -32,6 +32,8 @@ header{
   flex: 1;
   text-align: right;
   line-height: 30px;
+  font-size: 18px;
+  font-family: comic;
 }
 
 .hidden{
@@ -65,13 +67,4 @@ svg{
 
 .gone{
     display: none;
-}
-
-#nextButton{
-  width: 100%;
-  height: var(--nextButtonHeight);
-  color: #ffffff;
-  border: none;
-  font-weight: bold;
-  font-family: Arial, Helvetica, sans-serif;
 }

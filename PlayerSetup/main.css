@@ -88,13 +88,3 @@ button{
 	padding: 0;
 	background-position: center;
 }
-
-#nextButton{
-  width: 100%;
-  height: var(--nextButtonHeight);
-  background-color: #00B85E;
-  color: #ffffff;
-  border: none;
-  font-weight: bold;
-  font-family: Arial, Helvetica, sans-serif;
-}
