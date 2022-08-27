@@ -18,6 +18,12 @@ button:focus-visible {
     outline-style: dashed;
 }
 
+header{
+  display: flex;
+  height: var(--headerHeight);
+  padding: 7.5px;
+}
+
 #startButton {
     position: fixed;
     top: 35%;
@@ -29,18 +35,19 @@ button:focus-visible {
     border: none;
     cursor: pointer;
     user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 #backButton{
-  width: 30px;
-  background-color: inherit;
+  width: 35px;
+  height: 35px;
   border-style: none;
   padding: 0;
   background-size: contain;
-  background-image: url("images/back_button.svg");
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 footer {

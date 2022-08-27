@@ -17,13 +17,6 @@ body{
     font-weight: bold;
 }
 
-header{
-  display: flex;
-  height: var(--headerHeight);
-  display: flex;
-  padding: 10px 20px;
-}
-
 #content{
   width: 100%;
   height: calc(100% - var(--headerHeight) - var(--nextButtonHeight));

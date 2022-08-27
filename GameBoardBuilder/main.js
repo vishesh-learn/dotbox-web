@@ -10,7 +10,7 @@ $cENS = (tN) => document.createElementNS(nS, tN);
 var gameBoard;
 
 window.onload = () => {
-  const svg = $("svg"), backButton = $("#backButton"), nextButton = $("#nextButton");
+  const gameBoardSVG = $(".svgC svg"), backButton = $("#backButton"), nextButton = $("#nextButton");
 
   gameBoard = new GameBoard();
 
@@ -18,8 +18,8 @@ window.onload = () => {
 
   $aEL(backButton, "click", () => window.location.href = "../index.html")
   $aEL(window, "resize", setupGameBoard);
-  $aEL(svg, "pointerdown", pointHandler);
-  $aEL(svg, "pointerup", () => $rEL(svg, "pointermove", pointHandler));
+  $aEL(gameBoardSVG, "pointerdown", pointHandler);
+  $aEL(gameBoardSVG, "pointerup", () => $rEL(gameBoardSVG, "pointermove", pointHandler));
 
   $aEL(nextButton, "click", () => window.location.href = "../PlayerSetup/index.html");
 }
@@ -46,7 +46,7 @@ function startupVariables(){
 }
 
 function GameBoardBuilder(){
-    var svg = $("svg");
+    var gameBoardSVG = $(".svgC svg");
     var dots = $All("circle");
 
     for(let o of dots){
@@ -73,8 +73,8 @@ function GameBoardBuilder(){
                 doth.setAttribute("cx", cx);
                 doth.setAttribute("cy", cy);
 
-                svg.appendChild(doth);
-                svg.appendChild(dot);
+                gameBoardSVG.appendChild(doth);
+                gameBoardSVG.appendChild(dot);
             }
         }
     }
@@ -83,17 +83,17 @@ function GameBoardBuilder(){
 }
 
 function svgResize(){
-    var svg = $("svg");
+    var gameBoardSVG = $(".svgC svg");
 
     var width = ((gameBoard.maxCol - 1) * gameBoard.gap) + (gameBoard.svgPaddingX * 2);
     var height = ((gameBoard.maxRow - 1) * gameBoard.gap) + (gameBoard.svgPaddingY * 2);
 
-    svg.style.width = width + "px";
-    svg.style.height = height + "px";
+    gameBoardSVG.style.width = width + "px";
+    gameBoardSVG.style.height = height + "px";
 }
 
 function pointHandler(){
-  var svg = $("svg");
+  var gameBoardSVG = $(".svgC svg");
 
   var pointX = event.offsetX;
   var pointY = event.offsetY;
@@ -108,7 +108,7 @@ function pointHandler(){
 
   optedCnR();
 
-  $aEL(svg, "pointermove", pointHandler);
+  $aEL(gameBoardSVG, "pointermove", pointHandler);
 }
 
 function length_to_dotCount(length){

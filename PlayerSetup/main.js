@@ -17,9 +17,17 @@ window.onload = () => {
 
   $aEL(addPlayerB, "click", addPlayer);
   $aEL(playerListUI, "input", updatePlayer);
+  $aEL(playerListUI, "keypress", goButtonHandler);
   $aEL(playerListUI, "click", removePlayer);
 
   $aEL(nextButton, "click", () => window.location.href = "../Game/index.html")
+}
+
+function goButtonHandler() {
+  if (event.key === "Enter") {
+    console.log(event.target);
+    event.target.blur();
+  }
 }
 
 function addPlayer() {

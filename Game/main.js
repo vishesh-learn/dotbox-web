@@ -266,7 +266,7 @@ function getSVGLine(theClass, line, strokeWidth){
 }
 
 function svgResize(){
-    const svgList = $All("svg");
+    const svgList = $All(".svgC svg");
 
     var width = ((gameBoard.col - 1) * gameBoard.gap) + (gameBoard.svgPaddingX * 2);
     var height = ((gameBoard.row - 1) * gameBoard.gap) + (gameBoard.svgPaddingY * 2);
