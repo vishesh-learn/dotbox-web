@@ -1,7 +1,12 @@
 :root {
   --skyBlue: #b3fcff;
   --green: #00B85E;
-  --brown: #4C191B;
+  --brown: #4c191b;
+
+  --headerHeight: 50px;
+  --nextButtonHeight: 50px;
+  --playerTurnHeight: 60px;
+  --popUpColor: #ffffff36;
 }
 
 * {
@@ -12,6 +17,11 @@ body {
   background: #48c789;
 }
 
+button{
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
 button:focus-visible {
     outline: 2px solid black;
     border-radius: 4px;
@@ -19,9 +29,8 @@ button:focus-visible {
 }
 
 header{
-  display: flex;
+  position: relative;
   height: var(--headerHeight);
-  padding: 7.5px;
 }
 
 #startButton {
@@ -43,6 +52,7 @@ header{
   height: 35px;
   border-style: none;
   padding: 0;
+  fill: var(--brown);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;

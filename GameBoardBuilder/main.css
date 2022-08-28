@@ -3,11 +3,6 @@
     outline-style: none;
 }
 
-:root{
-  --headerHeight: 50px;
-  --nextButtonHeight: 50px;
-}
-
 body{
     background-color: var(--skyBlue);
     width: 100vw;
@@ -21,13 +16,22 @@ header, #nextButton{
   background-color: #00B85E;
 }
 
+#backButton {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+}
+
 #rowAndColInfo{
-  flex: 1;
+  float: right;
   text-align: right;
-  line-height: 30px;
   font-size: 18px;
   font-family: comic;
-  padding-right: 15px;
+  right: 20px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .hidden{
