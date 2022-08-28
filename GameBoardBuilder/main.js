@@ -140,10 +140,10 @@ function optedCnR(){
 
 function optedXnY(x, y){
     var dotEs = $All(".dot");
-    const rowAndColInfoE = $("#rowAndColInfo");
+    const infoE = $("#info");
 
     if(x && y){
-      rowAndColInfoE.innerHTML = gameBoard.col + " x " + gameBoard.row;
+      infoE.innerHTML = gameBoard.col + " x " + gameBoard.row;
 
         for(var dotE of dotEs){
             let cx = dotE.cx.baseVal.value;

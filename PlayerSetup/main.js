@@ -39,7 +39,16 @@ function addPlayer() {
 
   Player.playerList.push(player);
 
+  updatePlayerCountView();
+
   savePlayerList();
+}
+
+function updatePlayerCountView(){
+  const infoE = $("#info");
+  var playerCount = Player.playerList.length;
+
+  infoE.innerHTML = playerCount == 1 ? playerCount + " player" : playerCount + " players";
 }
 
 function updatePlayer(){
@@ -75,6 +84,8 @@ function removePlayer(){
 
     targetPlayer.remove();
 
+    updatePlayerCountView();
+
     savePlayerList();
   }
 }
@@ -98,6 +109,8 @@ function setupPlayerListUI(){
 
     playerListUI.append(playerUI);
   }
+
+  updatePlayerCountView();
 }
 
 function createPlayerUI(player){

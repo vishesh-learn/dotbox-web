@@ -60,6 +60,17 @@ header{
   -webkit-tap-highlight-color: transparent;
 }
 
+#info{
+  float: right;
+  text-align: right;
+  font-size: 18px;
+  font-family: comic;
+  right: 20px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 footer {
   position: fixed;
   left: 50%;

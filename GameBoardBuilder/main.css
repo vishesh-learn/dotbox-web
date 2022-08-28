@@ -23,17 +23,6 @@ header, #nextButton{
   transform: translateY(-50%);
 }
 
-#rowAndColInfo{
-  float: right;
-  text-align: right;
-  font-size: 18px;
-  font-family: comic;
-  right: 20px;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
 .hidden{
     opacity: 0;
 }
