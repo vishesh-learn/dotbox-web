@@ -4,8 +4,7 @@
 }
 
 :root{
-  --headerHeight: 50px;
-  --nextButtonHeight: 50px;
+  --playerHeight: 50px;
 }
 
 body{
@@ -33,8 +32,12 @@ body{
               inset 0 -3px 5px -5px #000000;
 }
 
+#playerList {
+  margin-bottom: calc(50vh);
+}
+
 .player {
-  height: 50px;
+  height: var(--playerHeight);
   display: flex;
   align-items: center;
 }
@@ -76,15 +79,7 @@ body{
 	background-size: contain;
 	width: 40px;
 	height: 40px;
-	position: absolute;
+	position: fixed;
 	right: 25px;
-	bottom: 30px;
-}
-
-button{
-	cursor: pointer;
-	background-color: inherit;
-	border-style: none;
-	padding: 0;
-	background-position: center;
+  bottom: calc(var(--nextButtonHeight) + 30px);
 }

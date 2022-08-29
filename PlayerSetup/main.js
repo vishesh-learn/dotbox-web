@@ -19,6 +19,7 @@ window.onload = () => {
   $aEL(playerListUI, "input", updatePlayer);
   $aEL(playerListUI, "keypress", goButtonHandler);
   $aEL(playerListUI, "click", removePlayer);
+  //$aEL(playerListUI, "focus", () => event.target.scrollIntoView());
 
   $aEL(nextButton, "click", () => window.location.href = "../Game/index.html")
 }
@@ -135,7 +136,7 @@ function createPlayerUI(player){
   playerUI.append(isAlgo);
 
   const removePlayerB = document.createElement("button");
-  removePlayerB.classList = "removePlayerB";
+  removePlayerB.classList = "button removePlayerB";
   playerUI.append(removePlayerB);
 
   return playerUI;

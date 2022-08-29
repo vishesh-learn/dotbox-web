@@ -18,6 +18,11 @@ body {
 }
 
 button{
+	background-color: inherit;
+	border-style: none;
+	padding: 0;
+	background-position: center;
+
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
@@ -26,6 +31,14 @@ button:focus-visible {
     outline: 2px solid black;
     border-radius: 4px;
     outline-style: dashed;
+}
+
+.button {
+  cursor: pointer;
+}
+
+.button:active {
+  scale: 0.96;
 }
 
 header{
@@ -37,7 +50,7 @@ header{
     position: fixed;
     top: 35%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    translate: -50% -50%;
     font-size: 50px;
     background: none;
     font-family: comic;
@@ -71,7 +84,7 @@ header{
   transform: translateY(-50%);
 }
 
-footer {
+.version {
   position: fixed;
   left: 50%;
   bottom: 0;
@@ -80,14 +93,19 @@ footer {
   font-family: comic;
 }
 
-#nextButton{
+.footBar {
   width: 100%;
   height: var(--nextButtonHeight);
   color: #ffffff;
   border: none;
+  background-color: var(--green);
+}
+
+#nextButton {
+  width: 100%;
+  height: var(--nextButtonHeight);
   font-weight: bold;
   font-family: comic;
-  background-color: #00B85E;
 }
 
 @font-face {
