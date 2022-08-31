@@ -60,11 +60,11 @@ header{
   transform: translateY(-50%);
 }
 
-.playerTurnList .player:nth-child(2){
+.playerTurnList:not(.slideLeft) .player:nth-child(2){
   height: 65px;
 }
 
-.playerTurnList .player:nth-child(2) .avatar{
+.playerTurnList:not(.slideLeft) .player:nth-child(2) .avatar{
   width: 30px;
   height: 30px;
   outline: 1px solid var(--brown);

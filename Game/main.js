@@ -125,7 +125,6 @@ function gameEvent(){
 
 function linePrev(){
   var x = event.offsetX, y = event.offsetY;
-  console.log("move", event, x, y);
 
     if(initDot){
         var left = initDot.cx - gameBoard.gap;

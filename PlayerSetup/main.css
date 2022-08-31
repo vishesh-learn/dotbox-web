@@ -33,7 +33,7 @@ body{
 }
 
 #playerList {
-  margin-bottom: calc(50vh);
+  margin-bottom: calc(40vh);
 }
 
 .player {
@@ -56,6 +56,11 @@ body{
   padding: 10px;
   height: 30px;
   flex: 1;
+}
+
+.playerName:focus {
+  font-weight: bold;
+  letter-spacing: 0.3px;
 }
 
 .isAlgo {

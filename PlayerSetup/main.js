@@ -19,9 +19,20 @@ window.onload = () => {
   $aEL(playerListUI, "input", updatePlayer);
   $aEL(playerListUI, "keypress", goButtonHandler);
   $aEL(playerListUI, "click", removePlayer);
-  //$aEL(playerListUI, "focus", () => event.target.scrollIntoView());
+  $aEL(playerListUI, "focusin", scrollAbove);
 
   $aEL(nextButton, "click", () => window.location.href = "../Game/index.html")
+}
+
+function scrollAbove() {
+  const target = event.target;
+
+  if(target.className.includes("playerName")){
+    const targetPlayer = target.parentElement;
+    const targetPlayerIndex = getIndexOfDom(targetPlayer);
+
+    $("#content").scrollTop = targetPlayer.clientHeight * (targetPlayerIndex - 2);
+  }
 }
 
 function goButtonHandler() {
