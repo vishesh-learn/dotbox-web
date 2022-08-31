@@ -62,7 +62,6 @@ function pointerOver(){
 function pointerDown(){
   const dotSVG = $(".dotSVG"), svgC = $(".svgC");
   var x = event.offsetX, y = event.offsetY;
-  console.log("down", x, y);
 
     if(x && y){
         initDot = nearestDot(x, y);
@@ -81,7 +80,6 @@ function pointerUp(){
   $rEL(svgC, "pointerup", pointerUp);
 
   var x = event.offsetX, y = event.offsetY;
-  console.log("up", x, y);
 
     made = {"lineMade": null, "boxMade": 0, "allLines": false};
 
