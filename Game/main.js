@@ -7,7 +7,7 @@ $cE = (tN) => document.createElement(tN);
 var nS = 'http://www.w3.org/2000/svg';
 $cENS = (tN) => document.createElementNS(nS, tN);
 
-var gameBoard, playerList, currPlayer, playerTurnList;
+var currPlayer, playerTurnList;
 
 var initDot, finalDot, orient, lineWidth = 6;
 
@@ -20,9 +20,8 @@ window.onload = () => {
     svgC = $(".svgC");
 
     loadGameBoard();
+    gameBoardBuilder();
     loadPlayerList();
-
-    playerList = Player.playerList;
 
     playerTurn();
 
@@ -796,16 +795,6 @@ function resetBoard(){
 
 function randi(upto){
     return Math.floor(Math.random() * upto);
-}
-
-function saveGameBoard(){
-  localStorage.gameBoard = JSON.stringify(gameBoard);
-}
-
-function loadGameBoard(){
-  gameBoard = localStorage.gameBoard ? JSON.parse(localStorage.gameBoard) : new GameBoard();
-
-  gameBoardBuilder();
 }
 
 function playerTurn(){

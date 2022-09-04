@@ -7,6 +7,8 @@ $cE = (tN) => document.createElement(tN);
 var nS = 'http://www.w3.org/2000/svg';
 $cENS = (tN) => document.createElementNS(nS, tN);
 
+//maxPlayers = (gameBoard.row - 1) * (gameBoard.col - 1);
+
 window.onload = () => {
   const backButton = $("#backButton"), nextButton = $("#nextButton");
   const addPlayerB = $("#addb"), playerListUI = $("#playerList");
@@ -49,7 +51,7 @@ function addPlayer() {
 
   playerListUI.append(playerUI);
 
-  Player.playerList.push(player);
+  playerList.push(player);
 
   updatePlayerCountView();
 
@@ -58,7 +60,7 @@ function addPlayer() {
 
 function updatePlayerCountView(){
   const infoE = $("#info");
-  var playerCount = Player.playerList.length;
+  var playerCount = playerList.length;
 
   infoE.innerHTML = playerCount == 1 ? playerCount + " player" : playerCount + " players";
 }
@@ -71,7 +73,7 @@ function updatePlayer(){
     const targetPlayer = target.parentElement;
     const targetPlayerIndex = getIndexOfDom(targetPlayer);
 
-    Player.playerList[targetPlayerIndex].name = name;
+    playerList[targetPlayerIndex].name = name;
   }
 
   if (target.className.includes("isAlgo")) {
@@ -79,7 +81,7 @@ function updatePlayer(){
     const targetPlayer = target.parentElement;
     const targetPlayerIndex = getIndexOfDom(targetPlayer);
 
-    Player.playerList[targetPlayerIndex].isAlgo = isAlgo;
+    playerList[targetPlayerIndex].isAlgo = isAlgo;
   }
 
   savePlayerList();
@@ -92,7 +94,7 @@ function removePlayer(){
     const targetPlayer = target.parentElement;
     const targetPlayerIndex = getIndexOfDom(targetPlayer);
 
-    Player.playerList.splice(targetPlayerIndex, 1);
+    playerList.splice(targetPlayerIndex, 1);
 
     targetPlayer.remove();
 
@@ -116,7 +118,7 @@ function setupPlayerListUI(){
 
   playerListUI.innerHTML = "";
 
-  for(let player of Player.playerList){
+  for(let player of playerList){
     playerUI = createPlayerUI(player);
 
     playerListUI.append(playerUI);

@@ -1,3 +1,10 @@
+var gameBoard = {}, playerList = [];
+
+var game = {
+  minPlayer: 2,
+  maxPlayer: 2
+}
+
 class GameBoard{
   constructor(){
     this.gap = 50;
@@ -14,13 +21,10 @@ class GameBoard{
 }
 
 class Player {
-  static playerList = [];
-  static minPlayer = 2;
-
   constructor() {
     this.id = 0;
     this.name = "";
-    this.color = randomColor(Player.playerList);
+    this.color = randomColor(playerList);
     this.isAlgo = false;
     this.rank = 0;
     this.score = 0;
@@ -28,30 +32,40 @@ class Player {
   }
 }
 
+function loadGameBoard(){
+   gameBoard = localStorage.gameBoard ? JSON.parse(localStorage.gameBoard) : new GameBoard();
+}
+
+function saveGameBoard(){
+  localStorage.gameBoard = JSON.stringify(gameBoard);
+}
+
 function loadPlayerList(){
   if(localStorage.playerList != undefined){
-    Player.playerList = JSON.parse(localStorage.playerList);
+    playerList = JSON.parse(localStorage.playerList);
 
     assignID();
     savePlayerList();
   }
 
-  while (Player.playerList.length < Player.minPlayer) {
-    Player.playerList.push(new Player());
+  while (playerList.length < Player.minPlayer) {
+    playerList.push(new Player());
   }
 }
 
 function assignID(){
-  for (var player of Player.playerList) {
-    player.id = Player.playerList.indexOf(player);
+  for (var player of playerList) {
+    player.id = playerList.indexOf(player);
   }
 }
 
 function savePlayerList(){
   assignID();
-  localStorage.playerList = JSON.stringify(Player.playerList);
+  localStorage.playerList = JSON.stringify(playerList);
 }
 
 window.onload = () => {
   document.getElementById("startButton").addEventListener("click", () => window.location.href = "GameBoardBuilder/index.html");
 }
+
+//window.onerror = (message, source, lineno, colno, error) => {$("pre").innerHTML = lineno + ": " + message + "\nat col: " + colno;}

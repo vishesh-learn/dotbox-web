@@ -50,7 +50,7 @@ header{
     position: fixed;
     top: 35%;
     left: 50%;
-    translate: -50% -50%;
+    transform: translate(-50%, -50%);
     font-size: 50px;
     background: none;
     font-family: comic;

@@ -7,12 +7,8 @@ $cE = (tN) => document.createElement(tN);
 var nS = 'http://www.w3.org/2000/svg';
 $cENS = (tN) => document.createElementNS(nS, tN);
 
-var gameBoard;
-
 window.onload = () => {
   const gameBoardSVG = $(".svgC svg"), backButton = $("#backButton"), nextButton = $("#nextButton");
-
-  gameBoard = new GameBoard();
 
   setupGameBoard();
 
@@ -161,14 +157,6 @@ function optedXnY(x, y){
     } else {
         console.log("invalid x or y");
     }
-}
-
-function saveGameBoard(){
-  localStorage.gameBoard = JSON.stringify(gameBoard);
-}
-
-function loadGameBoard(){
-  localStorage.gameBoard ? gameBoard = JSON.parse(localStorage.gameBoard) : new GameBoard();
 }
 
 function nearestDot(x, y){
