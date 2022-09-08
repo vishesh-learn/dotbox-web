@@ -43,14 +43,13 @@ function saveGameBoard(){
 function loadPlayerList(){
   if(localStorage.playerList != undefined){
     playerList = JSON.parse(localStorage.playerList);
-
-    assignID();
-    savePlayerList();
   }
 
-  while (playerList.length < Player.minPlayer) {
+  while (playerList.length < game.minPlayer) {
     playerList.push(new Player());
   }
+
+  savePlayerList();
 }
 
 function assignID(){

@@ -114,14 +114,11 @@ function setupPlayerListUI(){
   loadPlayerList();
 
   const playerListUI = $("#playerList");
-  var playerUI;
 
   playerListUI.innerHTML = "";
 
   for(let player of playerList){
-    playerUI = createPlayerUI(player);
-
-    playerListUI.append(playerUI);
+    playerListUI.append(createPlayerUI(player));
   }
 
   updatePlayerCountView();

@@ -151,6 +151,8 @@ header{
   top: 45%;
   transform: translate(-50%, -50%);
 
+  overflow: auto;
+
   display: none;
 }
 
