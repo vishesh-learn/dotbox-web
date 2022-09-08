@@ -138,33 +138,39 @@ header{
 }
 
 .winBoard{
-  width: 450px;
+  width: 100%;
+  max-width: 450px;
   min-height: 50%;
   max-height: calc(100% - 150px);
 
+  padding: 30px;
+
   box-shadow: 0px 0px 50px 50px var(--popUpColor);
-  border-radius: 100px;
 
   background-color: var(--popUpColor);
   position: fixed;
   left: 50%;
-  top: 45%;
+  top: 49%;
   transform: translate(-50%, -50%);
 
-  overflow: auto;
-
   display: none;
+
+  flex-direction: column;
 }
 
 .popUp .winBoard{
-  display: unset;
+  display: flex;
 }
 
 .playerRankList{
-  width: 70%;
+  width: calc(100% - 60px);
   max-width: 340px;
   min-width: 250px;
-  margin: 50px auto;
+  margin: auto;
+
+  flex: 1;
+
+  overflow: scroll;
 }
 
 .playerRankList .player {
@@ -198,4 +204,15 @@ header{
   width: 25px;
   text-align: center;
   font-size: 16px;
+}
+
+.bar {
+  display: flex;
+  width: calc(100% - 60px);
+  height: 100px;
+
+  padding: 10px 0;
+
+  flex-wrap: wrap;
+  justify-content: space-around;
 }

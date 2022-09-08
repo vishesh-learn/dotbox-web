@@ -17,7 +17,9 @@ window.onload = () => {
     const dotSVG = $(".dotSVG"),
     frame = $(".playerTurnList"),
     backButton = $("#backButton"),
-    svgC = $(".svgC");
+    svgC = $(".svgC"),
+    replayButton = $("#replayButton"),
+    newGameButton = $("#newGameButton");
 
     loadGameBoard();
     gameBoardBuilder();
@@ -32,6 +34,8 @@ window.onload = () => {
     $aEL(frame, "transitionend", setupPlayerTurnListUI);
 
     $aEL(backButton, "click", () => window.location.href = "../PlayerSetup/index.html");
+    $aEL(replayButton, "click", () => window.location.href = "../Game/index.html");
+    $aEL(newGameButton, "click", () => window.location.href = "../GameBoardBuilder/index.html");
 }
 
 class Line{
