@@ -1,49 +1,11 @@
-:root {
-  --skyBlue: #b3fcff;
-  --green: #00B85E;
-  --brown: #4c191b;
-
-  --headerHeight: 50px;
-  --nextButtonHeight: 50px;
-  --playerTurnHeight: 60px;
-  --popUpColor: #ffffff4d;
-}
-
-* {
-  font-family: comic;
-}
-
 body {
+  width: 100vw;
+  height: 100vh;
+
+  margin: 0;
+
   background: #48c789;
-}
-
-button{
-	background-color: inherit;
-	border-style: none;
-	padding: 0;
-	background-position: center;
-
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
-}
-
-button:focus-visible {
-    outline: 2px solid black;
-    border-radius: 4px;
-    outline-style: dashed;
-}
-
-.button {
-  cursor: pointer;
-}
-
-.button:active {
-  scale: 0.96;
-}
-
-header{
-  position: relative;
-  height: var(--headerHeight);
+  box-shadow: 0 0 5px 5px #4fdf99 inset;
 }
 
 #startButton {
@@ -60,30 +22,6 @@ header{
     -webkit-tap-highlight-color: transparent;
 }
 
-#backButton{
-  width: 35px;
-  height: 35px;
-  border-style: none;
-  padding: 0;
-  fill: var(--brown);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-#info{
-  float: right;
-  text-align: right;
-  font-size: 18px;
-  font-family: comic;
-  right: 20px;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
 .version {
   position: fixed;
   left: 50%;
@@ -91,42 +29,4 @@ header{
   transform: translateX(-50%);
   height: 30px;
   font-family: comic;
-}
-
-.footBar {
-  width: 100%;
-  height: var(--nextButtonHeight);
-  color: #ffffff;
-  border: none;
-  background-color: var(--green);
-}
-
-#nextButton {
-  width: 100%;
-  height: var(--nextButtonHeight);
-  font-weight: bold;
-  font-family: comic;
-}
-
-/* width */
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #40a2bf;
-  border-radius: 3px;
-}
-
-@font-face {
-    font-family: Itim-Regular;
-    src: url(fonts/Itim-Regular.ttf);
-}
-
-@font-face {
-    font-family: comic;
-    src: url(fonts/comic.ttf);
 }

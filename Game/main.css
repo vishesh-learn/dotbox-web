@@ -15,6 +15,7 @@ body{
     flex-direction: column;
     margin: 0;
     background-color: var(--skyBlue);
+    box-shadow: 0 0 2px 2px #5ddaff inset;
 }
 
 header{
@@ -68,11 +69,8 @@ header{
   transition-duration: var(--slideLeftDuration);
 }
 
-.playerTurnList:not(.slideLeft) .player:nth-child(2){
-  height: 65px;
-}
-
-.playerTurnList.slideLeft .player:nth-child(3){
+.playerTurnList:not(.slideLeft) .player:nth-child(2),
+.playerTurnList.slideLeft .player:nth-child(3) {
   height: 65px;
 }
 
@@ -237,4 +235,8 @@ header{
 
   flex-wrap: wrap;
   justify-content: space-around;
+}
+
+.bar .button {
+  font-weight: bold;
 }
