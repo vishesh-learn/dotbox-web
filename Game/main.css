@@ -1,3 +1,7 @@
+:root {
+  --slideLeftDuration: 0.3s;
+}
+
 *{
     box-sizing: border-box;
     outline-style: none;
@@ -47,7 +51,8 @@ header{
 }
 
 .slideLeft{
-  transition: left 0.2s;
+  transition-property: left;
+  transition-duration: var(--slideLeftDuration);
   left: -90px;
 }
 
@@ -58,18 +63,35 @@ header{
   position: relative;
   top: 50%;
   transform: translateY(-50%);
+
+  transition-property: height;
+  transition-duration: var(--slideLeftDuration);
 }
 
 .playerTurnList:not(.slideLeft) .player:nth-child(2){
   height: 65px;
 }
 
-.playerTurnList:not(.slideLeft) .player:nth-child(2) .avatar{
+.playerTurnList.slideLeft .player:nth-child(3){
+  height: 65px;
+}
+
+.avatar {
+  transition-property: width, height;
+  transition-duration: var(--slideLeftDuration);
+}
+
+.playerTurnList:not(.slideLeft) .player:nth-child(2) .avatar {
   width: 30px;
   height: 30px;
   outline: 1px solid var(--brown);
   outline-offset: 2px;
   outline-style: dashed;
+}
+
+.playerTurnList.slideLeft .player:nth-child(3) .avatar {
+  width: 30px;
+  height: 30px;
 }
 
 .playerTurnList .player .avatar{
