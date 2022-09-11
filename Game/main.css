@@ -1,5 +1,6 @@
 :root {
   --slideLeftDuration: 0.3s;
+  --strokeWidth: 6px;
 }
 
 *{
@@ -149,6 +150,11 @@ header{
     stroke: #d1fdff;
 }
 
+.line, .prevLine{
+  stroke-width: var(--strokeWidth);
+  stroke-linecap: round;
+}
+
 .bottom{
     height: 100px;
 }
@@ -228,8 +234,7 @@ header{
 
 .bar {
   display: flex;
-  width: calc(100% - 60px);
-  height: 100px;
+  height: 70px;
 
   padding: 10px 0;
 
@@ -239,4 +244,14 @@ header{
 
 .bar .button {
   font-weight: bold;
+  width: 100px;
+}
+
+.bar .button:hover {
+  border: 2px solid;
+  border-radius: 4px;
+}
+
+.bar .button:active {
+  color: brown;
 }
