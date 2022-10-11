@@ -69,11 +69,6 @@ function gameEvent(){
 
     if(made.boxMade > 0){
         currPlayer.score += made.boxMade;
-
-        if (currPlayer.isAlgo && !made.allLines) {
-          made = new Made();
-          autoDrawLine();
-        }
     } else {
         playerTurn();
     }

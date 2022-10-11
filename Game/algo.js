@@ -9,10 +9,12 @@ function autoDrawLine(){ //This function is working fine. No issue when it is ca
     }
 
     // try to make a square
-    for(var possibleLine of allPossibleLines){
-        if(doesMakesSquare(possibleLine)){
-            lineMaker(possibleLine, currPlayer.color);
-        }
+    var squareMakingLine = getSquareMakingLine();
+
+    while (squareMakingLine) {
+      lineMaker(squareMakingLine, currPlayer.color);
+
+      squareMakingLine = getSquareMakingLine();
     }
 
     // find all safe lines
@@ -29,6 +31,18 @@ function autoDrawLine(){ //This function is working fine. No issue when it is ca
     } else { // else draw any random line
         lineMaker(allPossibleLines[randi(allPossibleLines.length - 1)]);
     }
+}
+
+function getSquareMakingLine(){
+  var allPossibleLines = getAllPossibleLines();
+
+  for(var possibleLine of allPossibleLines){
+      if(doesMakesSquare(possibleLine)){
+        return possibleLine;
+      }
+  }
+
+  return false;
 }
 
 function isSafeMove(middleLine){
