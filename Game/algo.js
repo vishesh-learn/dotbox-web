@@ -16,6 +16,8 @@ function autoDrawLine(){ //This function is working fine. No issue when it is ca
 
       squareMakingLine = getSquareMakingLine();
     }
+    
+    allPossibleLines = getAllPossibleLines();
 
     // find all safe lines
     for(var possibleLine of allPossibleLines){
