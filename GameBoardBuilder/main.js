@@ -1,12 +1,3 @@
-$ = (o) => document.querySelector(o);
-$All = (o) => document.querySelectorAll(o);
-$aEL = (o, e, f) => o.addEventListener(e, f);
-$rEL = (o, e, f) => o.removeEventListener(e, f);
-$cE = (tN) => document.createElement(tN);
-
-var nS = 'http://www.w3.org/2000/svg';
-$cENS = (tN) => document.createElementNS(nS, tN);
-
 window.onload = () => {
   const gameBoardSVG = $(".svgC svg"), backButton = $("#backButton"), nextButton = $("#nextButton");
 

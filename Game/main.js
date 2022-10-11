@@ -1,12 +1,3 @@
-$ = (o) => document.querySelector(o);
-$All = (o) => document.querySelectorAll(o);
-$aEL = (o, e, f, b) => o.addEventListener(e, f, b);
-$rEL = (o, e, f) => o.removeEventListener(e, f);
-$cE = (tN) => document.createElement(tN);
-
-var nS = 'http://www.w3.org/2000/svg';
-$cENS = (tN) => document.createElementNS(nS, tN);
-
 var currPlayer, playerTurnList,
 initDot, finalDot, orient, made;
 
@@ -18,7 +9,7 @@ window.onload = () => {
     replayButton = $("#replayButton"),
     newGameButton = $("#newGameButton");
 
-    made = {"lineMade": false, "boxMade": 0, "allLines": false};
+    made = new Made();
 
     loadGameBoard();
     gameBoardBuilder();
@@ -38,7 +29,7 @@ window.onload = () => {
 }
 
 class Line{
-    Line(x1, y1, x2, y2){
+    constructor(x1, y1, x2, y2){
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
@@ -46,85 +37,12 @@ class Line{
     }
 }
 
-function pointerOver(){
-    const target = event.target;
-    const doth = $All(".doth");
-
-    if(target.classList.contains("doth")){
-        target.classList.remove("invisible");
-    }
-
-    if(target.tagName == "svg"){
-        for(let o of doth){
-            o.classList.add("invisible");
-        }
-    }
-}
-
-function pointerDown(){
-  const dotSVG = $(".dotSVG"), svgC = $(".svgC");
-  var x = event.offsetX, y = event.offsetY;
-
-    if(x && y){
-        initDot = nearestDot(x, y);
-        initDot = dotEToJSON(initDot);
-
-        $aEL(dotSVG, "pointermove", linePrev);
-        $aEL(svgC, "pointerup", pointerUp);
-    }
-}
-
-function pointerUp(){
-  const dotSVG = $(".dotSVG"), svgC = $(".svgC");
-
-  $rEL(dotSVG, "pointermove", linePrev);
-  $rEL(svgC, "pointerup", pointerUp);
-
-  var x = event.offsetX, y = event.offsetY;
-
-  made = {"lineMade": false, "boxMade": 0, "allLines": false};
-
-  let x_cx = difference(x, initDot.cx);
-
-  let y_cy = difference(y, initDot.cy);
-
-  var prevLines = $All(".prevLine");
-
-  for(let o of prevLines){
-    o.remove();
+class Made {
+  constructor() {
+    this.lineMade = false;
+    this.boxMade = 0;
+    this.allLines = false;
   }
-
-    if(initDot && x && y){
-        finalDot = nearDot(x, y);
-        if(validateLines(finalDot)){
-            lineMaker(dotsToLine(initDot, finalDot));
-        }
-    } else {
-        console.log("no x and y");
-    }
-}
-
-function gameEvent(){
-  if(made.lineMade){
-
-    if(made.boxMade > 0){ console.log(made);
-        currPlayer.score += made.boxMade;
-    } else {
-        playerTurn();
-    }
-
-    if(made.allLines){
-        winBoard();
-    }
-  }
-
-  made = {"lineMade": false, "boxMade": 0, "allLines": false};
-}
-
-function isEnd(){
-    if(getAllPossibleLines().length <= 0){
-      made.allLines = true;
-    }
 }
 
 function linePrev(){
@@ -356,14 +274,6 @@ function lineMaker(line){
     }
 
     initDot = null;
-}
-
-function lineMade(line){
-  made.lineMade = true;
-
-  isEnd();
-
-  gameEvent();
 }
 
 const getRectLines = (middle) => {
@@ -714,32 +624,6 @@ function getAllPossibleLines(){ //console.clear();
     return allPossibleLines;
 }
 
-function autoDrawLine(){
-    var dotEs = $All(".dot"), allPossibleLines = getAllPossibleLines(), currSafeMoves = [];
-
-    if(allPossibleLines.length <= 0){
-        made.allLines = true;
-    }
-
-    for(var possibleLine of allPossibleLines){
-        if(doesMakesSquare(possibleLine)){
-            lineMaker(possibleLine, currPlayer.color);
-        }
-    }
-
-    for(var possibleLine of allPossibleLines){
-        if(isSafeMove(possibleLine)){
-            currSafeMoves.push(possibleLine);
-        }
-    }
-
-    if(currSafeMoves.length > 0){
-        lineMaker(currSafeMoves[randi(currSafeMoves.length - 1)]);
-    } else {
-        lineMaker(allPossibleLines[randi(allPossibleLines.length - 1)]);
-    }
-}
-
 function doesMakesSquare(middleLine){
     var possibleSquare = getSurroundingLines(middleLine);
 
@@ -749,22 +633,6 @@ function doesMakesSquare(middleLine){
         }
     } else if(possibleSquare.orient == "vertical"){
         if((possibleSquare.left.length == 3) || (possibleSquare.right.length == 3)){
-            return true;
-        }
-    }
-
-    return false;
-}
-
-function isSafeMove(middleLine){
-    var possibleSquare = getSurroundingLines(middleLine);
-
-    if(possibleSquare.orient == "horizontal"){
-        if(((possibleSquare.top.length == 3) || (possibleSquare.bottom.length == 3)) || ((possibleSquare.top.length != 2) && (possibleSquare.bottom.length != 2))){
-            return true;
-        }
-    } else if(possibleSquare.orient == "vertical"){
-        if(((possibleSquare.left.length == 3) || (possibleSquare.right.length == 3)) || ((possibleSquare.left.length != 2) && (possibleSquare.right.length != 2))){
             return true;
         }
     }
@@ -789,28 +657,6 @@ function resetBoard(){
 
 function randi(upto){
     return Math.floor(Math.random() * upto);
-}
-
-function playerTurn(){
-  if (currPlayer != undefined) {
-    if (currPlayer.id == playerList.length - 1) {
-      currPlayer = playerList[0];
-    } else {
-      currPlayer = playerList[currPlayer.id + 1];
-    }
-
-    setupPlayerTurnList();
-    slideLeft();
-  } else {
-    currPlayer = playerList[0];
-
-    setupPlayerTurnList();
-    setupPlayerTurnListUI();
-  }
-
-  if(currPlayer.isAlgo){
-    autoDrawLine();
-  }
 }
 
 function setupPlayerTurnList(){
