@@ -24,7 +24,7 @@ function autoDrawLine(){ //This function is working fine. No issue when it is ca
 
     if(currSafeMoves.length > 0){ // draw safe line if exist
       var randomSafeMove = currSafeMoves[randi(currSafeMoves.length - 1)];
-      console.log(randomSafeMove);
+      //console.log(randomSafeMove);
         lineMaker(randomSafeMove);
     } else { // else draw any random line
         lineMaker(allPossibleLines[randi(allPossibleLines.length - 1)]);

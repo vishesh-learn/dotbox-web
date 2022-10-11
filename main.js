@@ -31,7 +31,7 @@ class GameBoard{
 
 class Player {
   constructor() {
-    this.id = 0;
+    this.id = 1;
     this.name = "";
     this.color = randomColor(playerList);
     this.isAlgo = false;
@@ -63,7 +63,7 @@ function loadPlayerList(){
 
 function assignID(){
   for (var player of playerList) {
-    player.id = playerList.indexOf(player);
+    player.id = playerList.indexOf(player) + 1;
   }
 }
 

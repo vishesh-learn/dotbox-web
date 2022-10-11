@@ -69,6 +69,11 @@ function gameEvent(){
 
     if(made.boxMade > 0){
         currPlayer.score += made.boxMade;
+
+        if (currPlayer.isAlgo && !made.allLines) {
+          made = new Made();
+          autoDrawLine();
+        }
     } else {
         playerTurn();
     }
@@ -83,10 +88,10 @@ function gameEvent(){
 
 function playerTurn(){
   if (currPlayer != undefined) {
-    if (currPlayer.id == playerList.length - 1) {
+    if (currPlayer.id == playerList.length) {
       currPlayer = playerList[0];
     } else {
-      currPlayer = playerList[currPlayer.id + 1];
+      currPlayer = playerList[currPlayer.id];
     }
 
     setupPlayerTurnList();

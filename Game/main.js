@@ -255,7 +255,7 @@ function lineMaker(line){
 
     var lineE = getSVGLine("line", line);
 
-    if(lineE && !lineExists(lineEToJSON(lineE))){
+    if(lineE && !lineExists(lineEToJSON(lineE), lineEsToJSON())){
 
         svg.appendChild(lineE);
 
@@ -263,11 +263,6 @@ function lineMaker(line){
 
         if(currPlayer.color){
             line.color = currPlayer.color;
-        }
-        if(currPlayer.id >= 0){
-            line.playerId = currPlayer.id;
-        } else {
-          console.log(currPlayer.id);
         }
 
         lineMade(line);
@@ -581,10 +576,9 @@ function dotExists(dot){
     return false;
 }
 
-function lineExists(line){
-    var linesE = lineEsToJSON();
+function lineExists(line, lineList){
 
-    for(let l of linesE){
+    for(let l of lineList){
         if(compareLineObj(line, l)){
           return true;
         }
@@ -611,8 +605,8 @@ function getAllPossibleLines(){ //console.clear();
         for(var dot2 of validFinalDots){
             var possibleLine = dotsToLine(dot1, dot2);
 
-            if(lineExists(possibleLine) == false && allPossibleLines.includes(possibleLine) == false){
-
+            if(lineExists(possibleLine, lineEsToJSON()) == false
+            && lineExists(possibleLine, allPossibleLines) == false){
 
                 allPossibleLines.push(possibleLine);
             } else {
@@ -661,30 +655,27 @@ function randi(upto){
 
 function setupPlayerTurnList(){
   playerTurnList = [];
+  var currIndex = currPlayer.id - 1;
 
-  if (currPlayer.id == 0) {
+  if (currIndex == 0) {
       prevIndex = playerList.length - 1;
   } else {
-      prevIndex = currPlayer.id - 1;
+      prevIndex = currIndex - 1;
   }
 
-  if (currPlayer.id <= playerList.length - 2) {
-
-  }
-
-  if (currPlayer.id == playerList.length - 1) {
+  if (currIndex == playerList.length - 1) {
       nextIndex = 0;
       nextIndex2 = 1;
-  } else if (currPlayer.id == playerList.length - 2) {
-      nextIndex = currPlayer.id + 1;
+  } else if (currIndex == playerList.length - 2) {
+      nextIndex = currIndex + 1;
       nextIndex2 = 0;
   } else {
-      nextIndex = currPlayer.id + 1;
-      nextIndex2 = currPlayer.id + 2;
+      nextIndex = currIndex + 1;
+      nextIndex2 = currIndex + 2;
   }
 
   playerTurnList.push(playerList[prevIndex]);
-  playerTurnList.push(playerList[currPlayer.id]);
+  playerTurnList.push(playerList[currIndex]);
   playerTurnList.push(playerList[nextIndex]);
   playerTurnList.push(playerList[nextIndex2]);
 }
