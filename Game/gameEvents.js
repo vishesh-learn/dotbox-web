@@ -92,7 +92,12 @@ function playerTurn(){
     }
 
     setupPlayerTurnList();
-    slideLeft();
+    if (currPlayer.isAlgo) {
+      setupPlayerTurnListUI();
+    } else {
+      slideLeft();
+    }
+
   } else {
     currPlayer = playerList[0];
 
