@@ -70,10 +70,10 @@ function gameEvent(){
     if(made.boxMade > 0){
         currPlayer.score += made.boxMade;
     } else {
-        playerTurn();
+      playerTurn();
     }
 
-    if(made.allLines){
+    if(isEnd()){
         winBoard();
     }
   }
@@ -82,6 +82,8 @@ function gameEvent(){
 }
 
 function playerTurn(){
+  clearTimeout(playerTurnTimeOut);
+
   if (currPlayer != undefined) {
     if (currPlayer.id == playerList.length) {
       currPlayer = playerList[0];
@@ -99,12 +101,17 @@ function playerTurn(){
   }
 
   if(currPlayer.isAlgo){
-    autoDrawLine();
+    removePointerEvents();
+    autoDrawLineTimeOut = setTimeout(autoDrawLine, 300);
+  } else {
+    addPointerEvents();
   }
 }
 
 function isEnd(){
     if(getAllPossibleLines().length <= 0){
-      made.allLines = true;
+      return true;
     }
+
+    return false;
 }

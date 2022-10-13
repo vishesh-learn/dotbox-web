@@ -1,31 +1,37 @@
-var currPlayer, playerTurnList,
-initDot, finalDot, orient, made;
+var currPlayer, playerTurnList, initDot, finalDot, orient, made, allPossibleLines,
+playerTurnTimeOut, autoDrawLineTimeOut;
 
 window.onload = () => {
-    const dotSVG = $(".dotSVG"),
-    frame = $(".playerTurnList"),
-    backButton = $("#backButton"),
-    svgC = $(".svgC"),
-    replayButton = $("#replayButton"),
-    newGameButton = $("#newGameButton");
-
     made = new Made();
 
     loadGameBoard();
-    gameBoardBuilder();
     loadPlayerList();
 
-    playerTurn();
+    gameBoardBuilder();
 
-    $aEL(dotSVG, "pointerover", pointerOver);
-    $aEL(dotSVG, "pointerdown", pointerDown);
-    $aEL(dotSVG, "pointerup", pointerUp);
+    playerTurnTimeOut = setTimeout(playerTurn, 50);
 
-    $aEL(frame, "transitionend", setupPlayerTurnListUI);
+    $aEL($(".playerTurnList"), "transitionend", setupPlayerTurnListUI);
 
-    $aEL(backButton, "click", () => window.location.href = "../PlayerSetup/index.html");
-    $aEL(replayButton, "click", () => window.location.href = "../Game/index.html");
-    $aEL(newGameButton, "click", () => window.location.href = "../GameBoardBuilder/index.html");
+    $aEL($("#backButton"), "click", () => window.location.href = "../PlayerSetup/index.html");
+    $aEL($("#replayButton"), "click", () => window.location.href = "../Game/index.html");
+    $aEL($("#newGameButton"), "click", () => window.location.href = "../GameBoardBuilder/index.html");
+}
+
+function addPointerEvents(){
+  const dotSVG = $(".dotSVG");
+
+  $aEL(dotSVG, "pointerover", pointerOver);
+  $aEL(dotSVG, "pointerdown", pointerDown);
+  $aEL(dotSVG, "pointerup", pointerUp);
+}
+
+function removePointerEvents(){
+  const dotSVG = $(".dotSVG");
+
+  $rEL(dotSVG, "pointerover", pointerOver);
+  $rEL(dotSVG, "pointerdown", pointerDown);
+  $rEL(dotSVG, "pointerup", pointerUp);
 }
 
 class Line{
@@ -41,7 +47,6 @@ class Made {
   constructor() {
     this.lineMade = false;
     this.boxMade = 0;
-    this.allLines = false;
   }
 }
 
@@ -596,7 +601,7 @@ function dotEToJSON(dotE){
 
 function getAllPossibleLines(){ //console.clear();
     var dotEs = $All(".dot");
-    var allPossibleLines = [];
+    allPossibleLines = [];
 
     for(var dotE of dotEs){
         var dot1 = dotEToJSON(dotE);

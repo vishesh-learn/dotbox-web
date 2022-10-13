@@ -1,42 +1,50 @@
 
 function autoDrawLine(){ //This function is working fine. No issue when it is called at currect event.
+  clearTimeout(autoDrawLineTimeOut);
 
-    var dotEs = $All(".dot"), allPossibleLines = getAllPossibleLines(), currSafeMoves = [];
+  makeAvailableBoxes();
 
-    //did all lines made
-    if(allPossibleLines.length <= 0){
-        made.allLines = true;
-    }
+  if (isEnd()) {
+    return true;
+  }
 
-    // try to make a square
-    var squareMakingLine = getSquareMakingLine();
+  makeSafeOrRandomAvailableLine();
+}
 
-    while (squareMakingLine) {
-      lineMaker(squareMakingLine, currPlayer.color);
+function makeAvailableBoxes(){
+  allPossibleLines = getAllPossibleLines();
 
-      squareMakingLine = getSquareMakingLine();
-    }
-    
-    allPossibleLines = getAllPossibleLines();
+  // try to make a square
+  var squareMakingLine = getSquareMakingLine();
 
-    // find all safe lines
-    for(var possibleLine of allPossibleLines){
-        if(isSafeMove(possibleLine)){
-            currSafeMoves.push(possibleLine);
-        }
-    }
+  while (squareMakingLine) {
+    lineMaker(squareMakingLine, currPlayer.color);
 
-    if(currSafeMoves.length > 0){ // draw safe line if exist
-      var randomSafeMove = currSafeMoves[randi(currSafeMoves.length - 1)];
-      //console.log(randomSafeMove);
-        lineMaker(randomSafeMove);
-    } else { // else draw any random line
-        lineMaker(allPossibleLines[randi(allPossibleLines.length - 1)]);
-    }
+    squareMakingLine = getSquareMakingLine();
+  }
+}
+
+function makeSafeOrRandomAvailableLine(){
+  var currSafeMoves = [];
+
+  // find all safe lines
+  for(var possibleLine of allPossibleLines){
+      if(isSafeMove(possibleLine)){
+          currSafeMoves.push(possibleLine);
+      }
+  }
+
+  if(currSafeMoves.length > 0){ // draw safe line if exist
+    var randomSafeMove = currSafeMoves[randi(currSafeMoves.length - 1)];
+    //console.log(randomSafeMove);
+      lineMaker(randomSafeMove);
+  } else { // else draw any random line
+      lineMaker(allPossibleLines[randi(allPossibleLines.length - 1)]);
+  }
 }
 
 function getSquareMakingLine(){
-  var allPossibleLines = getAllPossibleLines();
+  allPossibleLines = getAllPossibleLines();
 
   for(var possibleLine of allPossibleLines){
       if(doesMakesSquare(possibleLine)){
