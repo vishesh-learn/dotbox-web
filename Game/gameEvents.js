@@ -26,6 +26,8 @@ function pointerDown(){
     }
 }
 
+var removePrevLinesTimeOut;
+
 function pointerUp(){
   const dotSVG = $(".dotSVG"), svgC = $(".svgC");
 
@@ -36,24 +38,32 @@ function pointerUp(){
 
   made = new Made();
 
-  let x_cx = difference(x, initDot.cx);
+  removePrevLines();
 
-  let y_cy = difference(y, initDot.cy);
+  if (initDot) {
+    let x_cx = difference(x, initDot.cx);
 
+    let y_cy = difference(y, initDot.cy);
+  } else {
+    console.log("no initDot");
+  }
+
+  if(initDot && x && y){
+    finalDot = nearDot(x, y);
+    if(validateLines(finalDot)){
+        lineMaker(dotsToLine(initDot, finalDot));
+    }
+  } else {
+    console.log("no x and y");
+  }
+}
+
+function removePrevLines(){
   var prevLines = $All(".prevLine");
 
   for(let o of prevLines){
     o.remove();
   }
-
-    if(initDot && x && y){
-        finalDot = nearDot(x, y);
-        if(validateLines(finalDot)){
-            lineMaker(dotsToLine(initDot, finalDot));
-        }
-    } else {
-        console.log("no x and y");
-    }
 }
 
 function lineMade(line){ // This function is working fine.
@@ -84,6 +94,8 @@ function gameEvent(){
 function playerTurn(){
   clearTimeout(playerTurnTimeOut);
 
+  removePointerEvents();
+
   if (currPlayer != undefined) {
     if (currPlayer.id == playerList.length) {
       currPlayer = playerList[0];
@@ -106,8 +118,9 @@ function playerTurn(){
   }
 
   if(currPlayer.isAlgo){
-    removePointerEvents();
-    autoDrawLineTimeOut = setTimeout(autoDrawLine, 300);
+    //timeout with time value '0' is by purpose
+    autoDrawLineTimeOut = setTimeout(autoDrawLine, 0);
+    //autoDrawLine();
   } else {
     addPointerEvents();
   }
