@@ -13,7 +13,7 @@ body{
 }
 
 header, #nextButton{
-  background-color: #00B85E;
+  background-color: var(--green);
 }
 
 #backButton {
