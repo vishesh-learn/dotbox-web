@@ -138,6 +138,7 @@ function createPlayerUI(player){
 
   const removePlayerB = document.createElement("button");
   removePlayerB.classList = "button removePlayerB";
+  removePlayerB.innerHTML = "&#10005;";
   playerUI.append(removePlayerB);
 
   return playerUI;
