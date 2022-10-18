@@ -245,13 +245,7 @@ header{
 .bar .button {
   font-weight: bold;
   width: 100px;
-}
-
-.bar .button:hover {
-  border: 2px solid;
-  border-radius: 4px;
-}
-
-.bar .button:active {
-  color: brown;
+  border: 2px dashed;
+  border-radius: 7px;
+  background-color: #d1fdff75;
 }
