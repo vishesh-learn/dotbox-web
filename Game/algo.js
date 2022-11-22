@@ -1,5 +1,5 @@
 
-function autoDrawLine(){ //This function is working fine. No issue when it is called at currect event.
+function autoDrawLine(){
   clearTimeout(autoDrawLineTimeOut);
 
   makeAvailableBoxes();

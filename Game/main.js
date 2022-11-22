@@ -16,12 +16,14 @@ window.onload = () => {
     $aEL($("#backButton"), "click", () => window.location.href = "../PlayerSetup/index.html");
     $aEL($("#replayButton"), "click", () => window.location.href = "../Game/index.html");
     $aEL($("#newGameButton"), "click", () => window.location.href = "../GameBoardBuilder/index.html");
+
+    $aEL($(".dotSVG"), "pointerover", pointerOver);
 }
 
 function addPointerEvents(){
   const dotSVG = $(".dotSVG");
 
-  $aEL(dotSVG, "pointerover", pointerOver);
+  $aEL(dotSVG, "pointermove", linePrev);
   $aEL(dotSVG, "pointerdown", pointerDown);
   $aEL(dotSVG, "pointerup", pointerUp);
 }
@@ -29,7 +31,7 @@ function addPointerEvents(){
 function removePointerEvents(){
   const dotSVG = $(".dotSVG");
 
-  $rEL(dotSVG, "pointerover", pointerOver);
+  $rEL(dotSVG, "pointermove", linePrev);
   $rEL(dotSVG, "pointerdown", pointerDown);
   $rEL(dotSVG, "pointerup", pointerUp);
 }
@@ -270,7 +272,7 @@ function lineMaker(line){
             line.color = currPlayer.color;
         }
 
-        lineMade(line);
+        lineMade();
     }
 
     initDot = null;

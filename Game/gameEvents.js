@@ -18,11 +18,16 @@ function pointerDown(){
   var x = event.offsetX, y = event.offsetY;
 
     if(x && y){
-        initDot = nearestDot(x, y);
-        initDot = dotEToJSON(initDot);
+        let nearInitDot = nearestDot(x, y);
+        initDot = dotEToJSON(nearInitDot);
 
-        $aEL(dotSVG, "pointermove", linePrev);
-        $aEL(svgC, "pointerup", pointerUp);
+        if (difference(x, initDot.cx) <= gameBoard.gap/2
+        && difference(y, initDot.cy) <= gameBoard.gap/2) {
+          $aEL(dotSVG, "pointermove", linePrev);
+          $aEL(svgC, "pointerup", pointerUp);
+        } else {
+          console.log("line drawing canceled");
+        }
     }
 }
 
@@ -40,17 +45,14 @@ function pointerUp(){
 
   removePrevLines();
 
-  if (initDot) {
-    let x_cx = difference(x, initDot.cx);
-
-    let y_cy = difference(y, initDot.cy);
-  } else {
-    console.log("no initDot");
-  }
-
   if(initDot && x && y){
     finalDot = nearDot(x, y);
-    if(validateLines(finalDot)){
+    
+    if(
+        validateLines(finalDot)
+        && difference(x, finalDot.cx) <= gameBoard.gap/2
+        && difference(y, finalDot.cy) <= gameBoard.gap/2
+      ){
         lineMaker(dotsToLine(initDot, finalDot));
     }
   } else {
@@ -66,7 +68,7 @@ function removePrevLines(){
   }
 }
 
-function lineMade(line){ // This function is working fine.
+function lineMade(){ // This function is working fine.
   made.lineMade = true;
 
   isEnd();
