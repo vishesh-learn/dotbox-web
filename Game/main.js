@@ -18,6 +18,14 @@ window.onload = () => {
     $aEL($("#newGameButton"), "click", () => window.location.href = "../GameBoardBuilder/index.html");
 
     $aEL($(".dotSVG"), "pointerover", pointerOver);
+
+    footerInfo();
+}
+
+function footerInfo() {
+    const rowColInfoHtml = $('.rowAndCol');
+
+    rowColInfoHtml.innerHTML = `${gameBoard.col} x ${gameBoard.row}`;
 }
 
 function addPointerEvents(){

@@ -15,8 +15,6 @@ body{
     display: flex;
     flex-direction: column;
     margin: 0;
-    background-color: var(--skyBlue);
-    box-shadow: 0 0 2px 2px #5ddaff inset;
 }
 
 header{
@@ -114,7 +112,7 @@ header{
 }
 
 .svgC{
-  height: calc(100% - var(--headerHeight) - var(--nextButtonHeight));
+  height: calc(100% - var(--headerHeight) - var(--nextButtonHeight) - var(--footerHeight));
   position: relative;
   touch-action: none;
 }
@@ -142,7 +140,7 @@ header{
 }
 
 .doth{
-    fill: #d1fdff;
+    fill: #d1fdff7d;
     stroke: var(--brown);
 }
 
@@ -248,4 +246,12 @@ header{
   border: 2px dashed;
   border-radius: 7px;
   background-color: #d1fdff75;
+}
+
+footer {
+  display: flex;
+  align-items: center;
+  height: var(--footerHeight);
+  padding-left: 20px;
+  justify-content: space-around;
 }

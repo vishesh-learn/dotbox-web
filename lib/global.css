@@ -2,15 +2,29 @@
   --skyBlue: #b3fcff;
   --green: #45b77f;
   --brown: #4c191b;
+  --orange: rgb(246 120 26);
 
   --headerHeight: 50px;
   --nextButtonHeight: 50px;
   --playerTurnHeight: 60px;
+  --footerHeight: 50px;
   --popUpColor: #ffffff4d;
 }
 
 * {
   font-family: comic;
+}
+
+.page-bg {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: var(--skyBlue);
+  background-image: url(../images/bg.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
 }
 
 button{
@@ -40,6 +54,11 @@ button:focus-visible {
 header{
   position: relative;
   height: var(--headerHeight);
+  box-shadow: 0 -2px 5px 1px #000000;
+}
+
+input[type=checkbox]{
+  accent-color: var(--brown);
 }
 
 #backButton{
@@ -69,14 +88,15 @@ header{
 .footBar {
   width: 100%;
   height: var(--nextButtonHeight);
-  color: #ffffff;
   border: none;
-  background-color: var(--green);
+  box-shadow: 0 2px 5px 2px #000000;
+  background-color: rgb(246 120 26 / 60%);
 }
 
 #nextButton {
   width: 100%;
   height: var(--nextButtonHeight);
+  color: var(--brown);
   font-weight: bold;
   font-family: comic;
 }

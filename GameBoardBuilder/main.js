@@ -53,14 +53,6 @@ function GameBoardBuilder(){
                 dot.setAttribute("cx", cx);
                 dot.setAttribute("cy", cy);
 
-                let doth = $cENS("circle");
-                doth.setAttribute("class", "doth");
-
-                doth.setAttribute("r", "9");
-                doth.setAttribute("cx", cx);
-                doth.setAttribute("cy", cy);
-
-                gameBoardSVG.appendChild(doth);
                 gameBoardSVG.appendChild(dot);
             }
         }

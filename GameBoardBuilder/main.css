@@ -4,16 +4,15 @@
 }
 
 body{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     background-color: var(--skyBlue);
     width: 100vw;
     height: 100vh;
     margin: 0;
     font-family: sans-serif;
     font-weight: bold;
-}
-
-header, #nextButton{
-  background-color: var(--green);
 }
 
 #backButton {
@@ -29,10 +28,9 @@ header, #nextButton{
 
 .svgC{
     width: 100%;
-    height: calc(100% - var(--headerHeight) - var(--nextButtonHeight));
+    height: calc(100% - var(--headerHeight) - var(--nextButtonHeight) - var(--footerHeight));
     position: relative;
     overflow: auto;
-    box-shadow: inset 0 5px 5px -5px #000000, inset 0 -5px 5px -5px #000000;
 }
 
 .svgC svg{
@@ -44,12 +42,14 @@ header, #nextButton{
 }
 
 .dot{
-    fill: #4C191B;
+    fill: var(--brown);
+    border-radius: 50%;
+    outline: 1px solid var(--brown);
+    outline-offset: 3px;
 }
 
-.doth{
-    fill: var(--skyBlue); /*background*/
-    stroke: #4C191B;
+.dot.hidden {
+    outline-offset: 2px;
 }
 
 .gone{
