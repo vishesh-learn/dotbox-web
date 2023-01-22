@@ -1,18 +1,3 @@
-function pointerOver(){
-    const target = event.target;
-    const doth = $All(".doth");
-
-    if(target.classList.contains("doth")){
-        target.classList.remove("invisible");
-    }
-
-    if(target.tagName == "svg"){
-        for(let o of doth){
-            o.classList.add("invisible");
-        }
-    }
-}
-
 function pointerDown(){
   const dotSVG = $(".dotSVG"), svgC = $(".svgC");
   var x = event.offsetX, y = event.offsetY;

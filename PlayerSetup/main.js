@@ -120,13 +120,13 @@ function createPlayerUI(player){
   playerUI.classList = "player";
 
   const avatarUI = document.createElement("button");
-  avatarUI.classList = "avatar";
+  avatarUI.classList = "avatar"; console.log(player.color);
   avatarUI.style.backgroundColor = player.color;
   playerUI.append(avatarUI);
 
   const playerName = document.createElement("input");
   playerName.classList = "playerName";
-  playerName.placeholder = "player name here...";
+  playerName.placeholder = `player${player.id}`;
   playerName.value = player.name;
   playerUI.append(playerName);
 

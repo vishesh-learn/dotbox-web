@@ -9,9 +9,7 @@
 
 body{
     background-color: var(--skyBlue);
-    width: 100vw;
-    height: 100vh;
-    margin: 0;
+    color: var(--brown);
     font-family: sans-serif;
     font-weight: bold;
 }

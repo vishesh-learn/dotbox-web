@@ -17,8 +17,6 @@ window.onload = () => {
     $aEL($("#replayButton"), "click", () => window.location.href = "../Game/index.html");
     $aEL($("#newGameButton"), "click", () => window.location.href = "../GameBoardBuilder/index.html");
 
-    $aEL($(".dotSVG"), "pointerover", pointerOver);
-
     footerInfo();
 }
 
@@ -228,18 +226,10 @@ function gameBoardBuilder() {
                 let dot = $cENS("circle");
                 dot.setAttribute("class", "dot");
 
-                dot.setAttribute("r", "7");
+                //dot.setAttribute("r", "7");
                 dot.setAttribute("cx", cx);
                 dot.setAttribute("cy", cy);
-
-                let doth = $cENS("circle");
-                doth.setAttribute("class", "doth invisible");
-
-                doth.setAttribute("r", "9");
-                doth.setAttribute("cx", cx);
-                doth.setAttribute("cy", cy);
-
-                svg.appendChild(doth);
+                
                 svg.appendChild(dot);
             }
         }
@@ -727,7 +717,7 @@ function createPlayerUI(player){
 
   const playerName = document.createElement("div");
   playerName.classList = "playerName";
-  playerName.innerText = player.name;
+  playerName.innerText = player.name ? player.name: `player${player.id}`;
   playerUI.append(playerName);
 
   return playerUI;

@@ -8,11 +8,17 @@
   --nextButtonHeight: 50px;
   --playerTurnHeight: 60px;
   --footerHeight: 50px;
-  --popUpColor: #ffffff4d;
+  --popUpColor: rgba(255, 255, 255, .2);
 }
 
 * {
   font-family: comic;
+}
+
+body {
+  width: 100vw;
+  height: calc(100vh - env(safe-area-inset-bottom));
+  margin: 0;
 }
 
 .page-bg {
