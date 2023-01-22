@@ -2,6 +2,7 @@ var currPlayer, playerTurnList, initDot, finalDot, orient, made, allPossibleLine
 playerTurnTimeOut, autoDrawLineTimeOut;
 
 window.onload = () => {
+    const backButton = $("#backButton");
     made = new Made();
 
     loadGameBoard();
@@ -13,11 +14,15 @@ window.onload = () => {
 
     $aEL($(".playerTurnList"), "transitionend", setupPlayerTurnListUI);
 
-    $aEL($("#backButton"), "click", () => window.location.href = "../PlayerSetup/index.html");
+    $aEL(backButton, "click", goBack);
     $aEL($("#replayButton"), "click", () => window.location.href = "../Game/index.html");
     $aEL($("#newGameButton"), "click", () => window.location.href = "../GameBoardBuilder/index.html");
 
     footerInfo();
+}
+
+function goBack() {
+    window.location.href = "../PlayerSetup/index.html";
 }
 
 function footerInfo() {
@@ -717,7 +722,7 @@ function createPlayerUI(player){
 
   const playerName = document.createElement("div");
   playerName.classList = "playerName";
-  playerName.innerText = player.name ? player.name: `player${player.id}`;
+  playerName.innerText = Player.getName(player);
   playerUI.append(playerName);
 
   return playerUI;
@@ -777,7 +782,7 @@ function createRankPlayerUI(player) {
 
   const playerName = document.createElement("div");
   playerName.classList = "playerName";
-  playerName.innerText = player.name;
+  playerName.innerText = Player.getName(player);
   playerUI.append(playerName);
 
   const score = document.createElement("div");

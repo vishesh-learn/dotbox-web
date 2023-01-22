@@ -20,9 +20,10 @@ header {
 
 #backButton {
   fill: var(--brown);
-  position: absolute;
+  position: fixed;
   left: 10px;
   top: 10px;
+  z-index: 1;
 }
 
 .hidden {
@@ -118,7 +119,7 @@ header {
   touch-action: none;
 }
 
-.popUp .svgC {
+.popUp header, .popUp .svgC, .popUp .footBar {
   opacity: 0.2;
 }
 
@@ -169,7 +170,7 @@ header {
   width: 100%;
   max-width: 450px;
   min-height: 50%;
-  max-height: calc(100% - 150px);
+  max-height: calc(100% - 80px);
 
   padding: 30px;
 
@@ -182,6 +183,8 @@ header {
   transform: translate(-50%, -50%);
 
   flex-direction: column;
+  gap: 10px;
+  justify-content: space-around;
 }
 
 .popUp .winBoard {
@@ -196,7 +199,8 @@ header {
 
   flex: 1;
 
-  overflow: scroll;
+  overflow-x: overlay;
+  overflow-y: scroll;
 }
 
 .playerRankList .player {
@@ -239,7 +243,8 @@ header {
   padding: 10px 0;
 
   flex-wrap: wrap;
-  justify-content: space-around;
+  gap: 10px;
+  justify-content: space-evenly;
 }
 
 .bar .button {
@@ -247,7 +252,7 @@ header {
   width: 100px;
   border: 2px dashed;
   border-radius: 7px;
-  background-color: rgb(209 253 255 / 25%);
+  background-color: rgb(209 253 255 / 5%);
 }
 
 footer {
