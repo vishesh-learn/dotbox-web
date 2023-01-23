@@ -15,14 +15,14 @@ window.onload = () => {
     $aEL($(".playerTurnList"), "transitionend", setupPlayerTurnListUI);
 
     $aEL(backButton, "click", goBack);
-    $aEL($("#replayButton"), "click", () => window.location.href = "../Game/index.html");
-    $aEL($("#newGameButton"), "click", () => window.location.href = "../GameBoardBuilder/index.html");
+    $aEL($("#replayButton"), "click", () => window.location.href = `../${pages.play}/index.html`);
+    $aEL($("#newGameButton"), "click", () => window.location.href = `../${pages.setBoard}/index.html`);
 
     footerInfo();
 }
 
 function goBack() {
-    window.location.href = "../PlayerSetup/index.html";
+    window.location.href = `../${pages.setPlayers}/index.html`;
 }
 
 function footerInfo() {

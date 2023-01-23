@@ -8,7 +8,7 @@ window.onload = () => {
   $aEL(gameBoardSVG, "pointerdown", pointHandler);
   $aEL(gameBoardSVG, "pointerup", () => $rEL(gameBoardSVG, "pointermove", pointHandler));
 
-  $aEL(nextButton, "click", () => window.location.href = "../PlayerSetup/index.html");
+  $aEL(nextButton, "click", () => window.location.href = `../${pages.setPlayers}/index.html`);
 }
 
 function setupGameBoard(){

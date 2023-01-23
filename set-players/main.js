@@ -6,7 +6,7 @@ window.onload = () => {
 
   setupPlayerListUI();
 
-  $aEL(backButton, "click", () => window.location.href = "../GameBoardBuilder/index.html");
+  $aEL(backButton, "click", () => window.location.href = `../${pages.setBoard}/index.html`);
 
   $aEL(addPlayerB, "click", addPlayer);
   $aEL(playerListUI, "input", updatePlayer);
@@ -14,7 +14,7 @@ window.onload = () => {
   $aEL(playerListUI, "click", removePlayer);
   $aEL(playerListUI, "focusin", scrollAbove);
 
-  $aEL(nextButton, "click", () => window.location.href = "../Game/index.html")
+  $aEL(nextButton, "click", () => window.location.href = `../${pages.play}/index.html`)
 }
 
 function scrollAbove() {

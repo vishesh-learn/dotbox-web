@@ -1,5 +1,9 @@
 window.onload = () => {
-  document.getElementById("startButton").addEventListener("click", () => window.location.href = "GameBoardBuilder/index.html");
+  document.querySelector("#startButton")
+  .addEventListener(
+    "click",
+    () => window.location.href = `${pages.setBoard}/index.html`
+  );
 }
 
 //window.onerror = (message, source, lineno, colno, error) => {$("pre").innerHTML = lineno + ": " + message + "\nat col: " + colno;}
