@@ -61,9 +61,15 @@ button:focus-visible {
 }
 
 header{
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 0 20px 0 10px;
   height: var(--headerHeight);
   box-shadow: 0 -2px 5px 1px #000000;
+  position: relative;
 }
 
 input[type=checkbox]{
@@ -71,6 +77,7 @@ input[type=checkbox]{
 }
 
 #backButton{
+  display: inline-block;
   width: 35px;
   height: 35px;
   border-style: none;
@@ -84,14 +91,9 @@ input[type=checkbox]{
 }
 
 #info{
-  float: right;
-  text-align: right;
+  text-align: center;
   font-size: 18px;
   font-family: comic;
-  right: 20px;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
 }
 
 .footBar {

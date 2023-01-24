@@ -14,13 +14,6 @@ body{
     font-weight: bold;
 }
 
-#backButton {
-  position: absolute;
-  top: 50%;
-  left: 10px;
-  transform: translateY(-50%);
-}
-
 #content{
   width: 100%;
   height: calc(100% - var(--headerHeight) - var(--nextButtonHeight));
