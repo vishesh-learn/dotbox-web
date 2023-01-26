@@ -19,6 +19,8 @@ window.onload = () => {
     $aEL($("#newGameButton"), "click", () => window.location.href = `../${pages.setBoard}/index.html`);
 
     footerInfo();
+
+    setTabIndex();
 }
 
 function goBack() {

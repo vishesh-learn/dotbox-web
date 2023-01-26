@@ -29,18 +29,26 @@ body {
 }
 
 footer {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+  gap: 5px;
   height: 50px;
   position: relative;
+}
+
+.version, .privacy-policy-link {
+  padding: 0 5px;
 }
 
 .version {
   text-align: center;
 
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
   color: var(--brown);
   font-family: comic;
+}
+
+.privacy-policy-link {
+  text-decoration: underline;
 }

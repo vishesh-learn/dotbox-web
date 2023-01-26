@@ -13,11 +13,11 @@
 
 * {
   font-family: comic;
+  scroll-behavior: smooth;
 }
 
 body {
   width: 100vw;
-  /* height: calc(100vh - env(safe-area-inset-bottom)); */
   margin: 0;
   position: fixed;
   height: 100vh;
@@ -46,10 +46,8 @@ button{
   -webkit-tap-highlight-color: transparent;
 }
 
-button:focus-visible {
-    outline: 2px solid black;
-    border-radius: 4px;
-    outline-style: dashed;
+.button:focus-visible, a:focus-visible, input[type=checkbox]:focus-visible {
+  outline: 2px dashed #000000 !important;
 }
 
 .button {
@@ -74,6 +72,12 @@ header{
 
 input[type=checkbox]{
   accent-color: var(--brown);
+}
+
+a {
+  color: #2b44ce;
+  text-decoration-style: dotted;
+  text-underline-offset: 2px;
 }
 
 #backButton{

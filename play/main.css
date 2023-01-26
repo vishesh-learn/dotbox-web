@@ -250,7 +250,7 @@ header {
 .bar .button {
   font-weight: bold;
   width: 100px;
-  border: 2px dashed;
+  outline: 2px dashed #7c6157;
   border-radius: 7px;
   background-color: rgb(209 253 255 / 5%);
 }

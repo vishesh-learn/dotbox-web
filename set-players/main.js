@@ -14,10 +14,12 @@ window.onload = () => {
   $aEL(playerListUI, "click", removePlayer);
   $aEL(playerListUI, "focusin", scrollAbove);
 
-  $aEL(nextButton, "click", () => window.location.href = `../${pages.play}/index.html`)
+  $aEL(nextButton, "click", () => window.location.href = `../${pages.play}/index.html`);
+
+  setTabIndex();
 }
 
-function scrollAbove() {
+function scrollAbove(event) {
   const target = event.target;
 
   if(target.className.includes("playerName")){
@@ -28,7 +30,7 @@ function scrollAbove() {
   }
 }
 
-function goButtonHandler() {
+function goButtonHandler(event) {
   if (event.key === "Enter") {
     console.log(event.target);
     event.target.blur();
@@ -36,17 +38,11 @@ function goButtonHandler() {
 }
 
 function addPlayer() {
-  const playerListUI = $("#playerList"),
-        player = new Player();
-        playerUI = createPlayerUI(player);
-
-  playerListUI.append(playerUI);
-
-  playerList.push(player);
-
-  updatePlayerCountView();
+  playerList.push(new Player());
 
   savePlayerList();
+
+  setupPlayerListUI();
 }
 
 function updatePlayerCountView(){
@@ -54,6 +50,8 @@ function updatePlayerCountView(){
   var playerCount = playerList.length;
 
   infoE.innerHTML = playerCount == 1 ? playerCount + " player" : playerCount + " players";
+
+  assignID();
 }
 
 function updatePlayer(){
@@ -76,22 +74,17 @@ function updatePlayer(){
   }
 
   savePlayerList();
+  setupPlayerListUI();
 }
 
-function removePlayer(){
+function removePlayer(event){
   const target = event.target;
 
   if(target.className.includes("removePlayerB")){
-    const targetPlayer = target.parentElement;
-    const targetPlayerIndex = getIndexOfDom(targetPlayer);
-
-    playerList.splice(targetPlayerIndex, 1);
-
-    targetPlayer.remove();
-
-    updatePlayerCountView();
+    playerList.splice(getIndexOfDom(target.parentElement), 1);
 
     savePlayerList();
+    setupPlayerListUI();
   }
 }
 
@@ -120,24 +113,24 @@ function createPlayerUI(player){
   playerUI.classList = "player";
 
   const avatarUI = document.createElement("button");
-  avatarUI.classList = "avatar"; console.log(player.color);
+  avatarUI.classList = "avatar button tab-index"; console.log(player.color);
   avatarUI.style.backgroundColor = player.color;
   playerUI.append(avatarUI);
 
   const playerName = document.createElement("input");
-  playerName.classList = "playerName";
+  playerName.classList = "playerName tab-index";
   playerName.placeholder = `player${player.id}`;
   playerName.value = player.name;
   playerUI.append(playerName);
 
   const isAlgo = document.createElement("input");
-  isAlgo.classList = "isAlgo";
+  isAlgo.classList = "isAlgo tab-index";
   isAlgo.type = "checkbox";
   isAlgo.checked = player.isAlgo;
   playerUI.append(isAlgo);
 
   const removePlayerB = document.createElement("button");
-  removePlayerB.classList = "button removePlayerB";
+  removePlayerB.classList = "button removePlayerB tab-index";
   removePlayerB.innerHTML = "&#10005;";
   playerUI.append(removePlayerB);
 
