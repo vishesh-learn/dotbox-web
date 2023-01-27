@@ -75,7 +75,7 @@ function createSquareUI(xy){
 
 function createGradientUI(xy) {
     const gradientUI = $cENS('radialGradient');
-    gradientUI.id = `x${xy.x}y${xy.y}`;
+    gradientUI.setAttribute('id', `x${xy.x}y${xy.y}`);
 
     gradientUI.appendChild(createStopUI('60%', hueString(currPlayer.hue, '70%', "70%")));
     gradientUI.appendChild(createStopUI('100%', hueString(currPlayer.hue, '70%', "50%")));
