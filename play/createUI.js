@@ -43,7 +43,7 @@ function createRankPlayerUI(player) {
 }
 
 function createSquareUI(xy){
-    const svg = $(".boxG"), group = $('.boxDefs');
+    const svg = $(".boxSVG"), group = $('.boxDefs');
 
     if(xy.x && xy.y){
         var squareE = $cENS("rect");
