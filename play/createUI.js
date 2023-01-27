@@ -54,11 +54,11 @@ function createSquareUI(xy){
         squareE.setAttribute("height", gameBoard.gap);
 
         if(currPlayer.color){
-            squareE.style.fill = currPlayer.color;
+            //squareE.style.fill = currPlayer.color;
 
-            // var gradientUI = createGradientUI(xy);
-            // group.appendChild(gradientUI);
-            // squareE.style.fill = `url(#${gradientUI.id})`;
+            var gradientUI = createGradientUI(xy);
+            group.appendChild(gradientUI);
+            squareE.style.fill = `url(#${gradientUI.id})`;
         }
 
         if(currPlayer.id){
