@@ -57,8 +57,7 @@ function createSquareUI(xy){
             var gradientUI = createGradientUI(xy);
             group.appendChild(gradientUI);
 
-            //squareE.setAttribute("fill", currPlayer.color);
-            //squareE.setAttribute("fill", `url(#${gradientUI.id})`);
+            squareE.style.fill = currPlayer.color;
             squareE.style.fill = `url(#${gradientUI.id})`;
         }
 
