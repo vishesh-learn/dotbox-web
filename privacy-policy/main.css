@@ -18,3 +18,8 @@ h4 {
 .game-title {
     font-weight: bold;
 }
+
+::-webkit-scrollbar-thumb {
+    background: gray;
+    border-radius: 3px;
+}

@@ -1,6 +1,7 @@
 :root {
   --skyBlue: #b3fcff;
   --green: #45b77f;
+  --brown-light: #795548;
   --brown: #4c191b;
   --orange: rgb(246 120 26);
 
@@ -9,6 +10,10 @@
   --playerTurnHeight: 60px;
   --footerHeight: 50px;
   --popUpColor: rgba(255, 255, 255, .2);
+
+  --dot-radius: 10;
+  --dot-stroke-width: 4px;
+  --strokeWidth: 8px;
 }
 
 * {
@@ -118,12 +123,12 @@ a {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #40a2bf;
+  background: var(--brown-light);
   border-radius: 3px;
 }
 

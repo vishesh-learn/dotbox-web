@@ -1,6 +1,5 @@
 :root {
   --slideLeftDuration: 0.3s;
-  --strokeWidth: 6px;
 }
 
 * {
@@ -139,10 +138,10 @@ header {
 }
 
 .dot {
-  r: 8;
+  r: var(--dot-radius);
   fill: var(--brown);
   stroke: rgba(255, 255, 255, .25);
-  stroke-width: var(--strokeWidth);
+  stroke-width: var(--dot-stroke-width);
 }
 
 .dot:hover, .dot:active {
@@ -167,19 +166,19 @@ header {
 
 .winBoard {
   display: none;
-  width: 100%;
+  width: calc(100% - 50px);
   max-width: 450px;
   min-height: 50%;
-  max-height: calc(100% - 80px);
-
-  padding: 30px;
+  max-width: 100%;
+  max-height: calc(100% - 50px);
+  padding: 25px;
 
   box-shadow: 0px 0px 50px 50px var(--popUpColor);
 
   background-color: var(--popUpColor);
   position: fixed;
   left: 50%;
-  top: 49%;
+  top: 50%;
   transform: translate(-50%, -50%);
 
   flex-direction: column;
@@ -198,6 +197,7 @@ header {
   margin: auto;
 
   flex: 1;
+  flex-shrink: 2;
 
   overflow-x: overlay;
   overflow-y: scroll;
@@ -238,11 +238,10 @@ header {
 
 .bar {
   display: flex;
-  height: 70px;
-
-  padding: 10px 0;
+  height: 50px;
 
   flex-wrap: wrap;
+  flex-shrink: 0;
   gap: 10px;
   justify-content: space-evenly;
 }
@@ -250,7 +249,7 @@ header {
 .bar .button {
   font-weight: bold;
   width: 100px;
-  outline: 2px dashed #7c6157;
+  border: 2px dashed #7c6157;
   border-radius: 7px;
   background-color: rgb(209 253 255 / 5%);
 }

@@ -499,12 +499,12 @@ function squareXY(square){
         if(square.top.length == 4){
             xy.y = Math.min(l.y1, l.y2) - gameBoard.gap;
 
-            squareMaker(xy);
+            createSquareUI(xy);
         }
         if(square.bottom.length == 4){
             xy.y = Math.min(l.y1, l.y2);
 
-            squareMaker(xy);
+            createSquareUI(xy);
         }
     }
 
@@ -514,39 +514,13 @@ function squareXY(square){
         if(square.left.length == 4){
             xy.x = Math.min(l.x1, l.x2) - gameBoard.gap;
 
-            squareMaker(xy);
+            createSquareUI(xy);
         }
         if(square.right.length == 4){
             xy.x = Math.min(l.x1, l.x2);
 
-            squareMaker(xy);
+            createSquareUI(xy);
         }
-    }
-}
-
-function squareMaker(xy){
-    const svg = $(".boxSVG");
-
-    if(xy.x && xy.y){
-        var squareE = $cENS("rect");
-        squareE.setAttribute("class", "winBox");
-        squareE.setAttribute("x", xy.x);
-        squareE.setAttribute("y", xy.y);
-        squareE.setAttribute("width", gameBoard.gap);
-        squareE.setAttribute("height", gameBoard.gap);
-
-        if(currPlayer.color){
-            squareE.setAttribute("fill", currPlayer.color);
-        }
-
-        if(currPlayer.id){
-            squareE.setAttribute("byPlayer", currPlayer.id);
-        }
-
-        svg.appendChild(squareE);
-    }
-    else{
-        console.log("no xy");
     }
 }
 
@@ -713,23 +687,6 @@ function setupPlayerTurnListUI(){
   frame.classList.remove("slideLeft");
 }
 
-function createPlayerUI(player){
-  const playerUI = document.createElement("div");
-  playerUI.classList = "player";
-
-  const avatarUI = document.createElement("div");
-  avatarUI.classList = "avatar";
-  avatarUI.style.backgroundColor = player.color;
-  playerUI.append(avatarUI);
-
-  const playerName = document.createElement("div");
-  playerName.classList = "playerName";
-  playerName.innerText = Player.getName(player);
-  playerUI.append(playerName);
-
-  return playerUI;
-}
-
 function winBoard(){
   const winBoardUI = $("body");
 
@@ -766,31 +723,4 @@ function setupPlayerRankListUI(){
 
     playerRankListUI.append(playerUI);
   }
-}
-
-function createRankPlayerUI(player) {
-  const playerUI = document.createElement("div");
-  playerUI.classList = "player";
-
-  const rank = document.createElement("div");
-  rank.classList = "rank";
-  rank.innerText = player.rank;
-  playerUI.append(rank);
-
-  const avatarUI = document.createElement("div");
-  avatarUI.classList = "avatar";
-  avatarUI.style.backgroundColor = player.color;
-  playerUI.append(avatarUI);
-
-  const playerName = document.createElement("div");
-  playerName.classList = "playerName";
-  playerName.innerText = Player.getName(player);
-  playerUI.append(playerName);
-
-  const score = document.createElement("div");
-  score.classList = "score";
-  score.innerText = player.score;
-  playerUI.append(score);
-
-  return playerUI;
 }
