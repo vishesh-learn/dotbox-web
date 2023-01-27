@@ -85,7 +85,7 @@ function createGradientUI(xy) {
 function createStopUI(offset, stopColor) {
     const stopUI = $cENS('stop');
     stopUI.setAttribute('offset', offset);
-    stopUI.setAttribute("stop-color", stopColor);
+    stopUI.style.stopColor = stopColor;
 
     return stopUI;
 }
