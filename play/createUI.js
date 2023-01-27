@@ -58,7 +58,8 @@ function createSquareUI(xy){
             group.appendChild(gradientUI);
 
             //squareE.setAttribute("fill", currPlayer.color);
-            squareE.setAttribute("fill", `url(#${gradientUI.id})`);
+            //squareE.setAttribute("fill", `url(#${gradientUI.id})`);
+            squareE.style.fill = `url(#${gradientUI.id})`;
         }
 
         if(currPlayer.id){
