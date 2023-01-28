@@ -1,6 +1,6 @@
 # dotbox-web
 
-Application preview: https://vidhyanamo.github.io/dotbox-web/
+Application preview: https://vidyona.github.io/dotbox-web/
 
 DotBox is an android gaming application, digitally advanced version of a traditional game ‘Dots and Boxes’.
 
