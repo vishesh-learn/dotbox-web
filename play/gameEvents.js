@@ -1,3 +1,19 @@
+function addPointerEvents(){
+  const dotSVG = $(".dotSVG");
+
+  $aEL(dotSVG, "pointermove", linePrev);
+  $aEL(dotSVG, "pointerdown", pointerDown);
+  $aEL(dotSVG, "pointerup", pointerUp);
+}
+
+function removePointerEvents(){
+  const dotSVG = $(".dotSVG");
+
+  $rEL(dotSVG, "pointermove", linePrev);
+  $rEL(dotSVG, "pointerdown", pointerDown);
+  $rEL(dotSVG, "pointerup", pointerUp);
+}
+
 function pointerDown(){
   const dotSVG = $(".dotSVG"), svgC = $(".svgC");
   var x = event.offsetX, y = event.offsetY;
@@ -18,7 +34,7 @@ function pointerDown(){
 
 var removePrevLinesTimeOut;
 
-function pointerUp(){
+function pointerUp(event){
   const dotSVG = $(".dotSVG"), svgC = $(".svgC");
 
   $rEL(dotSVG, "pointermove", linePrev);
@@ -53,11 +69,15 @@ function removePrevLines(){
   }
 }
 
-function lineMade(){ // This function is working fine.
+function lineMade(line){
   made.lineMade = true;
 
-  isEnd();
-
+  allPossibleLines.forEach((possibleLine, index) => {
+    if (compareLineObj(possibleLine, line)) {
+      var l = allPossibleLines.splice(index, 1);
+    }
+  });
+  
   gameEvent();
 }
 
@@ -114,7 +134,7 @@ function playerTurn(){
 }
 
 function isEnd(){
-    if(getAllPossibleLines().length <= 0){
+    if(allPossibleLines.length <= 0){
       return true;
     }
 

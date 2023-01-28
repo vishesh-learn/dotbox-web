@@ -1,5 +1,21 @@
-var currPlayer, playerTurnList, initDot, finalDot, orient, made, allPossibleLines,
+var currPlayer, playerTurnList, initDot, finalDot, orient, made, allPossibleLines = [],
 playerTurnTimeOut, autoDrawLineTimeOut;
+
+class Line{
+    constructor(x1, y1, x2, y2){
+        this.x1 = x1;
+        this.y1 = y1;
+        this.x2 = x2;
+        this.y2 = y2;
+    }
+}
+
+class Made {
+  constructor() {
+    this.lineMade = false;
+    this.boxMade = 0;
+  }
+}
 
 window.onload = () => {
     const backButton = $("#backButton");
@@ -33,39 +49,7 @@ function footerInfo() {
     rowColInfoHtml.innerHTML = `${gameBoard.col} x ${gameBoard.row}`;
 }
 
-function addPointerEvents(){
-  const dotSVG = $(".dotSVG");
-
-  $aEL(dotSVG, "pointermove", linePrev);
-  $aEL(dotSVG, "pointerdown", pointerDown);
-  $aEL(dotSVG, "pointerup", pointerUp);
-}
-
-function removePointerEvents(){
-  const dotSVG = $(".dotSVG");
-
-  $rEL(dotSVG, "pointermove", linePrev);
-  $rEL(dotSVG, "pointerdown", pointerDown);
-  $rEL(dotSVG, "pointerup", pointerUp);
-}
-
-class Line{
-    constructor(x1, y1, x2, y2){
-        this.x1 = x1;
-        this.y1 = y1;
-        this.x2 = x2;
-        this.y2 = y2;
-    }
-}
-
-class Made {
-  constructor() {
-    this.lineMade = false;
-    this.boxMade = 0;
-  }
-}
-
-function linePrev(){
+function linePrev(event){
   var x = event.offsetX, y = event.offsetY;
 
     if(initDot){
@@ -95,8 +79,6 @@ function linePrev(){
         prevLineMaker(dotsToLine(initDot, pseudoDot));
     }
 }
-
-function difference(a, b) { return Math.abs(a - b); }
 
 function getValidFinalDots(initDot){
     var left = {"side": "left", "cx": initDot.cx - gameBoard.gap, "cy": initDot.cy};
@@ -181,29 +163,6 @@ function prevLineMaker(line){
     svg.appendChild(lineE);
 }
 
-function getSVGLine(theClass, line){
-    let lineE = $cENS("line");
-
-    lineE.setAttribute("class", theClass);
-
-    lineE.setAttribute("x1", line.x1);
-    lineE.setAttribute("y1", line.y1);
-    lineE.setAttribute("x2", line.x2);
-    lineE.setAttribute("y2", line.y2);
-
-    if(currPlayer.color){
-        lineE.setAttribute("stroke", currPlayer.color);
-    } else {
-        console.log("color not found");
-    }
-
-    if(currPlayer.id){
-        lineE.setAttribute("byPlayer", currPlayer.id);
-    }
-
-    return lineE;
-}
-
 function svgResize(){
     const svgList = $All(".svgC svg");
 
@@ -214,35 +173,6 @@ function svgResize(){
       svg.style.width = width + "px";
       svg.style.height = height + "px";
     }
-}
-
-function gameBoardBuilder() {
-    var svg = $(".dotSVG");
-    var dots = $All("circle");
-
-    for(let o of dots){
-        o.remove();
-    }
-
-    if(gameBoard.row >= 2 && gameBoard.col >= 2){
-        for(let i = 0;i < gameBoard.row;i++){
-            for(let j = 0;j < gameBoard.col;j++){
-                var cx = (gameBoard.gap * j + gameBoard.svgPaddingX).toString(10);
-                var cy = (gameBoard.gap * i + gameBoard.svgPaddingY).toString(10);
-
-                let dot = $cENS("circle");
-                dot.setAttribute("class", "dot");
-
-                //dot.setAttribute("r", "7");
-                dot.setAttribute("cx", cx);
-                dot.setAttribute("cy", cy);
-                
-                svg.appendChild(dot);
-            }
-        }
-    }
-
-    svgResize();
 }
 
 function validateLines(finalDot){
@@ -267,7 +197,7 @@ function lineMaker(line){
 
     var lineE = getSVGLine("line", line);
 
-    if(lineE && !lineExists(lineEToJSON(lineE), lineEsToJSON())){
+    if(lineE && !lineExists(line, lineEsToJSON())){
 
         svg.appendChild(lineE);
 
@@ -277,7 +207,7 @@ function lineMaker(line){
             line.color = currPlayer.color;
         }
 
-        lineMade();
+        lineMade(line);
     }
 
     initDot = null;
@@ -333,12 +263,12 @@ const getRectLines = (middle) => {
         };
 
         return {
-            "orient": "vertical",
+            "orient": orient,
             "leftSqr": [left, leftBottom, leftTop, middle],
             "rightSqr": [middle, rightBottom, right, rightTop]
         };
 
-    }else if(orient == "horizontal"){
+    } else if(orient == "horizontal"){
         var top = {
             "x1": middle.x1,
             "y1": middle.y1 - gameBoard.gap,
@@ -382,31 +312,11 @@ const getRectLines = (middle) => {
         };
 
         return {
-            "orient": "horizontal",
+            "orient": orient,
             "topSqr": [top, topRight, topLeft, middle],
             "bottomSqr": [middle, bottomRight, bottom, bottomLeft]
         };
     }
-}
-
-function lineEToJSON(lineE){
-    return {
-            "x1": lineE.x1.baseVal.value,
-            "y1": lineE.y1.baseVal.value,
-            "x2": lineE.x2.baseVal.value,
-            "y2": lineE.y2.baseVal.value
-        };
-}
-
-const lineEsToJSON = () => {
-    const linesE = $All("svg line");
-    var lines = [];
-
-    for(let lineE of linesE){
-        lines.push(lineEToJSON(lineE));
-    }
-
-    return lines;
 }
 
 function whetherSquare(line){
@@ -571,37 +481,6 @@ function lineExists(line, lineList){
     }
 
     return false;
-}
-
-function dotEToJSON(dotE){
-    return {
-        "cx": dotE.cx.baseVal.value,
-        "cy": dotE.cy.baseVal.value
-    }
-}
-
-function getAllPossibleLines(){ //console.clear();
-    var dotEs = $All(".dot");
-    allPossibleLines = [];
-
-    for(var dotE of dotEs){
-        var dot1 = dotEToJSON(dotE);
-        var validFinalDots = getValidFinalDots(dot1);
-
-        for(var dot2 of validFinalDots){
-            var possibleLine = dotsToLine(dot1, dot2);
-
-            if(lineExists(possibleLine, lineEsToJSON()) == false
-            && lineExists(possibleLine, allPossibleLines) == false){
-
-                allPossibleLines.push(possibleLine);
-            } else {
-              //console.log("abc");
-            }
-        }
-    }
-
-    return allPossibleLines;
 }
 
 function doesMakesSquare(middleLine){

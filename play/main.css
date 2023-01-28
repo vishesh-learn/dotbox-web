@@ -145,9 +145,7 @@ header {
 }
 
 .dot:hover, .dot:active {
-  border-radius: 50%;
-  outline: 1px solid var(--brown);
-  outline-offset: 2px;
+  filter: brightness(1.5);
 }
 
 .line,

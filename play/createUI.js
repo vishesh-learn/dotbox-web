@@ -89,3 +89,57 @@ function createStopUI(offset, stopColor) {
 
     return stopUI;
 }
+
+function gameBoardBuilder() {
+    var svg = $(".dotSVG");
+    var dots = $All("circle");
+
+    for(let o of dots){
+        o.remove();
+    }
+
+    if(gameBoard.row >= 2 && gameBoard.col >= 2){
+        for(let i = 0;i < gameBoard.row;i++){
+            for(let j = 0;j < gameBoard.col;j++){
+                var cx = (gameBoard.gap * j + gameBoard.svgPaddingX).toString(10);
+                var cy = (gameBoard.gap * i + gameBoard.svgPaddingY).toString(10);
+
+                let dot = $cENS("circle");
+                dot.setAttribute("class", "dot");
+
+                //dot.setAttribute("r", "7");
+                dot.setAttribute("cx", cx);
+                dot.setAttribute("cy", cy);
+                
+                svg.appendChild(dot);
+            }
+        }
+    }
+
+    svgResize();
+
+    getAllPossibleLines();
+}
+
+function getSVGLine(theClass, line){
+    let lineE = $cENS("line");
+
+    lineE.setAttribute("class", theClass);
+
+    lineE.setAttribute("x1", line.x1);
+    lineE.setAttribute("y1", line.y1);
+    lineE.setAttribute("x2", line.x2);
+    lineE.setAttribute("y2", line.y2);
+
+    if(currPlayer.color){
+        lineE.setAttribute("stroke", currPlayer.color);
+    } else {
+        console.log("color not found");
+    }
+
+    if(currPlayer.id){
+        lineE.setAttribute("byPlayer", currPlayer.id);
+    }
+
+    return lineE;
+}
