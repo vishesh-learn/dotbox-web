@@ -21,6 +21,10 @@
   scroll-behavior: smooth;
 }
 
+:focus {
+  outline: unset;
+}
+
 body {
   width: 100vw;
   margin: 0;

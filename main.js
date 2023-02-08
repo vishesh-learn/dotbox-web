@@ -1,4 +1,8 @@
 window.onload = () => {
+  document.querySelector(".share-button").addEventListener("click",
+    () => window.open(`${onAppStore.googlePlay}${onAppStore.packageName}`)
+  );
+
   document.querySelector("#startButton").addEventListener("click",
     () => window.location.href = `${pages.setBoard}`
   );
