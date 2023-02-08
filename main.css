@@ -8,6 +8,30 @@ body {
   display: flex;
 }
 
+.share-button {
+  width: 50px;
+  height: 50px;
+  position: fixed;
+  top: 15px;
+  right: 15px;
+}
+
+/* .share-button {
+  scale: 5;
+  top: 50%;
+  right: 50%;
+} */
+
+.line {
+  stroke: var(--brown);
+  stroke-width: 5;
+  /* stroke-linecap: round; */
+}
+
+.dot{
+  fill: var(--brown);
+}
+
 #startButton {
   position: fixed;
   top: 35%;
@@ -19,7 +43,6 @@ body {
   background: none;
   font-family: comic;
   border: none;
-  cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }

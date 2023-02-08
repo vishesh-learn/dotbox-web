@@ -46,9 +46,6 @@ button{
 	border-style: none;
 	padding: 0;
 	background-position: center;
-
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
 }
 
 .button:focus-visible, a:focus-visible, input[type=checkbox]:focus-visible {
@@ -57,6 +54,8 @@ button{
 
 .button {
   cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .button:active {
@@ -120,6 +119,10 @@ a {
   color: var(--brown);
   font-weight: bold;
   font-family: comic;
+}
+
+.dot {
+  border-radius: 50%;
 }
 
 /* width */
