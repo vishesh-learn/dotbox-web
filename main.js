@@ -1,7 +1,15 @@
-window.onload = () => {
-  document.querySelector(".share-button").addEventListener("click",
-    () => window.open(`${onAppStore.googlePlay}${onAppStore.packageName}`)
-  );
+window.addEventListener("load", () => {
+  document.querySelector(".share-button").addEventListener("click", () => {
+    if (navigator.share) {
+      navigator.share({
+        title: shareTitle,
+        text: shareText,
+        url: shareUrl
+      })
+    } else {
+      window.open(shareUrl)
+    }
+  });
 
   document.querySelector("#startButton").addEventListener("click",
     () => window.location.href = `${pages.setBoard}`
@@ -12,6 +20,4 @@ window.onload = () => {
   );
 
   setTabIndex();
-}
-
-//window.onerror = (message, source, lineno, colno, error) => {$("pre").innerHTML = lineno + ": " + message + "\nat col: " + colno;}
+});
