@@ -9,7 +9,7 @@ window.onload = () => {
   $aEL(backButton, "click", () => window.location.href = `../${pages.setBoard}`);
 
   $aEL(addPlayerB, "click", addPlayer);
-  $aEL(playerListUI, "input", updatePlayer);
+  $aEL(playerListUI, "change", updatePlayer);
   $aEL(playerListUI, "keypress", goButtonHandler);
   $aEL(playerListUI, "click", removePlayer);
   $aEL(playerListUI, "focusin", scrollAbove);
@@ -54,7 +54,7 @@ function updatePlayerCountView(){
   assignID();
 }
 
-function updatePlayer(){
+function updatePlayer(event){
   const target = event.target;
 
   if(target.className.includes("playerName")){
@@ -120,7 +120,6 @@ function createPlayerUI(player){
 
   const playerName = document.createElement("input");
   playerName.classList = "playerName";
-  playerName.tabIndex = 0;
   playerName.placeholder = `player${player.id}`;
   playerName.value = player.name;
   playerUI.append(playerName);
