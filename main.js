@@ -1,15 +1,5 @@
 window.addEventListener("load", () => {
-  document.querySelector(".share-button").addEventListener("click", () => {
-    if (navigator.share) {
-      navigator.share({
-        title: shareTitle,
-        text: shareText,
-        url: shareUrl
-      })
-    } else {
-      window.open(shareUrl)
-    }
-  });
+  document.querySelector(".share-button").addEventListener("click", shareApp);
 
   document.querySelector("#startButton").addEventListener("click",
     () => window.location.href = `${pages.setBoard}`
@@ -19,5 +9,5 @@ window.addEventListener("load", () => {
     () => window.location.href = `${pages.privacyPolicy}`
   );
 
-  setTabIndex();
+  keyOnTabIndex();
 });

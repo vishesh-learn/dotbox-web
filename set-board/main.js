@@ -3,14 +3,14 @@ window.onload = () => {
 
   setupGameBoard();
 
-  $aEL(backButton, "click", () => window.location.href = "../");
+  $aEL(backButton, "click", () => window.location.href = `../${pages.home}`);
   $aEL(window, "resize", setupGameBoard);
   $aEL(gameBoardSVG, "pointerdown", pointHandler);
   $aEL(gameBoardSVG, "pointerup", () => $rEL(gameBoardSVG, "pointermove", pointHandler));
 
   $aEL(nextButton, "click", () => window.location.href = `../${pages.setPlayers}`);
 
-  setTabIndex();
+  keyOnTabIndex();
 }
 
 function setupGameBoard(){

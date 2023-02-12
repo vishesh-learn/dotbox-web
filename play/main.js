@@ -36,7 +36,7 @@ window.onload = () => {
 
     footerInfo();
 
-    setTabIndex();
+    keyOnTabIndex();
 }
 
 function goBack() {

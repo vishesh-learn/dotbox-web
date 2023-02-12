@@ -16,7 +16,7 @@ window.onload = () => {
 
   $aEL(nextButton, "click", () => window.location.href = `../${pages.play}`);
 
-  setTabIndex();
+  keyOnTabIndex();
 }
 
 function scrollAbove(event) {
@@ -113,24 +113,28 @@ function createPlayerUI(player){
   playerUI.classList = "player";
 
   const avatarUI = document.createElement("button");
-  avatarUI.classList = "avatar button tab-index"; console.log(player.color);
+  avatarUI.classList = "avatar button";
+  avatarUI.tabIndex = 0;
   avatarUI.style.backgroundColor = player.color;
   playerUI.append(avatarUI);
 
   const playerName = document.createElement("input");
-  playerName.classList = "playerName tab-index";
+  playerName.classList = "playerName";
+  playerName.tabIndex = 0;
   playerName.placeholder = `player${player.id}`;
   playerName.value = player.name;
   playerUI.append(playerName);
 
   const isAlgo = document.createElement("input");
-  isAlgo.classList = "isAlgo tab-index";
+  isAlgo.classList = "isAlgo";
+  isAlgo.tabIndex = 0;
   isAlgo.type = "checkbox";
   isAlgo.checked = player.isAlgo;
   playerUI.append(isAlgo);
 
   const removePlayerB = document.createElement("button");
-  removePlayerB.classList = "button removePlayerB tab-index";
+  removePlayerB.classList = "button removePlayerB";
+  removePlayerB.tabIndex = 0;
   removePlayerB.innerHTML = "&#10005;";
   playerUI.append(removePlayerB);
 

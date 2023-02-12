@@ -3,6 +3,10 @@ body {
     flex-direction: column;
 }
 
+#backButton {
+    fill: grey;
+}
+
 h4 {
     margin-top: 0;
 }

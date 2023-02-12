@@ -1,14 +1,24 @@
 //Only one platform specific code is to be kept uncommented at a time.
 
-const shareTitle = `DotBox - A dots and boxes game`, shareText = `Check out DotBox, an amazing game!`;
-
 //platform specific code for web app:
-const shareUrl = window.location.href;
+function shareApp() {
+    if (navigator.share) {
+        navigator.share({
+        title: shareTitle,
+        text: shareText,
+        url: shareUrl
+        })
+    } else {
+        window.open(shareUrl);
+    }
+}
 
 /* ------------------------------------- */
 
 //platform specific code for android app:
-//const shareUrl = `${onAppStore.googlePlay}${onAppStore.packageName}`;
+// function shareApp() {
+//     Android.shareApp(shareTitle, shareText);
+// }
 
 /* ------------------------------------- */
 
