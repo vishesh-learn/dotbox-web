@@ -118,7 +118,9 @@ header {
   touch-action: none;
 }
 
-.popUp header, .popUp .svgC, .popUp .footBar {
+.pop-up-container header,
+.pop-up-container .page-content,
+.pop-up-container footer {
   opacity: 0.2;
 }
 
@@ -154,38 +156,12 @@ header {
   stroke-linecap: round;
 }
 
-.bottom {
-  height: 100px;
-}
-
-.gone {
-  display: none;
-}
-
-.winBoard {
-  display: none;
-  width: calc(100% - 50px);
-  max-width: 450px;
-  min-height: 50%;
-  max-width: 100%;
-  max-height: calc(100% - 50px);
-  padding: 25px;
-
-  box-shadow: 0px 0px 50px 50px var(--popUpColor);
-
-  background-color: var(--popUpColor);
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-
-  flex-direction: column;
-  gap: 10px;
-  justify-content: space-around;
-}
-
-.popUp .winBoard {
+footer {
   display: flex;
+  align-items: center;
+  height: var(--footerHeight);
+  padding-left: 20px;
+  justify-content: space-around;
 }
 
 .playerRankList {
@@ -250,12 +226,4 @@ header {
   border: 2px dashed #7c6157;
   border-radius: 7px;
   background-color: rgb(209 253 255 / 5%);
-}
-
-footer {
-  display: flex;
-  align-items: center;
-  height: var(--footerHeight);
-  padding-left: 20px;
-  justify-content: space-around;
 }

@@ -14,7 +14,7 @@ body{
     font-weight: bold;
 }
 
-#content{
+.page-content{
   width: 100%;
   height: calc(100% - var(--headerHeight) - var(--nextButtonHeight));
   position: relative;
@@ -80,4 +80,8 @@ body{
   stroke: var(--brown);
   stroke-width: 10px;
   stroke-linecap: round;
+}
+
+.pop-up-container .page-content {
+  opacity: 0.2;
 }

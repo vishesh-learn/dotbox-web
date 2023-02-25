@@ -41,7 +41,3 @@ body{
 .dot.hidden {
     outline-offset: 2px;
 }
-
-.gone{
-    display: none;
-}

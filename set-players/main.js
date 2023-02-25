@@ -9,8 +9,10 @@ window.onload = () => {
   $aEL(backButton, "click", () => window.location.href = `../${pages.setBoard}`);
 
   $aEL(addPlayerB, "click", addPlayer);
-  $aEL(playerListUI, "change", updatePlayer);
+
   $aEL(playerListUI, "keypress", goButtonHandler);
+  //$aEL(playerListUI, "click", colorSelector);
+  $aEL(playerListUI, "change", updatePlayer);
   $aEL(playerListUI, "click", removePlayer);
   $aEL(playerListUI, "focusin", scrollAbove);
 
@@ -22,11 +24,11 @@ window.onload = () => {
 function scrollAbove(event) {
   const target = event.target;
 
-  if(target.className.includes("playerName")){
+  if (target.className.includes("playerName")) {
     const targetPlayer = target.parentElement;
     const targetPlayerIndex = getIndexOfDom(targetPlayer);
 
-    $("#content").scrollTop = targetPlayer.clientHeight * (targetPlayerIndex - 2);
+    $(".page-content").scrollTop = targetPlayer.clientHeight * (targetPlayerIndex - 2);
   }
 }
 
@@ -45,7 +47,7 @@ function addPlayer() {
   setupPlayerListUI();
 }
 
-function updatePlayerCountView(){
+function updatePlayerCountView() {
   const infoE = $("#info");
   var playerCount = playerList.length;
 
@@ -54,33 +56,45 @@ function updatePlayerCountView(){
   assignID();
 }
 
-function updatePlayer(event){
+function updatePlayer(event) {
   const target = event.target;
 
-  if(target.className.includes("playerName")){
-    var name = target.value;
-    const targetPlayer = target.parentElement;
-    const targetPlayerIndex = getIndexOfDom(targetPlayer);
+  if (
+    target.className.includes("playerName")
+    || target.className.includes("isAlgo")
+  ) {
+    const targetPlayerIndex = getIndexOfDom(target.parentElement);
 
-    playerList[targetPlayerIndex].name = name;
+    if (target.className.includes("playerName")) {
+      var name = target.value;
+      playerList[targetPlayerIndex].name = name;
+    }
+
+    if (target.className.includes("isAlgo")) {
+      var isAlgo = target.checked;
+      playerList[targetPlayerIndex].isAlgo = isAlgo;
+    }
+
+    savePlayerList();
+    setupPlayerListUI();
   }
-
-  if (target.className.includes("isAlgo")) {
-    var isAlgo = target.checked;
-    const targetPlayer = target.parentElement;
-    const targetPlayerIndex = getIndexOfDom(targetPlayer);
-
-    playerList[targetPlayerIndex].isAlgo = isAlgo;
-  }
-
-  savePlayerList();
-  setupPlayerListUI();
 }
 
-function removePlayer(event){
+function colorSelector(event) {
   const target = event.target;
 
-  if(target.className.includes("removePlayerB")){
+  if (target.className.includes("avatar")) {
+    $("body").classList.add("pop-up-container");
+
+    const targetPlayerIndex = getIndexOfDom(target.parentElement);
+    console.log(playerList[targetPlayerIndex].color);
+  }
+}
+
+function removePlayer(event) {
+  const target = event.target;
+
+  if (target.className.includes("removePlayerB")) {
     playerList.splice(getIndexOfDom(target.parentElement), 1);
 
     savePlayerList();
@@ -88,27 +102,27 @@ function removePlayer(event){
   }
 }
 
-function getIndexOfDom(childDom){
+function getIndexOfDom(childDom) {
   const parentDom = childDom.parentElement;
 
   return Array.prototype.indexOf.call(parentDom.children, childDom);
 }
 
-function setupPlayerListUI(){
+function setupPlayerListUI() {
   loadPlayerList();
 
   const playerListUI = $("#playerList");
 
   playerListUI.innerHTML = "";
 
-  for(let player of playerList){
+  for (let player of playerList) {
     playerListUI.append(createPlayerUI(player));
   }
 
   updatePlayerCountView();
 }
 
-function createPlayerUI(player){
+function createPlayerUI(player) {
   const playerUI = document.createElement("div");
   playerUI.classList = "player";
 

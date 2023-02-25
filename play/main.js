@@ -567,9 +567,7 @@ function setupPlayerTurnListUI(){
 }
 
 function winBoard(){
-  const winBoardUI = $("body");
-
-  winBoardUI.classList.add("popUp");
+  $("body").classList.add("pop-up-container");
 
   setupPlayerRankList();
   setupPlayerRankListUI();
