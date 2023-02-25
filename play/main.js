@@ -21,8 +21,7 @@ window.onload = () => {
     const backButton = $("#backButton");
     made = new Made();
 
-    loadGameBoard();
-    loadPlayerList();
+    loadGameAndPlayerList();
 
     gameBoardBuilder();
 

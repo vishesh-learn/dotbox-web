@@ -1,10 +1,11 @@
-//maxPlayers = (gameBoard.row - 1) * (gameBoard.col - 1);
 var targetPlayerIndex = 0;
 
 window.onload = () => {
   const backButton = $("#backButton"), nextButton = $("#nextButton");
   const addPlayerB = $(".addb"), playerListUI = $(".playerList");
   const colorHueUI = $(".color-hue");
+
+  loadGameAndPlayerList();
 
   setupPlayerListUI();
 
@@ -44,11 +45,13 @@ function goButtonHandler(event) {
 }
 
 function addPlayer() {
-  playerList.push(new Player());
+  if (playerList.length < game.maxPlayer) {
+    playerList.push(new Player());
 
-  savePlayerList();
+    savePlayerList();
 
-  setupPlayerListUI();
+    setupPlayerListUI();
+  }
 }
 
 function updatePlayerCountView() {
@@ -126,8 +129,6 @@ function getIndexOfDom(childDom) {
 }
 
 function setupPlayerListUI() {
-  loadPlayerList();
-
   const playerListUI = $(".playerList");
 
   playerListUI.innerHTML = "";
@@ -151,6 +152,7 @@ function createPlayerUI(player) {
 
   const playerName = document.createElement("input");
   playerName.classList = "playerName";
+  playerName.maxLength = 30;
   playerName.placeholder = `player${player.id}`;
   playerName.value = player.name;
   playerUI.append(playerName);

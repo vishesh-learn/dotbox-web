@@ -172,7 +172,7 @@ footer {
 
   flex-direction: column;
   gap: 10px;
-  justify-content: space-around;
+  align-items: center;
 }
 
 ::-webkit-scrollbar {

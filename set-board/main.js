@@ -2,7 +2,7 @@ window.onload = () => {
   const gameBoardSVG = $(".svgC svg"), backButton = $("#backButton"), nextButton = $("#nextButton");
 
   setupGameBoard();
-
+  
   $aEL(backButton, "click", () => window.location.href = `../${pages.home}`);
   $aEL(window, "resize", setupGameBoard);
   $aEL(gameBoardSVG, "pointerdown", pointHandler);
