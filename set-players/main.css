@@ -21,7 +21,7 @@ body{
   overflow: auto;
 }
 
-#playerList {
+.playerList {
   margin-bottom: calc(45vh);
 }
 
@@ -31,12 +31,10 @@ body{
   align-items: center;
 }
 
-.avatar {
-  width: 25px;
+.player .avatar {
+  width: 30px;
   height: 25px;
-  border-radius: 50%;
   margin: 0 15px;
-  border: 2px solid rgba(0, 0, 0, .5);
 }
 
 .playerName{
@@ -66,7 +64,7 @@ body{
   margin: 0 10px 0 5px;
 }
 
-#addb {
+.addb {
   width: 40px;
 	height: 40px;
 	position: fixed;
@@ -82,6 +80,21 @@ body{
   stroke-linecap: round;
 }
 
-.pop-up-container .page-content {
+.pop-up-container .page-content .playerList,
+.pop-up-container .page-content .addb {
   opacity: 0.2;
+}
+
+.color-hue {
+  width: 100%;
+  flex: 1;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  align-items: center;
+  justify-items: center;
+}
+
+.color-hue .avatar {
+  width: 45px;
+  height: 30px;
 }

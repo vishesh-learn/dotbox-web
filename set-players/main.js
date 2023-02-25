@@ -1,8 +1,10 @@
 //maxPlayers = (gameBoard.row - 1) * (gameBoard.col - 1);
+var targetPlayerIndex = 0;
 
 window.onload = () => {
   const backButton = $("#backButton"), nextButton = $("#nextButton");
-  const addPlayerB = $("#addb"), playerListUI = $("#playerList");
+  const addPlayerB = $(".addb"), playerListUI = $(".playerList");
+  const colorHueUI = $(".color-hue");
 
   setupPlayerListUI();
 
@@ -11,10 +13,12 @@ window.onload = () => {
   $aEL(addPlayerB, "click", addPlayer);
 
   $aEL(playerListUI, "keypress", goButtonHandler);
-  //$aEL(playerListUI, "click", colorSelector);
+  $aEL(playerListUI, "click", colorSelector);
   $aEL(playerListUI, "change", updatePlayer);
   $aEL(playerListUI, "click", removePlayer);
   $aEL(playerListUI, "focusin", scrollAbove);
+
+  $aEL(colorHueUI, "click", selectColor);
 
   $aEL(nextButton, "click", () => window.location.href = `../${pages.play}`);
 
@@ -84,10 +88,23 @@ function colorSelector(event) {
   const target = event.target;
 
   if (target.className.includes("avatar")) {
+    targetPlayerIndex = getIndexOfDom(target.parentElement);
     $("body").classList.add("pop-up-container");
+  }
+}
 
-    const targetPlayerIndex = getIndexOfDom(target.parentElement);
-    console.log(playerList[targetPlayerIndex].color);
+function selectColor(event) {
+  const targetColorBallUI = event.target;
+  if (targetColorBallUI.className.includes("colorBall")) {
+
+    var hue = targetColorBallUI.getAttribute("hue");
+
+    playerList[targetPlayerIndex].hue = hue;
+
+    savePlayerList();
+    setupPlayerListUI();
+
+    $("body").classList.remove("pop-up-container");
   }
 }
 
@@ -111,7 +128,7 @@ function getIndexOfDom(childDom) {
 function setupPlayerListUI() {
   loadPlayerList();
 
-  const playerListUI = $("#playerList");
+  const playerListUI = $(".playerList");
 
   playerListUI.innerHTML = "";
 
@@ -129,7 +146,7 @@ function createPlayerUI(player) {
   const avatarUI = document.createElement("button");
   avatarUI.classList = "avatar button";
   avatarUI.tabIndex = 0;
-  avatarUI.style.backgroundColor = player.color;
+  avatarUI.style.backgroundColor = hueToHSL(player.hue);
   playerUI.append(avatarUI);
 
   const playerName = document.createElement("input");

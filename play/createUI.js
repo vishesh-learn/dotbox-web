@@ -4,7 +4,7 @@ function createPlayerUI(player) {
 
     const avatarUI = document.createElement("div");
     avatarUI.classList = "avatar";
-    avatarUI.style.backgroundColor = player.color;
+    avatarUI.style.backgroundColor = hueToHSL(player.hue);
     playerUI.append(avatarUI);
 
     const playerName = document.createElement("div");
@@ -26,7 +26,7 @@ function createRankPlayerUI(player) {
 
     const avatarUI = document.createElement("div");
     avatarUI.classList = "avatar";
-    avatarUI.style.backgroundColor = player.color;
+    avatarUI.style.backgroundColor = hueToHSL(player.hue);
     playerUI.append(avatarUI);
 
     const playerName = document.createElement("div");
@@ -53,8 +53,8 @@ function createSquareUI(xy){
         squareE.setAttribute("width", gameBoard.gap);
         squareE.setAttribute("height", gameBoard.gap);
 
-        if(currPlayer.color){
-            //squareE.style.fill = currPlayer.color;
+        if(hueToHSL(currPlayer.hue)){
+            //squareE.style.fill = hueToHSL(currPlayer.hue);
 
             var gradientUI = createGradientUI(xy);
             group.appendChild(gradientUI);
@@ -131,8 +131,8 @@ function getSVGLine(theClass, line){
     lineE.setAttribute("x2", line.x2);
     lineE.setAttribute("y2", line.y2);
 
-    if(currPlayer.color){
-        lineE.setAttribute("stroke", currPlayer.color);
+    if(hueToHSL(currPlayer.hue)){
+        lineE.setAttribute("stroke", hueToHSL(currPlayer.hue));
     } else {
         console.log("color not found");
     }

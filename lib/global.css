@@ -109,6 +109,13 @@ a {
   font-family: comic;
 }
 
+.avatar {
+  width: 30px;
+  height: 25px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, .5);
+}
+
 footer {
   width: 100%;
   height: var(--nextButtonHeight);

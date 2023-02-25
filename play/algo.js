@@ -18,7 +18,7 @@ function makeAvailableBoxes(){
   var squareMakingLine = getSquareMakingLine();
 
   while (squareMakingLine) {
-    lineMaker(squareMakingLine, currPlayer.color);
+    lineMaker(squareMakingLine, hueToHSL(currPlayer.hue));
 
     squareMakingLine = getSquareMakingLine();
   }

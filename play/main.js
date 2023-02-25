@@ -203,8 +203,8 @@ function lineMaker(line){
 
         squareXY(whetherSquare(lineEToJSON(lineE)));
 
-        if(currPlayer.color){
-            line.color = currPlayer.color;
+        if(hueToHSL(currPlayer.hue)){
+            line.color = hueToHSL(currPlayer.hue);
         }
 
         lineMade(line);
