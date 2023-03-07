@@ -46,7 +46,7 @@ body {
 }
 
 button{
-	background-color: inherit;
+	background-color: transparent;
 	border-style: none;
 	padding: 0;
 	background-position: center;
@@ -99,8 +99,6 @@ a {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
 }
 
 #info{
@@ -155,10 +153,8 @@ footer {
 
 .pop-up {
   display: none;
-  width: calc(100% - 50px);
-  max-width: 450px;
+  max-width: calc(100% - 50px);
   min-height: 50%;
-  max-width: 100%;
   max-height: calc(100% - 50px);
   padding: 25px;
 
@@ -175,8 +171,19 @@ footer {
   align-items: center;
 }
 
+.close-pop-up {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 5px;
+  font-weight: bold;
+  width: 30px;
+  height: 30px;
+}
+
 ::-webkit-scrollbar {
   width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-thumb {

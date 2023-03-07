@@ -1,20 +1,20 @@
-*{
-    box-sizing: border-box;
-    outline-style: none;
+* {
+  box-sizing: border-box;
+  outline-style: none;
 }
 
-:root{
+:root {
   --playerHeight: 50px;
 }
 
-body{
-    background-color: var(--skyBlue);
-    color: var(--brown);
-    font-family: sans-serif;
-    font-weight: bold;
+body {
+  background-color: var(--skyBlue);
+  color: var(--brown);
+  font-family: sans-serif;
+  font-weight: bold;
 }
 
-.page-content{
+.page-content {
   width: 100%;
   height: calc(100% - var(--headerHeight) - var(--nextButtonHeight));
   position: relative;
@@ -37,7 +37,7 @@ body{
   margin: 0 15px;
 }
 
-.playerName{
+.playerName {
   background-color: inherit;
   border-style: none none solid none;
   padding: 10px;
@@ -58,7 +58,6 @@ body{
 
 .removePlayerB {
   font-weight: bold;
-  background-repeat: no-repeat;
   width: 30px;
   height: 30px;
   margin: 0 10px 0 5px;
@@ -66,9 +65,9 @@ body{
 
 .addb {
   width: 40px;
-	height: 40px;
-	position: fixed;
-	right: 25px;
+  height: 40px;
+  position: fixed;
+  right: 25px;
   bottom: calc(var(--nextButtonHeight) + 30px);
   border-radius: 50%;
   background-color: var(--orange);
@@ -85,13 +84,23 @@ body{
   opacity: 0.2;
 }
 
+.set-color {
+  gap: 25px;
+}
+
+.set-color .color-prev {
+  width: 90px;
+  height: 75px;
+  outline: 2px dotted var(--brown);
+  outline-offset: 1px;
+}
+
 .color-hue {
-  width: 100%;
-  flex: 1;
   display: grid;
   grid-template-columns: auto auto auto;
   align-items: center;
   justify-items: center;
+  gap: 20px;
 }
 
 .color-hue .avatar {

@@ -4,6 +4,8 @@ window.onload = () => {
   const backButton = $("#backButton"), nextButton = $("#nextButton");
   const addPlayerB = $(".addb"), playerListUI = $(".playerList");
   const colorHueUI = $(".color-hue");
+  const popUpBgUI = $(".pop-up-bg");
+  const closePopUPUI = $(".close-pop-up");
 
   loadGameAndPlayerList();
 
@@ -20,10 +22,16 @@ window.onload = () => {
   $aEL(playerListUI, "focusin", scrollAbove);
 
   $aEL(colorHueUI, "click", selectColor);
+  $aEL(popUpBgUI, "click", closePopUP);
+  $aEL(closePopUPUI, "click", closePopUP);
 
   $aEL(nextButton, "click", () => window.location.href = `../${pages.play}`);
 
   keyOnTabIndex();
+}
+
+function closePopUP() {
+  $("body").classList.remove("pop-up-container");
 }
 
 function scrollAbove(event) {
@@ -88,11 +96,13 @@ function updatePlayer(event) {
 }
 
 function colorSelector(event) {
-  const target = event.target;
+  const target = event.target,
+    colorPrevHTML = document.querySelector(".color-prev");
 
   if (target.className.includes("avatar")) {
     targetPlayerIndex = getIndexOfDom(target.parentElement);
     $("body").classList.add("pop-up-container");
+    colorPrevHTML.style.backgroundColor = hueToHSL(playerList[targetPlayerIndex].hue);
   }
 }
 
@@ -107,7 +117,7 @@ function selectColor(event) {
     savePlayerList();
     setupPlayerListUI();
 
-    $("body").classList.remove("pop-up-container");
+    closePopUP();
   }
 }
 
@@ -146,7 +156,6 @@ function createPlayerUI(player) {
 
   const avatarUI = document.createElement("button");
   avatarUI.classList = "avatar button";
-  avatarUI.tabIndex = 0;
   avatarUI.style.backgroundColor = hueToHSL(player.hue);
   playerUI.append(avatarUI);
 
@@ -159,14 +168,12 @@ function createPlayerUI(player) {
 
   const isAlgo = document.createElement("input");
   isAlgo.classList = "isAlgo";
-  isAlgo.tabIndex = 0;
   isAlgo.type = "checkbox";
   isAlgo.checked = player.isAlgo;
   playerUI.append(isAlgo);
 
   const removePlayerB = document.createElement("button");
   removePlayerB.classList = "button removePlayerB";
-  removePlayerB.tabIndex = 0;
   removePlayerB.innerHTML = "&#10005;";
   playerUI.append(removePlayerB);
 

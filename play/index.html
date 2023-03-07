@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DotBox</title>
 
-    <link rel="shortcut icon" href="../icon.png" />
-    <link rel="stylesheet" href="../lib/global.css" />
-    <link rel="stylesheet" href="main.css" />
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DotBox</title>
+
+  <link rel="shortcut icon" href="../icon.png" />
+  <link rel="stylesheet" href="../lib/global.css" />
+  <link rel="stylesheet" href="main.css" />
 </head>
+
 <body>
   <div class="page-bg"></div>
 
-  <svg class="button" tabindex="0" id="backButton" width="200" height="200" viewBox="0 0 52.916666 52.916666" xmlns="http://www.w3.org/2000/svg">
-    <path transform="translate(0,-244.08334)" d="m 7.2183776,270.23195 c 0,0 1.4153437,-11.53004 13.3772454,-18.37613 11.617097,-6.64875 12.428033,7.01583 12.428033,7.01583 0,0 9.196528,-0.16797 9.115464,11.92727 -0.129103,11.62277 -9.115464,11.62277 -9.115464,11.62277 0,0 -0.85885,12.95898 -12.295478,6.59796 C 8.6357883,281.5361 7.2183776,270.23195 7.2183776,270.23195 Z"/>
+  <svg class="button" tabindex="0" id="backButton" width="200" height="200" viewBox="0 0 52.916666 52.916666"
+    xmlns="http://www.w3.org/2000/svg">
+    <path transform="translate(0,-244.08334)"
+      d="m 7.2183776,270.23195 c 0,0 1.4153437,-11.53004 13.3772454,-18.37613 11.617097,-6.64875 12.428033,7.01583 12.428033,7.01583 0,0 9.196528,-0.16797 9.115464,11.92727 -0.129103,11.62277 -9.115464,11.62277 -9.115464,11.62277 0,0 -0.85885,12.95898 -12.295478,6.59796 C 8.6357883,281.5361 7.2183776,270.23195 7.2183776,270.23195 Z" />
   </svg>
 
   <header>
@@ -33,7 +37,12 @@
   </div>
 
   <footer>
-    <div class="info rowAndCol"></div>
+    <div class="infoBar">
+      <div class="info rowAndCol"></div>
+      <div class="info curr-player-id"></div>
+      <div class="info curr-player-name"></div>
+      <div class="info curr-player-score"></div>
+    </div>
   </footer>
 
   <div class="pop-up-bg"></div>
@@ -55,4 +64,5 @@
   <script src="gameEvents.js"></script>
   <script src="algo.js"></script>
 </body>
+
 </html>

@@ -79,9 +79,8 @@ header {
 .playerTurnList:not(.slideLeft) .player:nth-child(2) .avatar {
   width: 30px;
   height: 30px;
-  outline: 1px solid var(--brown);
+  outline: 1px dashed var(--brown);
   outline-offset: 2px;
-  outline-style: dashed;
 }
 
 .playerTurnList.slideLeft .player:nth-child(3) .avatar {
@@ -152,11 +151,25 @@ header {
 }
 
 footer {
-  display: flex;
-  align-items: center;
   height: var(--footerHeight);
-  padding-left: 20px;
-  justify-content: space-around;
+}
+
+.infoBar {
+  overflow-x: scroll;
+  height: 100%;
+  white-space: nowrap;
+}
+
+.info {
+  display: inline-block;
+  padding: 0 20px;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.info:not(:first-child) {
+  border-left: 1px dotted var(--brown);
 }
 
 .playerRankList, .bar {

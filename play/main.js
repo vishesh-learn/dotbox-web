@@ -45,7 +45,7 @@ function goBack() {
 function footerInfo() {
     const rowColInfoHtml = $('.rowAndCol');
 
-    rowColInfoHtml.innerHTML = `${gameBoard.col} x ${gameBoard.row}`;
+    rowColInfoHtml.innerHTML = `Board: ${gameBoard.col} x ${gameBoard.row}`;
 }
 
 function linePrev(event){
@@ -552,6 +552,9 @@ function slideLeft() {
 
 function setupPlayerTurnListUI(){
   const frame = $(".playerTurnList");
+  const currPlayerIDUI = $(".curr-player-id");
+  const currPlayerIDName = $(".curr-player-name");
+  const currPlayerScoreUI = $(".curr-player-score");
   var playerUI;
 
   frame.innerHTML = "";
@@ -563,6 +566,10 @@ function setupPlayerTurnListUI(){
   }
 
   frame.classList.remove("slideLeft");
+
+  currPlayerIDUI.innerText = `ID: ${currPlayer.id}`;
+  currPlayerIDName.innerText = `Name: ${Player.getName(currPlayer)}`;
+  currPlayerScoreUI.innerText = `Score: ${currPlayer.score}`;
 }
 
 function winBoard(){
