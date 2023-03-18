@@ -102,7 +102,7 @@ function colorSelector(event) {
   if (target.className.includes("avatar")) {
     targetPlayerIndex = getIndexOfDom(target.parentElement);
     $("body").classList.add("pop-up-container");
-    colorPrevHTML.style.backgroundColor = hueToHSL(playerList[targetPlayerIndex].hue);
+    colorPrevHTML.style.backgroundColor = playerList[targetPlayerIndex].color;
   }
 }
 
@@ -110,9 +110,9 @@ function selectColor(event) {
   const targetColorBallUI = event.target;
   if (targetColorBallUI.className.includes("colorBall")) {
 
-    var hue = targetColorBallUI.getAttribute("hue");
+    var color = targetColorBallUI.style.backgroundColor;
 
-    playerList[targetPlayerIndex].hue = hue;
+    playerList[targetPlayerIndex].color = color;
 
     savePlayerList();
     setupPlayerListUI();
@@ -156,7 +156,7 @@ function createPlayerUI(player) {
 
   const avatarUI = document.createElement("button");
   avatarUI.classList = "avatar button";
-  avatarUI.style.backgroundColor = hueToHSL(player.hue);
+  avatarUI.style.backgroundColor = player.color;
   playerUI.append(avatarUI);
 
   const playerName = document.createElement("input");

@@ -4,7 +4,7 @@ function createPlayerUI(player) {
 
     const avatarUI = document.createElement("div");
     avatarUI.classList = "avatar";
-    avatarUI.style.backgroundColor = hueToHSL(player.hue);
+    avatarUI.style.backgroundColor = player.color;
     playerUI.append(avatarUI);
 
     const playerName = document.createElement("div");
@@ -26,7 +26,7 @@ function createRankPlayerUI(player) {
 
     const avatarUI = document.createElement("div");
     avatarUI.classList = "avatar";
-    avatarUI.style.backgroundColor = hueToHSL(player.hue);
+    avatarUI.style.backgroundColor = player.color;
     playerUI.append(avatarUI);
 
     const playerName = document.createElement("div");
@@ -43,7 +43,7 @@ function createRankPlayerUI(player) {
 }
 
 function createSquareUI(xy){
-    const svg = $(".boxSVG"), group = $('.boxDefs');
+    const boxDefsUI = $('.boxDefs'), boxGUI = $('.boxG');
 
     if(xy.x && xy.y){
         var squareE = $cENS("rect");
@@ -53,11 +53,11 @@ function createSquareUI(xy){
         squareE.setAttribute("width", gameBoard.gap);
         squareE.setAttribute("height", gameBoard.gap);
 
-        if(hueToHSL(currPlayer.hue)){
-            //squareE.style.fill = hueToHSL(currPlayer.hue);
+        if(currPlayer.color){
+            squareE.style.fill = currPlayer.color;
 
             var gradientUI = createGradientUI(xy);
-            group.appendChild(gradientUI);
+            boxDefsUI.appendChild(gradientUI);
             squareE.style.fill = `url(#${gradientUI.id})`;
         }
 
@@ -65,7 +65,7 @@ function createSquareUI(xy){
             squareE.setAttribute("byPlayer", currPlayer.id);
         }
 
-        svg.appendChild(squareE);
+        boxGUI.appendChild(squareE);
     }
     else{
         console.log("no xy");
@@ -76,9 +76,13 @@ function createGradientUI(xy) {
     const gradientUI = $cENS('radialGradient');
     gradientUI.setAttribute('id', `x${xy.x}y${xy.y}`);
 
-    gradientUI.appendChild(createStopUI('60%', hueString(currPlayer.hue, '70%', "70%")));
-    gradientUI.appendChild(createStopUI('100%', hueString(currPlayer.hue, '70%', "50%")));
+    let hslO1 = hexToHslObject(currPlayer.color);
+    hslO1.l = 50;
+    let stopColor2 = hslToHex(hslO1);
 
+    gradientUI.appendChild(createStopUI('60%', currPlayer.color));
+    gradientUI.appendChild(createStopUI('100%', stopColor2));
+    console.log(currPlayer.color);
     return gradientUI;
 }
 
@@ -86,7 +90,6 @@ function createStopUI(offset, stopColor) {
     const stopUI = $cENS('stop');
     stopUI.setAttribute('offset', offset);
     stopUI.style.stopColor = stopColor;
-
     return stopUI;
 }
 
@@ -131,8 +134,8 @@ function getSVGLine(theClass, line){
     lineE.setAttribute("x2", line.x2);
     lineE.setAttribute("y2", line.y2);
 
-    if(hueToHSL(currPlayer.hue)){
-        lineE.setAttribute("stroke", hueToHSL(currPlayer.hue));
+    if(currPlayer.color){
+        lineE.setAttribute("stroke", currPlayer.color);
     } else {
         console.log("color not found");
     }
