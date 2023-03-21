@@ -170,6 +170,8 @@ function createPlayerUI(player) {
   isAlgo.classList = "isAlgo";
   isAlgo.type = "checkbox";
   isAlgo.checked = player.isAlgo;
+  let h = hexToHslObject(player.color).h;
+  isAlgo.style.filter = `hue-rotate(${h}deg)`;
   playerUI.append(isAlgo);
 
   const removePlayerB = document.createElement("button");
