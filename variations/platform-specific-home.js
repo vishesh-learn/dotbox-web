@@ -4,9 +4,9 @@
 function shareApp() {
     if (navigator.share) {
         navigator.share({
-        title: shareTitle,
-        text: shareText,
-        url: shareUrl
+            title: shareTitle,
+            text: shareText,
+            url: shareUrl
         })
     } else {
         window.open(shareUrl);

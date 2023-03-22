@@ -1,40 +1,40 @@
-function addPointerEvents(){
+var removePrevLinesTimeOut;
+
+function addPointerEvents() {
   const dotSVG = $(".dotSVG");
 
-  $aEL(dotSVG, "pointermove", linePrev);
   $aEL(dotSVG, "pointerdown", pointerDown);
+  $aEL(dotSVG, "pointermove", linePrev);
   $aEL(dotSVG, "pointerup", pointerUp);
 }
 
-function removePointerEvents(){
+function removePointerEvents() {
   const dotSVG = $(".dotSVG");
 
-  $rEL(dotSVG, "pointermove", linePrev);
   $rEL(dotSVG, "pointerdown", pointerDown);
+  $rEL(dotSVG, "pointermove", linePrev);
   $rEL(dotSVG, "pointerup", pointerUp);
 }
 
-function pointerDown(){
+function pointerDown(event) {
   const dotSVG = $(".dotSVG"), svgC = $(".svgC");
   var x = event.offsetX, y = event.offsetY;
 
-    if(x && y){
-        let nearInitDot = nearestDot(x, y);
-        initDot = dotEToJSON(nearInitDot);
+  if (x && y) {
+    let nearInitDot = nearestDot(x, y);
+    initDot = dotEToJSON(nearInitDot);
 
-        if (difference(x, initDot.cx) <= gameBoard.gap/2
-        && difference(y, initDot.cy) <= gameBoard.gap/2) {
-          $aEL(dotSVG, "pointermove", linePrev);
-          $aEL(svgC, "pointerup", pointerUp);
-        } else {
-          console.log("line drawing canceled");
-        }
+    if (difference(x, initDot.cx) <= gameBoard.gap / 2
+      && difference(y, initDot.cy) <= gameBoard.gap / 2) {
+      $aEL(dotSVG, "pointermove", linePrev);
+      $aEL(svgC, "pointerup", pointerUp);
+    } else {
+      console.log("line drawing canceled");
     }
+  }
 }
 
-var removePrevLinesTimeOut;
-
-function pointerUp(event){
+function pointerUp(event) {
   const dotSVG = $(".dotSVG"), svgC = $(".svgC");
 
   $rEL(dotSVG, "pointermove", linePrev);
@@ -46,30 +46,30 @@ function pointerUp(event){
 
   removePrevLines();
 
-  if(initDot && x && y){
+  if (initDot && x && y) {
     finalDot = nearDot(x, y);
-    
-    if(
-        validateLines(finalDot)
-        && difference(x, finalDot.cx) <= gameBoard.gap/2
-        && difference(y, finalDot.cy) <= gameBoard.gap/2
-      ){
-        lineMaker(dotsToLine(initDot, finalDot));
+
+    if (
+      validateLines(finalDot)
+      && difference(x, finalDot.cx) <= gameBoard.gap / 2
+      && difference(y, finalDot.cy) <= gameBoard.gap / 2
+    ) {
+      lineMaker(new Line(initDot.cx, initDot.cy, finalDot.cx, finalDot.cy));
     }
   } else {
     console.log("no x and y");
   }
 }
 
-function removePrevLines(){
+function removePrevLines() {
   var prevLines = $All(".prevLine");
 
-  for(let o of prevLines){
+  for (let o of prevLines) {
     o.remove();
   }
 }
 
-function lineMade(line){
+function lineMade(line) {
   made.lineMade = true;
 
   allPossibleLines.forEach((possibleLine, index) => {
@@ -77,21 +77,21 @@ function lineMade(line){
       var l = allPossibleLines.splice(index, 1);
     }
   });
-  
+
   gameEvent();
 }
 
-function gameEvent(){
-  if(made.lineMade){
+function gameEvent() {
+  if (made.lineMade) {
 
-    if(made.boxMade > 0){
-        currPlayer.score += made.boxMade;
+    if (made.boxMade > 0) {
+      currPlayer.score += made.boxMade;
     } else {
       playerTurn();
     }
 
-    if(isEnd()){
-        winBoard();
+    if (isEnd()) {
+      winBoard();
     }
   }
 
@@ -99,7 +99,7 @@ function gameEvent(){
   setCurrPlayerInfo();
 }
 
-function playerTurn(){
+function playerTurn() {
   clearTimeout(playerTurnTimeOut);
 
   removePointerEvents();
@@ -125,19 +125,18 @@ function playerTurn(){
     setupPlayerTurnListUI();
   }
 
-  if(currPlayer.isAlgo){
-    //timeout with time value '0' is by purpose
+  if (currPlayer.isAlgo) {
+    //timeout with time value 0 to that each draw is displayed one by one instead of wait and together.
     autoDrawLineTimeOut = setTimeout(autoDrawLine, 0);
-    //autoDrawLine();
   } else {
     addPointerEvents();
   }
 }
 
-function isEnd(){
-    if(allPossibleLines.length <= 0){
-      return true;
-    }
+function isEnd() {
+  if (allPossibleLines.length <= 0) {
+    return true;
+  }
 
-    return false;
+  return false;
 }

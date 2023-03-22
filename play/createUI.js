@@ -42,6 +42,37 @@ function createRankPlayerUI(player) {
     return playerUI;
 }
 
+function gameBoardBuilder() {
+    var svg = $(".dotSVG");
+    var dots = $All("circle");
+
+    for(let o of dots){
+        o.remove();
+    }
+
+    if(gameBoard.row >= 2 && gameBoard.col >= 2){
+        for(let i = 0;i < gameBoard.row;i++){
+            for(let j = 0;j < gameBoard.col;j++){
+                var cx = (gameBoard.gap * j + gameBoard.svgPaddingX).toString(10);
+                var cy = (gameBoard.gap * i + gameBoard.svgPaddingY).toString(10);
+
+                let dot = $cENS("circle");
+                dot.setAttribute("class", "dot");
+
+                //dot.setAttribute("r", "7");
+                dot.setAttribute("cx", cx);
+                dot.setAttribute("cy", cy);
+                
+                svg.appendChild(dot);
+            }
+        }
+    }
+
+    svgResize();
+
+    getAllPossibleLines();
+}
+
 function createSquareUI(xy){
     const boxDefsUI = $('.boxDefs'), boxGUI = $('.boxG');
 
@@ -91,37 +122,6 @@ function createStopUI(offset, stopColor) {
     stopUI.setAttribute('offset', offset);
     stopUI.style.stopColor = stopColor;
     return stopUI;
-}
-
-function gameBoardBuilder() {
-    var svg = $(".dotSVG");
-    var dots = $All("circle");
-
-    for(let o of dots){
-        o.remove();
-    }
-
-    if(gameBoard.row >= 2 && gameBoard.col >= 2){
-        for(let i = 0;i < gameBoard.row;i++){
-            for(let j = 0;j < gameBoard.col;j++){
-                var cx = (gameBoard.gap * j + gameBoard.svgPaddingX).toString(10);
-                var cy = (gameBoard.gap * i + gameBoard.svgPaddingY).toString(10);
-
-                let dot = $cENS("circle");
-                dot.setAttribute("class", "dot");
-
-                //dot.setAttribute("r", "7");
-                dot.setAttribute("cx", cx);
-                dot.setAttribute("cy", cy);
-                
-                svg.appendChild(dot);
-            }
-        }
-    }
-
-    svgResize();
-
-    getAllPossibleLines();
 }
 
 function getSVGLine(theClass, line){

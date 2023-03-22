@@ -8,7 +8,7 @@ function getAllPossibleLines(){
         var validFinalDots = getValidFinalDots(dot1);
 
         for(var dot2 of validFinalDots){
-            var possibleLine = dotsToLine(dot1, dot2);
+            var possibleLine = new Line(dot1.cx, dot1.cy, dot2.cx, dot2.cy);
 
             if(lineExists(possibleLine, lineEsToJSON()) == false
                 && lineExists(possibleLine, allPossibleLines) == false){

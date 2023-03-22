@@ -25,7 +25,8 @@ window.onload = () => {
 
     gameBoardBuilder();
 
-    playerTurnTimeOut = setTimeout(playerTurn, 50);
+    //timeout to display board right away instead of waiting for auto drawing lines
+    playerTurnTimeOut = setTimeout(playerTurn, 0);
 
     $aEL($(".playerTurnList"), "transitionend", setupPlayerTurnListUI);
 
@@ -74,8 +75,8 @@ function linePrev(event) {
         }
 
         var pseudoDot = { "cx": x, "cy": y };
-
-        prevLineMaker(dotsToLine(initDot, pseudoDot));
+        
+        prevLineMaker(new Line(initDot.cx, initDot.cy, pseudoDot.cx, pseudoDot.cy));
     }
 }
 
@@ -498,8 +499,6 @@ function doesMakesSquare(middleLine) {
     return false;
 }
 
-function dotsToLine(dot1, dot2) { return { "x1": dot1.cx, "y1": dot1.cy, "x2": dot2.cx, "y2": dot2.cy }; }
-
 function resetBoard() {
     var linesE = $All(".line");
     var squaresE = $All(".winBox");
@@ -568,13 +567,9 @@ function setupPlayerTurnListUI() {
 }
 
 function setCurrPlayerInfo() {
-    const currPlayerIDUI = $(".curr-player-id");
-    const currPlayerIDName = $(".curr-player-name");
-    const currPlayerScoreUI = $(".curr-player-score");
-
-    currPlayerIDUI.innerText = `ID: ${currPlayer.id}`;
-    currPlayerIDName.innerText = `Name: ${Player.getName(currPlayer)}`;
-    currPlayerScoreUI.innerText = `Score: ${currPlayer.score}`;
+    $(".curr-player-id").innerText = `ID: ${currPlayer.id}`;
+    $(".curr-player-name").innerText = `Name: ${Player.getName(currPlayer)}`;
+    $(".curr-player-score").innerText = `Score: ${currPlayer.score}`;
 }
 
 function winBoard() {
