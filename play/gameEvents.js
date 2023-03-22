@@ -96,6 +96,7 @@ function gameEvent(){
   }
 
   made = new Made();
+  setCurrPlayerInfo();
 }
 
 function playerTurn(){
