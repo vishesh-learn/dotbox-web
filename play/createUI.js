@@ -50,11 +50,11 @@ function gameBoardBuilder() {
         o.remove();
     }
 
-    if(gameBoard.row >= 2 && gameBoard.col >= 2){
-        for(let i = 0;i < gameBoard.row;i++){
-            for(let j = 0;j < gameBoard.col;j++){
-                var cx = (gameBoard.gap * j + gameBoard.svgPaddingX).toString(10);
-                var cy = (gameBoard.gap * i + gameBoard.svgPaddingY).toString(10);
+    if(game.gameBoard.row >= 2 && game.gameBoard.col >= 2){
+        for(let i = 0;i < game.gameBoard.row;i++){
+            for(let j = 0;j < game.gameBoard.col;j++){
+                var cx = (game.gameBoard.gap * j + game.gameBoard.svgPaddingX).toString(10);
+                var cy = (game.gameBoard.gap * i + game.gameBoard.svgPaddingY).toString(10);
 
                 let dot = $cENS("circle");
                 dot.setAttribute("class", "dot");
@@ -81,8 +81,8 @@ function createSquareUI(xy){
         squareE.setAttribute("class", "winBox");
         squareE.setAttribute("x", xy.x);
         squareE.setAttribute("y", xy.y);
-        squareE.setAttribute("width", gameBoard.gap);
-        squareE.setAttribute("height", gameBoard.gap);
+        squareE.setAttribute("width", game.gameBoard.gap);
+        squareE.setAttribute("height", game.gameBoard.gap);
 
         if(currPlayer.color){
             squareE.style.fill = currPlayer.color;

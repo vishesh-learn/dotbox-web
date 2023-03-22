@@ -24,8 +24,8 @@ function pointerDown(event) {
     let nearInitDot = nearestDot(x, y);
     initDot = dotEToJSON(nearInitDot);
 
-    if (difference(x, initDot.cx) <= gameBoard.gap / 2
-      && difference(y, initDot.cy) <= gameBoard.gap / 2) {
+    if (difference(x, initDot.cx) <= game.gameBoard.gap / 2
+      && difference(y, initDot.cy) <= game.gameBoard.gap / 2) {
       $aEL(dotSVG, "pointermove", linePrev);
       $aEL(svgC, "pointerup", pointerUp);
     } else {
@@ -51,8 +51,8 @@ function pointerUp(event) {
 
     if (
       validateLines(finalDot)
-      && difference(x, finalDot.cx) <= gameBoard.gap / 2
-      && difference(y, finalDot.cy) <= gameBoard.gap / 2
+      && difference(x, finalDot.cx) <= game.gameBoard.gap / 2
+      && difference(y, finalDot.cy) <= game.gameBoard.gap / 2
     ) {
       lineMaker(new Line(initDot.cx, initDot.cy, finalDot.cx, finalDot.cy));
     }
@@ -69,7 +69,7 @@ function removePrevLines() {
   }
 }
 
-function lineMade(line) {
+function lineMade(line) { console.log(line);
   made.lineMade = true;
 
   allPossibleLines.forEach((possibleLine, index) => {
@@ -105,10 +105,10 @@ function playerTurn() {
   removePointerEvents();
 
   if (currPlayer != undefined) {
-    if (currPlayer.id == playerList.length) {
-      currPlayer = playerList[0];
+    if (currPlayer.id == game.playerList.length) {
+      currPlayer = game.playerList[0];
     } else {
-      currPlayer = playerList[currPlayer.id];
+      currPlayer = game.playerList[currPlayer.id];
     }
 
     setupPlayerTurnList();
@@ -119,7 +119,7 @@ function playerTurn() {
     }
 
   } else {
-    currPlayer = playerList[0];
+    currPlayer = game.playerList[0];
 
     setupPlayerTurnList();
     setupPlayerTurnListUI();

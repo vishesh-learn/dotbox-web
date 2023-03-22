@@ -46,17 +46,17 @@ function goBack() {
 function footerInfo() {
     const rowColInfoHtml = $('.rowAndCol');
 
-    rowColInfoHtml.innerHTML = `Board: ${gameBoard.col} x ${gameBoard.row}`;
+    rowColInfoHtml.innerHTML = `Board: ${game.gameBoard.col} x ${game.gameBoard.row}`;
 }
 
 function linePrev(event) {
     var x = event.offsetX, y = event.offsetY;
 
     if (initDot) {
-        var left = initDot.cx - gameBoard.gap;
-        var top = initDot.cy - gameBoard.gap;
-        var bottom = initDot.cy + gameBoard.gap;
-        var right = initDot.cx + gameBoard.gap;
+        var left = initDot.cx - game.gameBoard.gap;
+        var top = initDot.cy - game.gameBoard.gap;
+        var bottom = initDot.cy + game.gameBoard.gap;
+        var right = initDot.cx + game.gameBoard.gap;
 
         if (x < left) {
             x = left;
@@ -81,10 +81,10 @@ function linePrev(event) {
 }
 
 function getValidFinalDots(initDot) {
-    var left = { "side": "left", "cx": initDot.cx - gameBoard.gap, "cy": initDot.cy };
-    var top = { "side": "top", "cx": initDot.cx, "cy": initDot.cy - gameBoard.gap };
-    var bottom = { "side": "bottom", "cx": initDot.cx, "cy": initDot.cy + gameBoard.gap };
-    var right = { "side": "right", "cx": initDot.cx + gameBoard.gap, "cy": initDot.cy };
+    var left = { "side": "left", "cx": initDot.cx - game.gameBoard.gap, "cy": initDot.cy };
+    var top = { "side": "top", "cx": initDot.cx, "cy": initDot.cy - game.gameBoard.gap };
+    var bottom = { "side": "bottom", "cx": initDot.cx, "cy": initDot.cy + game.gameBoard.gap };
+    var right = { "side": "right", "cx": initDot.cx + game.gameBoard.gap, "cy": initDot.cy };
 
     var options = [top, right, bottom, left];
     var validFinalDots = [];
@@ -166,8 +166,8 @@ function prevLineMaker(line) {
 function svgResize() {
     const svgList = $All(".svgC svg");
 
-    var width = ((gameBoard.col - 1) * gameBoard.gap) + (gameBoard.svgPaddingX * 2);
-    var height = ((gameBoard.row - 1) * gameBoard.gap) + (gameBoard.svgPaddingY * 2);
+    var width = ((game.gameBoard.col - 1) * game.gameBoard.gap) + (game.gameBoard.svgPaddingX * 2);
+    var height = ((game.gameBoard.row - 1) * game.gameBoard.gap) + (game.gameBoard.svgPaddingY * 2);
 
     for (var svg of svgList) {
         svg.style.width = width + "px";
@@ -180,9 +180,9 @@ function validateLines(finalDot) {
         var deltaX = Math.abs(initDot.cx - finalDot.cx);
         var deltaY = Math.abs(initDot.cy - finalDot.cy);
 
-        if ((initDot.cx == finalDot.cx) && (deltaY == gameBoard.gap)) {
+        if ((initDot.cx == finalDot.cx) && (deltaY == game.gameBoard.gap)) {
             return true;
-        } else if ((initDot.cy == finalDot.cy) && (deltaX == gameBoard.gap)) {
+        } else if ((initDot.cy == finalDot.cy) && (deltaX == game.gameBoard.gap)) {
             return true;
         } else {
             return false;
@@ -221,44 +221,44 @@ const getRectLines = (middle) => {
 
     if (orient == "vertical") {
         var left = {
-            "x1": middle.x1 - gameBoard.gap,
+            "x1": middle.x1 - game.gameBoard.gap,
             "y1": middle.y1,
-            "x2": middle.x2 - gameBoard.gap,
+            "x2": middle.x2 - game.gameBoard.gap,
             "y2": middle.y2
         };
 
         var right = {
-            "x1": middle.x1 + gameBoard.gap,
+            "x1": middle.x1 + game.gameBoard.gap,
             "y1": middle.y1,
-            "x2": middle.x2 + gameBoard.gap,
+            "x2": middle.x2 + game.gameBoard.gap,
             "y2": middle.y2
         };
 
         var leftTop = {
             "x1": middle.x1,
             "y1": middle.y1,
-            "x2": middle.x1 - gameBoard.gap,
+            "x2": middle.x1 - game.gameBoard.gap,
             "y2": middle.y1
         };
 
         var leftBottom = {
             "x1": middle.x2,
             "y1": middle.y2,
-            "x2": middle.x2 - gameBoard.gap,
+            "x2": middle.x2 - game.gameBoard.gap,
             "y2": middle.y2
         };
 
         var rightTop = {
             "x1": middle.x1,
             "y1": middle.y1,
-            "x2": middle.x1 + gameBoard.gap,
+            "x2": middle.x1 + game.gameBoard.gap,
             "y2": middle.y1
         };
 
         var rightBottom = {
             "x1": middle.x2,
             "y1": middle.y2,
-            "x2": middle.x2 + gameBoard.gap,
+            "x2": middle.x2 + game.gameBoard.gap,
             "y2": middle.y2
         };
 
@@ -271,44 +271,44 @@ const getRectLines = (middle) => {
     } else if (orient == "horizontal") {
         var top = {
             "x1": middle.x1,
-            "y1": middle.y1 - gameBoard.gap,
+            "y1": middle.y1 - game.gameBoard.gap,
             "x2": middle.x2,
-            "y2": middle.y2 - gameBoard.gap
+            "y2": middle.y2 - game.gameBoard.gap
         };
 
         var topRight = {
             "x1": middle.x2,
             "y1": middle.y2,
             "x2": middle.x2,
-            "y2": middle.y2 - gameBoard.gap
+            "y2": middle.y2 - game.gameBoard.gap
         };
 
         var topLeft = {
             "x1": middle.x1,
             "y1": middle.y1,
             "x2": middle.x1,
-            "y2": middle.y1 - gameBoard.gap
+            "y2": middle.y1 - game.gameBoard.gap
         };
 
         var bottomRight = {
             "x1": middle.x2,
             "y1": middle.y2,
             "x2": middle.x2,
-            "y2": middle.y2 + gameBoard.gap
+            "y2": middle.y2 + game.gameBoard.gap
         };
 
         var bottom = {
             "x1": middle.x1,
-            "y1": middle.y1 + gameBoard.gap,
+            "y1": middle.y1 + game.gameBoard.gap,
             "x2": middle.x2,
-            "y2": middle.y2 + gameBoard.gap
+            "y2": middle.y2 + game.gameBoard.gap
         };
 
         var bottomLeft = {
             "x1": middle.x1,
             "y1": middle.y1,
             "x2": middle.x1,
-            "y2": middle.y1 + gameBoard.gap
+            "y2": middle.y1 + game.gameBoard.gap
         };
 
         return {
@@ -407,7 +407,7 @@ function squareXY(square) {
         l = square.hline;
         xy.x = Math.min(l.x1, l.x2);
         if (square.top.length == 4) {
-            xy.y = Math.min(l.y1, l.y2) - gameBoard.gap;
+            xy.y = Math.min(l.y1, l.y2) - game.gameBoard.gap;
 
             createSquareUI(xy);
         }
@@ -422,7 +422,7 @@ function squareXY(square) {
         l = square.vline;
         xy.y = Math.min(l.y1, l.y2);
         if (square.left.length == 4) {
-            xy.x = Math.min(l.x1, l.x2) - gameBoard.gap;
+            xy.x = Math.min(l.x1, l.x2) - game.gameBoard.gap;
 
             createSquareUI(xy);
         }
@@ -521,15 +521,15 @@ function setupPlayerTurnList() {
     var currIndex = currPlayer.id - 1;
 
     if (currIndex == 0) {
-        prevIndex = playerList.length - 1;
+        prevIndex = game.playerList.length - 1;
     } else {
         prevIndex = currIndex - 1;
     }
 
-    if (currIndex == playerList.length - 1) {
+    if (currIndex == game.playerList.length - 1) {
         nextIndex = 0;
         nextIndex2 = 1;
-    } else if (currIndex == playerList.length - 2) {
+    } else if (currIndex == game.playerList.length - 2) {
         nextIndex = currIndex + 1;
         nextIndex2 = 0;
     } else {
@@ -537,10 +537,10 @@ function setupPlayerTurnList() {
         nextIndex2 = currIndex + 2;
     }
 
-    playerTurnList.push(playerList[prevIndex]);
-    playerTurnList.push(playerList[currIndex]);
-    playerTurnList.push(playerList[nextIndex]);
-    playerTurnList.push(playerList[nextIndex2]);
+    playerTurnList.push(game.playerList[prevIndex]);
+    playerTurnList.push(game.playerList[currIndex]);
+    playerTurnList.push(game.playerList[nextIndex]);
+    playerTurnList.push(game.playerList[nextIndex2]);
 }
 
 function slideLeft() {
@@ -580,7 +580,7 @@ function winBoard() {
 }
 
 function setupPlayerRankList() {
-    playerList.sort((a, b) => {
+    game.playerList.sort((a, b) => {
         if (a.score > b.score) {
             return -1;
         }
@@ -599,10 +599,10 @@ function setupPlayerRankListUI() {
 
     playerRankListUI.innerHTML = "";
 
-    for (let i = 0; i < playerList.length; i++) {
-        playerList[i].rank = i + 1;
+    for (let i = 0; i < game.playerList.length; i++) {
+        game.playerList[i].rank = i + 1;
 
-        playerUI = createRankPlayerUI(playerList[i]);
+        playerUI = createRankPlayerUI(game.playerList[i]);
 
         playerRankListUI.append(playerUI);
     }

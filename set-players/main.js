@@ -53,8 +53,8 @@ function goButtonHandler(event) {
 }
 
 function addPlayer() {
-  if (playerList.length < game.maxPlayer) {
-    playerList.push(new Player());
+  if (game.playerList.length < game.maxPlayer) {
+    game.playerList.push(new Player());
 
     savePlayerList();
 
@@ -64,7 +64,7 @@ function addPlayer() {
 
 function updatePlayerCountView() {
   const infoE = $("#info");
-  var playerCount = playerList.length;
+  var playerCount = game.playerList.length;
 
   infoE.innerHTML = playerCount == 1 ? playerCount + " player" : playerCount + " players";
 
@@ -82,12 +82,12 @@ function updatePlayer(event) {
 
     if (target.className.includes("playerName")) {
       var name = target.value;
-      playerList[targetPlayerIndex].name = name;
+      game.playerList[targetPlayerIndex].name = name;
     }
 
     if (target.className.includes("isAlgo")) {
       var isAlgo = target.checked;
-      playerList[targetPlayerIndex].isAlgo = isAlgo;
+      game.playerList[targetPlayerIndex].isAlgo = isAlgo;
     }
 
     savePlayerList();
@@ -102,7 +102,7 @@ function colorSelector(event) {
   if (target.className.includes("avatar")) {
     targetPlayerIndex = getIndexOfDom(target.parentElement);
     $("body").classList.add("pop-up-container");
-    colorPrevHTML.style.backgroundColor = playerList[targetPlayerIndex].color;
+    colorPrevHTML.style.backgroundColor = game.playerList[targetPlayerIndex].color;
   }
 }
 
@@ -112,7 +112,7 @@ function selectColor(event) {
 
     var color = targetColorBallUI.style.backgroundColor;
 
-    playerList[targetPlayerIndex].color = color;
+    game.playerList[targetPlayerIndex].color = color;
 
     savePlayerList();
     setupPlayerListUI();
@@ -125,7 +125,7 @@ function removePlayer(event) {
   const target = event.target;
 
   if (target.className.includes("removePlayerB")) {
-    playerList.splice(getIndexOfDom(target.parentElement), 1);
+    game.playerList.splice(getIndexOfDom(target.parentElement), 1);
 
     savePlayerList();
     setupPlayerListUI();
@@ -143,7 +143,7 @@ function setupPlayerListUI() {
 
   playerListUI.innerHTML = "";
 
-  for (let player of playerList) {
+  for (let player of game.playerList) {
     playerListUI.append(createPlayerUI(player));
   }
 
