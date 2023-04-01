@@ -46,13 +46,13 @@ function gameBoardBuilder() {
     var svg = $(".dotSVG");
     var dots = $All("circle");
 
-    for(let o of dots){
+    for (let o of dots) {
         o.remove();
     }
 
-    if(game.gameBoard.row >= 2 && game.gameBoard.col >= 2){
-        for(let i = 0;i < game.gameBoard.row;i++){
-            for(let j = 0;j < game.gameBoard.col;j++){
+    if (game.gameBoard.row >= 2 && game.gameBoard.col >= 2) {
+        for (let i = 0; i < game.gameBoard.row; i++) {
+            for (let j = 0; j < game.gameBoard.col; j++) {
                 var cx = (game.gameBoard.gap * j + game.gameBoard.svgPaddingX).toString(10);
                 var cy = (game.gameBoard.gap * i + game.gameBoard.svgPaddingY).toString(10);
 
@@ -62,7 +62,7 @@ function gameBoardBuilder() {
                 //dot.setAttribute("r", "7");
                 dot.setAttribute("cx", cx);
                 dot.setAttribute("cy", cy);
-                
+
                 svg.appendChild(dot);
             }
         }
@@ -73,10 +73,8 @@ function gameBoardBuilder() {
     getAllPossibleLines();
 }
 
-function createSquareUI(xy){
-    const boxDefsUI = $('.boxDefs'), boxGUI = $('.boxG');
-
-    if(xy.x && xy.y){
+function createSquareUI(xy) {
+    if (xy.x && xy.y) {
         var squareE = $cENS("rect");
         squareE.setAttribute("class", "winBox");
         squareE.setAttribute("x", xy.x);
@@ -84,21 +82,21 @@ function createSquareUI(xy){
         squareE.setAttribute("width", game.gameBoard.gap);
         squareE.setAttribute("height", game.gameBoard.gap);
 
-        if(currPlayer.color){
+        if (currPlayer.color) {
             squareE.style.fill = currPlayer.color;
 
             var gradientUI = createGradientUI(xy);
-            boxDefsUI.appendChild(gradientUI);
+            $('.boxDefs').appendChild(gradientUI);
             squareE.style.fill = `url(#${gradientUI.id})`;
         }
 
-        if(currPlayer.id){
+        if (currPlayer.id) {
             squareE.setAttribute("byPlayer", currPlayer.id);
         }
 
-        boxGUI.appendChild(squareE);
+        return squareE;
     }
-    else{
+    else {
         console.log("no xy");
     }
 }
@@ -113,7 +111,7 @@ function createGradientUI(xy) {
 
     gradientUI.appendChild(createStopUI('60%', currPlayer.color));
     gradientUI.appendChild(createStopUI('100%', stopColor2));
-    console.log(currPlayer.color);
+
     return gradientUI;
 }
 
@@ -124,23 +122,23 @@ function createStopUI(offset, stopColor) {
     return stopUI;
 }
 
-function getSVGLine(theClass, line){
+function getSVGLine(classValue, line) {
     let lineE = $cENS("line");
 
-    lineE.setAttribute("class", theClass);
+    lineE.setAttribute("class", classValue);
 
     lineE.setAttribute("x1", line.x1);
     lineE.setAttribute("y1", line.y1);
     lineE.setAttribute("x2", line.x2);
     lineE.setAttribute("y2", line.y2);
 
-    if(currPlayer.color){
+    if (currPlayer.color) {
         lineE.setAttribute("stroke", currPlayer.color);
     } else {
         console.log("color not found");
     }
 
-    if(currPlayer.id){
+    if (currPlayer.id) {
         lineE.setAttribute("byPlayer", currPlayer.id);
     }
 

@@ -74,7 +74,7 @@ function svgResize(){
     gameBoardSVG.style.height = height + "px";
 }
 
-function pointHandler(){
+function pointHandler(event){
   var gameBoardSVG = $(".svgC svg");
 
   var pointX = event.offsetX;

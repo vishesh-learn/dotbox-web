@@ -1,5 +1,3 @@
-var removePrevLinesTimeOut;
-
 function addPointerEvents() {
   const dotSVG = $(".dotSVG");
 
@@ -69,7 +67,7 @@ function removePrevLines() {
   }
 }
 
-function lineMade(line) { console.log(line);
+function lineMade(line) {
   made.lineMade = true;
 
   allPossibleLines.forEach((possibleLine, index) => {
@@ -81,15 +79,19 @@ function lineMade(line) { console.log(line);
   gameEvent();
 }
 
+function boxMade(box) {
+  made.boxMade++;
+  //console.log(box);
+}
+
 function gameEvent() {
   if (made.lineMade) {
-
     if (made.boxMade > 0) {
       currPlayer.score += made.boxMade;
     } else {
       playerTurn();
     }
-
+    
     if (isEnd()) {
       winBoard();
     }
@@ -100,8 +102,6 @@ function gameEvent() {
 }
 
 function playerTurn() {
-  clearTimeout(playerTurnTimeOut);
-
   removePointerEvents();
 
   if (currPlayer != undefined) {
@@ -126,8 +126,7 @@ function playerTurn() {
   }
 
   if (currPlayer.isAlgo) {
-    //timeout with time value 0 to that each draw is displayed one by one instead of wait and together.
-    autoDrawLineTimeOut = setTimeout(autoDrawLine, 0);
+    requestAnimationFrame(autoDrawLine);
   } else {
     addPointerEvents();
   }

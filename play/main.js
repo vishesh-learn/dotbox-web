@@ -1,5 +1,4 @@
-var currPlayer, playerTurnList, initDot, finalDot, orient, made, allPossibleLines = [],
-    playerTurnTimeOut, autoDrawLineTimeOut;
+var currPlayer, playerTurnList, initDot, finalDot, orient, made, allPossibleLines = [];
 
 class Line {
     constructor(x1, y1, x2, y2) {
@@ -7,6 +6,13 @@ class Line {
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2;
+    }
+}
+
+class Box {
+    constructor(x, y) {
+        this.x = x,
+        this.y = y
     }
 }
 
@@ -25,8 +31,7 @@ window.onload = () => {
 
     gameBoardBuilder();
 
-    //timeout to display board right away instead of waiting for auto drawing lines
-    playerTurnTimeOut = setTimeout(playerTurn, 0);
+    requestAnimationFrame(playerTurn);
 
     $aEL($(".playerTurnList"), "transitionend", setupPlayerTurnListUI);
 
@@ -198,18 +203,13 @@ function lineMaker(line) {
     var lineE = getSVGLine("line", line);
 
     if (lineE && !lineExists(line, lineEsToJSON())) {
-
         svg.appendChild(lineE);
-
-        squareXY(whetherSquare(lineEToJSON(lineE)));
-
-        if (currPlayer.color) {
-            line.color = currPlayer.color;
-        }
+        
+        makeBox(getSurroundingLines(line));
 
         lineMade(line);
     }
-
+    
     initDot = null;
 }
 
@@ -319,30 +319,6 @@ const getRectLines = (middle) => {
     }
 }
 
-function whetherSquare(line) {
-    var square = getSurroundingLines(line);
-
-    if (square.orient == "horizontal") {
-        if (square.top.length == 4) {
-            made.boxMade++;
-        }
-        if (square.bottom.length == 4) {
-            made.boxMade++;
-        }
-    }
-
-    if (square.orient == "vertical") {
-        if (square.left.length == 4) {
-            made.boxMade++;
-        }
-        if (square.right.length == 4) {
-            made.boxMade++;
-        }
-    }
-
-    return square;
-}
-
 function getSurroundingLines(line) {
     var lines = lineEsToJSON();
     var rectLines = getRectLines(line);
@@ -400,38 +376,43 @@ function getSurroundingLines(line) {
     return square;
 }
 
-function squareXY(square) {
-    var l, xy = new Object();
+function makeBox(square) {
+    var x, y, boxes = [];
 
     if (square.orient == "horizontal") {
-        l = square.hline;
-        xy.x = Math.min(l.x1, l.x2);
+        x = Math.min(square.hline.x1, square.hline.x2);
         if (square.top.length == 4) {
-            xy.y = Math.min(l.y1, l.y2) - game.gameBoard.gap;
+            y = Math.min(square.hline.y1, square.hline.y2) - game.gameBoard.gap;
 
-            createSquareUI(xy);
+            boxes.push(new Box(x, y));
         }
         if (square.bottom.length == 4) {
-            xy.y = Math.min(l.y1, l.y2);
+            y = Math.min(square.hline.y1, square.hline.y2);
 
-            createSquareUI(xy);
+            boxes.push(new Box(x, y));
         }
     }
 
     if (square.orient == "vertical") {
-        l = square.vline;
-        xy.y = Math.min(l.y1, l.y2);
+        y = Math.min(square.vline.y1, square.vline.y2);
         if (square.left.length == 4) {
-            xy.x = Math.min(l.x1, l.x2) - game.gameBoard.gap;
+            x = Math.min(square.vline.x1, square.vline.x2) - game.gameBoard.gap;
 
-            createSquareUI(xy);
+            boxes.push(new Box(x, y));
         }
         if (square.right.length == 4) {
-            xy.x = Math.min(l.x1, l.x2);
+            x = Math.min(square.vline.x1, square.vline.x2);
 
-            createSquareUI(xy);
+            boxes.push(new Box(x, y));
         }
     }
+
+    let squareE;
+    boxes.forEach(box => {
+        squareE = createSquareUI(box);
+        $('.boxG').appendChild(squareE);
+        boxMade(box);
+    });
 }
 
 const compareLineObj = (obj1, obj2) => {
@@ -575,35 +556,32 @@ function setCurrPlayerInfo() {
 function winBoard() {
     $("body").classList.add("pop-up-container");
 
+    sortPlayerByScore();
     setupPlayerRankList();
-    setupPlayerRankListUI();
+}
+
+function sortPlayerByScore() {
+    game.playerList.sort((a, b) => b.score - a.score);
 }
 
 function setupPlayerRankList() {
-    game.playerList.sort((a, b) => {
-        if (a.score > b.score) {
-            return -1;
-        }
-
-        if (a.score < b.score) {
-            return 1;
-        }
-
-        return 0;
-    });
-}
-
-function setupPlayerRankListUI() {
     const playerRankListUI = $(".playerRankList");
-    var playerUI;
 
     playerRankListUI.innerHTML = "";
+    var rank = 1;
+    game.playerList.forEach((player, i, playerList) => { 
+        if (i > 0) {
+            let prevPlayer = playerList[i - 1];
 
-    for (let i = 0; i < game.playerList.length; i++) {
-        game.playerList[i].rank = i + 1;
+            console.log(prevPlayer, player);
 
-        playerUI = createRankPlayerUI(game.playerList[i]);
+            if (prevPlayer.score > player.score) {
+                rank++;
+            }
+        }
 
-        playerRankListUI.append(playerUI);
-    }
+        player.rank = rank;
+
+        playerRankListUI.append(createRankPlayerUI(player));
+    });
 }

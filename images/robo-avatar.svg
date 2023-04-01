@@ -5,22 +5,22 @@ viewBox="0 0 75 50"
 xmlns="http://www.w3.org/2000/svg">
 <style>
   svg {
-    fill: #b1b1b1;
-    stroke: rgba(0,0,0,.8);
-    stroke-width: 5;
+    fill: hsl(0, 100%, 88%);
+    stroke: hsl(0, 100%, 10%);
+    stroke-width: 4;
     stroke-linecap: round;
   }
   .antenna {
-    stroke-width: 6;
+    stroke-width: 4;
   }
   .antenna-point {
     fill: black;
-    stroke-width: 8;
+    stroke-width: 5;
   }
 </style>
 
-  <circle class="ear left" r="8" cx="15" cy="30" />
-  <circle class="ear right" r="5" cx="63" cy="30" />
+  <circle class="ear left" r="8" cx="16" cy="30" />
+  <circle class="ear right" r="5" cx="62" cy="30" />
 
   <line class="antenna left" x1="18" y1="15" x2="6" y2="2" />
   <circle class="antenna-point left" r="2" cx="6" cy="2" />

@@ -150,6 +150,10 @@ header {
   stroke-linecap: round;
 }
 
+.line:last-child {
+  outline: 1px dashed var(--brown);
+}
+
 footer {
   height: var(--footerHeight);
 }
