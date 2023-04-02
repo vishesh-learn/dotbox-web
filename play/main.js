@@ -1,4 +1,12 @@
-var currPlayer, playerTurnList, initDot, finalDot, orient, made, allPossibleLines = [];
+var currPlayer, playerTurnList, initDot, finalDot, orient, made, allPossibleLines = [], pendingPossiblelines = [];
+
+class Dot {
+    constructor(x, y, side) {
+        this.x = x;
+        this.y = y;
+        this.side = side;
+    }
+}
 
 class Line {
     constructor(x1, y1, x2, y2) {
@@ -7,12 +15,17 @@ class Line {
         this.x2 = x2;
         this.y2 = y2;
     }
+
+    get orient() {
+        return (this.x1 == this.x2) && (this.y1 != this.y2)
+            ? 'vertical' : 'horizontal';
+    }
 }
 
 class Box {
     constructor(x, y) {
         this.x = x,
-        this.y = y
+            this.y = y
     }
 }
 
@@ -24,20 +37,27 @@ class Made {
 }
 
 window.onload = () => {
-    const backButton = $("#backButton");
     made = new Made();
 
     loadGameAndPlayerList();
 
     gameBoardBuilder();
 
+    getAllPossibleLines();
+
+    getPendingPossiblelines()
+
     requestAnimationFrame(playerTurn);
 
     $aEL($(".playerTurnList"), "transitionend", setupPlayerTurnListUI);
 
-    $aEL(backButton, "click", goBack);
-    $aEL($("#replayButton"), "click", () => window.location.reload());
-    $aEL($("#newGameButton"), "click", () => window.location.href = `../${pages.setBoard}`);
+    $aEL($("#backButton"), "click", goBack);
+
+    $aEL($("#replayButton"), "click",
+        () => window.location.reload());
+
+    $aEL($("#newGameButton"), "click",
+        () => window.location.href = `../${pages.setBoard}`);
 
     footerInfo();
 
@@ -58,10 +78,10 @@ function linePrev(event) {
     var x = event.offsetX, y = event.offsetY;
 
     if (initDot) {
-        var left = initDot.cx - game.gameBoard.gap;
-        var top = initDot.cy - game.gameBoard.gap;
-        var bottom = initDot.cy + game.gameBoard.gap;
-        var right = initDot.cx + game.gameBoard.gap;
+        var left = initDot.x - game.gameBoard.gap;
+        var top = initDot.y - game.gameBoard.gap;
+        var bottom = initDot.y + game.gameBoard.gap;
+        var right = initDot.x + game.gameBoard.gap;
 
         if (x < left) {
             x = left;
@@ -79,39 +99,56 @@ function linePrev(event) {
             y = bottom;
         }
 
-        var pseudoDot = { "cx": x, "cy": y };
-        
-        prevLineMaker(new Line(initDot.cx, initDot.cy, pseudoDot.cx, pseudoDot.cy));
+        var pseudoDot = new Dot(x, y);
+
+        prevLineMaker(
+            new Line(
+                initDot.x, initDot.y, pseudoDot.x, pseudoDot.y
+            )
+        );
     }
 }
 
-function getValidFinalDots(initDot) {
-    var left = { "side": "left", "cx": initDot.cx - game.gameBoard.gap, "cy": initDot.cy };
-    var top = { "side": "top", "cx": initDot.cx, "cy": initDot.cy - game.gameBoard.gap };
-    var bottom = { "side": "bottom", "cx": initDot.cx, "cy": initDot.cy + game.gameBoard.gap };
-    var right = { "side": "right", "cx": initDot.cx + game.gameBoard.gap, "cy": initDot.cy };
+function getSurroundingDots(initDot) {
+    var top = new Dot(
+        initDot.x,
+        initDot.y - game.gameBoard.gap,
+        'top'
+    );
 
-    var options = [top, right, bottom, left];
-    var validFinalDots = [];
-    for (var option of options) {
-        if (dotExists(option)) {
-            validFinalDots.push(option);
-        }
-    }
+    var right = new Dot(
+        initDot.x + game.gameBoard.gap,
+        initDot.y,
+        "right",
+    );
 
-    return validFinalDots;
+    var bottom = new Dot(
+        initDot.x,
+        initDot.y + game.gameBoard.gap,
+        "bottom",
+    );
+
+    var left = new Dot(
+        initDot.x - game.gameBoard.gap,
+        initDot.y,
+        'left',
+    );
+
+    var options = [top, right, bottom, left].filter(dotExists);
+
+    return options;
 }
 
 function nearDot(x, y) {
-    var validFinalDots = getValidFinalDots(initDot);
-
+    var validFinalDots = getSurroundingDots(initDot);
+    
     var nearDot = validFinalDots[0];
     for (var dot of validFinalDots) {
-        let cx = dot.cx;
-        let cy = dot.cy;
+        let cx = dot.x;
+        let cy = dot.y;
 
-        let oldcx = nearDot.cx;
-        let oldcy = nearDot.cy;
+        let oldcx = nearDot.x;
+        let oldcy = nearDot.y;
 
         let x_cx = difference(x, cx);
         let y_cy = difference(y, cy);
@@ -180,151 +217,131 @@ function svgResize() {
     }
 }
 
-function validateLines(finalDot) {
-    if (initDot && finalDot.cx >= 0 && finalDot.cy >= 0) {
-        var deltaX = Math.abs(initDot.cx - finalDot.cx);
-        var deltaY = Math.abs(initDot.cy - finalDot.cy);
-
-        if ((initDot.cx == finalDot.cx) && (deltaY == game.gameBoard.gap)) {
-            return true;
-        } else if ((initDot.cy == finalDot.cy) && (deltaX == game.gameBoard.gap)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    return false;
-}
-
 function lineMaker(line) {
     const svg = $(".lineSVG");
 
     var lineE = getSVGLine("line", line);
 
-    if (lineE && !lineExists(line, lineEsToJSON())) {
+    if (lineE && lineNotExists(line, lineEsToJSON())) {
         svg.appendChild(lineE);
-        
+
         makeBox(getSurroundingLines(line));
 
         lineMade(line);
     }
-    
-    initDot = null;
+
+    initDot = undefined;
 }
 
-const getRectLines = (middle) => {
-    if ((middle.x1 == middle.x2) && (middle.y1 != middle.y2))
-        orient = "vertical"
-    else
-        orient = "horizontal";
+function getBoxMakingLines(line) {
+    if (line.orient == "vertical") {
+        var left = new Line(
+            line.x1 - game.gameBoard.gap,
+            line.y1,
+            line.x2 - game.gameBoard.gap,
+            line.y2
+        );
 
-    if (orient == "vertical") {
-        var left = {
-            "x1": middle.x1 - game.gameBoard.gap,
-            "y1": middle.y1,
-            "x2": middle.x2 - game.gameBoard.gap,
-            "y2": middle.y2
-        };
+        var right = new Line(
+            line.x1 + game.gameBoard.gap,
+            line.y1,
+            line.x2 + game.gameBoard.gap,
+            line.y2
+        );
 
-        var right = {
-            "x1": middle.x1 + game.gameBoard.gap,
-            "y1": middle.y1,
-            "x2": middle.x2 + game.gameBoard.gap,
-            "y2": middle.y2
-        };
+        var leftTop = new Line(
+            line.x1,
+            line.y1,
+            line.x1 - game.gameBoard.gap,
+            line.y1
+        );
 
-        var leftTop = {
-            "x1": middle.x1,
-            "y1": middle.y1,
-            "x2": middle.x1 - game.gameBoard.gap,
-            "y2": middle.y1
-        };
+        var leftBottom = new Line(
+            line.x2,
+            line.y2,
+            line.x2 - game.gameBoard.gap,
+            line.y2
+        );
 
-        var leftBottom = {
-            "x1": middle.x2,
-            "y1": middle.y2,
-            "x2": middle.x2 - game.gameBoard.gap,
-            "y2": middle.y2
-        };
+        var rightTop = new Line(
+            line.x1,
+            line.y1,
+            line.x1 + game.gameBoard.gap,
+            line.y1
+        );
 
-        var rightTop = {
-            "x1": middle.x1,
-            "y1": middle.y1,
-            "x2": middle.x1 + game.gameBoard.gap,
-            "y2": middle.y1
-        };
-
-        var rightBottom = {
-            "x1": middle.x2,
-            "y1": middle.y2,
-            "x2": middle.x2 + game.gameBoard.gap,
-            "y2": middle.y2
-        };
+        var rightBottom = new Line(
+            line.x2,
+            line.y2,
+            line.x2 + game.gameBoard.gap,
+            line.y2
+        );
 
         return {
-            "orient": orient,
-            "leftSqr": [left, leftBottom, leftTop, middle],
-            "rightSqr": [middle, rightBottom, right, rightTop]
+            'line': line,
+            "orient": line.orient,
+            "leftBoxMakingLines": [left, leftBottom, leftTop, line],
+            "rightBoxMakingLines": [line, rightBottom, right, rightTop]
         };
 
-    } else if (orient == "horizontal") {
-        var top = {
-            "x1": middle.x1,
-            "y1": middle.y1 - game.gameBoard.gap,
-            "x2": middle.x2,
-            "y2": middle.y2 - game.gameBoard.gap
-        };
+    } else if (line.orient == "horizontal") {
+        var top = new Line(
+            line.x1,
+            line.y1 - game.gameBoard.gap,
+            line.x2,
+            line.y2 - game.gameBoard.gap
+        );
 
-        var topRight = {
-            "x1": middle.x2,
-            "y1": middle.y2,
-            "x2": middle.x2,
-            "y2": middle.y2 - game.gameBoard.gap
-        };
+        var topRight = new Line(
+            line.x2,
+            line.y2,
+            line.x2,
+            line.y2 - game.gameBoard.gap
+        );
 
-        var topLeft = {
-            "x1": middle.x1,
-            "y1": middle.y1,
-            "x2": middle.x1,
-            "y2": middle.y1 - game.gameBoard.gap
-        };
+        var topLeft = new Line(
+            line.x1,
+            line.y1,
+            line.x1,
+            line.y1 - game.gameBoard.gap
+        );
 
-        var bottomRight = {
-            "x1": middle.x2,
-            "y1": middle.y2,
-            "x2": middle.x2,
-            "y2": middle.y2 + game.gameBoard.gap
-        };
+        var bottomRight = new Line(
+            line.x2,
+            line.y2,
+            line.x2,
+            line.y2 + game.gameBoard.gap
+        );
 
-        var bottom = {
-            "x1": middle.x1,
-            "y1": middle.y1 + game.gameBoard.gap,
-            "x2": middle.x2,
-            "y2": middle.y2 + game.gameBoard.gap
-        };
+        var bottom = new Line(
+            line.x1,
+            line.y1 + game.gameBoard.gap,
+            line.x2,
+            line.y2 + game.gameBoard.gap
+        );
 
-        var bottomLeft = {
-            "x1": middle.x1,
-            "y1": middle.y1,
-            "x2": middle.x1,
-            "y2": middle.y1 + game.gameBoard.gap
-        };
+        var bottomLeft = new Line(
+            line.x1,
+            line.y1,
+            line.x1,
+            line.y1 + game.gameBoard.gap
+        );
 
         return {
-            "orient": orient,
-            "topSqr": [top, topRight, topLeft, middle],
-            "bottomSqr": [middle, bottomRight, bottom, bottomLeft]
+            'line': line,
+            "orient": line.orient,
+            "topBoxMakingLines": [top, topRight, topLeft, line],
+            "bottomBoxMakingLines": [line, bottomRight, bottom, bottomLeft]
         };
     }
 }
 
 function getSurroundingLines(line) {
     var lines = lineEsToJSON();
-    var rectLines = getRectLines(line);
+    var boxMakingLines = getBoxMakingLines(line);
     var square = new Object();
 
-    if (orient == "vertical") {
+    if (line.orient == "vertical") {
         square.orient = "vertical";
         var leftSquare = [];
         var rightSquare = [];
@@ -333,12 +350,12 @@ function getSurroundingLines(line) {
 
         for (let l of lines) {
 
-            for (let a of rectLines.leftSqr) {
+            for (let a of boxMakingLines.leftBoxMakingLines) {
                 if (compareLineObj(l, a) && !leftSquare.includes(a))
                     leftSquare.push(a);
             }
 
-            for (let b of rectLines.rightSqr) {
+            for (let b of boxMakingLines.rightBoxMakingLines) {
                 if (compareLineObj(l, b) && !rightSquare.includes(b))
                     rightSquare.push(b);
             }
@@ -348,7 +365,7 @@ function getSurroundingLines(line) {
         square.right = rightSquare;
     }
 
-    if (orient == "horizontal") {
+    if (line.orient == "horizontal") {
         square.orient = "horizontal";
         var topSquare = [];
         var bottomSquare = [];
@@ -357,17 +374,16 @@ function getSurroundingLines(line) {
 
         for (let l of lines) {
 
-            for (let a of rectLines.topSqr) {
+            for (let a of boxMakingLines.topBoxMakingLines) {
                 if (compareLineObj(l, a) && !topSquare.includes(a))
                     topSquare.push(a);
             }
 
-            for (let b of rectLines.bottomSqr) {
+            for (let b of boxMakingLines.bottomBoxMakingLines) {
                 if (compareLineObj(l, b) && !bottomSquare.includes(b))
                     bottomSquare.push(b);
             }
         }
-
 
         square.top = topSquare;
         square.bottom = bottomSquare;
@@ -434,8 +450,8 @@ const compareLineObj = (obj1, obj2) => {
 
 function compareDots(dot1, dot2) {
     return (
-        (dot1.cx == dot2.cx) &&
-        (dot1.cy == dot2.cy)
+        (dot1.x == dot2.x) &&
+        (dot1.y == dot2.y)
     )
 }
 
@@ -443,7 +459,10 @@ function dotExists(dot) {
     var dotsE = $All("circle");
 
     for (var d of dotsE) {
-        var existingDot = dotEToJSON(d);
+        var existingDot = new Dot(
+            d.cx.baseVal.value,
+            d.cy.baseVal.value
+        );
 
         if (compareDots(dot, existingDot)) {
             return true;
@@ -453,15 +472,15 @@ function dotExists(dot) {
     return false;
 }
 
-function lineExists(line, lineList) {
+function lineNotExists(line, linelist) {
 
-    for (let l of lineList) {
-        if (compareLineObj(line, l)) {
-            return true;
+    for (let listLine of linelist) {
+        if (compareLineObj(line, listLine)) {
+            return false;
         }
     }
 
-    return false;
+    return true;
 }
 
 function doesMakesSquare(middleLine) {
@@ -569,7 +588,7 @@ function setupPlayerRankList() {
 
     playerRankListUI.innerHTML = "";
     var rank = 1;
-    game.playerList.forEach((player, i, playerList) => { 
+    game.playerList.forEach((player, i, playerList) => {
         if (i > 0) {
             let prevPlayer = playerList[i - 1];
 

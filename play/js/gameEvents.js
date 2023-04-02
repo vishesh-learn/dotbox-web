@@ -20,10 +20,13 @@ function pointerDown(event) {
 
   if (x && y) {
     let nearInitDot = nearestDot(x, y);
-    initDot = dotEToJSON(nearInitDot);
+    initDot = new Dot(
+      nearInitDot.cx.baseVal.value,
+      nearInitDot.cy.baseVal.value
+    );
 
-    if (difference(x, initDot.cx) <= game.gameBoard.gap / 2
-      && difference(y, initDot.cy) <= game.gameBoard.gap / 2) {
+    if (difference(x, initDot.x) <= game.gameBoard.gap / 2
+      && difference(y, initDot.y) <= game.gameBoard.gap / 2) {
       $aEL(dotSVG, "pointermove", linePrev);
       $aEL(svgC, "pointerup", pointerUp);
     } else {
@@ -46,13 +49,13 @@ function pointerUp(event) {
 
   if (initDot && x && y) {
     finalDot = nearDot(x, y);
-
+    
     if (
       validateLines(finalDot)
-      && difference(x, finalDot.cx) <= game.gameBoard.gap / 2
-      && difference(y, finalDot.cy) <= game.gameBoard.gap / 2
+      && difference(x, finalDot.x) <= game.gameBoard.gap / 2
+      && difference(y, finalDot.y) <= game.gameBoard.gap / 2
     ) {
-      lineMaker(new Line(initDot.cx, initDot.cy, finalDot.cx, finalDot.cy));
+      lineMaker(new Line(initDot.x, initDot.y, finalDot.x, finalDot.y));
     }
   } else {
     console.log("no x and y");
@@ -60,19 +63,15 @@ function pointerUp(event) {
 }
 
 function removePrevLines() {
-  var prevLines = $All(".prevLine");
-
-  for (let o of prevLines) {
-    o.remove();
-  }
+  $All(".prevLine").forEach(line => line.remove());
 }
 
 function lineMade(line) {
   made.lineMade = true;
 
-  allPossibleLines.forEach((possibleLine, index) => {
+  pendingPossiblelines.forEach((possibleLine, index) => {
     if (compareLineObj(possibleLine, line)) {
-      var l = allPossibleLines.splice(index, 1);
+      pendingPossiblelines.splice(index, 1);
     }
   });
 
@@ -91,7 +90,7 @@ function gameEvent() {
     } else {
       playerTurn();
     }
-    
+
     if (isEnd()) {
       winBoard();
     }
@@ -133,7 +132,7 @@ function playerTurn() {
 }
 
 function isEnd() {
-  if (allPossibleLines.length <= 0) {
+  if (pendingPossiblelines.length <= 0) {
     return true;
   }
 

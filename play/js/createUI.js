@@ -69,8 +69,6 @@ function gameBoardBuilder() {
     }
 
     svgResize();
-
-    getAllPossibleLines();
 }
 
 function createSquareUI(xy) {

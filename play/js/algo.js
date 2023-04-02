@@ -22,21 +22,21 @@ function findAndMakeBoxMakingLines() {
 function makeSafeOrRandomLine() {
   var line;
 
-  var currSafeMoves = allPossibleLines.filter(possibleLine => isSafeMove(possibleLine));
+  var currSafeMoves = pendingPossiblelines.filter(possibleLine => isSafeMove(possibleLine));
 
   if (currSafeMoves.length > 0) { // draw safe line if exist
     line = currSafeMoves[getRndInteger(0, currSafeMoves.length - 1)];
   } else { // else draw any random line - *need to find and draw less unsafe line
-    line = allPossibleLines[getRndInteger(0, allPossibleLines.length - 1)];
+    line = pendingPossiblelines[getRndInteger(0, pendingPossiblelines.length - 1)];
   }
 
   lineMaker(line);
 }
 
 function getSquareMakingLine() {
-  allPossibleLines = getAllPossibleLines();
+  getPendingPossiblelines();
 
-  for (var possibleLine of allPossibleLines) {
+  for (var possibleLine of pendingPossiblelines) {
     if (doesMakesSquare(possibleLine)) {
       return possibleLine;
     }
