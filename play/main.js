@@ -213,10 +213,10 @@ function svgResize() {
     var width = ((game.gameBoard.col - 1) * game.gameBoard.gap) + (game.gameBoard.svgPaddingX * 2);
     var height = ((game.gameBoard.row - 1) * game.gameBoard.gap) + (game.gameBoard.svgPaddingY * 2);
 
-    for (var svg of svgList) {
-        svg.style.width = width + "px";
-        svg.style.height = height + "px";
-    }
+    svgList.forEach(svg => {
+        svg.style.width = `${width}px`;
+        svg.style.height = `${height}px`;
+    });
 }
 
 function lineMaker(line) {
@@ -593,8 +593,6 @@ function setupPlayerRankList() {
     game.playerList.forEach((player, i, playerList) => {
         if (i > 0) {
             let prevPlayer = playerList[i - 1];
-
-            console.log(prevPlayer, player);
 
             if (prevPlayer.score > player.score) {
                 rank++;

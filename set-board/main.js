@@ -36,27 +36,22 @@ function startupVariables(){
 }
 
 function GameBoardBuilder(){
-    var gameBoardSVG = $(".svgC svg");
-    var dots = $All("circle");
-
-    for(let o of dots){
-        o.remove();
-    }
+    $All("circle").forEach(dot => dot.remove());
 
     if(game.gameBoard.maxRow >= game.gameBoard.minRow && game.gameBoard.maxCol >= game.gameBoard.minCol){
         for(let i = 0;i < game.gameBoard.maxRow;i++){
             for(let j = 0;j < game.gameBoard.maxCol;j++){
-                var cx = (game.gameBoard.gap * j + game.gameBoard.svgPaddingX).toString(10);
-                var cy = (game.gameBoard.gap * i + game.gameBoard.svgPaddingY).toString(10);
+                var x = (game.gameBoard.gap * j + game.gameBoard.svgPaddingX).toString(10);
+                var y = (game.gameBoard.gap * i + game.gameBoard.svgPaddingY).toString(10);
 
                 let dot = $cENS("circle");
                 dot.setAttribute("class", "dot hidden");
 
                 dot.setAttribute("r", "7");
-                dot.setAttribute("cx", cx);
-                dot.setAttribute("cy", cy);
+                dot.setAttribute("cx", x);
+                dot.setAttribute("cy", y);
 
-                gameBoardSVG.appendChild(dot);
+                $(".svgC svg").appendChild(dot);
             }
         }
     }

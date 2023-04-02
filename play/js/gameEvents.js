@@ -55,10 +55,7 @@ function pointerUp(event) {
       && difference(x, finalDot.x) <= game.gameBoard.gap / 2
       && difference(y, finalDot.y) <= game.gameBoard.gap / 2
     ) {
-      requestAnimationFrame(() => {
-        lineMaker(new Line(initDot.x, initDot.y, finalDot.x, finalDot.y));
-      });
-      
+      lineMaker(new Line(initDot.x, initDot.y, finalDot.x, finalDot.y));
     }
   } else {
     console.log("no x and y");
