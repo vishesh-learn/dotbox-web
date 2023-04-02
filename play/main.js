@@ -100,12 +100,14 @@ function linePrev(event) {
         }
 
         var pseudoDot = new Dot(x, y);
-
-        prevLineMaker(
-            new Line(
-                initDot.x, initDot.y, pseudoDot.x, pseudoDot.y
-            )
-        );
+        
+        requestAnimationFrame(() => {
+            prevLineMaker(
+                new Line(
+                    initDot.x, initDot.y, pseudoDot.x, pseudoDot.y
+                )
+            );
+        });
     }
 }
 
