@@ -3,7 +3,7 @@
   --green: #45b77f;
   --brown-light: #795548;
   --brown: #4c191b;
-  --orange: rgb(246 120 26);
+  --orange: #ffa15b;
 
   --headerHeight: 50px;
   --nextButtonHeight: 50px;
@@ -40,7 +40,7 @@ body {
   background-color: var(--skyBlue);
   background-image: url(../images/bg.svg);
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 1600px 100%;
   background-position: center;
   z-index: -1;
 }

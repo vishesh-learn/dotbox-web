@@ -19,7 +19,7 @@ h4 {
     padding: 20px 30px;
 }
 
-.game-title {
+.game-title, .email-id {
     font-weight: bold;
 }
 

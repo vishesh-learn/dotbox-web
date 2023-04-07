@@ -73,7 +73,7 @@ function footerInfo() {
 
     rowColInfoHtml.innerHTML = `Board: ${game.gameBoard.col} x ${game.gameBoard.row}`;
 }
-
+let abc;
 function linePrev(event) {
     var x = event.offsetX, y = event.offsetY;
 
@@ -101,13 +101,12 @@ function linePrev(event) {
 
         var pseudoDot = new Dot(x, y);
         
-        requestAnimationFrame(() => {
-            prevLineMaker(
-                new Line(
-                    initDot.x, initDot.y, pseudoDot.x, pseudoDot.y
-                )
-            );
-        });
+        abc = setTimeout(prevLineMaker, 0, [initDot.x, initDot.y, pseudoDot.x, pseudoDot.y]);
+        // prevLineMaker(
+        //     new Line(
+        //         initDot.x, initDot.y, pseudoDot.x, pseudoDot.y
+        //     )
+        // );
     }
 }
 
@@ -194,7 +193,7 @@ const nearestDot = (x, y) => {
     return nearDot;
 }
 
-function prevLineMaker(line) {
+function prevLineMaker(line) { clearTimeout(abc);
     var svg = $(".lineSVG");
     var prevLines = $All(".prevLine");
 
