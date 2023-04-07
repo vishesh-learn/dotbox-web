@@ -45,7 +45,7 @@ function pointerUp(event) {
 
   made = new Made();
 
-  abc = setTimeout(removePrevLines);
+  abc = setTimeout(removePrevLines, 0);
   //removePrevLines();
 
   if (initDot && x && y) {
