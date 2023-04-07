@@ -101,12 +101,11 @@ function linePrev(event) {
 
         var pseudoDot = new Dot(x, y);
         
-        abc = setTimeout(prevLineMaker, 0, [initDot.x, initDot.y, pseudoDot.x, pseudoDot.y]);
-        // prevLineMaker(
-        //     new Line(
-        //         initDot.x, initDot.y, pseudoDot.x, pseudoDot.y
-        //     )
-        // );
+        prevLineMaker(
+            new Line(
+                initDot.x, initDot.y, pseudoDot.x, pseudoDot.y
+            )
+        );
     }
 }
 
@@ -193,7 +192,7 @@ const nearestDot = (x, y) => {
     return nearDot;
 }
 
-function prevLineMaker(line) { clearTimeout(abc);
+function prevLineMaker(line) {
     var svg = $(".lineSVG");
     var prevLines = $All(".prevLine");
 

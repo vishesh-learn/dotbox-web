@@ -45,7 +45,8 @@ function pointerUp(event) {
 
   made = new Made();
 
-  removePrevLines();
+  abc = setTimeout(removePrevLines);
+  //removePrevLines();
 
   if (initDot && x && y) {
     finalDot = nearDot(x, y);
@@ -62,7 +63,7 @@ function pointerUp(event) {
   }
 }
 
-function removePrevLines() {
+function removePrevLines() { clearTimeout(abc);
   $All(".prevLine").forEach(line => line.remove());
 }
 
