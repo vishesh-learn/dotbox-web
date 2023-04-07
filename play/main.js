@@ -196,13 +196,9 @@ function prevLineMaker(line) {
     var svg = $(".lineSVG");
     var prevLines = $All(".prevLine");
 
-    for (let o of prevLines) {
-        o.remove();
-    }
+    prevLines.forEach(line => line.remove());
 
-    let lineE = getSVGLine("prevLine", line);
-
-    svg.appendChild(lineE);
+    svg.appendChild(getSVGLine("prevLine", line));
 }
 
 function svgResize() {
