@@ -44,9 +44,8 @@ function pointerUp(event) {
   var x = event.offsetX, y = event.offsetY;
 
   made = new Made();
-
-  abc = setTimeout(removePrevLines, 0);
-  //removePrevLines();
+  
+  removePrevLines();
 
   if (initDot && x && y) {
     finalDot = nearDot(x, y);
@@ -56,14 +55,14 @@ function pointerUp(event) {
       && difference(x, finalDot.x) <= game.gameBoard.gap / 2
       && difference(y, finalDot.y) <= game.gameBoard.gap / 2
     ) {
-      lineMaker(new Line(initDot.x, initDot.y, finalDot.x, finalDot.y));
+      addLine(new Line(initDot.x, initDot.y, finalDot.x, finalDot.y));
     }
   } else {
     console.log("no x and y");
   }
 }
 
-function removePrevLines() { clearTimeout(abc);
+function removePrevLines() {
   $All(".prevLine").forEach(line => line.remove());
 }
 
@@ -133,9 +132,5 @@ function playerTurn() {
 }
 
 function isEnd() {
-  if (pendingPossiblelines.length <= 0) {
-    return true;
-  }
-
-  return false;
+  return pendingPossiblelines.length <= 0;
 }

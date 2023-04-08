@@ -12,7 +12,7 @@ function autoDrawLine() {
 let squareMakingLine;
 function findAndMakeBoxMakingLines() {
   if (squareMakingLine = getSquareMakingLine()) {
-    lineMaker(squareMakingLine);
+    addLine(squareMakingLine);
     
     // try to make a square
     findAndMakeBoxMakingLines();
@@ -30,7 +30,7 @@ function makeSafeOrRandomLine() {
     line = pendingPossiblelines[getRndInteger(0, pendingPossiblelines.length - 1)];
   }
 
-  lineMaker(line);
+  addLine(line);
 }
 
 function getSquareMakingLine() {

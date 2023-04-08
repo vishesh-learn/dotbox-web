@@ -1,4 +1,4 @@
-var currPlayer, playerTurnList, initDot, finalDot, orient, made, allPossibleLines = [], pendingPossiblelines = [];
+var currPlayer, playerTurnList, initDot, finalDot, orient, made, allPossibleLines = [], pendingPossiblelines = [],removePrevLinesTimeOut;
 
 class Dot {
     constructor(x, y, side) {
@@ -9,16 +9,26 @@ class Dot {
 }
 
 class Line {
-    constructor(x1, y1, x2, y2) {
+    constructor(x1, y1, x2, y2, byPlayerID, prev = false) {
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2;
+        this.byPlayerID = byPlayerID;
+        this.prev = prev;
     }
 
     get orient() {
         return (this.x1 == this.x2) && (this.y1 != this.y2)
             ? 'vertical' : 'horizontal';
+    }
+
+    get byPlayer() {
+        for (const player of game.playerList) {
+            if (player.id == this.byPlayerID) {
+                return player;
+            }
+        }
     }
 }
 
@@ -73,7 +83,7 @@ function footerInfo() {
 
     rowColInfoHtml.innerHTML = `Board: ${game.gameBoard.col} x ${game.gameBoard.row}`;
 }
-let abc;
+
 function linePrev(event) {
     var x = event.offsetX, y = event.offsetY;
 
@@ -135,7 +145,6 @@ function getSurroundingDots(initDot) {
     );
 
     var options = [top, right, bottom, left].filter(dotExists);
-
     return options;
 }
 
@@ -193,12 +202,11 @@ const nearestDot = (x, y) => {
 }
 
 function prevLineMaker(line) {
-    var svg = $(".lineSVG");
-    var prevLines = $All(".prevLine");
+    removePrevLines();
 
-    prevLines.forEach(line => line.remove());
-
-    svg.appendChild(getSVGLine("prevLine", line));
+    line.byPlayerID = currPlayer.id;
+    line.prev = true;
+    $(".lineSVG").appendChild(getSVGLine(line));
 }
 
 function svgResize() {
@@ -213,20 +221,31 @@ function svgResize() {
     });
 }
 
-function lineMaker(line) {
-    const svg = $(".lineSVG");
+function addLine(line) {
+    line.byPlayerID = currPlayer.id;
 
-    var lineE = getSVGLine("line", line);
+    if (line && lineNotExists(line, game.lines)) {
+        game.lines.push(line);
 
-    if (lineE && lineNotExists(line, lineEsToJSON())) {
-        svg.appendChild(lineE);
+        updateLinesUI();
 
         makeBox(getSurroundingLines(line));
 
         lineMade(line);
+    } else {
+        console.log('line exists');
     }
 
     initDot = undefined;
+}
+
+function updateLinesUI() {
+    const lineSVG = $(".lineSVG");
+    lineSVG.innerHTML = '';
+
+    game.lines.forEach(line => {
+        lineSVG.appendChild(getSVGLine(line));
+    });
 }
 
 function getBoxMakingLines(line) {
@@ -333,7 +352,7 @@ function getBoxMakingLines(line) {
 }
 
 function getSurroundingLines(line) {
-    var lines = lineEsToJSON();
+    var existingLineList = lineEsToJSON();
     var boxMakingLines = getBoxMakingLines(line);
     var square = new Object();
 
@@ -343,19 +362,17 @@ function getSurroundingLines(line) {
         var rightSquare = [];
 
         square.vline = line;
-
-        for (let l of lines) {
-
-            for (let a of boxMakingLines.leftBoxMakingLines) {
-                if (compareLineObj(l, a) && !leftSquare.includes(a))
-                    leftSquare.push(a);
-            }
-
-            for (let b of boxMakingLines.rightBoxMakingLines) {
-                if (compareLineObj(l, b) && !rightSquare.includes(b))
-                    rightSquare.push(b);
-            }
-        }
+        existingLineList.forEach(existingLine => {
+            boxMakingLines.leftBoxMakingLines.forEach(boxMakingLine => {
+                if (compareLineObj(existingLine, boxMakingLine) && !leftSquare.includes(boxMakingLine))
+                    leftSquare.push(boxMakingLine);
+            });
+            
+            boxMakingLines.rightBoxMakingLines.forEach(boxMakingLine => {
+                if (compareLineObj(existingLine, boxMakingLine) && !rightSquare.includes(boxMakingLine))
+                    rightSquare.push(boxMakingLine);
+            });
+        });
 
         square.left = leftSquare;
         square.right = rightSquare;
@@ -368,18 +385,17 @@ function getSurroundingLines(line) {
 
         square.hline = line;
 
-        for (let l of lines) {
+        existingLineList.forEach(existingLine => {
+            boxMakingLines.topBoxMakingLines.forEach(boxMakingLine => {
+                if (compareLineObj(existingLine, boxMakingLine) && !topSquare.includes(boxMakingLine))
+                    topSquare.push(boxMakingLine);
+            });
 
-            for (let a of boxMakingLines.topBoxMakingLines) {
-                if (compareLineObj(l, a) && !topSquare.includes(a))
-                    topSquare.push(a);
-            }
-
-            for (let b of boxMakingLines.bottomBoxMakingLines) {
-                if (compareLineObj(l, b) && !bottomSquare.includes(b))
-                    bottomSquare.push(b);
-            }
-        }
+            boxMakingLines.bottomBoxMakingLines.forEach(boxMakingLine => {
+                if (compareLineObj(existingLine, boxMakingLine) && !bottomSquare.includes(boxMakingLine))
+                    bottomSquare.push(boxMakingLine);
+            });
+        });
 
         square.top = topSquare;
         square.bottom = bottomSquare;
@@ -445,21 +461,18 @@ const compareLineObj = (obj1, obj2) => {
 }
 
 function compareDots(dot1, dot2) {
-    return (
-        (dot1.x == dot2.x) &&
-        (dot1.y == dot2.y)
-    )
+    return (dot1.x == dot2.x) && (dot1.y == dot2.y);
 }
 
 function dotExists(dot) {
-    var dotsE = $All("circle");
-
-    for (var d of dotsE) {
-        var existingDot = new Dot(
-            d.cx.baseVal.value,
-            d.cy.baseVal.value
+    var dotsE = $All("circle"), existingDot;
+    
+    for (const existingDotUI of dotsE) {
+        existingDot = new Dot(
+            existingDotUI.cx.baseVal.value,
+            existingDotUI.cy.baseVal.value
         );
-
+            
         if (compareDots(dot, existingDot)) {
             return true;
         }
@@ -469,7 +482,6 @@ function dotExists(dot) {
 }
 
 function lineNotExists(line, linelist) {
-
     for (let listLine of linelist) {
         if (compareLineObj(line, listLine)) {
             return false;
@@ -499,44 +511,32 @@ function resetBoard() {
     var linesE = $All(".line");
     var squaresE = $All(".winBox");
 
-    for (let sE of squaresE) {
-        sE.remove();
-    }
-
-    for (let lE of linesE) {
-        lE.remove();
-    }
-}
-
-function randi(upto) {
-    return Math.floor(Math.random() * upto);
+    [...squaresE, ...linesE].forEach(element => element.remove());
 }
 
 function setupPlayerTurnList() {
     playerTurnList = [];
     var currIndex = currPlayer.id - 1;
 
-    if (currIndex == 0) {
-        prevIndex = game.playerList.length - 1;
-    } else {
-        prevIndex = currIndex - 1;
-    }
+    prevIndex = currIndex === 0 ? game.playerList.length - 1 : prevIndex = currIndex - 1;
 
-    if (currIndex == game.playerList.length - 1) {
+    if (currIndex === game.playerList.length - 1) {
         nextIndex = 0;
         nextIndex2 = 1;
-    } else if (currIndex == game.playerList.length - 2) {
+    } else if (currIndex === game.playerList.length - 2) {
         nextIndex = currIndex + 1;
         nextIndex2 = 0;
     } else {
         nextIndex = currIndex + 1;
         nextIndex2 = currIndex + 2;
     }
-
-    playerTurnList.push(game.playerList[prevIndex]);
-    playerTurnList.push(game.playerList[currIndex]);
-    playerTurnList.push(game.playerList[nextIndex]);
-    playerTurnList.push(game.playerList[nextIndex2]);
+    
+    playerTurnList.push(
+        game.playerList[prevIndex],
+        game.playerList[currIndex],
+        game.playerList[nextIndex],
+        game.playerList[nextIndex2]
+    );
 }
 
 function slideLeft() {
@@ -551,11 +551,11 @@ function setupPlayerTurnListUI() {
 
     frame.innerHTML = "";
 
-    for (let player of playerTurnList) {
+    playerTurnList.forEach(player => {
         playerUI = createPlayerUI(player);
 
         frame.append(playerUI);
-    }
+    });
 
     frame.classList.remove("slideLeft");
 
@@ -564,7 +564,7 @@ function setupPlayerTurnListUI() {
 
 function setCurrPlayerInfo() {
     $(".curr-player-id").innerText = `ID: ${currPlayer.id}`;
-    $(".curr-player-name").innerText = `Name: ${Player.getName(currPlayer)}`;
+    $(".curr-player-name").innerText = `Name: ${currPlayer.placeholderName()}`;
     $(".curr-player-score").innerText = `Score: ${currPlayer.score}`;
 }
 

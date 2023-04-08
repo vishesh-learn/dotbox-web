@@ -9,7 +9,7 @@ function createPlayerUI(player) {
 
     const playerName = document.createElement("div");
     playerName.classList = "playerName";
-    playerName.innerText = Player.getName(player);
+    playerName.innerText = player.placeholderName();
     playerUI.append(playerName);
 
     return playerUI;
@@ -31,7 +31,7 @@ function createRankPlayerUI(player) {
 
     const playerName = document.createElement("div");
     playerName.classList = "playerName";
-    playerName.innerText = Player.getName(player);
+    playerName.innerText = player.placeholderName();
     playerUI.append(playerName);
 
     const score = document.createElement("div");
@@ -43,23 +43,21 @@ function createRankPlayerUI(player) {
 }
 
 function gameBoardBuilder() {
+    var cx, cy;
     var svg = $(".dotSVG");
     var dots = $All("circle");
 
-    for (let o of dots) {
-        o.remove();
-    }
+    dots.forEach(dot => dot.remove());
 
     if (game.gameBoard.row >= 2 && game.gameBoard.col >= 2) {
         for (let i = 0; i < game.gameBoard.row; i++) {
             for (let j = 0; j < game.gameBoard.col; j++) {
-                var cx = (game.gameBoard.gap * j + game.gameBoard.svgPaddingX).toString(10);
-                var cy = (game.gameBoard.gap * i + game.gameBoard.svgPaddingY).toString(10);
+                cx = (game.gameBoard.gap * j + game.gameBoard.svgPaddingX).toString();
+                cy = (game.gameBoard.gap * i + game.gameBoard.svgPaddingY).toString();
 
                 let dot = $cENS("circle");
                 dot.setAttribute("class", "dot");
 
-                //dot.setAttribute("r", "7");
                 dot.setAttribute("cx", cx);
                 dot.setAttribute("cy", cy);
 
@@ -120,24 +118,24 @@ function createStopUI(offset, stopColor) {
     return stopUI;
 }
 
-function getSVGLine(classValue, line) {
+function getSVGLine(line) {
     let lineE = $cENS("line");
 
-    lineE.setAttribute("class", classValue);
+    lineE.setAttribute("class", line.prev ? 'prevLine' : 'line');
 
     lineE.setAttribute("x1", line.x1);
     lineE.setAttribute("y1", line.y1);
     lineE.setAttribute("x2", line.x2);
     lineE.setAttribute("y2", line.y2);
 
-    if (currPlayer.color) {
-        lineE.setAttribute("stroke", currPlayer.color);
+    if (line.byPlayer.color) {
+        lineE.setAttribute("stroke", line.byPlayer.color);
     } else {
         console.log("color not found");
     }
 
-    if (currPlayer.id) {
-        lineE.setAttribute("byPlayer", currPlayer.id);
+    if (line.byPlayerID) {
+        lineE.setAttribute("byPlayer", line.byPlayerID);
     }
 
     return lineE;
