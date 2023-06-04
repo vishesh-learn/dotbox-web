@@ -32,12 +32,17 @@ body {
   fill: var(--brown);
 }
 
-#startButton {
+#home-menu {
   position: fixed;
   top: 35%;
   left: 50%;
   transform: translate(-50%, -50%);
 
+  display: flex;
+  flex-direction: column;
+}
+
+#home-menu .button {
   color: indianred;
   font-size: 50px;
   background: none;

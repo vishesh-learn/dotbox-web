@@ -1,72 +1,25 @@
-var currPlayer, playerTurnList, initDot, finalDot, orient, made, allPossibleLines = [], pendingPossiblelines = [],removePrevLinesTimeOut;
-
-class Dot {
-    constructor(x, y, side) {
-        this.x = x;
-        this.y = y;
-        this.side = side;
-    }
-}
-
-class Line {
-    constructor(x1, y1, x2, y2, byPlayerID, prev = false) {
-        this.x1 = x1;
-        this.y1 = y1;
-        this.x2 = x2;
-        this.y2 = y2;
-        this.byPlayerID = byPlayerID;
-        this.prev = prev;
-    }
-
-    get orient() {
-        return (this.x1 == this.x2) && (this.y1 != this.y2)
-            ? 'vertical' : 'horizontal';
-    }
-
-    get byPlayer() {
-        for (const player of game.playerList) {
-            if (player.id == this.byPlayerID) {
-                return player;
-            }
-        }
-    }
-}
-
-class Box {
-    constructor(x, y) {
-        this.x = x,
-            this.y = y
-    }
-}
-
-class Made {
-    constructor() {
-        this.lineMade = false;
-        this.boxMade = 0;
-    }
-}
-
 window.onload = () => {
+    $aEL(document.querySelector("#backButton"), "click", goBack);
+
     made = new Made();
 
-    loadGameAndPlayerList();
+    loadCurrGame();
 
     gameBoardBuilder();
 
     getAllPossibleLines();
 
-    getPendingPossiblelines()
+    getPendingPossiblelines();
+
+    updateLinesUI();
 
     requestAnimationFrame(playerTurn);
 
-    $aEL($(".playerTurnList"), "transitionend", setupPlayerTurnListUI);
+    $aEL(document.querySelector(".playerTurnList"), "transitionend", setupPlayerTurnListUI);
 
-    $aEL($("#backButton"), "click", goBack);
+    $aEL(document.querySelector("#replayButton"), "click", replay);
 
-    $aEL($("#replayButton"), "click",
-        () => window.location.reload());
-
-    $aEL($("#newGameButton"), "click",
+    $aEL(document.querySelector("#newGameButton"), "click",
         () => window.location.href = `../${pages.setBoard}`);
 
     footerInfo();
@@ -74,24 +27,29 @@ window.onload = () => {
     keyOnTabIndex();
 }
 
+function replay() {
+    localStorage.lines = [];
+    window.location.reload();
+}
+
 function goBack() {
     window.location.href = `../${pages.setPlayers}`;
 }
 
 function footerInfo() {
-    const rowColInfoHtml = $('.rowAndCol');
+    const rowColInfoHtml = document.querySelector('.rowAndCol');
 
-    rowColInfoHtml.innerHTML = `Board: ${game.gameBoard.col} x ${game.gameBoard.row}`;
+    rowColInfoHtml.innerHTML = `Board: ${currGame.gameBoard.col} x ${currGame.gameBoard.row}`;
 }
 
 function linePrev(event) {
     var x = event.offsetX, y = event.offsetY;
 
     if (initDot) {
-        var left = initDot.x - game.gameBoard.gap;
-        var top = initDot.y - game.gameBoard.gap;
-        var bottom = initDot.y + game.gameBoard.gap;
-        var right = initDot.x + game.gameBoard.gap;
+        var left = initDot.x - currGame.gameBoard.gap;
+        var top = initDot.y - currGame.gameBoard.gap;
+        var bottom = initDot.y + currGame.gameBoard.gap;
+        var right = initDot.x + currGame.gameBoard.gap;
 
         if (x < left) {
             x = left;
@@ -122,24 +80,24 @@ function linePrev(event) {
 function getSurroundingDots(initDot) {
     var top = new Dot(
         initDot.x,
-        initDot.y - game.gameBoard.gap,
+        initDot.y - currGame.gameBoard.gap,
         'top'
     );
 
     var right = new Dot(
-        initDot.x + game.gameBoard.gap,
+        initDot.x + currGame.gameBoard.gap,
         initDot.y,
         "right",
     );
 
     var bottom = new Dot(
         initDot.x,
-        initDot.y + game.gameBoard.gap,
+        initDot.y + currGame.gameBoard.gap,
         "bottom",
     );
 
     var left = new Dot(
-        initDot.x - game.gameBoard.gap,
+        initDot.x - currGame.gameBoard.gap,
         initDot.y,
         'left',
     );
@@ -174,7 +132,7 @@ function nearDot(x, y) {
 }
 
 const nearestDot = (x, y) => {
-    var dotEs = $All(".dot");
+    var dotEs = document.querySelectorAll(".dot");
 
     var nearDot = dotEs[0];
 
@@ -206,14 +164,14 @@ function prevLineMaker(line) {
 
     line.byPlayerID = currPlayer.id;
     line.prev = true;
-    $(".lineSVG").appendChild(getSVGLine(line));
+    document.querySelector(".lineSVG").appendChild(getSVGLine(line));
 }
 
 function svgResize() {
-    const svgList = $All(".svgC svg");
+    const svgList = document.querySelectorAll(".svgC svg");
 
-    var width = ((game.gameBoard.col - 1) * game.gameBoard.gap) + (game.gameBoard.svgPaddingX * 2);
-    var height = ((game.gameBoard.row - 1) * game.gameBoard.gap) + (game.gameBoard.svgPaddingY * 2);
+    var width = ((currGame.gameBoard.col - 1) * currGame.gameBoard.gap) + (currGame.gameBoard.svgPaddingX * 2);
+    var height = ((currGame.gameBoard.row - 1) * currGame.gameBoard.gap) + (currGame.gameBoard.svgPaddingY * 2);
 
     svgList.forEach(svg => {
         svg.style.width = `${width}px`;
@@ -222,16 +180,12 @@ function svgResize() {
 }
 
 function addLine(line) {
-    line.byPlayerID = currPlayer.id;
-
-    if (line && lineNotExists(line, game.lines)) {
-        game.lines.push(line);
+    if (line && lineNotExists(line, currGame.lines)) {
+        currGame.lines.push(line);
 
         updateLinesUI();
 
-        makeBox(getSurroundingLines(line));
-
-        lineMade(line);
+        //lineMade(line);
     } else {
         console.log('line exists');
     }
@@ -240,55 +194,59 @@ function addLine(line) {
 }
 
 function updateLinesUI() {
-    const lineSVG = $(".lineSVG");
+    const lineSVG = document.querySelector(".lineSVG");
     lineSVG.innerHTML = '';
 
-    game.lines.forEach(line => {
+    currGame.lines.forEach(line => {
         lineSVG.appendChild(getSVGLine(line));
+        
+        makeBox(getSurroundingLines(line), line);
+
+        lineMade(line);
     });
 }
 
 function getBoxMakingLines(line) {
     if (line.orient == "vertical") {
         var left = new Line(
-            line.x1 - game.gameBoard.gap,
+            line.x1 - currGame.gameBoard.gap,
             line.y1,
-            line.x2 - game.gameBoard.gap,
+            line.x2 - currGame.gameBoard.gap,
             line.y2
         );
 
         var right = new Line(
-            line.x1 + game.gameBoard.gap,
+            line.x1 + currGame.gameBoard.gap,
             line.y1,
-            line.x2 + game.gameBoard.gap,
+            line.x2 + currGame.gameBoard.gap,
             line.y2
         );
 
         var leftTop = new Line(
             line.x1,
             line.y1,
-            line.x1 - game.gameBoard.gap,
+            line.x1 - currGame.gameBoard.gap,
             line.y1
         );
 
         var leftBottom = new Line(
             line.x2,
             line.y2,
-            line.x2 - game.gameBoard.gap,
+            line.x2 - currGame.gameBoard.gap,
             line.y2
         );
 
         var rightTop = new Line(
             line.x1,
             line.y1,
-            line.x1 + game.gameBoard.gap,
+            line.x1 + currGame.gameBoard.gap,
             line.y1
         );
 
         var rightBottom = new Line(
             line.x2,
             line.y2,
-            line.x2 + game.gameBoard.gap,
+            line.x2 + currGame.gameBoard.gap,
             line.y2
         );
 
@@ -302,44 +260,44 @@ function getBoxMakingLines(line) {
     } else if (line.orient == "horizontal") {
         var top = new Line(
             line.x1,
-            line.y1 - game.gameBoard.gap,
+            line.y1 - currGame.gameBoard.gap,
             line.x2,
-            line.y2 - game.gameBoard.gap
+            line.y2 - currGame.gameBoard.gap
         );
 
         var topRight = new Line(
             line.x2,
             line.y2,
             line.x2,
-            line.y2 - game.gameBoard.gap
+            line.y2 - currGame.gameBoard.gap
         );
 
         var topLeft = new Line(
             line.x1,
             line.y1,
             line.x1,
-            line.y1 - game.gameBoard.gap
+            line.y1 - currGame.gameBoard.gap
         );
 
         var bottomRight = new Line(
             line.x2,
             line.y2,
             line.x2,
-            line.y2 + game.gameBoard.gap
+            line.y2 + currGame.gameBoard.gap
         );
 
         var bottom = new Line(
             line.x1,
-            line.y1 + game.gameBoard.gap,
+            line.y1 + currGame.gameBoard.gap,
             line.x2,
-            line.y2 + game.gameBoard.gap
+            line.y2 + currGame.gameBoard.gap
         );
 
         var bottomLeft = new Line(
             line.x1,
             line.y1,
             line.x1,
-            line.y1 + game.gameBoard.gap
+            line.y1 + currGame.gameBoard.gap
         );
 
         return {
@@ -404,13 +362,13 @@ function getSurroundingLines(line) {
     return square;
 }
 
-function makeBox(square) {
+function makeBox(square, line) {
     var x, y, boxes = [];
 
     if (square.orient == "horizontal") {
         x = Math.min(square.hline.x1, square.hline.x2);
         if (square.top.length == 4) {
-            y = Math.min(square.hline.y1, square.hline.y2) - game.gameBoard.gap;
+            y = Math.min(square.hline.y1, square.hline.y2) - currGame.gameBoard.gap;
 
             boxes.push(new Box(x, y));
         }
@@ -424,7 +382,7 @@ function makeBox(square) {
     if (square.orient == "vertical") {
         y = Math.min(square.vline.y1, square.vline.y2);
         if (square.left.length == 4) {
-            x = Math.min(square.vline.x1, square.vline.x2) - game.gameBoard.gap;
+            x = Math.min(square.vline.x1, square.vline.x2) - currGame.gameBoard.gap;
 
             boxes.push(new Box(x, y));
         }
@@ -437,8 +395,8 @@ function makeBox(square) {
 
     let squareE;
     boxes.forEach(box => {
-        squareE = createSquareUI(box);
-        $('.boxG').appendChild(squareE);
+        squareE = createSquareUI(box, line);
+        document.querySelector('.boxG').appendChild(squareE);
         boxMade(box);
     });
 }
@@ -465,7 +423,7 @@ function compareDots(dot1, dot2) {
 }
 
 function dotExists(dot) {
-    var dotsE = $All("circle"), existingDot;
+    var dotsE = document.querySelectorAll("circle"), existingDot;
     
     for (const existingDotUI of dotsE) {
         existingDot = new Dot(
@@ -508,8 +466,8 @@ function doesMakesSquare(middleLine) {
 }
 
 function resetBoard() {
-    var linesE = $All(".line");
-    var squaresE = $All(".winBox");
+    var linesE = document.querySelectorAll(".line");
+    var squaresE = document.querySelectorAll(".winBox");
 
     [...squaresE, ...linesE].forEach(element => element.remove());
 }
@@ -518,12 +476,12 @@ function setupPlayerTurnList() {
     playerTurnList = [];
     var currIndex = currPlayer.id - 1;
 
-    prevIndex = currIndex === 0 ? game.playerList.length - 1 : prevIndex = currIndex - 1;
+    prevIndex = currIndex === 0 ? currGame.playerList.length - 1 : prevIndex = currIndex - 1;
 
-    if (currIndex === game.playerList.length - 1) {
+    if (currIndex === currGame.playerList.length - 1) {
         nextIndex = 0;
         nextIndex2 = 1;
-    } else if (currIndex === game.playerList.length - 2) {
+    } else if (currIndex === currGame.playerList.length - 2) {
         nextIndex = currIndex + 1;
         nextIndex2 = 0;
     } else {
@@ -532,21 +490,21 @@ function setupPlayerTurnList() {
     }
     
     playerTurnList.push(
-        game.playerList[prevIndex],
-        game.playerList[currIndex],
-        game.playerList[nextIndex],
-        game.playerList[nextIndex2]
+        currGame.playerList[prevIndex],
+        currGame.playerList[currIndex],
+        currGame.playerList[nextIndex],
+        currGame.playerList[nextIndex2]
     );
 }
 
 function slideLeft() {
-    const frame = $(".playerTurnList");
+    const frame = document.querySelector(".playerTurnList");
 
     frame.classList.add("slideLeft");
 }
 
 function setupPlayerTurnListUI() {
-    const frame = $(".playerTurnList");
+    const frame = document.querySelector(".playerTurnList");
     var playerUI;
 
     frame.innerHTML = "";
@@ -563,28 +521,29 @@ function setupPlayerTurnListUI() {
 }
 
 function setCurrPlayerInfo() {
-    $(".curr-player-id").innerText = `ID: ${currPlayer.id}`;
-    $(".curr-player-name").innerText = `Name: ${currPlayer.placeholderName()}`;
-    $(".curr-player-score").innerText = `Score: ${currPlayer.score}`;
+    document.querySelector(".curr-player-id").innerText = `ID: ${currPlayer.id}`;
+    console.log(currPlayer.placeholderName);
+    document.querySelector(".curr-player-name").innerText = `Name: ${currPlayer.placeholderName}`;
+    document.querySelector(".curr-player-score").innerText = `Score: ${currPlayer.score}`;
 }
 
 function winBoard() {
-    $("body").classList.add("pop-up-container");
+    document.querySelector("body").classList.add("pop-up-container");
 
     sortPlayerByScore();
     setupPlayerRankList();
 }
 
 function sortPlayerByScore() {
-    game.playerList.sort((a, b) => b.score - a.score);
+    currGame.playerList.sort((a, b) => b.score - a.score);
 }
 
 function setupPlayerRankList() {
-    const playerRankListUI = $(".playerRankList");
+    const playerRankListUI = document.querySelector(".playerRankList");
 
     playerRankListUI.innerHTML = "";
     var rank = 1;
-    game.playerList.forEach((player, i, playerList) => {
+    currGame.playerList.forEach((player, i, playerList) => {
         if (i > 0) {
             let prevPlayer = playerList[i - 1];
 

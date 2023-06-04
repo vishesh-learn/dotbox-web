@@ -1,5 +1,5 @@
 const lineEsToJSON = () => {
-    const linesE = $All("svg line");
+    const linesE = document.querySelectorAll("svg line");
     var lines = [];
 
     for (let lineE of linesE) {

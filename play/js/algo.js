@@ -12,11 +12,14 @@ function autoDrawLine() {
 let squareMakingLine;
 function findAndMakeBoxMakingLines() {
   if (squareMakingLine = getSquareMakingLine()) {
+    squareMakingLine.byPlayerID = currPlayer.id;
     addLine(squareMakingLine);
     
     // try to make a square
     findAndMakeBoxMakingLines();
   }
+
+  saveCurrGame();
 }
 
 function makeSafeOrRandomLine() {
@@ -30,7 +33,10 @@ function makeSafeOrRandomLine() {
     line = pendingPossiblelines[getRndInteger(0, pendingPossiblelines.length - 1)];
   }
 
+  line.byPlayerID = currPlayer.id;
   addLine(line);
+
+  saveCurrGame();
 }
 
 function getSquareMakingLine() {

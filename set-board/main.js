@@ -1,11 +1,12 @@
 window.onload = () => {
-  const gameBoardSVG = $(".svgC svg"), backButton = $("#backButton"), nextButton = $("#nextButton");
+  const gameBoardSVG = document.querySelector(".svgC svg"), backButton = document.querySelector("#backButton"), nextButton = document.querySelector("#nextButton");
   
   $aEL(backButton, "click", () => window.location.href = `../${pages.home}`);
 
+  loadCurrGame();
   setupGameBoard();
+
   $aEL(window, "resize", setupGameBoard);
-  
   $aEL(gameBoardSVG, "pointerdown", pointHandler);
   $aEL(gameBoardSVG, "pointerup", () => $rEL(gameBoardSVG, "pointermove", pointHandler));
 
@@ -15,7 +16,6 @@ window.onload = () => {
 }
 
 function setupGameBoard(){
-  loadGameBoard();
   startupVariables();
   GameBoardBuilder();
   optedCnR();
@@ -23,35 +23,35 @@ function setupGameBoard(){
 
 function startupVariables(){
   var cH = parseInt(
-    getComputedStyle($(".svgC"), null).getPropertyValue("height")
-  ) - (game.gameBoard.svgPaddingX * 2);
+    getComputedStyle(document.querySelector(".svgC"), null).getPropertyValue("height")
+  ) - (currGame.gameBoard.svgPaddingX * 2);
 
   var cW = parseInt(
-    getComputedStyle($(".svgC"), null).getPropertyValue("width")
-  ) - (game.gameBoard.svgPaddingX * 2);
+    getComputedStyle(document.querySelector(".svgC"), null).getPropertyValue("width")
+  ) - (currGame.gameBoard.svgPaddingX * 2);
 
-  game.gameBoard.maxRow = length_to_dotCount(cH);
+  currGame.gameBoard.maxRow = length_to_dotCount(cH);
 
-  game.gameBoard.maxCol = length_to_dotCount(cW);
+  currGame.gameBoard.maxCol = length_to_dotCount(cW);
 }
 
 function GameBoardBuilder(){
-    $All("circle").forEach(dot => dot.remove());
+    document.querySelectorAll("circle").forEach(dot => dot.remove());
 
-    if(game.gameBoard.maxRow >= game.gameBoard.minRow && game.gameBoard.maxCol >= game.gameBoard.minCol){
-        for(let i = 0;i < game.gameBoard.maxRow;i++){
-            for(let j = 0;j < game.gameBoard.maxCol;j++){
-                var x = (game.gameBoard.gap * j + game.gameBoard.svgPaddingX).toString(10);
-                var y = (game.gameBoard.gap * i + game.gameBoard.svgPaddingY).toString(10);
+    if(currGame.gameBoard.maxRow >= currGame.gameBoard.minRow && currGame.gameBoard.maxCol >= currGame.gameBoard.minCol){
+        for(let i = 0;i < currGame.gameBoard.maxRow;i++){
+            for(let j = 0;j < currGame.gameBoard.maxCol;j++){
+                var x = (currGame.gameBoard.gap * j + currGame.gameBoard.svgPaddingX).toString(10);
+                var y = (currGame.gameBoard.gap * i + currGame.gameBoard.svgPaddingY).toString(10);
 
-                let dot = $cENS("circle");
+                let dot = document.createElementNS('http://www.w3.org/2000/svg', "circle");
                 dot.setAttribute("class", "dot hidden");
 
                 dot.setAttribute("r", "7");
                 dot.setAttribute("cx", x);
                 dot.setAttribute("cy", y);
 
-                $(".svgC svg").appendChild(dot);
+                document.querySelector(".svgC svg").appendChild(dot);
             }
         }
     }
@@ -60,17 +60,17 @@ function GameBoardBuilder(){
 }
 
 function svgResize(){
-    var gameBoardSVG = $(".svgC svg");
+    var gameBoardSVG = document.querySelector(".svgC svg");
 
-    var width = ((game.gameBoard.maxCol - 1) * game.gameBoard.gap) + (game.gameBoard.svgPaddingX * 2);
-    var height = ((game.gameBoard.maxRow - 1) * game.gameBoard.gap) + (game.gameBoard.svgPaddingY * 2);
+    var width = ((currGame.gameBoard.maxCol - 1) * currGame.gameBoard.gap) + (currGame.gameBoard.svgPaddingX * 2);
+    var height = ((currGame.gameBoard.maxRow - 1) * currGame.gameBoard.gap) + (currGame.gameBoard.svgPaddingY * 2);
 
     gameBoardSVG.style.width = width + "px";
     gameBoardSVG.style.height = height + "px";
 }
 
 function pointHandler(event){
-  var gameBoardSVG = $(".svgC svg");
+  var gameBoardSVG = document.querySelector(".svgC svg");
 
   var pointX = event.offsetX;
   var pointY = event.offsetY;
@@ -80,8 +80,8 @@ function pointHandler(event){
   var optedX = nearDot.cx.baseVal.value;
   var optedY = nearDot.cy.baseVal.value;
 
-  game.gameBoard.col = length_to_dotCount(optedX, game.gameBoard.gap);
-  game.gameBoard.row = length_to_dotCount(optedY, game.gameBoard.gap);
+  currGame.gameBoard.col = length_to_dotCount(optedX, currGame.gameBoard.gap);
+  currGame.gameBoard.row = length_to_dotCount(optedY, currGame.gameBoard.gap);
 
   optedCnR();
 
@@ -89,38 +89,38 @@ function pointHandler(event){
 }
 
 function length_to_dotCount(length){
-  //values of 'length % game.gameBoard.gap' and 'svgPadding' are equal
-  return (length - length % game.gameBoard.gap + game.gameBoard.gap) / game.gameBoard.gap;
+  //values of 'length % currGame.gameBoard.gap' and 'svgPadding' are equal
+  return (length - length % currGame.gameBoard.gap + currGame.gameBoard.gap) / currGame.gameBoard.gap;
 }
 
 function dotCount_to_length(dotCount, svgPadding){
-  return (dotCount * game.gameBoard.gap) - game.gameBoard.gap + svgPadding;
+  return (dotCount * currGame.gameBoard.gap) - currGame.gameBoard.gap + svgPadding;
 }
 
 function optedCnR(){
-  if (game.gameBoard.col > game.gameBoard.maxCol) {
-    game.gameBoard.col = game.gameBoard.maxCol;
-  } else if (game.gameBoard.col < game.gameBoard.minCol) {
-    game.gameBoard.col = game.gameBoard.minCol;
+  if (currGame.gameBoard.col > currGame.gameBoard.maxCol) {
+    currGame.gameBoard.col = currGame.gameBoard.maxCol;
+  } else if (currGame.gameBoard.col < currGame.gameBoard.minCol) {
+    currGame.gameBoard.col = currGame.gameBoard.minCol;
   }
 
-  if (game.gameBoard.row > game.gameBoard.maxRow) {
-    game.gameBoard.row = game.gameBoard.maxRow;
-  } else if (game.gameBoard.row < game.gameBoard.minRow) {
-    game.gameBoard.row = game.gameBoard.minRow;
+  if (currGame.gameBoard.row > currGame.gameBoard.maxRow) {
+    currGame.gameBoard.row = currGame.gameBoard.maxRow;
+  } else if (currGame.gameBoard.row < currGame.gameBoard.minRow) {
+    currGame.gameBoard.row = currGame.gameBoard.minRow;
   }
 
-  var x = dotCount_to_length(game.gameBoard.col, game.gameBoard.svgPaddingX);
-  var y = dotCount_to_length(game.gameBoard.row, game.gameBoard.svgPaddingY);
+  var x = dotCount_to_length(currGame.gameBoard.col, currGame.gameBoard.svgPaddingX);
+  var y = dotCount_to_length(currGame.gameBoard.row, currGame.gameBoard.svgPaddingY);
   optedXnY(x, y);
 }
 
 function optedXnY(x, y){
-    var dotEs = $All(".dot");
-    const infoE = $("#info");
+    var dotEs = document.querySelectorAll(".dot");
+    const infoE = document.querySelector("#info");
 
     if(x && y){
-      infoE.innerHTML = game.gameBoard.col + " x " + game.gameBoard.row;
+      infoE.innerHTML = currGame.gameBoard.col + " x " + currGame.gameBoard.row;
 
         for(var dotE of dotEs){
             let cx = dotE.cx.baseVal.value;
@@ -134,14 +134,14 @@ function optedXnY(x, y){
             }
         }
 
-        saveGameBoard(game.gameBoard);
+        saveCurrGame();
     } else {
         console.log("invalid x or y");
     }
 }
 
 function nearestDot(x, y){
-    var dotEs = $All(".dot");
+    var dotEs = document.querySelectorAll(".dot");
 
     var nearDot = dotEs[0];
 

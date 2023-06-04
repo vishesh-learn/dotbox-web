@@ -1,7 +1,7 @@
 //this file contains function that need to run only once per load to set up gameplay.
 
 function getAllPossibleLines() {
-    var dotEs = $All(".dot"), validFinalDots, dot1, dot2;
+    var dotEs = document.querySelectorAll(".dot"), validFinalDots, dot1, dot2;
 
     for (var dotE of dotEs) {
         dot1 = new Dot(

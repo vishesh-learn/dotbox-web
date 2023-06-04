@@ -3,9 +3,9 @@ function validateLines(finalDot) {
       var deltaX = Math.abs(initDot.x - finalDot.x);
       var deltaY = Math.abs(initDot.y - finalDot.y);
 
-      if ((initDot.x == finalDot.x) && (deltaY == game.gameBoard.gap)) {
+      if ((initDot.x == finalDot.x) && (deltaY == currGame.gameBoard.gap)) {
           return true;
-      } else if ((initDot.y == finalDot.y) && (deltaX == game.gameBoard.gap)) {
+      } else if ((initDot.y == finalDot.y) && (deltaX == currGame.gameBoard.gap)) {
           return true;
       } else {
           return false;

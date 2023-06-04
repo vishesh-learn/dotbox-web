@@ -1,17 +1,20 @@
 var targetPlayerIndex = 0;
 
 window.onload = () => {
-  const backButton = $("#backButton"), nextButton = $("#nextButton");
-  const addPlayerB = $(".addb"), playerListUI = $(".playerList");
-  const colorHueUI = $(".color-hue");
-  const popUpBgUI = $(".pop-up-bg");
-  const closePopUPUI = $(".close-pop-up");
+  const backButton = document.querySelector("#backButton"), nextButton = document.querySelector("#nextButton");
+  $aEL(backButton, "click", () => window.location.href = `../${pages.setBoard}`);
+  $aEL(nextButton, "click", () => window.location.href = `../${pages.play}`);
+  
+  const addPlayerB = document.querySelector(".addb"), playerListUI = document.querySelector(".playerList");
+  const colorHueUI = document.querySelector(".color-hue");
+  const popUpBgUI = document.querySelector(".pop-up-bg");
+  const closePopUPUI = document.querySelector(".close-pop-up");
 
-  loadGameAndPlayerList();
+  loadCurrGame();
+  
+  playerList();
 
   setupPlayerListUI();
-
-  $aEL(backButton, "click", () => window.location.href = `../${pages.setBoard}`);
 
   $aEL(addPlayerB, "click", addPlayer);
 
@@ -25,13 +28,11 @@ window.onload = () => {
   $aEL(popUpBgUI, "click", closePopUP);
   $aEL(closePopUPUI, "click", closePopUP);
 
-  $aEL(nextButton, "click", () => window.location.href = `../${pages.play}`);
-
   keyOnTabIndex();
 }
 
 function closePopUP() {
-  $("body").classList.remove("pop-up-container");
+  document.querySelector("body").classList.remove("pop-up-container");
 }
 
 function scrollAbove(event) {
@@ -41,7 +42,7 @@ function scrollAbove(event) {
     const targetPlayer = target.parentElement;
     const targetPlayerIndex = getIndexOfDom(targetPlayer);
 
-    $(".page-content").scrollTop = targetPlayer.clientHeight * (targetPlayerIndex - 2);
+    document.querySelector(".page-content").scrollTop = targetPlayer.clientHeight * (targetPlayerIndex - 2);
   }
 }
 
@@ -53,22 +54,20 @@ function goButtonHandler(event) {
 }
 
 function addPlayer() {
-  if (game.playerList.length < game.maxPlayer) {
-    game.playerList.push(new Player());
+  if (currGame.playerList.length < currGame.maxPlayer) {
+    currGame.playerList.push(new Player());
 
-    savePlayerList();
+    saveCurrGame();
 
     setupPlayerListUI();
   }
 }
 
 function updatePlayerCountView() {
-  const infoE = $("#info");
-  var playerCount = game.playerList.length;
+  const infoE = document.querySelector("#info");
+  var playerCount = currGame.playerList.length;
 
   infoE.innerHTML = playerCount == 1 ? playerCount + " player" : playerCount + " players";
-
-  assignID();
 }
 
 function updatePlayer(event) {
@@ -82,15 +81,15 @@ function updatePlayer(event) {
 
     if (target.className.includes("playerName")) {
       var name = target.value;
-      game.playerList[targetPlayerIndex].name = name;
+      currGame.playerList[targetPlayerIndex].name = name;
     }
 
     if (target.className.includes("isAlgo")) {
       var isAlgo = target.checked;
-      game.playerList[targetPlayerIndex].isAlgo = isAlgo;
+      currGame.playerList[targetPlayerIndex].isAlgo = isAlgo;
     }
 
-    savePlayerList();
+    saveCurrGame();
     setupPlayerListUI();
   }
 }
@@ -101,8 +100,8 @@ function colorSelector(event) {
 
   if (target.className.includes("avatar")) {
     targetPlayerIndex = getIndexOfDom(target.parentElement);
-    $("body").classList.add("pop-up-container");
-    colorPrevHTML.style.backgroundColor = game.playerList[targetPlayerIndex].color;
+    document.querySelector("body").classList.add("pop-up-container");
+    colorPrevHTML.style.backgroundColor = currGame.playerList[targetPlayerIndex].color;
   }
 }
 
@@ -112,9 +111,9 @@ function selectColor(event) {
 
     var color = targetColorBallUI.style.backgroundColor;
 
-    game.playerList[targetPlayerIndex].color = color;
+    currGame.playerList[targetPlayerIndex].color = color;
 
-    savePlayerList();
+    saveCurrGame();
     setupPlayerListUI();
 
     closePopUP();
@@ -125,9 +124,9 @@ function removePlayer(event) {
   const target = event.target;
 
   if (target.className.includes("removePlayerB")) {
-    game.playerList.splice(getIndexOfDom(target.parentElement), 1);
+    currGame.playerList.splice(getIndexOfDom(target.parentElement), 1);
 
-    savePlayerList();
+    saveCurrGame();
     setupPlayerListUI();
   }
 }
@@ -139,11 +138,11 @@ function getIndexOfDom(childDom) {
 }
 
 function setupPlayerListUI() {
-  const playerListUI = $(".playerList");
+  const playerListUI = document.querySelector(".playerList");
 
   playerListUI.innerHTML = "";
 
-  for (let player of game.playerList) {
+  for (let player of currGame.playerList) {
     playerListUI.append(createPlayerUI(player));
   }
 
@@ -162,12 +161,12 @@ function createPlayerUI(player) {
   const playerName = document.createElement("input");
   playerName.classList = "playerName";
   playerName.maxLength = 30;
-  playerName.placeholder = `player${player.id}`;
+  playerName.placeholder = player.placeholderName;
   playerName.value = player.name;
   playerUI.append(playerName);
 
   const isAlgo = document.createElement("input");
-  isAlgo.classList = "isAlgo";
+  isAlgo.classList = "isAlgo button";
   isAlgo.type = "checkbox";
   isAlgo.checked = player.isAlgo;
   let h = hexToHslObject(player.color).h;

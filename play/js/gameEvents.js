@@ -1,5 +1,5 @@
 function addPointerEvents() {
-  const dotSVG = $(".dotSVG");
+  const dotSVG = document.querySelector(".dotSVG");
 
   $aEL(dotSVG, "pointerdown", pointerDown);
   $aEL(dotSVG, "pointermove", linePrev);
@@ -7,7 +7,7 @@ function addPointerEvents() {
 }
 
 function removePointerEvents() {
-  const dotSVG = $(".dotSVG");
+  const dotSVG = document.querySelector(".dotSVG");
 
   $rEL(dotSVG, "pointerdown", pointerDown);
   $rEL(dotSVG, "pointermove", linePrev);
@@ -15,7 +15,7 @@ function removePointerEvents() {
 }
 
 function pointerDown(event) {
-  const dotSVG = $(".dotSVG"), svgC = $(".svgC");
+  const dotSVG = document.querySelector(".dotSVG"), svgC = document.querySelector(".svgC");
   var x = event.offsetX, y = event.offsetY;
 
   if (x && y) {
@@ -25,8 +25,8 @@ function pointerDown(event) {
       nearInitDot.cy.baseVal.value
     );
 
-    if (difference(x, initDot.x) <= game.gameBoard.gap / 2
-      && difference(y, initDot.y) <= game.gameBoard.gap / 2) {
+    if (difference(x, initDot.x) <= currGame.gameBoard.gap / 2
+      && difference(y, initDot.y) <= currGame.gameBoard.gap / 2) {
       $aEL(dotSVG, "pointermove", linePrev);
       $aEL(svgC, "pointerup", pointerUp);
     } else {
@@ -36,7 +36,7 @@ function pointerDown(event) {
 }
 
 function pointerUp(event) {
-  const dotSVG = $(".dotSVG"), svgC = $(".svgC");
+  const dotSVG = document.querySelector(".dotSVG"), svgC = document.querySelector(".svgC");
 
   $rEL(dotSVG, "pointermove", linePrev);
   $rEL(svgC, "pointerup", pointerUp);
@@ -52,23 +52,25 @@ function pointerUp(event) {
     
     if (
       validateLines(finalDot)
-      && difference(x, finalDot.x) <= game.gameBoard.gap / 2
-      && difference(y, finalDot.y) <= game.gameBoard.gap / 2
+      && difference(x, finalDot.x) <= currGame.gameBoard.gap / 2
+      && difference(y, finalDot.y) <= currGame.gameBoard.gap / 2
     ) {
-      addLine(new Line(initDot.x, initDot.y, finalDot.x, finalDot.y));
+      addLine(new Line(initDot.x, initDot.y, finalDot.x, finalDot.y, currPlayer.id));
     }
   } else {
     console.log("no x and y");
   }
+
+  saveCurrGame();
 }
 
 function removePrevLines() {
-  $All(".prevLine").forEach(line => line.remove());
+  document.querySelectorAll(".prevLine").forEach(line => line.remove());
 }
 
 function lineMade(line) {
   made.lineMade = true;
-
+  
   pendingPossiblelines.forEach((possibleLine, index) => {
     if (compareLineObj(possibleLine, line)) {
       pendingPossiblelines.splice(index, 1);
@@ -80,7 +82,6 @@ function lineMade(line) {
 
 function boxMade(box) {
   made.boxMade++;
-  //console.log(box);
 }
 
 function gameEvent() {
@@ -104,10 +105,10 @@ function playerTurn() {
   removePointerEvents();
 
   if (currPlayer != undefined) {
-    if (currPlayer.id == game.playerList.length) {
-      currPlayer = game.playerList[0];
+    if (currPlayer.id == currGame.playerList.length) {
+      currPlayer = currGame.playerList[0];
     } else {
-      currPlayer = game.playerList[currPlayer.id];
+      currPlayer = currGame.playerList[currPlayer.id];
     }
 
     setupPlayerTurnList();
@@ -118,7 +119,7 @@ function playerTurn() {
     }
 
   } else {
-    currPlayer = game.playerList[0];
+    currPlayer = currGame.playerList[0];
 
     setupPlayerTurnList();
     setupPlayerTurnListUI();
@@ -131,6 +132,6 @@ function playerTurn() {
   }
 }
 
-function isEnd() {
+function isEnd() { console.log(pendingPossiblelines);
   return pendingPossiblelines.length <= 0;
 }
