@@ -498,17 +498,18 @@ function setupPlayerTurnList() {
     playerTurnList = [];
     var currIndex = currPlayer.id - 1;
 
-    prevIndex = currIndex === 0 ? currGame.playerList.length - 1 : prevIndex = currIndex - 1;
+    prevIndex = currIndex === 0 ? currGame.playerList.length - 1 : currIndex - 1;
 
     if (currIndex === currGame.playerList.length - 1) {
         nextIndex = 0;
-        nextIndex2 = 1;
-    } else if (currIndex === currGame.playerList.length - 2) {
-        nextIndex = currIndex + 1;
-        nextIndex2 = 0;
     } else {
         nextIndex = currIndex + 1;
-        nextIndex2 = currIndex + 2;
+    }
+
+    if (nextIndex === currGame.playerList.length - 1) {
+        nextIndex2 = 0;
+    } else {
+        nextIndex2 = nextIndex + 1;
     }
 
     playerTurnList.push(
@@ -530,7 +531,6 @@ function setupPlayerTurnListUI() {
     var playerUI;
 
     frame.innerHTML = "";
-
     playerTurnList.forEach(player => {
         playerUI = createPlayerUI(player);
 

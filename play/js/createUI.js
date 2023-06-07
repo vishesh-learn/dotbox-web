@@ -1,4 +1,10 @@
 function createPlayerUI(player) {
+    if (!player) {
+        console.trace("no player");
+
+        return false;
+    }
+
     const playerUI = document.createElement("div");
     playerUI.classList = "player";
 

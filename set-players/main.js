@@ -11,8 +11,6 @@ window.onload = () => {
   const closePopUPUI = document.querySelector(".close-pop-up");
 
   loadCurrGame();
-  
-  playerList();
 
   setupPlayerListUI();
 

@@ -87,7 +87,7 @@ function boxMade(box) {
 function gameEvent() {
   if (made.lineMade) {
     currPlayer.score += made.boxMade;
-
+    
     if (made.boxMade <= 0) {
       playerTurn();
     }
