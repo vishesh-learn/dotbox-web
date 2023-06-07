@@ -83,8 +83,6 @@ function pointHandler(event){
   currGame.gameBoard.col = length_to_dotCount(optedX, currGame.gameBoard.gap);
   currGame.gameBoard.row = length_to_dotCount(optedY, currGame.gameBoard.gap);
 
-  resetGame(); //replace this with a filter instead of reset as done with player list change
-
   optedCnR();
 
   $aEL(gameBoardSVG, "pointermove", pointHandler);

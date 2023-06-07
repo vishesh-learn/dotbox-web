@@ -4,11 +4,12 @@ window.onload = () => {
     made = new Made();
 
     loadCurrGame();
-    refreshGameLines();
 
     gameBoardBuilder();
 
     getAllPossibleLines();
+
+    refreshGameLines();
 
     getPendingPossiblelines();
 
@@ -29,13 +30,20 @@ window.onload = () => {
 }
 
 function refreshGameLines() {
-    currGame.lines = currGame.lines.filter(line => currGame.playerList.find(player => player.id == line.byPlayerID));
+    currGame.lines = currGame.lines.filter(line => {
+        let playerExists = currGame.playerList.some(player => player.id == line.byPlayerID);
 
-    console.log("refreshGameLines -> ", currGame);
+        let isNotPossibleLine = lineNotExists(line, allPossibleLines);
+
+        return playerExists && !isNotPossibleLine;
+    });
+
+    saveCurrGame();
 }
 
 function replay() {
-    localStorage.lines = [];
+    //currGame.lines = [];
+    resetGame();
     window.location.reload();
 }
 
