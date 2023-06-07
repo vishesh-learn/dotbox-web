@@ -4,6 +4,7 @@ window.onload = () => {
     made = new Made();
 
     loadCurrGame();
+    refreshGameLines();
 
     gameBoardBuilder();
 
@@ -25,6 +26,12 @@ window.onload = () => {
     footerInfo();
 
     keyOnTabIndex();
+}
+
+function refreshGameLines() {
+    currGame.lines = currGame.lines.filter(line => currGame.playerList.find(player => player.id == line.byPlayerID));
+
+    console.log("refreshGameLines -> ", currGame);
 }
 
 function replay() {
@@ -195,6 +202,10 @@ function addLine(line) {
 
 function updateLinesUI() {
     const lineSVG = document.querySelector(".lineSVG");
+
+    currGame.playerList.forEach(player => {
+        player.score = 0;
+    });
 
     currGame.lines.forEach(line => {
         let DOMLines = lineEsToJSON();
@@ -468,7 +479,7 @@ function doesMakesSquare(middleLine) {
     return false;
 }
 
-function resetBoard() {
+function resetBoardUI() {
     var linesE = document.querySelectorAll(".line");
     var squaresE = document.querySelectorAll(".winBox");
 
