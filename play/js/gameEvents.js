@@ -86,9 +86,9 @@ function boxMade(box) {
 
 function gameEvent() {
   if (made.lineMade) {
-    if (made.boxMade > 0) {
-      currPlayer.score += made.boxMade;
-    } else {
+    currPlayer.score += made.boxMade;
+
+    if (made.boxMade <= 0) {
       playerTurn();
     }
 
@@ -132,6 +132,6 @@ function playerTurn() {
   }
 }
 
-function isEnd() { console.log(pendingPossiblelines);
+function isEnd() {
   return pendingPossiblelines.length <= 0;
 }

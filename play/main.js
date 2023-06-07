@@ -11,9 +11,9 @@ window.onload = () => {
 
     getPendingPossiblelines();
 
+    playerTurn();
+    
     updateLinesUI();
-
-    requestAnimationFrame(playerTurn);
 
     $aEL(document.querySelector(".playerTurnList"), "transitionend", setupPlayerTurnListUI);
 
@@ -68,7 +68,7 @@ function linePrev(event) {
         }
 
         var pseudoDot = new Dot(x, y);
-        
+
         prevLineMaker(
             new Line(
                 initDot.x, initDot.y, pseudoDot.x, pseudoDot.y
@@ -108,7 +108,7 @@ function getSurroundingDots(initDot) {
 
 function nearDot(x, y) {
     var validFinalDots = getSurroundingDots(initDot);
-    
+
     var nearDot = validFinalDots[0];
     for (var dot of validFinalDots) {
         let cx = dot.x;
@@ -195,14 +195,17 @@ function addLine(line) {
 
 function updateLinesUI() {
     const lineSVG = document.querySelector(".lineSVG");
-    lineSVG.innerHTML = '';
 
     currGame.lines.forEach(line => {
-        lineSVG.appendChild(getSVGLine(line));
-        
-        makeBox(getSurroundingLines(line), line);
+        let DOMLines = lineEsToJSON();
 
-        lineMade(line);
+        if (lineNotExists(line, DOMLines)) {
+            lineSVG.appendChild(getSVGLine(line));
+
+            makeBox(getSurroundingLines(line), line);
+
+            lineMade(line);
+        }
     });
 }
 
@@ -325,7 +328,7 @@ function getSurroundingLines(line) {
                 if (compareLineObj(existingLine, boxMakingLine) && !leftSquare.includes(boxMakingLine))
                     leftSquare.push(boxMakingLine);
             });
-            
+
             boxMakingLines.rightBoxMakingLines.forEach(boxMakingLine => {
                 if (compareLineObj(existingLine, boxMakingLine) && !rightSquare.includes(boxMakingLine))
                     rightSquare.push(boxMakingLine);
@@ -424,13 +427,13 @@ function compareDots(dot1, dot2) {
 
 function dotExists(dot) {
     var dotsE = document.querySelectorAll("circle"), existingDot;
-    
+
     for (const existingDotUI of dotsE) {
         existingDot = new Dot(
             existingDotUI.cx.baseVal.value,
             existingDotUI.cy.baseVal.value
         );
-            
+
         if (compareDots(dot, existingDot)) {
             return true;
         }
@@ -488,7 +491,7 @@ function setupPlayerTurnList() {
         nextIndex = currIndex + 1;
         nextIndex2 = currIndex + 2;
     }
-    
+
     playerTurnList.push(
         currGame.playerList[prevIndex],
         currGame.playerList[currIndex],
@@ -522,7 +525,6 @@ function setupPlayerTurnListUI() {
 
 function setCurrPlayerInfo() {
     document.querySelector(".curr-player-id").innerText = `ID: ${currPlayer.id}`;
-    console.log(currPlayer.placeholderName);
     document.querySelector(".curr-player-name").innerText = `Name: ${currPlayer.placeholderName}`;
     document.querySelector(".curr-player-score").innerText = `Score: ${currPlayer.score}`;
 }
