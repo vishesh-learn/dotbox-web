@@ -17,6 +17,8 @@ window.onload = () => {
     
     updateLinesUI();
 
+    setCurrPlayerInfo();
+
     $aEL(document.querySelector(".playerTurnList"), "transitionend", setupPlayerTurnListUI);
 
     $aEL(document.querySelector("#replayButton"), "click", replay);
@@ -42,7 +44,6 @@ function refreshGameLines() {
 }
 
 function replay() {
-    //currGame.lines = [];
     resetGame();
     window.location.reload();
 }
@@ -542,7 +543,7 @@ function setupPlayerTurnListUI() {
     setCurrPlayerInfo();
 }
 
-function setCurrPlayerInfo() {
+function setCurrPlayerInfo() { console.trace(currPlayer);
     document.querySelector(".curr-player-id").innerText = `ID: ${currPlayer.id}`;
     document.querySelector(".curr-player-name").innerText = `Name: ${currPlayer.placeholderName}`;
     document.querySelector(".curr-player-score").innerText = `Score: ${currPlayer.score}`;

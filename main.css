@@ -40,11 +40,12 @@ body {
 
   display: flex;
   flex-direction: column;
+  gap: 5px;
 }
 
 #home-menu .button {
   color: indianred;
-  font-size: 50px;
+  font-size: 40px;
   background: none;
   font-family: comic;
   border: none;
