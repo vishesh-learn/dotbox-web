@@ -71,12 +71,19 @@ header{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 15px;
   flex-wrap: wrap;
   padding: 0 20px 0 10px;
   height: var(--headerHeight);
   box-shadow: 0 -2px 5px 1px #000000;
   position: relative;
+}
+
+header .left {
+  display: flex;
+  gap: inherit;
+  flex-wrap: inherit;
+  align-items: inherit;
 }
 
 input[type=checkbox]{
@@ -89,16 +96,18 @@ a {
   text-underline-offset: 2px;
 }
 
-#backButton{
-  display: inline-block;
-  width: 35px;
-  height: 35px;
-  border-style: none;
-  padding: 0;
+.icon {
+  width: 30px;
+  height: 30px;
   fill: var(--brown);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+#backButton{
+  border-style: none;
+  padding: 0;
 }
 
 #info{

@@ -17,12 +17,14 @@ header {
   flex: 1;
 }
 
-#backButton {
-  fill: var(--brown);
+#homeButton {
   position: fixed;
-  left: 10px;
-  top: 10px;
   z-index: 1;
+}
+
+#homeButton {
+  left: 15px;
+  top: 10px;
 }
 
 .hidden {

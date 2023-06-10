@@ -1,9 +1,11 @@
 window.onload = () => {
-    $aEL(document.querySelector("#backButton"), "click", goBack);
+    document.querySelector("#homeButton").addEventListener("click", goHome);
 
     made = new Made();
 
     loadCurrGame();
+
+    currGame.currPage = pages.play;
 
     gameBoardBuilder();
 
@@ -24,7 +26,7 @@ window.onload = () => {
     $aEL(document.querySelector("#replayButton"), "click", replay);
 
     $aEL(document.querySelector("#newGameButton"), "click",
-        () => window.location.href = `../${pages.setBoard}`);
+        () => window.location.href = `../${pages.setBoard}/${pages.indexPage}`);
 
     footerInfo();
 
@@ -48,8 +50,8 @@ function replay() {
     window.location.reload();
 }
 
-function goBack() {
-    window.location.href = `../${pages.setPlayers}`;
+function goHome() {
+    window.location.href = `../${pages.indexPage}`;
 }
 
 function footerInfo() {
@@ -543,7 +545,7 @@ function setupPlayerTurnListUI() {
     setCurrPlayerInfo();
 }
 
-function setCurrPlayerInfo() { console.trace(currPlayer);
+function setCurrPlayerInfo() {
     document.querySelector(".curr-player-id").innerText = `ID: ${currPlayer.id}`;
     document.querySelector(".curr-player-name").innerText = `Name: ${currPlayer.placeholderName}`;
     document.querySelector(".curr-player-score").innerText = `Score: ${currPlayer.score}`;

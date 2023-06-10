@@ -5,16 +5,22 @@ window.addEventListener("load", () => {
   document.querySelector("#startButton").addEventListener("click", newGame);
 
   document.querySelector(".privacy-policy-link").addEventListener("click",
-    () => window.location.href = `${pages.privacyPolicy}`
+    () => window.location.href = `${pages.privacyPolicy}/${pages.indexPage}`
   );
+
+  initHome();
 
   keyOnTabIndex();
 });
 
-function continueGame() {
+function initHome() {
+  document.querySelector("#continueButton").disabled = !Boolean(localStorage.currGame);
+}
+
+function continueGame() { // todo: go to last visited page
   loadCurrGame();
 
-  window.location.href = `${pages.play}`;
+  window.location.href = `${currGame.currPage ? currGame.currPage : pages.setBoard}/${pages.indexPage}`;
 }
 
 function newGame() {
@@ -22,5 +28,5 @@ function newGame() {
 
   loadCurrGame();
 
-  window.location.href = `${pages.setBoard}`;
+  window.location.href = `${pages.setBoard}/${pages.indexPage}`;
 }

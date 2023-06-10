@@ -1,5 +1,5 @@
 window.onload = () => {
-    $aEL(document.querySelector("#backButton"), "click", () => window.location.href = `../${pages.home}`);
+    $aEL(document.querySelector("#backButton"), "click", () => window.location.href = `../${pages.indexPage}`);
 
     keyOnTabIndex();
 }

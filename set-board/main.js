@@ -1,18 +1,32 @@
 window.onload = () => {
-  const gameBoardSVG = document.querySelector(".svgC svg"), backButton = document.querySelector("#backButton"), nextButton = document.querySelector("#nextButton");
-  
-  $aEL(backButton, "click", () => window.location.href = `../${pages.home}`);
+  const gameBoardSVG = document.querySelector(".svgC svg")
+  const nextButton = document.querySelector("#nextButton");
+
+  document.querySelector("#homeButton").addEventListener("click", goHome);
+
+  document.querySelector("#backButton").addEventListener("click", goBack);
 
   loadCurrGame();
+
+  currGame.currPage = pages.setBoard;
+
   setupGameBoard();
 
   $aEL(window, "resize", setupGameBoard);
   $aEL(gameBoardSVG, "pointerdown", pointHandler);
   $aEL(gameBoardSVG, "pointerup", () => $rEL(gameBoardSVG, "pointermove", pointHandler));
 
-  $aEL(nextButton, "click", () => window.location.href = `../${pages.setPlayers}`);
+  $aEL(nextButton, "click", () => window.location.href = `../${pages.setPlayers}/${pages.indexPage}`);
 
   keyOnTabIndex();
+}
+
+function goHome() {
+    window.location.href = `../${pages.indexPage}`;
+}
+
+function goBack() {
+  window.location.href = `../${pages.indexPage}`;
 }
 
 function setupGameBoard(){

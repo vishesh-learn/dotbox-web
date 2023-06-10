@@ -2,15 +2,21 @@ var targetPlayerIndex = 0;
 
 window.onload = () => {
   const backButton = document.querySelector("#backButton"), nextButton = document.querySelector("#nextButton");
-  $aEL(backButton, "click", () => window.location.href = `../${pages.setBoard}`);
-  $aEL(nextButton, "click", () => window.location.href = `../${pages.play}`);
+  $aEL(backButton, "click", () => window.location.href = `../${pages.setBoard}/${pages.indexPage}`);
+  $aEL(nextButton, "click", () => window.location.href = `../${pages.play}/${pages.indexPage}`);
   
   const addPlayerB = document.querySelector(".addb"), playerListUI = document.querySelector(".playerList");
   const colorHueUI = document.querySelector(".color-hue");
   const popUpBgUI = document.querySelector(".pop-up-bg");
   const closePopUPUI = document.querySelector(".close-pop-up");
 
+  document.querySelector("#homeButton").addEventListener("click", goHome);
+
   loadCurrGame();
+
+  currGame.currPage = pages.setPlayers;
+
+  saveCurrGame();
 
   setupPlayerListUI();
 
@@ -27,6 +33,10 @@ window.onload = () => {
   $aEL(closePopUPUI, "click", closePopUP);
 
   keyOnTabIndex();
+}
+
+function goHome() {
+    window.location.href = `../${pages.indexPage}`;
 }
 
 function closePopUP() {
