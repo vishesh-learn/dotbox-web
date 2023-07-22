@@ -2,7 +2,7 @@ window.addEventListener("load", () => {
   document.querySelector(".share-button").addEventListener("click", shareApp);
 
   document.querySelector("#continueButton").addEventListener("click", continueGame);
-  document.querySelector("#startButton").addEventListener("click", newGame);
+  document.querySelector("#newGameButton").addEventListener("click", newGame);
 
   document.querySelector(".privacy-policy-link").addEventListener("click",
     () => window.location.href = `${pages.privacyPolicy}/${pages.indexPage}`

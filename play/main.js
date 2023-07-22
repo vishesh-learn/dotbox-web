@@ -25,8 +25,7 @@ window.onload = () => {
 
     $aEL(document.querySelector("#replayButton"), "click", replay);
 
-    $aEL(document.querySelector("#newGameButton"), "click",
-        () => window.location.href = `../${pages.setBoard}/${pages.indexPage}`);
+    $aEL(document.querySelector("#newGameButton"), "click", newGame);
 
     footerInfo();
 
@@ -48,6 +47,11 @@ function refreshGameLines() {
 function replay() {
     resetGame();
     window.location.reload();
+}
+
+function newGame() {
+    resetGame();
+    window.location.href = `../${pages.setBoard}/${pages.indexPage}`
 }
 
 function goHome() {

@@ -57,7 +57,7 @@ body {
   opacity: 0.5;
 }
 
-#startButton:active {
+#newGameButton:active {
   scale: 0.99;
 }
 
