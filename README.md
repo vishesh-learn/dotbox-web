@@ -1,14 +1,15 @@
-# dotbox-web
+# DotBox Web
 
-Application preview: https://vidyona.github.io/dotbox-web/
+**Application preview:** https://vidyona.github.io/dotbox-web/
 
-DotBox is an android gaming application, digitally advanced version of a traditional game ‘Dots and Boxes’.
+**DotBox** is an Android gaming application, a digitally advanced version of the traditional game ‘Dots and Boxes’.
 
-Features:
-* Choose any number of rows and columns based on the screen size. (at least 3 rows and 3 columns)
-* Choose any number of players. (at least 2)
-* Set preferred colour for each player.
-* Set any player to be computer.
-* Beautiful design.
+**Features:**
+* Choose any number of rows and columns based on the screen size (minimum of 3 rows and 3 columns).
+* Choose any number of players (minimum of 2).
+* Set preferred color for each player.
+* Set any player to be controlled by the computer.
+* Continue your last game or start a new one.
+* Beautiful design with animations.
 
-* This app is in active development, which means more features will be coming soon along with resolving of potential issues.
+This app is in active development, which means more features will be coming soon along with the resolution of potential issues.
