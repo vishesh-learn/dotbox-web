@@ -75,7 +75,7 @@ function gameBoardBuilder() {
     svgResize();
 }
 
-function createSquareUI(box, line) {
+function createSquareUI(box) {
     if (box.x && box.y) {
         var squareE = document.createElementNS('http://www.w3.org/2000/svg', "rect");
         squareE.setAttribute("class", "winBox");
@@ -84,16 +84,16 @@ function createSquareUI(box, line) {
         squareE.setAttribute("width", currGame.gameBoard.gap);
         squareE.setAttribute("height", currGame.gameBoard.gap);
 
-        if (line.byPlayer.color) {
-            squareE.style.fill = line.byPlayer.color;
+        if (box.byLine.byPlayer.color) {
+            squareE.style.fill = box.byLine.byPlayer.color;
 
-            var gradientUI = createGradientUI(box, line);
+            var gradientUI = createGradientUI(box);
             document.querySelector('.boxDefs').appendChild(gradientUI);
             squareE.style.fill = `url(#${gradientUI.id})`;
         }
 
-        if (line.byPlayer.id) {
-            squareE.setAttribute("byPlayer", line.byPlayer.id);
+        if (box.byLine.byPlayer.id) {
+            squareE.setAttribute("byPlayer", box.byLine.byPlayer.id);
         }
 
         return squareE;
@@ -103,15 +103,15 @@ function createSquareUI(box, line) {
     }
 }
 
-function createGradientUI(box, line) {
+function createGradientUI(box) {
     const gradientUI = document.createElementNS('http://www.w3.org/2000/svg', 'radialGradient');
     gradientUI.setAttribute('id', `x${box.x}y${box.y}`);
 
-    let hslO1 = hexToHslObject(line.byPlayer.color);
+    let hslO1 = hexToHslObject(box.byLine.byPlayer.color);
     hslO1.l = 50;
     let stopColor2 = hslToHex(hslO1);
 
-    gradientUI.appendChild(createStopUI('60%', line.byPlayer.color));
+    gradientUI.appendChild(createStopUI('60%', box.byLine.byPlayer.color));
     gradientUI.appendChild(createStopUI('100%', stopColor2));
 
     return gradientUI;

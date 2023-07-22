@@ -40,9 +40,15 @@ body {
   background-color: var(--skyBlue);
   background-image: url(../images/bg.svg);
   background-repeat: no-repeat;
-  background-size: 1600px 100%;
+  background-size: cover;
   background-position: center;
   z-index: -1;
+}
+
+@media only screen and (width < 1600px) {
+  .page-bg {
+    background-size: 1600px;
+  }
 }
 
 button{

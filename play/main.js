@@ -16,7 +16,7 @@ window.onload = () => {
     getPendingPossiblelines();
 
     playerTurn();
-    
+
     updateLinesUI();
 
     setCurrPlayerInfo();
@@ -202,8 +202,6 @@ function addLine(line) {
         currGame.lines.push(line);
 
         updateLinesUI();
-
-        //lineMade(line);
     } else {
         console.log('line exists');
     }
@@ -229,6 +227,17 @@ function updateLinesUI() {
             lineMade(line);
         }
     });
+
+    //console.log(boxes);
+    updateBoxesUI(boxes);
+}
+
+function updateBoxesUI(boxes) {
+    currGame.playerList.forEach(player => {
+        player.score = boxes.filter(box => box.byLine.byPlayer == player).length;
+    });
+
+    setCurrPlayerInfo();
 }
 
 function getBoxMakingLines(line) {
@@ -388,19 +397,19 @@ function getSurroundingLines(line) {
 }
 
 function makeBox(square, line) {
-    var x, y, boxes = [];
+    var x, y, currBoxes = [];
 
     if (square.orient == "horizontal") {
         x = Math.min(square.hline.x1, square.hline.x2);
         if (square.top.length == 4) {
             y = Math.min(square.hline.y1, square.hline.y2) - currGame.gameBoard.gap;
 
-            boxes.push(new Box(x, y));
+            currBoxes.push(new Box(x, y, line));
         }
         if (square.bottom.length == 4) {
             y = Math.min(square.hline.y1, square.hline.y2);
 
-            boxes.push(new Box(x, y));
+            currBoxes.push(new Box(x, y, line));
         }
     }
 
@@ -409,21 +418,25 @@ function makeBox(square, line) {
         if (square.left.length == 4) {
             x = Math.min(square.vline.x1, square.vline.x2) - currGame.gameBoard.gap;
 
-            boxes.push(new Box(x, y));
+            currBoxes.push(new Box(x, y, line));
         }
         if (square.right.length == 4) {
             x = Math.min(square.vline.x1, square.vline.x2);
 
-            boxes.push(new Box(x, y));
+            currBoxes.push(new Box(x, y, line));
         }
     }
 
-    let squareE;
-    boxes.forEach(box => {
-        squareE = createSquareUI(box, line);
+    currBoxes.forEach(addBox);
+}
+
+function addBox(box) {
+    if (boxNotExists(box, boxes)) {
+        boxes.push(box);
+        let squareE = createSquareUI(box);
         document.querySelector('.boxG').appendChild(squareE);
         boxMade(box);
-    });
+    }
 }
 
 const compareLineObj = (obj1, obj2) => {
@@ -440,7 +453,7 @@ const compareLineObj = (obj1, obj2) => {
             (obj1.x2 == obj2.x1) &&
             (obj1.y2 == obj2.y1)
         )
-    )
+    );
 }
 
 function compareDots(dot1, dot2) {
@@ -472,6 +485,20 @@ function lineNotExists(line, linelist) {
     }
 
     return true;
+}
+
+function boxNotExists(box, boxList) {
+    for (let listBox of boxList) {
+        if (compareBoxObj(box, listBox)) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+function compareBoxObj(box1, box2) {
+    return (box1.x == box2.x) && (box1.y == box2.y);
 }
 
 function doesMakesSquare(middleLine) {

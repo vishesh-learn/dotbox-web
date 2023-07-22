@@ -1,9 +1,10 @@
-var currPlayer, playerTurnList, initDot, finalDot, orient, made, allPossibleLines = [], pendingPossiblelines = [], removePrevLinesTimeOut;
+var currPlayer, playerTurnList, initDot, finalDot, orient, made, allPossibleLines = [], pendingPossiblelines = [], removePrevLinesTimeOut, boxes = [];
 
 class Box {
-  constructor(x, y) {
+  constructor(x, y, byLine) {
     this.x = x,
-    this.y = y
+    this.y = y,
+    this.byLine = byLine
   }
 }
 

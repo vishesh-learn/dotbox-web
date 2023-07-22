@@ -80,14 +80,12 @@ function lineMade(line) {
   gameEvent();
 }
 
-function boxMade(box) {
+function boxMade(box) { //console.trace('box');
   made.boxMade++;
 }
 
-function gameEvent() {
+function gameEvent() { //console.log(made);
   if (made.lineMade) {
-    currPlayer.score += made.boxMade;
-    
     if (made.boxMade <= 0) {
       playerTurn();
     }
