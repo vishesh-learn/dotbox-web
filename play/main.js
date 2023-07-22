@@ -228,7 +228,6 @@ function updateLinesUI() {
         }
     });
 
-    //console.log(boxes);
     updateBoxesUI(boxes);
 }
 
@@ -579,6 +578,8 @@ function setCurrPlayerInfo() {
 }
 
 function winBoard() {
+    updateBoxesUI(boxes);
+
     document.querySelector("body").classList.add("pop-up-container");
 
     sortPlayerByScore();

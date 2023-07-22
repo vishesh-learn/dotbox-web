@@ -80,7 +80,7 @@ function lineMade(line) {
   gameEvent();
 }
 
-function boxMade(box) { //console.trace('box');
+function boxMade(box) {
   made.boxMade++;
 }
 
