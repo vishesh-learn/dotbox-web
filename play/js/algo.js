@@ -1,5 +1,5 @@
 
-function autoDrawLine() {
+function autoDrawLine() { console.log(currPlayer);
   findAndMakeBoxMakingLines();
  
   if (isEnd()) {

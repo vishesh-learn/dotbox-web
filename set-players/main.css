@@ -21,7 +21,7 @@ body {
   overflow: auto;
 }
 
-.playerList {
+.players {
   margin-bottom: calc(45vh);
 }
 
@@ -90,7 +90,7 @@ body {
   stroke-linecap: round;
 }
 
-.pop-up-container .page-content .playerList,
+.pop-up-container .page-content .players,
 .pop-up-container .page-content .addb {
   opacity: 0.2;
 }

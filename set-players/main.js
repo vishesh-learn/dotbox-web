@@ -5,7 +5,7 @@ window.onload = () => {
   $aEL(backButton, "click", () => window.location.href = `../${pages.setBoard}/${pages.indexPage}`);
   $aEL(nextButton, "click", () => window.location.href = `../${pages.play}/${pages.indexPage}`);
   
-  const addPlayerB = document.querySelector(".addb"), playerListUI = document.querySelector(".playerList");
+  const addPlayerB = document.querySelector(".addb"), playersUI = document.querySelector(".players");
   const colorHueUI = document.querySelector(".color-hue");
   const popUpBgUI = document.querySelector(".pop-up-bg");
   const closePopUPUI = document.querySelector(".close-pop-up");
@@ -18,15 +18,15 @@ window.onload = () => {
 
   saveCurrGame();
 
-  setupPlayerListUI();
+  setupplayersUI();
 
   $aEL(addPlayerB, "click", addPlayer);
 
-  $aEL(playerListUI, "keypress", goButtonHandler);
-  $aEL(playerListUI, "click", colorSelector);
-  $aEL(playerListUI, "change", updatePlayer);
-  $aEL(playerListUI, "click", removePlayer);
-  $aEL(playerListUI, "focusin", scrollAbove);
+  $aEL(playersUI, "keypress", goButtonHandler);
+  $aEL(playersUI, "click", colorSelector);
+  $aEL(playersUI, "change", updatePlayer);
+  $aEL(playersUI, "click", removePlayer);
+  $aEL(playersUI, "focusin", scrollAbove);
 
   $aEL(colorHueUI, "click", selectColor);
   $aEL(popUpBgUI, "click", closePopUP);
@@ -62,18 +62,18 @@ function goButtonHandler(event) {
 }
 
 function addPlayer() {
-  if (currGame.playerList.length < currGame.maxPlayer) {
-    currGame.playerList.push(new Player());
+  if (currGame.players.length < currGame.maxPlayer) {
+    currGame.players.push(new Player());
 
     saveCurrGame();
 
-    setupPlayerListUI();
+    setupplayersUI();
   }
 }
 
 function updatePlayerCountView() {
   const infoE = document.querySelector("#info");
-  var playerCount = currGame.playerList.length;
+  var playerCount = currGame.players.length;
 
   infoE.innerHTML = playerCount == 1 ? playerCount + " player" : playerCount + " players";
 }
@@ -89,16 +89,16 @@ function updatePlayer(event) {
 
     if (target.className.includes("playerName")) {
       var name = target.value;
-      currGame.playerList[targetPlayerIndex].name = name;
+      currGame.players[targetPlayerIndex].name = name;
     }
 
     if (target.className.includes("isAlgo")) {
       var isAlgo = target.checked;
-      currGame.playerList[targetPlayerIndex].isAlgo = isAlgo;
+      currGame.players[targetPlayerIndex].isAlgo = isAlgo;
     }
 
     saveCurrGame();
-    setupPlayerListUI();
+    setupplayersUI();
   }
 }
 
@@ -109,7 +109,7 @@ function colorSelector(event) {
   if (target.className.includes("avatar")) {
     targetPlayerIndex = getIndexOfDom(target.parentElement);
     document.querySelector("body").classList.add("pop-up-container");
-    colorPrevHTML.style.backgroundColor = currGame.playerList[targetPlayerIndex].color;
+    colorPrevHTML.style.backgroundColor = currGame.players[targetPlayerIndex].color;
   }
 }
 
@@ -119,10 +119,10 @@ function selectColor(event) {
 
     var color = targetColorBallUI.style.backgroundColor;
 
-    currGame.playerList[targetPlayerIndex].color = color;
+    currGame.players[targetPlayerIndex].color = color;
 
     saveCurrGame();
-    setupPlayerListUI();
+    setupplayersUI();
 
     closePopUP();
   }
@@ -132,10 +132,10 @@ function removePlayer(event) {
   const target = event.target;
 
   if (target.className.includes("removePlayerB")) {
-    currGame.playerList.splice(getIndexOfDom(target.parentElement), 1);
+    currGame.players.splice(getIndexOfDom(target.parentElement), 1);
 
     saveCurrGame();
-    setupPlayerListUI();
+    setupplayersUI();
   }
 }
 
@@ -145,13 +145,13 @@ function getIndexOfDom(childDom) {
   return Array.prototype.indexOf.call(parentDom.children, childDom);
 }
 
-function setupPlayerListUI() {
-  const playerListUI = document.querySelector(".playerList");
+function setupplayersUI() {
+  const playersUI = document.querySelector(".players");
 
-  playerListUI.innerHTML = "";
+  playersUI.innerHTML = "";
 
-  for (let player of currGame.playerList) {
-    playerListUI.append(createPlayerUI(player));
+  for (let player of currGame.players) {
+    playersUI.append(createPlayerUI(player));
   }
 
   updatePlayerCountView();

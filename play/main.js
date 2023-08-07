@@ -34,7 +34,7 @@ window.onload = () => {
 
 function refreshGameLines() {
     currGame.lines = currGame.lines.filter(line => {
-        let playerExists = currGame.playerList.some(player => player.id == line.byPlayerID);
+        let playerExists = currGame.players.some(player => player.id == line.byPlayerID);
 
         let isNotPossibleLine = lineNotExists(line, allPossibleLines);
 
@@ -216,7 +216,7 @@ function addLine(line) {
 function updateLinesUI() {
     const lineSVG = document.querySelector(".lineSVG");
 
-    currGame.playerList.forEach(player => {
+    currGame.players.forEach(player => {
         player.score = 0;
     });
 
@@ -236,7 +236,7 @@ function updateLinesUI() {
 }
 
 function updateBoxesUI(boxes) {
-    currGame.playerList.forEach(player => {
+    currGame.players.forEach(player => {
         player.score = boxes.filter(box => box.byLine.byPlayer == player).length;
     });
 
@@ -531,25 +531,25 @@ function setupPlayerTurnList() {
     playerTurnList = [];
     var currIndex = currPlayer.id - 1;
 
-    prevIndex = currIndex === 0 ? currGame.playerList.length - 1 : currIndex - 1;
+    prevIndex = currIndex === 0 ? currGame.players.length - 1 : currIndex - 1;
 
-    if (currIndex === currGame.playerList.length - 1) {
+    if (currIndex === currGame.players.length - 1) {
         nextIndex = 0;
     } else {
         nextIndex = currIndex + 1;
     }
 
-    if (nextIndex === currGame.playerList.length - 1) {
+    if (nextIndex === currGame.players.length - 1) {
         nextIndex2 = 0;
     } else {
         nextIndex2 = nextIndex + 1;
     }
 
     playerTurnList.push(
-        currGame.playerList[prevIndex],
-        currGame.playerList[currIndex],
-        currGame.playerList[nextIndex],
-        currGame.playerList[nextIndex2]
+        currGame.players[prevIndex],
+        currGame.players[currIndex],
+        currGame.players[nextIndex],
+        currGame.players[nextIndex2]
     );
 }
 
@@ -591,7 +591,7 @@ function winBoard() {
 }
 
 function sortPlayerByScore() {
-    currGame.playerList.sort((a, b) => b.score - a.score);
+    currGame.players.sort((a, b) => b.score - a.score);
 }
 
 function setupPlayerRankList() {
@@ -599,9 +599,9 @@ function setupPlayerRankList() {
 
     playerRankListUI.innerHTML = "";
     var rank = 1;
-    currGame.playerList.forEach((player, i, playerList) => {
+    currGame.players.forEach((player, i, players) => {
         if (i > 0) {
-            let prevPlayer = playerList[i - 1];
+            let prevPlayer = players[i - 1];
 
             if (prevPlayer.score > player.score) {
                 rank++;

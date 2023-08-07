@@ -103,10 +103,10 @@ function playerTurn() {
   removePointerEvents();
 
   if (currPlayer != undefined) {
-    if (currPlayer.id == currGame.playerList.length) {
-      currPlayer = currGame.playerList[0];
+    if (currPlayer.id == currGame.players.length) {
+      currPlayer = currGame.players[0];
     } else {
-      currPlayer = currGame.playerList[currPlayer.id];
+      currPlayer = currGame.players[currPlayer.id];
     }
 
     setupPlayerTurnList();
@@ -117,12 +117,14 @@ function playerTurn() {
     }
 
   } else {
-    currPlayer = currGame.playerList[0];
+    currPlayer = currGame.players[0];
 
     setupPlayerTurnList();
     setupPlayerTurnListUI();
   }
 
+  console.log('\n');
+  console.log(currPlayer);
   if (currPlayer.isAlgo) {
     requestAnimationFrame(autoDrawLine);
   } else {
