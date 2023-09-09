@@ -34,7 +34,7 @@ body {
 
 #home-menu {
   position: fixed;
-  top: 37%;
+  top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
 
@@ -45,7 +45,7 @@ body {
 
 #home-menu .button {
   color: indianred;
-  font-size: 35px;
+  font-size: 30px;
   background: none;
   font-family: comic;
   border: none;

@@ -45,11 +45,11 @@ body {
   z-index: -1;
 }
 
-@media only screen and (width < 1600px) {
+/* @media only screen and (width > 1600px) {
   .page-bg {
-    background-size: 1600px;
+    background-size: cover;
   }
-}
+} */
 
 button{
 	background-color: transparent;
