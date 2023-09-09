@@ -123,8 +123,6 @@ function playerTurn() {
     setupPlayerTurnListUI();
   }
 
-  console.log('\n');
-  console.log(currPlayer);
   if (currPlayer.isAlgo) {
     requestAnimationFrame(autoDrawLine);
   } else {

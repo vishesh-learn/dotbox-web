@@ -1,5 +1,9 @@
 
-function autoDrawLine() { console.log(currPlayer);
+function autoDrawLine() {
+  if (!currPlayer.isAlgo) {
+    return false;
+  }
+
   findAndMakeBoxMakingLines();
  
   if (isEnd()) {
