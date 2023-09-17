@@ -75,14 +75,15 @@ body {
 }
 
 .addb {
-  width: 40px;
+  width: 50px;
   height: 40px;
   position: fixed;
   right: 25px;
   bottom: calc(var(--nextButtonHeight) + 30px);
+  border: 3px solid;
   border-radius: 50%;
-  background-color: var(--orange);
-  box-shadow: 0 0 20px 5px var(--orange);
+  background-color: #a15821;
+  /* box-shadow: 0 0 20px 5px var(--orange); */
 
   fill: none;
   stroke: var(--brown);
@@ -100,15 +101,48 @@ body {
 }
 
 .set-color .color-prev {
-  width: 90px;
-  height: 75px;
+  width: 80px;
+  height: 60px;
   outline: 2px dotted var(--brown);
   outline-offset: 1px;
 }
 
+#colorSlider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+#colorSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: var(--brown);
+  cursor: pointer;
+}
+
+#colorSlider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #04AA6D;
+  cursor: pointer;
+}
+
+.colorBall {
+  border-radius: 45%;
+}
+
 .color-hue {
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: auto auto auto auto;
   align-items: center;
   justify-items: center;
   gap: 20px;

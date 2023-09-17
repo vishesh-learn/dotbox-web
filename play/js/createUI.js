@@ -107,7 +107,7 @@ function createGradientUI(box) {
     const gradientUI = document.createElementNS('http://www.w3.org/2000/svg', 'radialGradient');
     gradientUI.setAttribute('id', `x${box.x}y${box.y}`);
 
-    let hslO1 = hexToHslObject(box.byLine.byPlayer.color);
+    let hslO1 = toHslObject(box.byLine.byPlayer.color);
     hslO1.l = 50;
     let stopColor2 = hslToHex(hslO1);
 

@@ -4,13 +4,15 @@ window.onload = () => {
   const backButton = document.querySelector("#backButton"), nextButton = document.querySelector("#nextButton");
   $aEL(backButton, "click", () => window.location.href = `../${pages.setBoard}/${pages.indexPage}`);
   $aEL(nextButton, "click", () => window.location.href = `../${pages.play}/${pages.indexPage}`);
-  
+
   const addPlayerB = document.querySelector(".addb"), playersUI = document.querySelector(".players");
   const colorHueUI = document.querySelector(".color-hue");
   const popUpBgUI = document.querySelector(".pop-up-bg");
   const closePopUPUI = document.querySelector(".close-pop-up");
 
   document.querySelector("#homeButton").addEventListener("click", goHome);
+
+  createColorBalls();
 
   loadCurrGame();
 
@@ -32,11 +34,13 @@ window.onload = () => {
   $aEL(popUpBgUI, "click", closePopUP);
   $aEL(closePopUPUI, "click", closePopUP);
 
+  document.querySelector('#colorSlider').addEventListener('input', colorRange_Input);
+
   keyOnTabIndex();
 }
 
 function goHome() {
-    window.location.href = `../${pages.indexPage}`;
+  window.location.href = `../${pages.indexPage}`;
 }
 
 function closePopUP() {
@@ -102,29 +106,69 @@ function updatePlayer(event) {
   }
 }
 
-function colorSelector(event) {
-  const target = event.target,
-    colorPrevHTML = document.querySelector(".color-prev");
+function createColorBalls() {
+  const colorHueHtml = document.querySelector('.color-hue');
 
-  if (target.className.includes("avatar")) {
-    targetPlayerIndex = getIndexOfDom(target.parentElement);
-    document.querySelector("body").classList.add("pop-up-container");
-    colorPrevHTML.style.backgroundColor = currGame.players[targetPlayerIndex].color;
+  let colorBall;
+  for (let i = 0; i < 18; i++) {
+    colorBall = document.createElement('button');
+    colorBall.classList = "button avatar colorBall";
+    colorBall.style.backgroundColor = hueToHex(i * 20);
+
+    colorHueHtml.append(colorBall);
   }
 }
 
-function selectColor(event) {
-  const targetColorBallUI = event.target;
-  if (targetColorBallUI.className.includes("colorBall")) {
+function colorSelector(event) {
+  if (event.target.className.includes("avatar")) {
+    targetPlayerIndex = getIndexOfDom(event.target.parentElement);
 
-    var color = targetColorBallUI.style.backgroundColor;
+    document.querySelector("body").classList.add("pop-up-container");
+
+    let color = currGame.players[targetPlayerIndex].color;
+
+    document.querySelector(".color-prev").style.backgroundColor = color;
+
+    setupColorRange(toHslObject(color).h);
+  }
+}
+
+function setupColorRange(h = 0) {
+  const colorSlider = document.querySelector('#colorSlider');
+
+  let min = h - 18, max = h + 18;
+
+  colorSlider.min = min >= 0 ? min : 0;
+
+  colorSlider.max = max < 360 ? max : 360;
+
+  colorSlider.value = h;
+}
+
+function colorRange_Input(event) {
+  let hex = hueToHex(event.target.value);
+
+  currGame.players[targetPlayerIndex].color = hex;
+
+  document.querySelector(".color-prev").style.backgroundColor = hex;
+
+  saveCurrGame();
+  setupplayersUI();
+}
+
+function selectColor(event) {
+  if (event.target.className.includes("colorBall")) {
+
+    var color = event.target.style.backgroundColor;
 
     currGame.players[targetPlayerIndex].color = color;
 
+    document.querySelector(".color-prev").style.backgroundColor = color;
+
+    setupColorRange(toHslObject(color).h);
+
     saveCurrGame();
     setupplayersUI();
-
-    closePopUP();
   }
 }
 
@@ -177,7 +221,7 @@ function createPlayerUI(player) {
   isAlgo.classList = "isAlgo button";
   isAlgo.type = "checkbox";
   isAlgo.checked = player.isAlgo;
-  let h = hexToHslObject(player.color).h;
+  let h = toHslObject(player.color).h;
   isAlgo.style.filter = `hue-rotate(${h}deg)`;
   playerUI.append(isAlgo);
 
