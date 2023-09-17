@@ -187,6 +187,7 @@ footer {
 }
 
 .close-pop-up {
+  color: var(--brown);
   position: absolute;
   top: 0px;
   right: 0px;
