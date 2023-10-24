@@ -7,7 +7,7 @@
 **Features:**
 * Choose any number of rows and columns based on the screen size (minimum of 3 rows and 3 columns).
 * Choose any number of players (minimum of 2).
-* Set preferred color for each player.
+* Set custom color for each player.
 * Set any player to be controlled by the computer.
 * Continue your last game or start a new one.
 * Beautiful design with animations.

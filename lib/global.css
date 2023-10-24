@@ -70,7 +70,7 @@ button{
 
 .button:active {
   scale: 0.98;
-  filter: brightness(1.5);
+  filter: brightness(1.1);
 }
 
 header{
