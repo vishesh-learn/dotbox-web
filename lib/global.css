@@ -216,3 +216,7 @@ footer {
     font-family: comic;
     src: url(../fonts/comic.ttf);
 }
+
+.displayNone {
+  display: none;
+}
