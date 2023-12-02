@@ -114,7 +114,7 @@ header {
   touch-action: none;
   margin: auto;
   width: 100%;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .pop-up-container header,
