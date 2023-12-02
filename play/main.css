@@ -112,6 +112,8 @@ header {
   height: calc(100% - var(--headerHeight) - var(--nextButtonHeight) - var(--footerHeight));
   position: relative;
   touch-action: none;
+  margin: auto;
+  width: 100%;
 }
 
 .pop-up-container header,
@@ -121,13 +123,10 @@ header {
 }
 
 .svgC svg {
-  width: 100%;
-  height: 100%;
   cursor: crosshair;
   position: absolute;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateY(-50%);
 }
 
 .lineSVG,

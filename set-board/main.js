@@ -49,6 +49,16 @@ function startupVariables(){
   currGame.gameBoard.maxCol = length_to_dotCount(cW);
 }
 
+function svgResize(){
+    var gameBoardSVG = document.querySelector(".svgC svg");
+
+    var width = ((currGame.gameBoard.maxCol - 1) * currGame.gameBoard.gap) + (currGame.gameBoard.svgPaddingX * 2);
+    var height = ((currGame.gameBoard.maxRow - 1) * currGame.gameBoard.gap) + (currGame.gameBoard.svgPaddingY * 2);
+
+    gameBoardSVG.style.width = width + "px";
+    gameBoardSVG.style.height = height + "px";
+}
+
 function GameBoardBuilder(){
     document.querySelectorAll("circle").forEach(dot => dot.remove());
 
@@ -71,16 +81,6 @@ function GameBoardBuilder(){
     }
 
     svgResize();
-}
-
-function svgResize(){
-    var gameBoardSVG = document.querySelector(".svgC svg");
-
-    var width = ((currGame.gameBoard.maxCol - 1) * currGame.gameBoard.gap) + (currGame.gameBoard.svgPaddingX * 2);
-    var height = ((currGame.gameBoard.maxRow - 1) * currGame.gameBoard.gap) + (currGame.gameBoard.svgPaddingY * 2);
-
-    gameBoardSVG.style.width = width + "px";
-    gameBoardSVG.style.height = height + "px";
 }
 
 function pointHandler(event){

@@ -190,10 +190,13 @@ function prevLineMaker(line) {
 }
 
 function svgResize() {
+    const svgC = document.querySelector(".svgC");
     const svgList = document.querySelectorAll(".svgC svg");
 
     var width = ((currGame.gameBoard.col - 1) * currGame.gameBoard.gap) + (currGame.gameBoard.svgPaddingX * 2);
     var height = ((currGame.gameBoard.row - 1) * currGame.gameBoard.gap) + (currGame.gameBoard.svgPaddingY * 2);
+
+    svgC.style.maxWidth = `${width}px`;
 
     svgList.forEach(svg => {
         svg.style.width = `${width}px`;
