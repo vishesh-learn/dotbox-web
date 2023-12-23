@@ -20,8 +20,8 @@ window.onload = () => {
     updateLinesUI();
 
     setCurrPlayerInfo();
-
-    $aEL(document.querySelector(".playerTurnList"), "transitionend", setupPlayerTurnListUI);
+     
+    document.querySelector(".playerTurnList").addEventListener("transitionend", setupPlayerTurnListUI);
 
     $aEL(document.querySelector("#replayButton"), "click", replay);
 
@@ -59,9 +59,9 @@ function goHome() {
 }
 
 function footerInfo() {
-    const rowColInfoHtml = document.querySelector('.rowAndCol');
+    const rowColInfoHtml = document.querySelector('.rowAndCol .value');
 
-    rowColInfoHtml.innerHTML = `Board: ${currGame.gameBoard.col} x ${currGame.gameBoard.row}`;
+    rowColInfoHtml.innerHTML = `${currGame.gameBoard.col} x ${currGame.gameBoard.row}`;
 }
 
 function linePrev(event) {
@@ -193,10 +193,12 @@ function svgResize() {
     const svgC = document.querySelector(".svgC");
     const svgList = document.querySelectorAll(".svgC svg");
 
+    const scrollBarWidth = 10;
+
     var width = ((currGame.gameBoard.col - 1) * currGame.gameBoard.gap) + (currGame.gameBoard.svgPaddingX * 2);
     var height = ((currGame.gameBoard.row - 1) * currGame.gameBoard.gap) + (currGame.gameBoard.svgPaddingY * 2);
 
-    svgC.style.maxWidth = `${width}px`;
+    svgC.style.maxWidth = `${width + scrollBarWidth}px`;
 
     svgList.forEach(svg => {
         svg.style.width = `${width}px`;
@@ -579,9 +581,9 @@ function setupPlayerTurnListUI() {
 }
 
 function setCurrPlayerInfo() {
-    document.querySelector(".curr-player-id").innerText = `ID: ${currPlayer.id}`;
-    document.querySelector(".curr-player-name").innerText = `Name: ${currPlayer.placeholderName}`;
-    document.querySelector(".curr-player-score").innerText = `Score: ${currPlayer.score}`;
+    document.querySelector('.curr-player-id .value').innerText = `${currPlayer.id}`;
+    document.querySelector('.curr-player-name .value').innerText = `${currPlayer.placeholderName}`;
+    document.querySelector('.curr-player-score .value').innerText = `${currPlayer.score}`;
 }
 
 function winBoard() {

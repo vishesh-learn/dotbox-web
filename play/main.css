@@ -1,5 +1,7 @@
 :root {
   --slideLeftDuration: 0.3s;
+  --headerHeight: 100px;
+  --footerHeight: 70px;
 }
 
 * {
@@ -15,6 +17,7 @@ body {
 
 header {
   flex: 1;
+  max-height: var(--headerHeight);
 }
 
 #homeButton {
@@ -109,12 +112,17 @@ header {
 }
 
 .svgC {
-  height: calc(100% - var(--headerHeight) - var(--nextButtonHeight) - var(--footerHeight));
+  height: calc(100% - var(--headerHeight) - var(--footerHeight));
   position: relative;
   touch-action: none;
   margin: auto;
   width: 100%;
   overflow: auto;
+}
+
+.svgC::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
 }
 
 .pop-up-container header,

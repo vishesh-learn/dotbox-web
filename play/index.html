@@ -9,21 +9,22 @@
   <link rel="shortcut icon" href="../icon.png" />
   <link rel="stylesheet" href="../lib/global.css" />
   <link rel="stylesheet" href="main.css" />
+  <link rel="stylesheet" href="mediaQuery.css">
 </head>
 
 <body>
   <div class="page-bg"></div>
 
-  <svg class="icon button" tabindex="0" id="homeButton" width="30" height="30" viewBox="0 0 214 200"
-    xmlns="http://www.w3.org/2000/svg">
-    <path
-      d="M107 0C107 0 147 0 197 60C247 120 166.029 136.764 166.029 136.764C166.029 136.764 167 200 107 199.997C47 200 47.3282 136.764 47.3282 136.764C47.3282 136.764 -33 120 17 60C67 0 107 0 107 0Z" />
-  </svg>
-
   <header>
     <div class="playerTurn">
       <div class="playerTurnList"></div>
     </div>
+
+    <svg class="icon button" tabindex="0" id="homeButton" width="30" height="30" viewBox="0 0 214 200"
+      xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M107 0C107 0 147 0 197 60C247 120 166.029 136.764 166.029 136.764C166.029 136.764 167 200 107 199.997C47 200 47.3282 136.764 47.3282 136.764C47.3282 136.764 -33 120 17 60C67 0 107 0 107 0Z" />
+    </svg>
   </header>
 
   <div class="page-content svgC">
@@ -38,10 +39,22 @@
 
   <footer>
     <div class="infoBar">
-      <div class="info curr-player-id"></div>
-      <div class="info curr-player-name"></div>
-      <div class="info curr-player-score"></div>
-      <div class="info rowAndCol"></div>
+      <div class="info curr-player-id">
+        <div class="label">ID: </div>
+        <div class="value"></div>
+      </div>
+      <div class="info curr-player-name">
+        <div class="label">Name: </div>
+        <div class="value"></div>
+      </div>
+      <div class="info curr-player-score">
+        <div class="label">Score: </div>
+        <div class="value"></div>
+      </div>
+      <div class="info rowAndCol">
+        <div class="label">Board: </div>
+        <div class="value"></div>
+      </div>
     </div>
   </footer>
 
