@@ -1,4 +1,4 @@
-@media only screen and (max-height: 360px) and (orientation: landscape) {
+@media only screen and (max-height: 480px) and (orientation: landscape) {
     :root {
         --headerHeight: 100%;
         --footerHeight: 100%;

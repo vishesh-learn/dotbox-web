@@ -81,7 +81,7 @@ header{
   flex-wrap: wrap;
   padding: 0 20px 0 10px;
   height: var(--headerHeight);
-  box-shadow: 0 -2px 5px 1px #000000;
+  box-shadow: -2px -2px 5px 1px #000000;
   position: relative;
 }
 
@@ -133,7 +133,7 @@ footer {
   width: 100%;
   height: var(--nextButtonHeight);
   border: none;
-  box-shadow: 0 2px 5px 2px #000000;
+  box-shadow: 2px 2px 5px 2px #000000;
   background-color: rgb(246 120 26 / 60%);
 }
 
@@ -202,9 +202,17 @@ footer {
   height: 5px;
 }
 
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 ::-webkit-scrollbar-thumb {
   background: var(--brown-light);
-  border-radius: 3px;
+  border-radius: 100px;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 @font-face {

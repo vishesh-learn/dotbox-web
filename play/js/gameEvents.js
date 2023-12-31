@@ -1,21 +1,21 @@
 function addPointerEvents() {
-  const dotSVG = document.querySelector(".dotSVG");
+  const svgC = document.querySelector(".svgC");
 
-  $aEL(dotSVG, "pointerdown", pointerDown);
-  $aEL(dotSVG, "pointermove", linePrev);
-  $aEL(dotSVG, "pointerup", pointerUp);
+  $aEL(svgC, "pointerdown", pointerDown);
+  $aEL(svgC, "pointermove", linePrev);
+  $aEL(svgC, "pointerup", pointerUp);
 }
 
 function removePointerEvents() {
-  const dotSVG = document.querySelector(".dotSVG");
+  const svgC = document.querySelector(".svgC");
 
-  $rEL(dotSVG, "pointerdown", pointerDown);
-  $rEL(dotSVG, "pointermove", linePrev);
-  $rEL(dotSVG, "pointerup", pointerUp);
+  $rEL(svgC, "pointerdown", pointerDown);
+  $rEL(svgC, "pointermove", linePrev);
+  $rEL(svgC, "pointerup", pointerUp);
 }
 
 function pointerDown(event) {
-  const dotSVG = document.querySelector(".dotSVG"), svgC = document.querySelector(".svgC");
+  const svgC = document.querySelector(".svgC");
   var x = event.offsetX, y = event.offsetY;
 
   if (x && y) {
@@ -27,7 +27,7 @@ function pointerDown(event) {
 
     if (difference(x, initDot.x) <= currGame.gameBoard.gap / 2
       && difference(y, initDot.y) <= currGame.gameBoard.gap / 2) {
-      $aEL(dotSVG, "pointermove", linePrev);
+      $aEL(svgC, "pointermove", linePrev);
       $aEL(svgC, "pointerup", pointerUp);
     } else {
       console.log("line drawing canceled");
@@ -35,10 +35,10 @@ function pointerDown(event) {
   }
 }
 
-function pointerUp(event) {
-  const dotSVG = document.querySelector(".dotSVG"), svgC = document.querySelector(".svgC");
+function pointerUp(event) { console.log(event);
+  const svgC = document.querySelector(".svgC");
 
-  $rEL(dotSVG, "pointermove", linePrev);
+  $rEL(svgC, "pointermove", linePrev);
   $rEL(svgC, "pointerup", pointerUp);
 
   var x = event.offsetX, y = event.offsetY;
