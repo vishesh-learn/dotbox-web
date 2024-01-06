@@ -1,17 +1,23 @@
-function addPointerEvents() {
-  const svgC = document.querySelector(".svgC");
+function pointerDownEvent(listen = true) {
+  const board = document.querySelector(".dotSVG");
 
-  $aEL(svgC, "pointerdown", pointerDown);
-  $aEL(svgC, "pointermove", linePrev);
-  $aEL(svgC, "pointerup", pointerUp);
+  if (listen) {
+    $aEL(board, "pointerdown", pointerDown);
+  } else {
+    $rEL(board, "pointerdown", pointerDown);
+  }
 }
 
-function removePointerEvents() {
-  const svgC = document.querySelector(".svgC");
+function pointerMoveAndUPEvents(listen = true) {
+  const board = document.querySelector(".svgC");
 
-  $rEL(svgC, "pointerdown", pointerDown);
-  $rEL(svgC, "pointermove", linePrev);
-  $rEL(svgC, "pointerup", pointerUp);
+  if (listen) {
+    $aEL(board, "pointermove", linePrev);
+    $aEL(board, "pointerup", pointerUp);
+  } else {
+    $rEL(board, "pointermove", linePrev);
+    $rEL(board, "pointerup", pointerUp);
+  }
 }
 
 function pointerDown(event) {
@@ -27,29 +33,27 @@ function pointerDown(event) {
 
     if (difference(x, initDot.x) <= currGame.gameBoard.gap / 2
       && difference(y, initDot.y) <= currGame.gameBoard.gap / 2) {
-      $aEL(svgC, "pointermove", linePrev);
-      $aEL(svgC, "pointerup", pointerUp);
+      pointerMoveAndUPEvents(true);
     } else {
       console.log("line drawing canceled");
     }
   }
 }
 
-function pointerUp(event) { console.log(event);
-  const svgC = document.querySelector(".svgC");
+function pointerUp(event) {
+  console.log(event);
 
-  $rEL(svgC, "pointermove", linePrev);
-  $rEL(svgC, "pointerup", pointerUp);
+  pointerMoveAndUPEvents(false);
 
   var x = event.offsetX, y = event.offsetY;
 
   made = new Made();
-  
+
   removePrevLines();
 
   if (initDot && x && y) {
     finalDot = nearDot(x, y);
-    
+
     if (
       validateLines(finalDot)
       && difference(x, finalDot.x) <= currGame.gameBoard.gap / 2
@@ -70,7 +74,7 @@ function removePrevLines() {
 
 function lineMade(line) {
   made.lineMade = true;
-  
+
   pendingPossiblelines.forEach((possibleLine, index) => {
     if (compareLineObj(possibleLine, line)) {
       pendingPossiblelines.splice(index, 1);
@@ -84,7 +88,7 @@ function boxMade(box) {
   made.boxMade++;
 }
 
-function gameEvent() { //console.log(made);
+function gameEvent() {
   if (made.lineMade) {
     if (made.boxMade <= 0) {
       playerTurn();
@@ -100,7 +104,7 @@ function gameEvent() { //console.log(made);
 }
 
 function playerTurn() {
-  removePointerEvents();
+  pointerDownEvent(false);
 
   if (currPlayer != undefined) {
     if (currPlayer.id == currGame.players.length) {
@@ -126,7 +130,7 @@ function playerTurn() {
   if (currPlayer.isAlgo) {
     requestAnimationFrame(autoDrawLine);
   } else {
-    addPointerEvents();
+    pointerDownEvent(true);
   }
 }
 

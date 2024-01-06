@@ -2,6 +2,7 @@
   --slideLeftDuration: 0.3s;
   --headerHeight: 100px;
   --footerHeight: 70px;
+  --scrollbarSize: 30px;
 }
 
 * {
@@ -134,10 +135,6 @@ header {
   max-height: calc(var(--boardHeight) + var(--scrollbarSize));
 
   overflow: scroll;
-}
-
-:root {
-  --scrollbarSize: 20px;
 }
 
 .svgC::-webkit-scrollbar {
