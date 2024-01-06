@@ -190,20 +190,16 @@ function prevLineMaker(line) {
 }
 
 function svgResize() {
-    const svgC = document.querySelector(".svgC");
-    const svgList = document.querySelectorAll(".svgC svg");
+    // let scrollbarSize = Number(getComputedStyle(document.documentElement)
+    // .getPropertyValue('--scrollbarSize').trim().replace(/\D/g, '')) || 0;
 
-    const scrollBarWidth = 10;
+    // console.log(scrollbarSize);
 
     var width = ((currGame.gameBoard.col - 1) * currGame.gameBoard.gap) + (currGame.gameBoard.svgPaddingX * 2);
     var height = ((currGame.gameBoard.row - 1) * currGame.gameBoard.gap) + (currGame.gameBoard.svgPaddingY * 2);
 
-    svgC.style.maxWidth = `${width + scrollBarWidth}px`;
-
-    svgList.forEach(svg => {
-        svg.style.width = `${width}px`;
-        svg.style.height = `${height}px`;
-    });
+    document.documentElement.style.setProperty('--boardWidth', `${width}px`);
+    document.documentElement.style.setProperty('--boardHeight', `${height}px`);
 }
 
 function addLine(line) {
