@@ -190,13 +190,10 @@ function prevLineMaker(line) {
 }
 
 function svgResize() {
-    // let scrollbarSize = Number(getComputedStyle(document.documentElement)
-    // .getPropertyValue('--scrollbarSize').trim().replace(/\D/g, '')) || 0;
+    let dotRadius = getDotRadius();
 
-    // console.log(scrollbarSize);
-
-    var width = ((currGame.gameBoard.col - 1) * currGame.gameBoard.gap) + (currGame.gameBoard.svgPaddingX * 2);
-    var height = ((currGame.gameBoard.row - 1) * currGame.gameBoard.gap) + (currGame.gameBoard.svgPaddingY * 2);
+    var width = ((currGame.gameBoard.col - 1) * currGame.gameBoard.gap) + dotRadius;
+    var height = ((currGame.gameBoard.row - 1) * currGame.gameBoard.gap) + dotRadius;
 
     document.documentElement.style.setProperty('--boardWidth', `${width}px`);
     document.documentElement.style.setProperty('--boardHeight', `${height}px`);

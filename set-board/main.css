@@ -1,3 +1,7 @@
+:root {
+    --dotRadius: 11;
+}
+
 *{
     box-sizing: border-box;
     outline-style: none;

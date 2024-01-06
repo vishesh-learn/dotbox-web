@@ -162,7 +162,7 @@ header {
 }
 
 .dot {
-  r: var(--dot-radius);
+  r: var(--dotRadius);
   fill: var(--brown);
   stroke: rgba(255, 255, 255, .25);
   stroke-width: var(--dot-stroke-width);
