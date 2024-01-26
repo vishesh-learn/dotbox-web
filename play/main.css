@@ -126,13 +126,13 @@ header {
   position: relative;
   touch-action: none;
 
-  min-width: calc(var(--boardWidth) + var(--playScrollbarSize));
-  min-height: calc(var(--boardHeight) + var(--playScrollbarSize));
+  min-width: calc(var(--boardWidth) + var(--playXScrollbarSize));
+  min-height: calc(var(--boardHeight) + var(--playYScrollbarSize));
 }
 
 .page-content::-webkit-scrollbar {
-  width: var(--playScrollbarSize);
-  height: var(--playScrollbarSize);
+  width: var(--playXScrollbarSize);
+  height: var(--playYScrollbarSize);
 }
 
 

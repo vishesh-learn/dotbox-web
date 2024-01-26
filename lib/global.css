@@ -11,7 +11,8 @@
   --playHeaderHeight: 100px;
   --playFooterHeight: 70px;
   --playerTurnHeight: 60px;
-  --playScrollbarSize: 30px;
+  --playXScrollbarSize: 30px;
+  --playYScrollbarSize: 30px;
   
   --popUpColor: rgba(255, 255, 255, .2);
 

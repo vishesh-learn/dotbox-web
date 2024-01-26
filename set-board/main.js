@@ -34,6 +34,29 @@ function setupGameBoard() {
   startupVariables();
   GameBoardBuilder();
   optedCnR();
+
+  gameBoardOverFlow();
+}
+
+function gameBoardOverFlow() {
+    let pageContentSize = getComputedSize(document.querySelector(".page-content"));
+    let boardSize = getComputedSize(document.querySelector(".svgC"));
+
+    if (boardSize.width > pageContentSize.width) {
+        document.documentElement.style.setProperty('--align-x-board', `flex-start`);
+        document.documentElement.style.setProperty('--playXScrollbarSize', `30px`);
+    } else {
+        document.documentElement.style.setProperty('--align-x-board', `center`);
+        document.documentElement.style.setProperty('--playXScrollbarSize', `0px`);
+    }
+
+    if (boardSize.height > pageContentSize.height) {
+        document.documentElement.style.setProperty('--align-y-board', `flex-start`);
+        document.documentElement.style.setProperty('--playYScrollbarSize', `30px`);
+    } else {
+        document.documentElement.style.setProperty('--align-y-board', `center`);
+        document.documentElement.style.setProperty('--playYScrollbarSize', `0px`);
+    }
 }
 
 function startupVariables() {
@@ -56,6 +79,12 @@ function startupVariables() {
   currGame.gameBoard.maxCol = length_to_dotCount(drawableWidth);
 
   currGame.gameBoard.maxRow = length_to_dotCount(drawableHeight);
+
+  let width = dotCount_to_length(currGame.gameBoard.maxCol);
+  let height = dotCount_to_length(currGame.gameBoard.maxRow);
+
+  document.documentElement.style.setProperty('--svgWidth', `${width}px`);
+  document.documentElement.style.setProperty('--svgHeight', `${height}px`);
 }
 
 function svgResize() {
