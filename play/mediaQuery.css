@@ -1,7 +1,7 @@
 @media only screen and (max-height: 480px) and (orientation: landscape) {
     :root {
-        --headerHeight: 100%;
-        --footerHeight: 100%;
+        --playHeaderHeight: 100%;
+        --playFooterHeight: 100%;
     }
 
     body {
@@ -46,10 +46,6 @@
     .slideLeft {
         transition-property: top;
         top: -50px;
-    }
-
-    .svgC {
-        height: 100%;
     }
 
     footer {

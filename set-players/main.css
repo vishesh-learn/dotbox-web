@@ -12,11 +12,18 @@ body {
   color: var(--brown);
   font-family: sans-serif;
   font-weight: bold;
+
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  height: var(--headerHeight);
 }
 
 .page-content {
   width: 100%;
-  height: calc(100% - var(--headerHeight) - var(--nextButtonHeight));
+  flex: 1;
   position: relative;
   overflow: auto;
 }
@@ -79,7 +86,7 @@ body {
   height: 40px;
   position: fixed;
   right: 25px;
-  bottom: calc(var(--nextButtonHeight) + 30px);
+  bottom: calc(var(--footerHeight) + 30px);
   border: 3px solid;
   border-radius: 50%;
   background-color: var(--orange);

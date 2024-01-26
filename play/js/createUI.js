@@ -57,20 +57,18 @@ function gameBoardBuilder() {
 
     dots.forEach(dot => dot.remove());
 
-    if (currGame.gameBoard.row >= 2 && currGame.gameBoard.col >= 2) {
-        for (let i = 0; i < currGame.gameBoard.row; i++) {
-            for (let j = 0; j < currGame.gameBoard.col; j++) {
-                cx = (currGame.gameBoard.gap * j + dotRadius).toString();
-                cy = (currGame.gameBoard.gap * i + dotRadius).toString();
+    for (let i = 0; i < currGame.gameBoard.row; i++) {
+        for (let j = 0; j < currGame.gameBoard.col; j++) {
+            cx = (currGame.gameBoard.gap * j + dotRadius).toString();
+            cy = (currGame.gameBoard.gap * i + dotRadius).toString();
 
-                let dot = document.createElementNS('http://www.w3.org/2000/svg', "circle");
-                dot.setAttribute("class", "dot");
+            let dot = document.createElementNS('http://www.w3.org/2000/svg', "circle");
+            dot.setAttribute("class", "dot");
 
-                dot.setAttribute("cx", cx);
-                dot.setAttribute("cy", cy);
-
-                svg.appendChild(dot);
-            }
+            dot.setAttribute("cx", cx);
+            dot.setAttribute("cy", cy);
+            
+            svg.appendChild(dot);
         }
     }
 

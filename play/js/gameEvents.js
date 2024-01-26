@@ -106,6 +106,11 @@ function gameEvent() {
 function playerTurn() {
   pointerDownEvent(false);
 
+  if (!(currGame?.players?.length > 0)) {
+    console.error('not enough players for the game', currGame);
+    return false;
+  }
+
   if (currPlayer != undefined) {
     if (currPlayer.id == currGame.players.length) {
       currPlayer = currGame.players[0];

@@ -23,13 +23,33 @@ window.onload = () => {
      
     document.querySelector(".playerTurnList").addEventListener("transitionend", setupPlayerTurnListUI);
 
-    $aEL(document.querySelector("#replayButton"), "click", replay);
+    document.querySelector("#replayButton").addEventListener("click", replay);
 
-    $aEL(document.querySelector("#newGameButton"), "click", newGame);
+    document.querySelector("#newGameButton").addEventListener("click", newGame);
 
     footerInfo();
 
     keyOnTabIndex();
+
+    gameBoardOverFlow();
+    addEventListener("resize", gameBoardOverFlow);
+}
+
+function gameBoardOverFlow() {
+    let pageContentSize = getComputedSize(document.querySelector(".page-content"));
+    let boardSize = getComputedSize(document.querySelector(".svgC"));
+
+    if (boardSize.width > pageContentSize.width) {
+        document.documentElement.style.setProperty('--align-x-board', `flex-start`);
+    } else {
+        document.documentElement.style.setProperty('--align-x-board', `center`);
+    }
+
+    if (boardSize.height > pageContentSize.height) {
+        document.documentElement.style.setProperty('--align-y-board', `flex-start`);
+    } else {
+        document.documentElement.style.setProperty('--align-y-board', `center`);
+    }
 }
 
 function refreshGameLines() {
@@ -192,8 +212,8 @@ function prevLineMaker(line) {
 function svgResize() {
     let dotRadius = getDotRadius();
 
-    var width = ((currGame.gameBoard.col - 1) * currGame.gameBoard.gap) + dotRadius;
-    var height = ((currGame.gameBoard.row - 1) * currGame.gameBoard.gap) + dotRadius;
+    var width = ((currGame.gameBoard.col - 1) * currGame.gameBoard.gap) + (2 * dotRadius);
+    var height = ((currGame.gameBoard.row - 1) * currGame.gameBoard.gap) + (2 * dotRadius);
 
     document.documentElement.style.setProperty('--boardWidth', `${width}px`);
     document.documentElement.style.setProperty('--boardHeight', `${height}px`);
@@ -574,6 +594,11 @@ function setupPlayerTurnListUI() {
 }
 
 function setCurrPlayerInfo() {
+    if (!currPlayer) {
+        console.error('currPlayer not found for game', currGame);
+        return false;
+    }
+
     document.querySelector('.curr-player-id .value').innerText = `${currPlayer.id}`;
     document.querySelector('.curr-player-name .value').innerText = `${currPlayer.placeholderName}`;
     document.querySelector('.curr-player-score .value').innerText = `${currPlayer.score}`;

@@ -2,12 +2,12 @@
     --dotRadius: 11;
 }
 
-*{
+* {
     box-sizing: border-box;
     outline-style: none;
 }
 
-body{
+body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -16,26 +16,36 @@ body{
     font-weight: bold;
 }
 
-.hidden{
+header {
+    height: var(--headerHeight);
+}
+
+.hidden {
     opacity: 0;
 }
 
-.svgC{
+.page-content {
+    flex: 1;
+    margin: 25px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.svgC {
     width: 100%;
-    height: calc(100% - var(--headerHeight) - var(--nextButtonHeight) - var(--footerHeight));
-    position: relative;
-    overflow: auto;
+    height: 100%;
+    max-height: calc(100% - var(--playHeaderHeight) - var(--playFooterHeight) + var(--headerHeight) + var(--footerHeight) - var(--playScrollbarSize));
+    /* overflow: auto; */
 }
 
-.svgC svg{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    overflow: auto;
+.svgC svg {
+    width: 100%;
+    height: 100%;
 }
 
-.dot{
+.dot {
     fill: var(--brown);
     border-radius: 50%;
     outline: 1px solid var(--brown);

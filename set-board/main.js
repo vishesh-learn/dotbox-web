@@ -12,7 +12,8 @@ window.onload = () => {
 
   setupGameBoard();
 
-  $aEL(window, "resize", setupGameBoard);
+  addEventListener("resize", setupGameBoard);
+  
   $aEL(gameBoardSVG, "pointerdown", pointHandler);
   $aEL(gameBoardSVG, "pointerup", () => $rEL(gameBoardSVG, "pointermove", pointHandler));
 
@@ -38,19 +39,23 @@ function setupGameBoard() {
 function startupVariables() {
   let dotRadius = getDotRadius();
 
-  console.log('dotRadius', dotRadius);
+  //console.log('dotRadius', dotRadius);
 
-  let boardSize = getComputedBoardSize();
+  let boardSize = getComputedSize(document.querySelector(".svgC"));
 
   console.log('boardSize', boardSize);
 
-  var cH = boardSize.height - dotRadius;
+  let scrollbarSize = getScrollbarSize();
 
-  var cW = boardSize.width - dotRadius;
+  console.log('scrollbarSize', scrollbarSize);
 
-  currGame.gameBoard.maxRow = length_to_dotCount(cH);
+  var drawableWidth = boardSize.width - (dotRadius * 2) - scrollbarSize;
 
-  currGame.gameBoard.maxCol = length_to_dotCount(cW);
+  var drawableHeight = boardSize.height - (dotRadius * 2) - scrollbarSize;
+
+  currGame.gameBoard.maxCol = length_to_dotCount(drawableWidth);
+
+  currGame.gameBoard.maxRow = length_to_dotCount(drawableHeight);
 }
 
 function svgResize() {
@@ -87,7 +92,7 @@ function GameBoardBuilder() {
     }
   }
 
-  svgResize();
+  //svgResize();
 }
 
 function pointHandler(event) {

@@ -6,14 +6,20 @@
   --orange: #ffa15b;
 
   --headerHeight: 50px;
-  --nextButtonHeight: 50px;
-  --playerTurnHeight: 60px;
   --footerHeight: 50px;
+
+  --playHeaderHeight: 100px;
+  --playFooterHeight: 70px;
+  --playerTurnHeight: 60px;
+  --playScrollbarSize: 30px;
+  
   --popUpColor: rgba(255, 255, 255, .2);
 
   --dotRadius: 10;
   --dot-stroke-width: 5px;
   --strokeWidth: 8px;
+
+  --scrollbarSize: 5px;
 }
 
 * {
@@ -80,7 +86,6 @@ header{
   gap: 15px;
   flex-wrap: wrap;
   padding: 0 20px 0 10px;
-  height: var(--headerHeight);
   box-shadow: -2px -2px 5px 1px #000000;
   position: relative;
 }
@@ -131,7 +136,7 @@ a {
 
 footer {
   width: 100%;
-  height: var(--nextButtonHeight);
+  height: var(--footerHeight);
   border: none;
   box-shadow: 2px 2px 5px 2px #000000;
   background-color: rgb(246 120 26 / 60%);
@@ -139,7 +144,7 @@ footer {
 
 #nextButton {
   width: 100%;
-  height: var(--nextButtonHeight);
+  height: 100%;
   color: var(--brown);
   font-weight: bold;
   font-family: comic;
@@ -198,8 +203,8 @@ footer {
 }
 
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: var(--scrollbarSize);
+  height: var(--scrollbarSize);
 }
 
 ::-webkit-scrollbar-track {
