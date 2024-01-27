@@ -1,10 +1,13 @@
+:root {
+  --playerHeight: 50px;
+  --currentPlayerColor: unset;
+  --colorSliderMinHex: "#d3d3d3";
+  --colorSliderMaxHex: "#d3d3d3";
+}
+
 * {
   box-sizing: border-box;
   outline-style: none;
-}
-
-:root {
-  --playerHeight: 50px;
 }
 
 body {
@@ -104,11 +107,19 @@ header {
   opacity: 0.2;
 }
 
+.pop-up .top.left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
 .set-color {
   gap: 35px;
 }
 
 .set-color .color-prev {
+  background-color: var(--currentPlayerColor);
   width: 80px;
   height: 60px;
   outline: 2px dotted var(--brown);
@@ -118,12 +129,14 @@ header {
 #colorSlider {
   -webkit-appearance: none;
   width: 100%;
+  min-width: 180px;
   height: 10px;
   border-radius: 5px;
-  background: #d3d3d3;
+  background: linear-gradient(to right, var(--colorSliderMinHex), var(--colorSliderMaxHex));
   outline: none;
   -webkit-transition: .2s;
   transition: opacity .2s;
+  cursor: pointer;
 }
 
 #colorSlider::-webkit-slider-thumb {
@@ -132,7 +145,8 @@ header {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background: var(--brown);
+  background: var(--currentPlayerColor);
+  border: 2px solid var(--brown);
   cursor: pointer;
 }
 
@@ -158,5 +172,5 @@ header {
 
 .color-hue .avatar {
   width: 45px;
-  height: 30px;
+  height: 35px;
 }

@@ -127,7 +127,7 @@ function colorSelector(event) {
 
     let color = currGame.players[targetPlayerIndex].color;
 
-    document.querySelector(".color-prev").style.backgroundColor = color;
+    document.documentElement.style.setProperty('--currentPlayerColor', color);
 
     setupColorRange(toHslObject(color).h);
   }
@@ -142,6 +142,12 @@ function setupColorRange(h = 0) {
 
   colorSlider.max = max < 360 ? max : 360;
 
+  let minHex = hueToHex(colorSlider.min);
+  let maxHex = hueToHex(colorSlider.max);
+
+  document.documentElement.style.setProperty('--colorSliderMinHex', minHex);
+  document.documentElement.style.setProperty('--colorSliderMaxHex', maxHex);
+
   colorSlider.value = h;
 }
 
@@ -150,7 +156,7 @@ function colorRange_Input(event) {
 
   currGame.players[targetPlayerIndex].color = hex;
 
-  document.querySelector(".color-prev").style.backgroundColor = hex;
+  document.documentElement.style.setProperty('--currentPlayerColor', hex);
 
   saveCurrGame();
   setupplayersUI();
@@ -163,7 +169,7 @@ function selectColor(event) {
 
     currGame.players[targetPlayerIndex].color = color;
 
-    document.querySelector(".color-prev").style.backgroundColor = color;
+    document.documentElement.style.setProperty('--currentPlayerColor', color);
 
     setupColorRange(toHslObject(color).h);
 

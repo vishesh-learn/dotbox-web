@@ -14,7 +14,7 @@
   --playXScrollbarSize: 30px;
   --playYScrollbarSize: 30px;
   
-  --popUpColor: rgba(255, 255, 255, .2);
+  --popUpColor: #ffffff33;
 
   --dotRadius: 10;
   --dot-stroke-width: 5px;
@@ -51,12 +51,6 @@ body {
   background-position: center;
   z-index: -1;
 }
-
-/* @media only screen and (width > 1600px) {
-  .page-bg {
-    background-size: cover;
-  }
-} */
 
 button{
 	background-color: transparent;
@@ -197,10 +191,9 @@ footer {
   position: absolute;
   top: 0px;
   right: 0px;
-  padding: 5px;
+  padding: 10px;
   font-weight: bold;
-  width: 30px;
-  height: 30px;
+  line-height: 1em;
 }
 
 ::-webkit-scrollbar {

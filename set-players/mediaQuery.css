@@ -1,0 +1,22 @@
+@media only screen and (min-height: 480px) and (orientation: landscape) {
+    .pop-up {
+        box-shadow: none;
+        padding: 45px;
+    }
+
+    .close-pop-up {
+        font-size: large;
+    }
+}
+
+@media only screen and (max-height: 480px) and (orientation: landscape) {
+    .pop-up {
+        flex-direction: row;
+        width: 100%;
+        justify-content: center;
+    }
+
+    #colorSlider {
+        max-width: 180px;
+    }
+}
