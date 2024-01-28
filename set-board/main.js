@@ -13,9 +13,13 @@ window.onload = () => {
   setupGameBoard();
 
   addEventListener("resize", setupGameBoard);
-  
-  $aEL(gameBoardSVG, "pointerdown", pointHandler);
-  $aEL(gameBoardSVG, "pointerup", () => $rEL(gameBoardSVG, "pointermove", pointHandler));
+
+  gameBoardSVG.addEventListener("pointerdown", pointerHandler);
+  gameBoardSVG.addEventListener("pointerup",
+    () => gameBoardSVG.removeEventListener("pointermove", pointerHandler)
+  );
+
+  gameBoardSVG.addEventListener('keypress', keyHandler);
 
   $aEL(nextButton, "click", () => window.location.href = `../${pages.setPlayers}/${pages.indexPage}`);
 
@@ -39,38 +43,32 @@ function setupGameBoard() {
 }
 
 function gameBoardOverFlow() {
-    let pageContentSize = getComputedSize(document.querySelector(".page-content"));
-    let boardSize = getComputedSize(document.querySelector(".svgC"));
+  let pageContentSize = getComputedSize(document.querySelector(".page-content"));
+  let boardSize = getComputedSize(document.querySelector(".svgC"));
 
-    if (boardSize.width > pageContentSize.width) {
-        document.documentElement.style.setProperty('--align-x-board', `flex-start`);
-        document.documentElement.style.setProperty('--playXScrollbarSize', `30px`);
-    } else {
-        document.documentElement.style.setProperty('--align-x-board', `center`);
-        document.documentElement.style.setProperty('--playXScrollbarSize', `0px`);
-    }
+  if (boardSize.width > pageContentSize.width) {
+    document.documentElement.style.setProperty('--align-x-board', `flex-start`);
+    document.documentElement.style.setProperty('--playXScrollbarSize', `30px`);
+  } else {
+    document.documentElement.style.setProperty('--align-x-board', `center`);
+    document.documentElement.style.setProperty('--playXScrollbarSize', `0px`);
+  }
 
-    if (boardSize.height > pageContentSize.height) {
-        document.documentElement.style.setProperty('--align-y-board', `flex-start`);
-        document.documentElement.style.setProperty('--playYScrollbarSize', `30px`);
-    } else {
-        document.documentElement.style.setProperty('--align-y-board', `center`);
-        document.documentElement.style.setProperty('--playYScrollbarSize', `0px`);
-    }
+  if (boardSize.height > pageContentSize.height) {
+    document.documentElement.style.setProperty('--align-y-board', `flex-start`);
+    document.documentElement.style.setProperty('--playYScrollbarSize', `30px`);
+  } else {
+    document.documentElement.style.setProperty('--align-y-board', `center`);
+    document.documentElement.style.setProperty('--playYScrollbarSize', `0px`);
+  }
 }
 
 function startupVariables() {
   let dotRadius = getDotRadius();
 
-  //console.log('dotRadius', dotRadius);
-
   let boardSize = getComputedSize(document.querySelector(".svgC"));
 
-  console.log('boardSize', boardSize);
-
   let scrollbarSize = getScrollbarSize();
-
-  console.log('scrollbarSize', scrollbarSize);
 
   var drawableWidth = boardSize.width - (dotRadius * 2) - scrollbarSize;
 
@@ -78,7 +76,15 @@ function startupVariables() {
 
   currGame.gameBoard.maxCol = length_to_dotCount(drawableWidth);
 
+  if (currGame.gameBoard.maxCol <= currGame.gameBoard.minCol) {
+    currGame.gameBoard.maxCol = currGame.gameBoard.minCol;
+  }
+
   currGame.gameBoard.maxRow = length_to_dotCount(drawableHeight);
+
+  if (currGame.gameBoard.maxRow <= currGame.gameBoard.minRow) {
+    currGame.gameBoard.maxRow = currGame.gameBoard.minRow;
+  }
 
   let width = dotCount_to_length(currGame.gameBoard.maxCol);
   let height = dotCount_to_length(currGame.gameBoard.maxRow);
@@ -103,54 +109,56 @@ function GameBoardBuilder() {
 
   let dotRadius = getDotRadius();
 
-  if (currGame.gameBoard.maxRow >= currGame.gameBoard.minRow && currGame.gameBoard.maxCol >= currGame.gameBoard.minCol) {
-    for (let i = 0; i < currGame.gameBoard.maxRow; i++) {
-      for (let j = 0; j < currGame.gameBoard.maxCol; j++) {
-        var x = (currGame.gameBoard.gap * j + dotRadius).toString(10);
-        var y = (currGame.gameBoard.gap * i + dotRadius).toString(10);
+  for (let i = 0; i < currGame.gameBoard.maxRow; i++) {
+    for (let j = 0; j < currGame.gameBoard.maxCol; j++) {
+      var x = (currGame.gameBoard.gap * j + dotRadius).toString(10);
+      var y = (currGame.gameBoard.gap * i + dotRadius).toString(10);
 
-        let dot = document.createElementNS('http://www.w3.org/2000/svg', "circle");
-        dot.setAttribute("class", "dot hidden");
+      let dot = document.createElementNS('http://www.w3.org/2000/svg', "circle");
+      dot.setAttribute("class", "dot hidden");
 
-        dot.setAttribute("r", "7");
-        dot.setAttribute("cx", x);
-        dot.setAttribute("cy", y);
+      dot.setAttribute("r", "7");
+      dot.setAttribute("cx", x);
+      dot.setAttribute("cy", y);
 
-        document.querySelector(".svgC svg").appendChild(dot);
-      }
+      dot.setAttribute('tabindex', 0);
+
+      document.querySelector(".svgC svg").appendChild(dot);
     }
   }
-
-  //svgResize();
 }
 
-function pointHandler(event) {
-  var gameBoardSVG = document.querySelector(".svgC svg");
-
+function pointerHandler(event) {
   var pointX = event.offsetX;
   var pointY = event.offsetY;
 
   var nearDot = nearestDot(pointX, pointY);
 
-  var optedX = nearDot.cx.baseVal.value;
-  var optedY = nearDot.cy.baseVal.value;
+  optedDot(nearDot);
+
+  document.querySelector(".svgC svg")
+    .addEventListener("pointermove", pointerHandler);
+}
+
+function keyHandler(event) {
+  if (event.keyCode === 13) {
+    optedDot(event.target);
+  }
+  //more functions on different key codes...
+}
+
+function optedDot(dot) {
+  if (dot.tagName != "circle") {
+    return false;
+  }
+
+  var optedX = dot.cx.baseVal.value;
+  var optedY = dot.cy.baseVal.value;
 
   currGame.gameBoard.col = length_to_dotCount(optedX, currGame.gameBoard.gap);
   currGame.gameBoard.row = length_to_dotCount(optedY, currGame.gameBoard.gap);
 
   optedCnR();
-
-  $aEL(gameBoardSVG, "pointermove", pointHandler);
-}
-
-function length_to_dotCount(length) {
-  return (length - length % currGame.gameBoard.gap + currGame.gameBoard.gap) / currGame.gameBoard.gap;
-}
-
-function dotCount_to_length(dotCount) {
-  let dotRadius = getDotRadius();
-
-  return (dotCount * currGame.gameBoard.gap) - currGame.gameBoard.gap + dotRadius * 2;
 }
 
 function optedCnR() {
@@ -223,6 +231,16 @@ function nearestDot(x, y) {
   }
 
   return nearDot;
+}
+
+function length_to_dotCount(length) {
+  return (length - length % currGame.gameBoard.gap + currGame.gameBoard.gap) / currGame.gameBoard.gap;
+}
+
+function dotCount_to_length(dotCount) {
+  let dotRadius = getDotRadius();
+
+  return (dotCount * currGame.gameBoard.gap) - currGame.gameBoard.gap + dotRadius * 2;
 }
 
 function difference(a, b) { return Math.abs(a - b); }

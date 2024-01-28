@@ -48,6 +48,10 @@
         top: -50px;
     }
 
+    .pop-up {
+        min-height: 70%;
+    }
+
     footer {
         height: 100%;
         width: 100px;

@@ -1,14 +1,11 @@
 var targetPlayerIndex = 0;
 
 window.onload = () => {
-  const backButton = document.querySelector("#backButton"), nextButton = document.querySelector("#nextButton");
-  $aEL(backButton, "click", () => window.location.href = `../${pages.setBoard}/${pages.indexPage}`);
-  $aEL(nextButton, "click", () => window.location.href = `../${pages.play}/${pages.indexPage}`);
+  document.querySelector("#backButton")
+    .addEventListener("click", () => window.location.href = `../${pages.setBoard}/${pages.indexPage}`);
 
-  const addPlayerB = document.querySelector(".addb"), playersUI = document.querySelector(".players");
-  const colorHueUI = document.querySelector(".color-hue");
-  const popUpBgUI = document.querySelector(".pop-up-bg");
-  const closePopUPUI = document.querySelector(".close-pop-up");
+  document.querySelector("#nextButton")
+    .addEventListener("click", () => window.location.href = `../${pages.play}/${pages.indexPage}`);
 
   document.querySelector("#homeButton").addEventListener("click", goHome);
 
@@ -20,19 +17,21 @@ window.onload = () => {
 
   saveCurrGame();
 
-  setupplayersUI();
+  setupPlayersUI();
 
-  $aEL(addPlayerB, "click", addPlayer);
+  document.querySelector(".addb").addEventListener("click", addPlayer);
 
-  $aEL(playersUI, "keypress", goButtonHandler);
-  $aEL(playersUI, "click", colorSelector);
-  $aEL(playersUI, "change", updatePlayer);
-  $aEL(playersUI, "click", removePlayer);
-  $aEL(playersUI, "focusin", scrollAbove);
+  const playersUI = document.querySelector(".players");
 
-  $aEL(colorHueUI, "click", selectColor);
-  $aEL(popUpBgUI, "click", closePopUP);
-  $aEL(closePopUPUI, "click", closePopUP);
+  playersUI.addEventListener("keypress", goButtonHandler);
+  playersUI.addEventListener("click", colorSelector);
+  playersUI.addEventListener("change", updatePlayer);
+  playersUI.addEventListener("click", removePlayer);
+  playersUI.addEventListener("focusin", scrollAbove);
+
+  document.querySelector(".color-hue").addEventListener("click", selectColor);
+  document.querySelector(".pop-up-bg").addEventListener("click", closePopUP);
+  document.querySelector(".close-pop-up").addEventListener("click", closePopUP);
 
   document.querySelector('#colorSlider').addEventListener('input', colorRange_Input);
 
@@ -71,7 +70,7 @@ function addPlayer() {
 
     saveCurrGame();
 
-    setupplayersUI();
+    setupPlayersUI();
   }
 }
 
@@ -102,7 +101,7 @@ function updatePlayer(event) {
     }
 
     saveCurrGame();
-    setupplayersUI();
+    setupPlayersUI();
   }
 }
 
@@ -159,7 +158,7 @@ function colorRange_Input(event) {
   document.documentElement.style.setProperty('--currentPlayerColor', hex);
 
   saveCurrGame();
-  setupplayersUI();
+  setupPlayersUI();
 }
 
 function selectColor(event) {
@@ -174,7 +173,7 @@ function selectColor(event) {
     setupColorRange(toHslObject(color).h);
 
     saveCurrGame();
-    setupplayersUI();
+    setupPlayersUI();
   }
 }
 
@@ -185,7 +184,7 @@ function removePlayer(event) {
     currGame.players.splice(getIndexOfDom(target.parentElement), 1);
 
     saveCurrGame();
-    setupplayersUI();
+    setupPlayersUI();
   }
 }
 
@@ -195,7 +194,7 @@ function getIndexOfDom(childDom) {
   return Array.prototype.indexOf.call(parentDom.children, childDom);
 }
 
-function setupplayersUI() {
+function setupPlayersUI() {
   const playersUI = document.querySelector(".players");
 
   playersUI.innerHTML = "";
@@ -227,8 +226,7 @@ function createPlayerUI(player) {
   isAlgo.classList = "isAlgo button";
   isAlgo.type = "checkbox";
   isAlgo.checked = player.isAlgo;
-  let h = toHslObject(player.color).h;
-  isAlgo.style.filter = `hue-rotate(${h}deg)`;
+  
   playerUI.append(isAlgo);
 
   const removePlayerB = document.createElement("button");

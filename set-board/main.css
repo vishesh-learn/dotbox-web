@@ -2,6 +2,9 @@
     --dotRadius: 11;
     --svgWidth: 100%;
     --svgHeight: 100%;
+
+    --align-x-board: center;
+    --align-y-board: center;
 }
 
 * {
@@ -20,6 +23,7 @@ body {
 
 header {
     height: var(--headerHeight);
+    min-width: 170px;
 }
 
 .hidden {
@@ -31,8 +35,11 @@ header {
     margin: 25px;
 
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+
+    justify-content: var(--align-x-board);
+    align-items: var(--align-y-board);
+
+    overflow: auto;
 }
 
 .svgC {
@@ -43,9 +50,13 @@ header {
 
     position: relative;
 
+    min-width: var(--svgWidth);
+    min-height: var(--svgHeight);
+
     display: flex;
-    justify-content: center;
-    align-items: center;
+
+    justify-content: var(--align-x-board);
+    align-items: var(--align-y-board);
 }
 
 .svgC svg {
@@ -62,4 +73,8 @@ header {
 
 .dot.hidden {
     outline-offset: 2px;
+}
+
+.dot:focus-visible {
+    outline: 1px dashed;
 }
