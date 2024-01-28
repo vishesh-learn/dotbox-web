@@ -126,15 +126,9 @@ header {
   position: relative;
   touch-action: none;
 
-  min-width: calc(var(--boardWidth) + var(--playXScrollbarSize));
-  min-height: calc(var(--boardHeight) + var(--playYScrollbarSize));
+  min-width: var(--boardWidth);
+  min-height: var(--boardHeight);
 }
-
-.page-content::-webkit-scrollbar {
-  width: var(--playXScrollbarSize);
-  height: var(--playYScrollbarSize);
-}
-
 
 .pop-up-container header,
 .pop-up-container .page-content,

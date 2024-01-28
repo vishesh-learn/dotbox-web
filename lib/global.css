@@ -11,8 +11,6 @@
   --playHeaderHeight: 100px;
   --playFooterHeight: 70px;
   --playerTurnHeight: 60px;
-  --playXScrollbarSize: 30px;
-  --playYScrollbarSize: 30px;
   
   --popUpColor: #ffffff33;
 
@@ -90,6 +88,7 @@ header .left {
   gap: inherit;
   flex-wrap: inherit;
   align-items: inherit;
+  justify-content: center;
 }
 
 input[type=checkbox]{

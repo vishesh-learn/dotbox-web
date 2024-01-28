@@ -1,0 +1,9 @@
+@media only screen and (max-height: 480px) and (orientation: landscape) {
+    :root {
+        --playHeaderWidth: 100px;
+        --playHeaderHeight: 100%;
+
+        --playFooterWidth: 100px;
+        --playFooterHeight: 100%;
+    }
+}

@@ -1,9 +1,4 @@
 @media only screen and (max-height: 480px) and (orientation: landscape) {
-    :root {
-        --playHeaderHeight: 100%;
-        --playFooterHeight: 100%;
-    }
-
     body {
         flex-direction: row;
     }
@@ -53,7 +48,6 @@
     }
 
     footer {
-        height: 100%;
         width: 100px;
     }
 

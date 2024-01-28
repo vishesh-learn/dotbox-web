@@ -41,18 +41,14 @@ function gameBoardOverFlow() {
 
     if (boardSize.width > pageContentSize.width) {
         document.documentElement.style.setProperty('--align-x-board', `flex-start`);
-        document.documentElement.style.setProperty('--playXScrollbarSize', `30px`);
     } else {
         document.documentElement.style.setProperty('--align-x-board', `center`);
-        document.documentElement.style.setProperty('--playXScrollbarSize', `0px`);
     }
 
     if (boardSize.height > pageContentSize.height) {
         document.documentElement.style.setProperty('--align-y-board', `flex-start`);
-        document.documentElement.style.setProperty('--playYScrollbarSize', `30px`);
     } else {
         document.documentElement.style.setProperty('--align-y-board', `center`);
-        document.documentElement.style.setProperty('--playYScrollbarSize', `0px`);
     }
 }
 
