@@ -178,27 +178,23 @@ const nearestDot = (x, y) => {
 
     var nearDot = dotEs[0];
 
-    for (var i = 1; i < dotEs.length; i++) {
-        let dotE = dotEs[i];
+    let dotDiffs = [...dotEs].map(dotE => ({
+        element: dotE,
+        Xdiff: difference(x, dotE.cx.baseVal.value),
+        Ydiff: difference(y, dotE.cy.baseVal.value)
+    }));
 
-        let cx = dotE.cx.baseVal.value;
-        let cy = dotE.cy.baseVal.value;
+    let minXValue = Math.min(...dotDiffs.map(dotDiff => dotDiff.Xdiff));
 
-        let oldcx = nearDot.cx.baseVal.value;
-        let oldcy = nearDot.cy.baseVal.value;
+    let minXdotDiffs = dotDiffs.filter(dotDiff => dotDiff.Xdiff == minXValue);
+    
+    let minYValue = Math.min(...minXdotDiffs.map(minXdotDiff => minXdotDiff.Ydiff));
 
-        let xcx = difference(x, cx);
-        let ycy = difference(y, cy);
+    let minXYdotDiff = minXdotDiffs.find(minXdotDiff => minXdotDiff.Ydiff == minYValue);
 
-        let oldxcx = difference(x, oldcx);
-        let oldycy = difference(y, oldcy);
+    console.log(minXYdotDiff);
 
-        if ((xcx <= oldxcx) && ycy <= oldycy) {
-            nearDot = dotE;
-        }
-    }
-
-    return nearDot;
+    return minXYdotDiff.element;
 }
 
 function prevLineMaker(line) {

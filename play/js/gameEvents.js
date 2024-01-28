@@ -12,20 +12,20 @@ function pointerMoveAndUPEvents(listen = true) {
   const board = document.querySelector(".svgC");
 
   if (listen) {
-    $aEL(board, "pointermove", linePrev);
-    $aEL(board, "pointerup", pointerUp);
+    board.addEventListener("pointermove", linePrev);
+    board.addEventListener("pointerup", pointerUp);
   } else {
-    $rEL(board, "pointermove", linePrev);
-    $rEL(board, "pointerup", pointerUp);
+    board.removeEventListener("pointermove", linePrev);
+    board.removeEventListener("pointerup", pointerUp);
   }
 }
 
 function pointerDown(event) {
-  const svgC = document.querySelector(".svgC");
   var x = event.offsetX, y = event.offsetY;
 
   if (x && y) {
     let nearInitDot = nearestDot(x, y);
+
     initDot = new Dot(
       nearInitDot.cx.baseVal.value,
       nearInitDot.cy.baseVal.value
@@ -34,6 +34,16 @@ function pointerDown(event) {
     if (difference(x, initDot.x) <= currGame.gameBoard.gap / 2
       && difference(y, initDot.y) <= currGame.gameBoard.gap / 2) {
       pointerMoveAndUPEvents(true);
+
+      let validFinalDots = getSurroundingDots(initDot).filter(validFinalDot => {
+        var possibleLine = new Line(
+          initDot.x, initDot.y, validFinalDot.x, validFinalDot.y
+        );
+
+        return !lineNotExists(possibleLine, pendingPossiblelines);
+      })
+
+      console.log(validFinalDots);
     } else {
       console.log("line drawing canceled");
     }
@@ -41,8 +51,6 @@ function pointerDown(event) {
 }
 
 function pointerUp(event) {
-  console.log(event);
-
   pointerMoveAndUPEvents(false);
 
   var x = event.offsetX, y = event.offsetY;
