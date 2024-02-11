@@ -53,7 +53,8 @@ function scrollAbove(event) {
     const targetPlayer = target.parentElement;
     const targetPlayerIndex = getIndexOfDom(targetPlayer);
 
-    document.querySelector(".page-content").scrollTop = targetPlayer.clientHeight * (targetPlayerIndex - 2);
+    document.querySelector(".page-content")
+      .scrollTop = targetPlayer.clientHeight * (targetPlayerIndex - 2);
   }
 }
 
@@ -75,10 +76,8 @@ function addPlayer() {
 }
 
 function updatePlayerCountView() {
-  const infoE = document.querySelector("#info");
-  var playerCount = currGame.players.length;
-
-  infoE.innerHTML = playerCount == 1 ? playerCount + " player" : playerCount + " players";
+  document.querySelector("#info")
+    .innerHTML = `${currGame.players.length}<br /> ${currGame.players.length == 1 ? "player" : "players"}`;
 }
 
 function updatePlayer(event) {
@@ -226,7 +225,7 @@ function createPlayerUI(player) {
   isAlgo.classList = "isAlgo button";
   isAlgo.type = "checkbox";
   isAlgo.checked = player.isAlgo;
-  
+
   playerUI.append(isAlgo);
 
   const removePlayerB = document.createElement("button");

@@ -73,6 +73,7 @@ button{
 }
 
 header{
+  height: var(--headerHeight);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -85,6 +86,7 @@ header{
 
 header .left {
   display: flex;
+  flex-direction: row;
   gap: inherit;
   flex-wrap: inherit;
   align-items: inherit;
@@ -129,7 +131,7 @@ a {
 }
 
 footer {
-  width: 100%;
+  width: var(--footerWidth);
   height: var(--footerHeight);
   border: none;
   box-shadow: 2px 2px 5px 2px #000000;

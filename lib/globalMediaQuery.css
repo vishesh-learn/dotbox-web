@@ -6,4 +6,8 @@
         --playFooterWidth: 100px;
         --playFooterHeight: 100%;
     }
+
+    header .left {
+        flex-direction: column;
+    }
 }

@@ -24,10 +24,20 @@ header {
   height: var(--headerHeight);
 }
 
-.page-content {
-  width: 100%;
+#info br {
+  display: none;
+}
+
+.page {
   flex: 1;
   position: relative;
+}
+
+.page-content {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  position: absolute;
   overflow: auto;
 }
 
@@ -102,8 +112,7 @@ header {
   stroke-linecap: round;
 }
 
-.pop-up-container .page-content .players,
-.pop-up-container .page-content .addb {
+.pop-up-container .page-content {
   opacity: 0.2;
 }
 

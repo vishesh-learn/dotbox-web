@@ -27,12 +27,6 @@ body {
     font-weight: bold;
 }
 
-header {
-    height: var(--headerHeight);
-    min-width: 170px;
-    width: var(--headerWidth);
-}
-
 .hidden {
     opacity: 0;
 }
@@ -82,9 +76,4 @@ header {
 
 .dot:focus-visible {
     outline: 1px dashed;
-}
-
-footer {
-    width: var(--footerWidth);
-    height: var(--footerHeight);
 }

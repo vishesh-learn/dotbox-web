@@ -257,3 +257,7 @@ footer {
   border-radius: 7px;
   background-color: rgb(209 253 255 / 5%);
 }
+
+.winBoard {
+  gap: 60px;
+}

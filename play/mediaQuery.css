@@ -68,4 +68,8 @@
     .info:not(:first-child) {
         border-style: none;
     }
+
+    .winBoard {
+      gap: 30px;
+    }
 }
