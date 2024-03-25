@@ -43,7 +43,7 @@ function pointerDown(event) {
         return !lineNotExists(possibleLine, pendingPossiblelines);
       })
 
-      console.log(validFinalDots);
+      // console.log(validFinalDots);
     } else {
       console.log("line drawing canceled");
     }
@@ -142,6 +142,7 @@ function playerTurn() {
 
   if (currPlayer.isAlgo) {
     requestAnimationFrame(autoDrawLine);
+    // autoDrawLine();
   } else {
     pointerDownEvent(true);
   }

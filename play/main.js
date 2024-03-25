@@ -5,6 +5,8 @@ window.onload = () => {
 
     loadCurrGame();
 
+    footerInfo();
+
     currGame.currPage = pages.play;
 
     gameBoardBuilder();
@@ -17,22 +19,34 @@ window.onload = () => {
 
     playerTurn();
 
-    updateLinesUI();
+    loadingStartUI();
 
-    setCurrPlayerInfo();
-     
+    setTimeout(() => {
+        updateLinesUI(); // time comsuming function
+
+        setCurrPlayerInfo();
+
+        loadingEndUI();
+    }, 0);
+
     document.querySelector(".playerTurnList").addEventListener("transitionend", setupPlayerTurnListUI);
 
     document.querySelector("#replayButton").addEventListener("click", replay);
 
     document.querySelector("#newGameButton").addEventListener("click", newGame);
 
-    footerInfo();
-
     keyOnTabIndex();
 
     gameBoardOverFlow();
     addEventListener("resize", gameBoardOverFlow);
+}
+
+function loadingStartUI() {
+    document.querySelector("body").classList.add("loading-container");
+}
+
+function loadingEndUI() {
+    document.querySelector("body").classList.remove("loading-container");
 }
 
 function gameBoardOverFlow() {
@@ -187,12 +201,12 @@ const nearestDot = (x, y) => {
     let minXValue = Math.min(...dotDiffs.map(dotDiff => dotDiff.Xdiff));
 
     let minXdotDiffs = dotDiffs.filter(dotDiff => dotDiff.Xdiff == minXValue);
-    
+
     let minYValue = Math.min(...minXdotDiffs.map(minXdotDiff => minXdotDiff.Ydiff));
 
     let minXYdotDiff = minXdotDiffs.find(minXdotDiff => minXdotDiff.Ydiff == minYValue);
 
-    console.log(minXYdotDiff);
+    // console.log(minXYdotDiff);
 
     return minXYdotDiff.element;
 }
@@ -238,7 +252,9 @@ function updateLinesUI() {
         let DOMLines = lineEsToJSON();
 
         if (lineNotExists(line, DOMLines)) {
-            lineSVG.appendChild(getSVGLine(line));
+            let lineUI = getSVGLine(line);
+
+            lineSVG.appendChild(lineUI);
 
             makeBox(getSurroundingLines(line), line);
 
@@ -450,8 +466,11 @@ function makeBox(square, line) {
 function addBox(box) {
     if (boxNotExists(box, boxes)) {
         boxes.push(box);
-        let squareE = createSquareUI(box);
-        document.querySelector('.boxG').appendChild(squareE);
+
+        let squareUI = createSquareUI(box);
+
+        document.querySelector('.boxG').appendChild(squareUI);
+
         boxMade(box);
     }
 }
@@ -603,7 +622,7 @@ function setCurrPlayerInfo() {
 function winBoard() {
     updateBoxesUI(boxes);
 
-    document.querySelector("body").classList.add("pop-up-container");
+    document.querySelector("body").classList.add("winBoard-container");
 
     sortPlayerByScore();
     setupPlayerRankList();

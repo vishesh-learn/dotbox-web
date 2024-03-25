@@ -1,5 +1,5 @@
 @media only screen and (min-height: 480px) and (orientation: landscape) {
-    .pop-up {
+    .pop-up.set-color {
         box-shadow: none;
         padding: 45px;
     }
@@ -41,7 +41,7 @@
         bottom: 30px;
     }
 
-    .pop-up {
+    .pop-up.set-color {
         flex-direction: row;
         height: 100%;
         justify-content: center;

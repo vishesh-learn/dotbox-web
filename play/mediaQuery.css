@@ -43,7 +43,7 @@
         top: -50px;
     }
 
-    .pop-up {
+    .pop-up.winBoard {
         min-height: 70%;
     }
 
