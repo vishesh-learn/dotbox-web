@@ -10,6 +10,7 @@
 * Set custom color for each player.
 * Set any player to be controlled by the computer.
 * Continue your last game or start a new one.
+* Play in both orientations (landscape and portrait).
 * Beautiful design with animations.
 
 This app is in active development, which means more features will be coming soon along with the resolution of potential issues.

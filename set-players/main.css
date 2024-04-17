@@ -182,6 +182,14 @@ header {
   cursor: pointer;
 }
 
+#colorSlider:focus-visible {
+  outline: 2px dashed #000000;
+}
+
+#colorSlider::-webkit-slider-runnable-track:focus-visible {
+  outline: 2px dashed #000000;
+}
+
 #colorSlider::-moz-range-thumb {
   width: 25px;
   height: 25px;

@@ -61,7 +61,7 @@ button{
   outline: 2px dashed #000000 !important;
 }
 
-.button {
+.button, input {
   cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
