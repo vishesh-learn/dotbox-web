@@ -35,11 +35,17 @@ function goBack() {
 }
 
 function setupGameBoard() {
-  startupVariables();
-  GameBoardBuilder();
-  optedCnR();
+  loadingStartUI();
 
-  gameBoardOverFlow();
+  setTimeout(() => {
+    startupVariables();
+    GameBoardBuilder();
+    optedCnR();
+
+    gameBoardOverFlow();
+
+    loadingEndUI();
+  }, 0);
 }
 
 function gameBoardOverFlow() {

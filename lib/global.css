@@ -1,9 +1,16 @@
 :root {
+  --bg: #eae1c9;
+  --bg-low-opacity: #eae1c8a8;
+
   --skyBlue: #b3fcff;
   --green: #45b77f;
+
   --brown-light: #795548;
   --brown: #4c191b;
+  --dark-brown-text: #6b2426;
+
   --orange: #ffa15b;
+  --popUpColor: #ffffff33;
 
   --headerHeight: 50px;
   --footerHeight: 50px;
@@ -11,8 +18,6 @@
   --playHeaderHeight: 100px;
   --playFooterHeight: 70px;
   --playerTurnHeight: 60px;
-  
-  --popUpColor: #ffffff33;
 
   --dotRadius: 10;
   --dot-stroke-width: 5px;
@@ -24,6 +29,7 @@
 * {
   font-family: comic;
   scroll-behavior: smooth;
+  line-height: 1em;
 }
 
 :focus {
@@ -36,40 +42,15 @@ body {
   position: fixed;
   height: 100vh;
   max-height: 100%;
+
+  color: var(--brown);
 }
 
-.page-bg {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background-color: var(--skyBlue);
-  background-image: url(../images/bg.svg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  z-index: -1;
-}
-
-button{
+button {
 	background-color: transparent;
 	border-style: none;
 	padding: 0;
 	background-position: center;
-}
-
-.button:focus-visible, a:focus-visible, input[type=checkbox]:focus-visible {
-  outline: 2px dashed #000000 !important;
-}
-
-.button, input {
-  cursor: pointer;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.button:active {
-  scale: 0.98;
-  filter: brightness(1.1);
 }
 
 header{
@@ -101,6 +82,37 @@ a {
   color: #2b44ce;
   text-decoration-style: dotted;
   text-underline-offset: 2px;
+}
+
+.page-bg {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg);
+  background-image: url(../images/endless-constellation.svg);
+  /* background-repeat: no-repeat; */
+  /* background-size: cover; */
+  background-position: center;
+  z-index: -1;
+}
+
+.button {
+  color: var(--brown);
+}
+
+.button:focus-visible, a:focus-visible, input[type=checkbox]:focus-visible {
+  outline: 2px dashed #000000 !important;
+}
+
+.button, input {
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.button:active {
+  scale: 0.98;
+  filter: brightness(1.1);
 }
 
 .icon {
@@ -135,7 +147,7 @@ footer {
   height: var(--footerHeight);
   border: none;
   box-shadow: 2px 2px 5px 2px #000000;
-  background-color: rgb(246 120 26 / 60%);
+  background-color: rgb(246 120 26 / 40%);
 }
 
 #nextButton {
@@ -189,6 +201,20 @@ footer {
 
 ::-webkit-scrollbar-corner {
   background: transparent;
+}
+
+.loading {
+  opacity: 0;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  transition: opacity 2s 2s;
+}
+
+.loading-container .pop-up.loading {
+  opacity: 1;
 }
 
 @font-face {

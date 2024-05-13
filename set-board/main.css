@@ -56,6 +56,9 @@ body {
 
     justify-content: var(--align-x-board);
     align-items: var(--align-y-board);
+
+    background: var(--bg-low-opacity);
+    box-shadow: 0 0 20px 30px var(--bg-low-opacity);
 }
 
 .svgC svg {

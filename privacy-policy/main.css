@@ -3,9 +3,9 @@ body {
     flex-direction: column;
 }
 
-#backButton {
+/* #backButton {
     fill: grey;
-}
+} */
 
 h4 {
     margin-top: 0;
@@ -19,11 +19,12 @@ h4 {
     padding: 20px 30px;
 }
 
-.game-title, .email-id {
+.game-title,
+.email-id {
     font-weight: bold;
 }
 
-::-webkit-scrollbar-thumb {
-    background: gray;
-    border-radius: 3px;
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
 }

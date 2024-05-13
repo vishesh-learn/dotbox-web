@@ -11,8 +11,6 @@
 }
 
 body {
-  background-color: var(--skyBlue);
-  color: var(--brown);
   font-family: sans-serif;
   font-weight: bold;
 
@@ -22,6 +20,7 @@ body {
 
 header {
   height: var(--headerHeight);
+  z-index: 1;
 }
 
 #info br {
@@ -42,7 +41,11 @@ header {
 }
 
 .players {
+  margin-top: 5px;
   margin-bottom: calc(45vh);
+  
+  background: var(--bg-low-opacity);
+  box-shadow: 0 0 20px 30px var(--bg-low-opacity);
 }
 
 .player {

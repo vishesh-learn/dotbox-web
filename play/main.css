@@ -128,6 +128,9 @@ header {
 
   min-width: var(--boardWidth);
   min-height: var(--boardHeight);
+  
+  background: var(--bg-low-opacity);
+  box-shadow: 0 0 20px 30px var(--bg-low-opacity);
 }
 
 .winBoard-container header,
@@ -287,16 +290,4 @@ footer {
   flex-direction: column;
   gap: 10px;
   align-items: center;
-}
-
-.loading {
-  display: none;
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.loading-container .pop-up.loading {
-  display: block;
 }

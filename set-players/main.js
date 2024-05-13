@@ -1,6 +1,6 @@
 var targetPlayerIndex = 0;
 
-window.onload = () => {
+window.onload = function () {
   document.querySelector("#backButton")
     .addEventListener("click", () => window.location.href = `../${pages.setBoard}/${pages.indexPage}`);
 
@@ -194,15 +194,21 @@ function getIndexOfDom(childDom) {
 }
 
 function setupPlayersUI() {
-  const playersUI = document.querySelector(".players");
+  loadingStartUI();
 
-  playersUI.innerHTML = "";
+  setTimeout(() => {
+    const playersUI = document.querySelector(".players");
 
-  for (let player of currGame.players) {
-    playersUI.append(createPlayerUI(player));
-  }
+    playersUI.innerHTML = "";
 
-  updatePlayerCountView();
+    for (let player of currGame.players) {
+      playersUI.append(createPlayerUI(player));
+    }
+
+    updatePlayerCountView();
+
+    loadingEndUI();
+  }, 0);
 }
 
 function createPlayerUI(player) {

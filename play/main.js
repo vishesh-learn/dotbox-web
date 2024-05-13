@@ -41,14 +41,6 @@ window.onload = () => {
     addEventListener("resize", gameBoardOverFlow);
 }
 
-function loadingStartUI() {
-    document.querySelector("body").classList.add("loading-container");
-}
-
-function loadingEndUI() {
-    document.querySelector("body").classList.remove("loading-container");
-}
-
 function gameBoardOverFlow() {
     let pageContentSize = getComputedSize(document.querySelector(".page-content"));
     let boardSize = getComputedSize(document.querySelector(".svgC"));
