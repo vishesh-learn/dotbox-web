@@ -75,6 +75,7 @@ footer {
 }
 
 .version, .privacy-policy-link {
+  line-height: 1em;
   padding: 0 5px;
 }
 

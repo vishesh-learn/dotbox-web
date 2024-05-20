@@ -20,7 +20,6 @@ body {
 
 header {
   height: var(--headerHeight);
-  z-index: 1;
 }
 
 #info br {
