@@ -48,27 +48,12 @@ function setupGameBoard() {
   }, 0);
 }
 
-function gameBoardOverFlow() {
-  let pageContentSize = getComputedSize(document.querySelector(".page-content"));
-  let boardSize = getComputedSize(document.querySelector(".svgC"));
-
-  if (boardSize.width > pageContentSize.width) {
-    document.documentElement.style.setProperty('--align-x-board', `flex-start`);
-  } else {
-    document.documentElement.style.setProperty('--align-x-board', `center`);
-  }
-
-  if (boardSize.height > pageContentSize.height) {
-    document.documentElement.style.setProperty('--align-y-board', `flex-start`);
-  } else {
-    document.documentElement.style.setProperty('--align-y-board', `center`);
-  }
-}
-
 function startupVariables() {
   let dotRadius = getDotRadius();
 
   let boardSize = getComputedSize(document.querySelector(".svgC"));
+
+  console.log(boardSize);
 
   let scrollbarSize = getScrollbarSize();
 
@@ -93,6 +78,23 @@ function startupVariables() {
 
   document.documentElement.style.setProperty('--svgWidth', `${width}px`);
   document.documentElement.style.setProperty('--svgHeight', `${height}px`);
+}
+
+function gameBoardOverFlow() {
+  let pageContentSize = getComputedSize(document.querySelector(".page-content"));
+  let boardSize = getComputedSize(document.querySelector(".svgC"));
+
+  if (boardSize.width > pageContentSize.width) {
+    document.documentElement.style.setProperty('--align-x-board', `flex-start`);
+  } else {
+    document.documentElement.style.setProperty('--align-x-board', `center`);
+  }
+
+  if (boardSize.height > pageContentSize.height) {
+    document.documentElement.style.setProperty('--align-y-board', `flex-start`);
+  } else {
+    document.documentElement.style.setProperty('--align-y-board', `center`);
+  }
 }
 
 function svgResize() {

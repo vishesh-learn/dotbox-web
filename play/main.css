@@ -69,6 +69,12 @@ header {
 
   transition-property: height;
   transition-duration: var(--slideLeftDuration);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
 }
 
 .playerTurnList:not(.slideLeft) .player:nth-child(2),
@@ -86,6 +92,7 @@ header {
   height: 30px;
   outline: 1px dashed var(--brown);
   outline-offset: 2px;
+  margin: 3px;
 }
 
 .playerTurnList.slideLeft .player:nth-child(3) .avatar {
@@ -96,19 +103,16 @@ header {
 .playerTurnList .player .avatar {
   width: 25px;
   height: 20px;
-  position: absolute;
-  bottom: 23px;
-  left: 50%;
-  transform: translateX(-50%);
+  
 }
 
 .playerTurnList .player .playerName {
-  width: 100%;
   height: 20px;
   text-align: center;
   font-size: 14px;
-  position: absolute;
-  bottom: 0;
+
+  background: var(--bg-low-opacity);
+  box-shadow: 0 0 2px 1px var(--bg-low-opacity);
 }
 
 .page-content {
@@ -128,7 +132,7 @@ header {
 
   min-width: var(--boardWidth);
   min-height: var(--boardHeight);
-  
+
   background: var(--bg-low-opacity);
   box-shadow: 0 0 20px 30px var(--bg-low-opacity);
 }
@@ -161,7 +165,8 @@ header {
   stroke-width: var(--dot-stroke-width);
 }
 
-.dot:hover, .dot:active {
+.dot:hover,
+.dot:active {
   filter: brightness(1.5);
 }
 
@@ -197,7 +202,8 @@ footer {
   border-left: 1px dotted var(--brown);
 }
 
-.playerRankList, .bar {
+.playerRankList,
+.bar {
   max-width: 340px;
   min-width: 250px;
 }
