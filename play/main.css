@@ -110,9 +110,8 @@ header {
   height: 20px;
   text-align: center;
   font-size: 14px;
-
-  background: var(--bg-low-opacity);
-  box-shadow: 0 0 2px 1px var(--bg-low-opacity);
+  padding-left: 3px;
+  padding-right: 3px;
 }
 
 .page-content {
@@ -134,7 +133,7 @@ header {
   min-height: var(--boardHeight);
 
   background: var(--bg-low-opacity);
-  box-shadow: 0 0 20px 30px var(--bg-low-opacity);
+  box-shadow: 0 0 30px 30px var(--bg-low-opacity);
 }
 
 .winBoard-container header,

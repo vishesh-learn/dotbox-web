@@ -1,6 +1,6 @@
 :root {
-  --bg: #eae1c9;
-  --bg-low-opacity: #eae1c8a8;
+  --bg: #ff60004a;
+  --bg-low-opacity: #ff600009;
 
   --skyBlue: #b3fcff;
   --green: #45b77f;
@@ -147,7 +147,7 @@ footer {
   width: var(--footerWidth);
   height: var(--footerHeight);
   border: none;
-  box-shadow: 2px 2px 5px 2px #000000;
+  box-shadow: 2px 2px 5px 1px #000000ab;
   background-color: rgb(246 120 26 / 40%);
   z-index: 1;
 }

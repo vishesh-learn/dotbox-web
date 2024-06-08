@@ -42,9 +42,6 @@ body {
   flex-direction: column;
   gap: 20px;
   padding: 20px;
-
-  background: var(--bg-low-opacity);
-  box-shadow: 0 0 20px 30px var(--bg-low-opacity);
 }
 
 #home-menu .button {
@@ -53,7 +50,11 @@ body {
   background: none;
   font-family: comic;
   border: none;
+  border-radius: 20px;
   user-select: none;
+
+  background: var(--bg-low-opacity);
+  box-shadow: 0 0 10px 10px var(--bg-low-opacity);
 }
 
 #continueButton:disabled {

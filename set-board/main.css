@@ -22,7 +22,6 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: var(--skyBlue);
     font-family: sans-serif;
     font-weight: bold;
 }
@@ -56,14 +55,14 @@ body {
 
     justify-content: var(--align-x-board);
     align-items: var(--align-y-board);
-
-    background: var(--bg-low-opacity);
-    box-shadow: 0 0 20px 30px var(--bg-low-opacity);
 }
 
 .svgC svg {
     width: var(--svgWidth);
     height: var(--svgHeight);
+
+    background: var(--bg-low-opacity);
+    box-shadow: 0 0 30px 15px var(--bg-low-opacity);
 }
 
 .dot {
