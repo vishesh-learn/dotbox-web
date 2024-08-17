@@ -1,5 +1,5 @@
 window.addEventListener("load", () => {
-  document.querySelector(".share-button").addEventListener("click", shareApp);
+  document.querySelector("share-button").addEventListener("click", shareApp);
 
   document.querySelector("#continueButton").addEventListener("click", continueGame);
   document.querySelector("#newGameButton").addEventListener("click", newGame);
@@ -20,7 +20,7 @@ function initHome() {
 function continueGame() { // todo: go to last visited page
   loadCurrGame();
 
-  window.location.href = `${currGame.currPage ? currGame.currPage : pages.setBoard}/${pages.indexPage}`;
+  window.location.href = `pages/${currGame.currPage ? currGame.currPage : pages.setBoard}/${pages.indexPage}`;
 }
 
 function newGame() {
@@ -28,5 +28,5 @@ function newGame() {
 
   loadCurrGame();
 
-  window.location.href = `${pages.setBoard}/${pages.indexPage}`;
+  window.location.href = `pages/${pages.setBoard}/${pages.indexPage}`;
 }

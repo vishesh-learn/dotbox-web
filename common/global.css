@@ -90,7 +90,7 @@ a {
   width: 100%;
   height: 100%;
   background-color: var(--bg);
-  background-image: url(../images/endless-constellation.svg);
+  background-image: url(../assets/images/endless-constellation.svg);
   /* background-repeat: no-repeat; */
   /* background-size: cover; */
   background-position: center;
@@ -221,12 +221,12 @@ footer {
 
 @font-face {
     font-family: Itim-Regular;
-    src: url(../fonts/Itim-Regular.ttf);
+    src: url(../assets/fonts/Itim-Regular.ttf);
 }
 
 @font-face {
     font-family: comic;
-    src: url(../fonts/comic.ttf);
+    src: url(../assets/fonts/comic.ttf);
 }
 
 .displayNone {

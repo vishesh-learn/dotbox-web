@@ -1,6 +1,6 @@
 # DotBox Web
 
-**Application preview:** https://vishesh-learn.github.io/dotbox-web/
+**Application preview:** https://dotbox-web-visheshlearns-projects.vercel.app/
 
 **DotBox** is an Android gaming application, a digitally advanced version of the traditional game ‘Dots and Boxes’.
 

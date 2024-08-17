@@ -27,11 +27,11 @@ window.onload = () => {
 }
 
 function goHome() {
-  window.location.href = `../${pages.indexPage}`;
+  window.location.href = `../../${pages.indexPage}`;
 }
 
 function goBack() {
-  window.location.href = `../${pages.indexPage}`;
+  window.location.href = `../../${pages.indexPage}`;
 }
 
 function setupGameBoard() {

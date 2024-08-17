@@ -39,7 +39,7 @@ window.onload = function () {
 }
 
 function goHome() {
-  window.location.href = `../${pages.indexPage}`;
+  window.location.href = `../../${pages.indexPage}`;
 }
 
 function closePopUP() {

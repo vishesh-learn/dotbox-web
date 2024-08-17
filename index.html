@@ -15,21 +15,14 @@
   <title>DotBox Web</title>
 
   <link rel="shortcut icon" href="icon.png" />
-  <link rel="stylesheet" href="lib/global.css" />
+  <link rel="stylesheet" href="common/global.css" />
   <link rel="stylesheet" href="main.css" />
 </head>
 
 <body>
   <div class="page-bg"></div>
 
-  <svg class="button share-button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" preserveAspectRatio="none"
-    tabindex="0">
-    <line class="line" x1="32" y1="13.5" x2="18" y2="20.5" />
-    <line class="line" x1="18" y1="29.5" x2="32" y2="36.5" />
-    <circle class="dot" r="7" cx="41" cy="9" />
-    <circle class="dot" r="7" cx="9" cy="25" />
-    <circle class="dot" r="7" cx="41" cy="41" />
-  </svg>
+  <share-button tabindex="0" class="button"></share-button>
 
   <div class="page-content">
     <div id="home-menu">
@@ -43,17 +36,18 @@
 
     <div class="versionSeparator displayNone">|</div>
 
-    <a href="./privacy-policy/index.html" class="button privacy-policy-link" tabindex="0">
+    <a href="./pages/privacy-policy/index.html" class="button privacy-policy-link" tabindex="0">
       privacy-policy
     </a>
 
     <div class="versionSeparator">|</div>
 
-    <a href="./credits/index.html" class="button privacy-policy-link" tabindex="0">credits</a>
+    <a href="./pages/credits/index.html" class="button privacy-policy-link" tabindex="0">credits</a>
   </footer>
 
-  <script src="lib/color.js"></script>
-  <script src="lib/global.js"></script>
+  <script src="web-components/share-button/index.js"></script>
+  <script src="common/color.js"></script>
+  <script src="common/global.js"></script>
   <script src="variations/platform-specific-home.js"></script>
   <script src="main.js"></script>
 </body>
