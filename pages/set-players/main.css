@@ -39,10 +39,16 @@ header {
   overflow: auto;
 }
 
+.page-content .instruction {
+  margin: 20px 20px 10px 20px;
+  background: var(--bg-mid-opacity);
+  box-shadow: 0 0 30px 15px var(--bg-mid-opacity);
+}
+
 .players {
   margin-top: 5px;
   margin-bottom: calc(45vh);
-  
+
   background: var(--bg-low-opacity);
   box-shadow: 0 0 20px 30px var(--bg-low-opacity);
 }
@@ -60,14 +66,21 @@ header {
 }
 
 .playerName {
-  background-color: inherit;
+  background-color: transparent;
   border-style: none none solid none;
+  border-bottom-style: solid;
+  border-bottom-color: var(--brown);
   padding: 10px;
   height: 30px;
   flex: 1;
 }
 
+.playerName::placeholder {
+  color: #4c191ba0;
+}
+
 .playerName:focus {
+  background-color: var(--bg-low-opacity);
   font-weight: bold;
   letter-spacing: 0.3px;
 }
@@ -86,7 +99,8 @@ header {
 }
 
 .isAlgo:not(:checked) {
-  filter: grayscale(1) opacity(.5) !important;
+  /* filter: grayscale(1) opacity(.5) !important; */
+  opacity: .5;
 }
 
 .removePlayerB {

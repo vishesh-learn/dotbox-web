@@ -93,7 +93,7 @@ function gameBoardOverFlow() {
   if (boardSize.height > pageContentSize.height) {
     document.documentElement.style.setProperty('--align-y-board', `flex-start`);
   } else {
-    document.documentElement.style.setProperty('--align-y-board', `center`);
+    document.documentElement.style.setProperty('--align-y-board', `space-evenly`);
   }
 }
 

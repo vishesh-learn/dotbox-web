@@ -1,5 +1,6 @@
 :root {
   --bg: #ff60004a;
+  --bg-mid-opacity: #ff600014;
   --bg-low-opacity: #ff600009;
 
   --skyBlue: #b3fcff;
@@ -43,6 +44,20 @@ body {
   max-height: 100%;
 
   color: var(--brown);
+}
+
+.highlight-bg {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.highlight > :not(.highlight) {
+  filter: blur(1.5px);
+  z-index: 2;
 }
 
 button {

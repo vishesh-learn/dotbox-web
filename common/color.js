@@ -18,7 +18,7 @@ function newColor(existingColors) {
 }
 
 function hueToHex(hue) {
-	return new Color(`hsl(${hue}, 100%, 80%)`).hex;
+	return new Color(`hsl(${hue}, 100%, 75%)`).hex;
 }
 
 function toHslObject(hex) {

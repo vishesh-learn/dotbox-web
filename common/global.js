@@ -122,6 +122,26 @@ function keyOnTabIndex() {
   });
 }
 
+function highlightElement(element) {
+  const container = document.querySelector("body");
+  container.classList.add("highlight");
+
+  let reachedElement = false;
+
+  while (!reachedElement) {
+    const parent = element.closest(".highlight > *");
+    parent.classList.add("highlight");
+
+    reachedElement = parent == element;
+  }
+}
+
+function removeHighlight() {
+  const containers = document.querySelectorAll(".highlight");
+  
+  containers.forEach(container => container.classList.remove("highlight"));
+}
+
 function resetGame() {
   currGame.lines = [];
 
@@ -247,21 +267,27 @@ function getScrollbarSize() {
 }
 
 function getDotRadius() {
-  return Number(
+  let dotRadius = Number(
     getComputedStyle(document.documentElement)
       .getPropertyValue('--dotRadius').trim().replace(/\D/g, '')
   ) || 0;
+
+  const accountForIncreasingOutlineOffset = 1;
+
+  const totalRadius = dotRadius + accountForIncreasingOutlineOffset;
+
+  return totalRadius;
 }
 
 function getComputedSize(element) {
 
   let widthValue = getComputedStyle(element, null)
-  .getPropertyValue("width");
+    .getPropertyValue("width");
 
   let width = Number(widthValue.match(/^\d+/)?.[0] || 0);
 
   let heightValue = getComputedStyle(element, null)
-  .getPropertyValue("height");
+    .getPropertyValue("height");
 
   let height = Number(heightValue.match(/^\d+/)?.[0] || 0);
 
