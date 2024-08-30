@@ -138,8 +138,53 @@ function highlightElement(element) {
 
 function removeHighlight() {
   const containers = document.querySelectorAll(".highlight");
-  
+
   containers.forEach(container => container.classList.remove("highlight"));
+}
+
+function elementTooltip(element) {
+  const container = document.querySelector("body");
+
+  const containerBoundingClientRect = container.getBoundingClientRect();
+  const elementBoundingClientRect = element.getBoundingClientRect();
+
+  const tooltipWidth = 300;
+  const tooltipHeight = 200;
+
+  const tooltip = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  tooltip.style.position = "fixed";
+  tooltip.setAttribute("width", tooltipWidth.toString());
+  tooltip.setAttribute("height", tooltipHeight.toString());
+  tooltip.style.backgroundColor = "var(--brown)";
+  tooltip.style.borderRadius = "3px";
+
+  console.log({ containerBoundingClientRect, elementBoundingClientRect });
+
+  // todo: place at center if no space on either sides
+
+  const isSpaceOnTop = elementBoundingClientRect.top - tooltipHeight > containerBoundingClientRect.height;
+  const isSpaceOnBottom = elementBoundingClientRect.bottom + tooltipHeight < containerBoundingClientRect.height;
+
+  if (isSpaceOnBottom) {
+    tooltip.style.top = `${elementBoundingClientRect.top + elementBoundingClientRect.height}px`;
+  } else if (isSpaceOnTop) {
+    tooltip.style.top = `${elementBoundingClientRect.top - tooltipHeight}px`;
+  } else {
+    tooltip.style.top = `${(elementBoundingClientRect.top + Math.round(elementBoundingClientRect.height / 2)) - Math.round(tooltipHeight / 2)}px`;
+  }
+
+  const isSpaceOnLeft = elementBoundingClientRect.left - tooltipWidth > containerBoundingClientRect.width;
+  const isSpaceOnRight = elementBoundingClientRect.right + tooltipWidth < containerBoundingClientRect.width;
+
+  if (isSpaceOnRight) {
+    tooltip.style.left = `${elementBoundingClientRect.left + elementBoundingClientRect.width}px`;
+  } else if (isSpaceOnLeft) {
+    tooltip.style.left = `${elementBoundingClientRect.left - tooltipWidth}px`;
+  } else {
+    tooltip.style.left = `${(elementBoundingClientRect.left + Math.round(elementBoundingClientRect.width / 2)) - Math.round(tooltipWidth / 2)}px`;
+  }
+
+  container.append(tooltip);
 }
 
 function resetGame() {

@@ -100,7 +100,7 @@ header {
 
 .isAlgo:not(:checked) {
   /* filter: grayscale(1) opacity(.5) !important; */
-  opacity: .5;
+  opacity: .3;
 }
 
 .removePlayerB {
