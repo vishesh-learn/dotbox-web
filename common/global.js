@@ -142,47 +142,47 @@ function removeHighlight() {
   containers.forEach(container => container.classList.remove("highlight"));
 }
 
-function elementTooltip(element) {
+function elementTooltip(element) { // make this a web component or a class
   const container = document.querySelector("body");
 
   const containerBoundingClientRect = container.getBoundingClientRect();
   const elementBoundingClientRect = element.getBoundingClientRect();
 
-  const tooltipWidth = 300;
-  const tooltipHeight = 200;
+  const tooltipWidth = 200;
+  const tooltipHeight = 100;
+  const gap = 5;
 
-  const tooltip = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  const tooltip = document.createElement("div");
   tooltip.style.position = "fixed";
-  tooltip.setAttribute("width", tooltipWidth.toString());
-  tooltip.setAttribute("height", tooltipHeight.toString());
+  tooltip.style.width = `${tooltipWidth}px`;
+  tooltip.style.height = `${tooltipHeight}px`;
   tooltip.style.backgroundColor = "var(--brown)";
   tooltip.style.borderRadius = "3px";
 
-  console.log({ containerBoundingClientRect, elementBoundingClientRect });
+  const isSpaceOnTop = elementBoundingClientRect.top - tooltipHeight - gap > containerBoundingClientRect.top;
+  const isSpaceOnBottom = elementBoundingClientRect.bottom + tooltipHeight + gap < containerBoundingClientRect.height;
 
-  // todo: place at center if no space on either sides
-
-  const isSpaceOnTop = elementBoundingClientRect.top - tooltipHeight > containerBoundingClientRect.height;
-  const isSpaceOnBottom = elementBoundingClientRect.bottom + tooltipHeight < containerBoundingClientRect.height;
-
-  if (isSpaceOnBottom) {
-    tooltip.style.top = `${elementBoundingClientRect.top + elementBoundingClientRect.height}px`;
-  } else if (isSpaceOnTop) {
-    tooltip.style.top = `${elementBoundingClientRect.top - tooltipHeight}px`;
+  if (isSpaceOnTop) {
+    tooltip.style.top = `${elementBoundingClientRect.top - tooltipHeight - gap}px`;
+  } else if (isSpaceOnBottom) {
+    tooltip.style.top = `${elementBoundingClientRect.bottom + gap}px`;
   } else {
     tooltip.style.top = `${(elementBoundingClientRect.top + Math.round(elementBoundingClientRect.height / 2)) - Math.round(tooltipHeight / 2)}px`;
   }
 
-  const isSpaceOnLeft = elementBoundingClientRect.left - tooltipWidth > containerBoundingClientRect.width;
-  const isSpaceOnRight = elementBoundingClientRect.right + tooltipWidth < containerBoundingClientRect.width;
+  const isSpaceOnRight = elementBoundingClientRect.right + tooltipWidth + gap < containerBoundingClientRect.width;
+  const isSpaceOnLeft = elementBoundingClientRect.left - tooltipWidth - gap > containerBoundingClientRect.left;
 
   if (isSpaceOnRight) {
-    tooltip.style.left = `${elementBoundingClientRect.left + elementBoundingClientRect.width}px`;
+    tooltip.style.left = `${elementBoundingClientRect.right + gap}px`;
   } else if (isSpaceOnLeft) {
-    tooltip.style.left = `${elementBoundingClientRect.left - tooltipWidth}px`;
+    tooltip.style.left = `${elementBoundingClientRect.left - tooltipWidth - gap}px`;
   } else {
     tooltip.style.left = `${(elementBoundingClientRect.left + Math.round(elementBoundingClientRect.width / 2)) - Math.round(tooltipWidth / 2)}px`;
   }
+
+  console.log({ elementBoundingClientRect });
+  console.log({ isSpaceOnTop, isSpaceOnRight, isSpaceOnBottom, isSpaceOnLeft });
 
   container.append(tooltip);
 }
