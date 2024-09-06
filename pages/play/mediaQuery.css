@@ -6,11 +6,11 @@
     header {
         flex: unset;
         height: 100%;
-        width: 100px;
+        width: 90px;
     }
 
     #homeButton {
-        left: 20px;
+        left: 30px;
     }
 
     .playerTurn {
