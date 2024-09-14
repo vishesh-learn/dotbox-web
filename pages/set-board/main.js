@@ -21,7 +21,7 @@ window.onload = () => {
 
   gameBoardSVG.addEventListener('keypress', keyHandler);
 
-  $aEL(nextButton, "click", () => window.location.href = `../${pages.setPlayers}/${pages.indexPage}`);
+  nextButton.addEventListener("click", () => window.location.href = `../${pages.setPlayers}/${pages.indexPage}`);
 
   keyOnTabIndex();
 }

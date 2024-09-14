@@ -1,105 +1,3 @@
-$aEL = (o, e, f, b) => o.addEventListener(e, f, b);
-$rEL = (o, e, f) => o.removeEventListener(e, f);
-
-const pages = {
-  indexPage: "index.html",
-  setBoard: "set-board",
-  setPlayers: "set-players",
-  play: "play",
-  privacyPolicy: "privacy-policy"
-};
-
-const onAppStore = {
-  packageName: "com.vishesh.dotbox",
-  googlePlay: "http://play.google.com/store/apps/details?id="
-}
-
-const shareTitle = `DotBox`,
-  shareText = "Check out 'DotBox', an amazing dots and boxes gaming application!",
-  shareUrl = window.location.href;
-
-const playStoreLink = `${onAppStore.googlePlay}${onAppStore.packageName}`;
-
-var currGame = {};
-
-class Game {
-  constructor() {
-    this.dateTime = new Date(),
-      this.gameBoard = gameBoard(),
-      this.minPlayer = 2,
-      this.players = players(this.minPlayer, this.maxPlayer),
-      this.lines = [],
-      this.currPage = ""
-  }
-
-  get maxPlayer() {
-    if (typeof this.gameBoard?.row == 'number' && typeof this.gameBoard?.col == 'number') {
-      return (this.gameBoard.row - 1) * (this.gameBoard.col - 1);
-    } else {
-      return this.minPlayer;
-    }
-  }
-}
-
-class GameBoard {
-  constructor() {
-    this.gap = 50;
-    this.minRow = 3;
-    this.minCol = 3;
-    this.maxRow = this.minRow;
-    this.maxCol = this.minCol;
-    this.row = this.minRow;
-    this.col = this.minCol;
-    this.x = 130;
-  }
-}
-
-class Player {
-  constructor(players = [], id = 0, name = '', color = null, isAlgo = false, rank = 0, score = 0, avatar = null) {
-    this.avatar = avatar;
-    this.color = color || newColor(players.map(player => player.color));
-    this.id = id;
-    this.isAlgo = isAlgo;
-    this.name = name;
-    this.rank = rank;
-    this.score = score;
-  }
-
-  get placeholderName() {
-    return this.name || `player${this.id}`;
-  }
-}
-
-class Dot {
-  constructor(x, y, side) {
-    this.x = x;
-    this.y = y;
-    this.side = side;
-  }
-}
-
-class Line {
-  constructor(x1, y1, x2, y2, byPlayerID, prev = false) {
-    this.x1 = x1;
-    this.y1 = y1;
-    this.x2 = x2;
-    this.y2 = y2;
-    this.byPlayerID = byPlayerID;
-    this.prev = prev;
-  }
-
-  get orient() {
-    return (this.x1 == this.x2) && (this.y1 != this.y2)
-      ? 'vertical' : 'horizontal';
-  }
-
-  get byPlayer() {
-    return currGame.players.find(player => player.id == this.byPlayerID);
-  }
-
-  //include comparison method to compare parameter/argument with this object.
-}
-
 window.addEventListener("load", () => {
   const title = document.querySelector("title");
 
@@ -110,6 +8,10 @@ window.addEventListener("load", () => {
   }
 
   updateVersionUI();
+
+  // testing guide feature
+  // let a = new ElementGuide(document.querySelector("#guide"));
+  // a.activate();
 });
 
 function keyOnTabIndex() {
@@ -137,9 +39,9 @@ function highlightElement(element) {
 }
 
 function removeHighlight() {
-  const containers = document.querySelectorAll(".highlight");
+  const elements = document.querySelectorAll(".highlight");
 
-  containers.forEach(container => container.classList.remove("highlight"));
+  elements.forEach(element => element.classList.remove("highlight"));
 }
 
 function elementTooltip(element) { // make this a web component or a class
@@ -153,21 +55,53 @@ function elementTooltip(element) { // make this a web component or a class
   const gap = 5;
 
   const tooltip = document.createElement("div");
-  tooltip.style.position = "fixed";
-  tooltip.style.width = `${tooltipWidth}px`;
-  tooltip.style.height = `${tooltipHeight}px`;
-  tooltip.style.backgroundColor = "var(--brown)";
-  tooltip.style.borderRadius = "3px";
+  tooltip.classList = "tooltip highlight highlight-container";
+  Object.assign(tooltip.style, {
+    width: `${tooltipWidth}px`,
+    height: `${tooltipHeight}px`
+  });
+
+  const cornerDot_TopLeft = document.createElement("div");
+  cornerDot_TopLeft.classList = "corner-dots top left";
+  tooltip.append(cornerDot_TopLeft);
+
+  const cornerDot_TopRight = document.createElement("div");
+  cornerDot_TopRight.classList = "corner-dots top right";
+  tooltip.append(cornerDot_TopRight);
+
+  const cornerDot_BottomLeft = document.createElement("div");
+  cornerDot_BottomLeft.classList = "corner-dots bottom left";
+  tooltip.append(cornerDot_BottomLeft);
+
+  const cornerDot_BottomRight = document.createElement("div");
+  cornerDot_BottomRight.classList = "corner-dots bottom right";
+  tooltip.append(cornerDot_BottomRight);
+
+  const connectorContainer = document.createElement("div");
+  connectorContainer.classList = "connector-container";
+
+  const connector = document.createElement("div");
+  connector.classList = "connector";
+
+  connectorContainer.append(connector);
 
   const isSpaceOnTop = elementBoundingClientRect.top - tooltipHeight - gap > containerBoundingClientRect.top;
   const isSpaceOnBottom = elementBoundingClientRect.bottom + tooltipHeight + gap < containerBoundingClientRect.height;
 
   if (isSpaceOnTop) {
     tooltip.style.top = `${elementBoundingClientRect.top - tooltipHeight - gap}px`;
+
+    connectorContainer.classList.add("bottom");
   } else if (isSpaceOnBottom) {
     tooltip.style.top = `${elementBoundingClientRect.bottom + gap}px`;
+
+    connectorContainer.classList.add("top");
   } else {
-    tooltip.style.top = `${(elementBoundingClientRect.top + Math.round(elementBoundingClientRect.height / 2)) - Math.round(tooltipHeight / 2)}px`;
+    tooltip.style.top = `${(elementBoundingClientRect.top
+      + Math.round(elementBoundingClientRect.height / 2))
+      - Math.round(tooltipHeight / 2)}px`;
+
+    connectorContainer.classList.add("middle");
   }
 
   const isSpaceOnRight = elementBoundingClientRect.right + tooltipWidth + gap < containerBoundingClientRect.width;
@@ -175,14 +109,24 @@ function elementTooltip(element) { // make this a web component or a class
 
   if (isSpaceOnRight) {
     tooltip.style.left = `${elementBoundingClientRect.right + gap}px`;
+
+    connectorContainer.classList.add("left");
   } else if (isSpaceOnLeft) {
     tooltip.style.left = `${elementBoundingClientRect.left - tooltipWidth - gap}px`;
+
+    connectorContainer.classList.add("right");
   } else {
-    tooltip.style.left = `${(elementBoundingClientRect.left + Math.round(elementBoundingClientRect.width / 2)) - Math.round(tooltipWidth / 2)}px`;
+    tooltip.style.left = `${(elementBoundingClientRect.left
+      + Math.round(elementBoundingClientRect.width / 2))
+      - Math.round(tooltipWidth / 2)}px`;
+
+    connectorContainer.classList.add("center");
   }
 
   console.log({ elementBoundingClientRect });
   console.log({ isSpaceOnTop, isSpaceOnRight, isSpaceOnBottom, isSpaceOnLeft });
+
+  tooltip.append(connectorContainer);
 
   container.append(tooltip);
 }

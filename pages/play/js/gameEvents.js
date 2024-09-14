@@ -2,9 +2,9 @@ function pointerDownEvent(listen = true) {
   const board = document.querySelector(".dotSVG");
 
   if (listen) {
-    $aEL(board, "pointerdown", pointerDown);
+    board.addEventListener("pointerdown", pointerDown);
   } else {
-    $rEL(board, "pointerdown", pointerDown);
+    board.removeEventListener("pointerdown", pointerDown);
   }
 }
 

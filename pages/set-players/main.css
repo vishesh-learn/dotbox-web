@@ -43,6 +43,7 @@ header {
   margin: 20px 20px 10px 20px;
   background: var(--bg-low-opacity);
   box-shadow: 0 0 30px 15px var(--bg-low-opacity);
+  text-align: center;
 }
 
 .players {

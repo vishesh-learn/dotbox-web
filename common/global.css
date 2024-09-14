@@ -55,19 +55,104 @@ body {
   height: 100%;
 }
 
-.highlight > :not(.highlight) {
-  filter: blur(1.5px);
+.highlight> :not(.highlight, .highlight-container > *) {
+  filter: blur(1px);
   z-index: 2;
 }
 
-button {
-	background-color: transparent;
-	border-style: none;
-	padding: 0;
-	background-position: center;
+.tooltip {
+  position: fixed;
+  background-color: #f0ebeb;
+  border: 5px solid var(--brown);
+  border-radius: 3px
 }
 
-header{
+.corner-dots {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: var(--brown);
+  border-radius: 20px;
+}
+
+.corner-dots.top {
+  top: -8px;
+}
+
+.corner-dots.right {
+  right: -8px;
+}
+
+.corner-dots.bottom {
+  bottom: -8px;
+}
+
+.corner-dots.left {
+  left: -8px;
+}
+
+.connector-container {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+}
+
+.connector-container.top.right {
+  rotate: 225deg;
+}
+
+.connector-container.bottom.right {
+  rotate: 315deg;
+}
+
+.connector-container.bottom.left {
+  rotate: 45;
+}
+
+.connector-container.top.left {
+  rotate: 135deg;
+}
+
+.connector-container.top {
+  top: -16px;
+}
+
+.connector-container.right {
+  right: -16px;
+}
+
+.connector-container.bottom {
+  bottom: -16px;
+}
+
+.connector-container.left {
+  left: -16px;
+}
+
+.connector-container.middle {
+  top: -10px;
+}
+
+.connector-container.center {
+  left: -10px;
+}
+
+.connector {
+  margin: auto;
+  background-color: var(--brown);
+  width: 5px;
+  height: 100%;
+  border-radius: 20px;
+}
+
+button {
+  background-color: transparent;
+  border-style: none;
+  padding: 0;
+  background-position: center;
+}
+
+header {
   height: var(--headerHeight);
   display: flex;
   align-items: center;
@@ -90,7 +175,7 @@ header .left {
   justify-content: center;
 }
 
-input[type=checkbox]{
+input[type=checkbox] {
   accent-color: var(--brown);
 }
 
@@ -116,11 +201,14 @@ a {
   color: var(--brown);
 }
 
-.button:focus-visible, a:focus-visible, input[type=checkbox]:focus-visible {
+.button:focus-visible,
+a:focus-visible,
+input[type=checkbox]:focus-visible {
   outline: 2px dashed #000000 !important;
 }
 
-.button, input {
+.button,
+input {
   cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
@@ -140,12 +228,18 @@ a {
   background-position: center;
 }
 
-#backButton{
+#guide {
+  width: 25px;
+  height: 25px;
+  background-image: url(../assets/images/info.svg);
+}
+
+#backButton {
   border-style: none;
   padding: 0;
 }
 
-#info{
+#info {
   text-align: center;
   font-size: 18px;
   font-family: comic;
@@ -235,13 +329,13 @@ footer {
 }
 
 @font-face {
-    font-family: Itim-Regular;
-    src: url(../assets/fonts/Itim-Regular.ttf);
+  font-family: Itim-Regular;
+  src: url(../assets/fonts/Itim-Regular.ttf);
 }
 
 @font-face {
-    font-family: comic;
-    src: url(../assets/fonts/comic.ttf);
+  font-family: comic;
+  src: url(../assets/fonts/comic.ttf);
 }
 
 .displayNone {
