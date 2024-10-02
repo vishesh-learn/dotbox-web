@@ -38,6 +38,38 @@ window.onload = function () {
   keyOnTabIndex();
 }
 
+function playerUILoaded() {
+  tooltip_init();
+}
+
+const elementGuideData = [
+  new ElementGuide(".avatar", "Player Color", "Choose your player color!"),
+  new ElementGuide(".addb", "Add Player", "Add a new player to the game!"),
+  new ElementGuide(".playerName", "Player Name", "Type your name"),
+  new ElementGuide(".isAlgo", "Autoplayer", "Enable Autoplayer (Let the robot play!)"),
+  new ElementGuide(".removePlayerB", "Remove Player", "Remove this player")
+];
+
+let currentElementGuideIndex = 0;
+
+function tooltip_init() {
+  document.querySelector("#guide").addEventListener("click", () => {
+    elementGuideData[currentElementGuideIndex].activate();
+  });
+
+  document.querySelector(".page-bg").addEventListener("click", () => {
+    ElementGuide.deactivate();
+
+    if (currentElementGuideIndex < elementGuideData.length - 1) {
+      currentElementGuideIndex++;
+      
+      elementGuideData[currentElementGuideIndex].activate();
+    } else {
+      currentElementGuideIndex = 0;
+    }
+  });
+}
+
 function goHome() {
   window.location.href = `../../${pages.indexPage}`;
 }
@@ -193,7 +225,7 @@ function getIndexOfDom(childDom) {
   return Array.prototype.indexOf.call(parentDom.children, childDom);
 }
 
-function setupPlayersUI() {
+async function setupPlayersUI() {
   loadingStartUI();
 
   setTimeout(() => {
@@ -208,6 +240,8 @@ function setupPlayersUI() {
     updatePlayerCountView();
 
     loadingEndUI();
+
+    playerUILoaded();
   }, 0);
 }
 

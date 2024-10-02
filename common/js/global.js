@@ -8,10 +8,6 @@ window.addEventListener("load", () => {
   }
 
   updateVersionUI();
-
-  // testing guide feature
-  // let a = new ElementGuide(document.querySelector("#guide"));
-  // a.activate();
 });
 
 function keyOnTabIndex() {
@@ -22,113 +18,6 @@ function keyOnTabIndex() {
       }
     });
   });
-}
-
-function highlightElement(element) {
-  const container = document.querySelector("body");
-  container.classList.add("highlight");
-
-  let reachedElement = false;
-
-  while (!reachedElement) {
-    const parent = element.closest(".highlight > *");
-    parent.classList.add("highlight");
-
-    reachedElement = parent == element;
-  }
-}
-
-function removeHighlight() {
-  const elements = document.querySelectorAll(".highlight");
-
-  elements.forEach(element => element.classList.remove("highlight"));
-}
-
-function elementTooltip(element) { // make this a web component or a class
-  const container = document.querySelector("body");
-
-  const containerBoundingClientRect = container.getBoundingClientRect();
-  const elementBoundingClientRect = element.getBoundingClientRect();
-
-  const tooltipWidth = 200;
-  const tooltipHeight = 100;
-  const gap = 5;
-
-  const tooltip = document.createElement("div");
-  tooltip.classList = "tooltip highlight highlight-container";
-  Object.assign(tooltip.style, {
-    width: `${tooltipWidth}px`,
-    height: `${tooltipHeight}px`
-  });
-
-  const cornerDot_TopLeft = document.createElement("div");
-  cornerDot_TopLeft.classList = "corner-dots top left";
-  tooltip.append(cornerDot_TopLeft);
-
-  const cornerDot_TopRight = document.createElement("div");
-  cornerDot_TopRight.classList = "corner-dots top right";
-  tooltip.append(cornerDot_TopRight);
-
-  const cornerDot_BottomLeft = document.createElement("div");
-  cornerDot_BottomLeft.classList = "corner-dots bottom left";
-  tooltip.append(cornerDot_BottomLeft);
-
-  const cornerDot_BottomRight = document.createElement("div");
-  cornerDot_BottomRight.classList = "corner-dots bottom right";
-  tooltip.append(cornerDot_BottomRight);
-
-  const connectorContainer = document.createElement("div");
-  connectorContainer.classList = "connector-container";
-
-  const connector = document.createElement("div");
-  connector.classList = "connector";
-
-  connectorContainer.append(connector);
-
-  const isSpaceOnTop = elementBoundingClientRect.top - tooltipHeight - gap > containerBoundingClientRect.top;
-  const isSpaceOnBottom = elementBoundingClientRect.bottom + tooltipHeight + gap < containerBoundingClientRect.height;
-
-  if (isSpaceOnTop) {
-    tooltip.style.top = `${elementBoundingClientRect.top - tooltipHeight - gap}px`;
-
-    connectorContainer.classList.add("bottom");
-  } else if (isSpaceOnBottom) {
-    tooltip.style.top = `${elementBoundingClientRect.bottom + gap}px`;
-
-    connectorContainer.classList.add("top");
-  } else {
-    tooltip.style.top = `${(elementBoundingClientRect.top
-      + Math.round(elementBoundingClientRect.height / 2))
-      - Math.round(tooltipHeight / 2)}px`;
-
-    connectorContainer.classList.add("middle");
-  }
-
-  const isSpaceOnRight = elementBoundingClientRect.right + tooltipWidth + gap < containerBoundingClientRect.width;
-  const isSpaceOnLeft = elementBoundingClientRect.left - tooltipWidth - gap > containerBoundingClientRect.left;
-
-  if (isSpaceOnRight) {
-    tooltip.style.left = `${elementBoundingClientRect.right + gap}px`;
-
-    connectorContainer.classList.add("left");
-  } else if (isSpaceOnLeft) {
-    tooltip.style.left = `${elementBoundingClientRect.left - tooltipWidth - gap}px`;
-
-    connectorContainer.classList.add("right");
-  } else {
-    tooltip.style.left = `${(elementBoundingClientRect.left
-      + Math.round(elementBoundingClientRect.width / 2))
-      - Math.round(tooltipWidth / 2)}px`;
-
-    connectorContainer.classList.add("center");
-  }
-
-  console.log({ elementBoundingClientRect });
-  console.log({ isSpaceOnTop, isSpaceOnRight, isSpaceOnBottom, isSpaceOnLeft });
-
-  tooltip.append(connectorContainer);
-
-  container.append(tooltip);
 }
 
 function resetGame() {

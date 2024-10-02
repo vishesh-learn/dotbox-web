@@ -28,7 +28,7 @@
 }
 
 * {
-  font-family: comic;
+  font-family: Itim-Regular;
   scroll-behavior: smooth;
 }
 
@@ -46,6 +46,11 @@ body {
   color: var(--brown);
 }
 
+.instruction {
+  font-weight: normal;
+  font-size: large;
+}
+
 .highlight-bg {
   position: fixed;
   width: 100%;
@@ -61,34 +66,51 @@ body {
 }
 
 .tooltip {
+  min-width: 200px;
+  line-height: 1;
   position: fixed;
   background-color: #f0ebeb;
-  border: 5px solid var(--brown);
-  border-radius: 3px
+  border: 3px solid var(--brown);
+  border-radius: 3px;
+  padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.tooltip .title {
+  margin: 0;
+}
+
+.tooltip .instruction {
+  margin: 0;
+  line-height: 1;
+  font-size: 14px;
 }
 
 .corner-dots {
   position: absolute;
-  width: 12px;
-  height: 12px;
+  width: 8px;
+  height: 8px;
   background-color: var(--brown);
   border-radius: 20px;
 }
 
 .corner-dots.top {
-  top: -8px;
+  top: -5px;
 }
 
 .corner-dots.right {
-  right: -8px;
+  right: -5px;
 }
 
 .corner-dots.bottom {
-  bottom: -8px;
+  bottom: -5px;
 }
 
 .corner-dots.left {
-  left: -8px;
+  left: -5px;
 }
 
 .connector-container {
@@ -106,7 +128,7 @@ body {
 }
 
 .connector-container.bottom.left {
-  rotate: 45;
+  rotate: 45deg;
 }
 
 .connector-container.top.left {
@@ -134,13 +156,13 @@ body {
 }
 
 .connector-container.center {
-  left: -10px;
+  left: calc(50% - 8px);
 }
 
 .connector {
   margin: auto;
   background-color: var(--brown);
-  width: 5px;
+  width: 3px;
   height: 100%;
   border-radius: 20px;
 }
@@ -190,7 +212,7 @@ a {
   width: 100%;
   height: 100%;
   background-color: var(--bg);
-  background-image: url(../assets/images/endless-constellation.svg);
+  background-image: url(../../assets/images/endless-constellation.svg);
   /* background-repeat: no-repeat; */
   /* background-size: cover; */
   background-position: center;
@@ -231,7 +253,7 @@ input {
 #guide {
   width: 25px;
   height: 25px;
-  background-image: url(../assets/images/info.svg);
+  background-image: url(../../assets/images/info.svg);
 }
 
 #backButton {
@@ -242,8 +264,9 @@ input {
 #info {
   text-align: center;
   font-size: 18px;
-  font-family: comic;
 }
+
+
 
 .avatar {
   width: 30px;
@@ -266,7 +289,6 @@ footer {
   height: 100%;
   color: var(--brown);
   font-weight: bold;
-  font-family: comic;
 }
 
 .dot {
@@ -330,12 +352,12 @@ footer {
 
 @font-face {
   font-family: Itim-Regular;
-  src: url(../assets/fonts/Itim-Regular.ttf);
+  src: url(../../assets/fonts/Itim-Regular.ttf);
 }
 
 @font-face {
   font-family: comic;
-  src: url(../assets/fonts/comic.ttf);
+  src: url(../../assets/fonts/comic.ttf);
 }
 
 .displayNone {

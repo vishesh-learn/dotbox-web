@@ -42,7 +42,6 @@ share-button {
   color: unset;
   font-size: 26px;
   background: none;
-  font-family: comic;
   border: none;
   border-radius: 20px;
   user-select: none;
@@ -79,7 +78,6 @@ footer {
   text-align: center;
 
   color: var(--brown);
-  font-family: comic;
 }
 
 .privacy-policy-link {
@@ -88,7 +86,7 @@ footer {
 
 @media only screen and (min-height: 480px) {
   #home-menu {
-    gap: 20px;
+    gap: 10px;
   }
 
   #home-menu .button {

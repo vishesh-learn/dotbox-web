@@ -75,23 +75,3 @@ class Line {
 
   //include comparison method to compare parameter/argument with this object.
 }
-
-// ========= [ Guide ] ========= //
-
-class ElementGuide {
-  constructor(element, title, instruction) {
-    this.element = element,
-      this.title = title,
-      this.instruction = instruction
-  }
-
-  activate() {
-    highlightElement(this.element);
-
-    elementTooltip(this.element);
-  }
-
-  static deactivate() {
-    removeHighlight();
-  }
-}
