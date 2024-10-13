@@ -126,8 +126,11 @@ function createStopUI(offset, stopColor) {
 
 function getSVGLine(line) {
     let lineE = document.createElementNS('http://www.w3.org/2000/svg', "line");
+    lineE.classList = "line";
 
-    lineE.setAttribute("class", line.prev ? 'prevLine' : 'line');
+    if (line.prev) {
+        lineE.classList.add("preview");
+    }
 
     lineE.setAttribute("x1", line.x1);
     lineE.setAttribute("y1", line.y1);

@@ -77,7 +77,7 @@ function pointerUp(event) {
 }
 
 function removePrevLines() {
-  document.querySelectorAll(".prevLine").forEach(line => line.remove());
+  document.querySelectorAll(".preview").forEach(line => line.remove());
 }
 
 function lineMade(line) {

@@ -35,6 +35,8 @@ window.onload = () => {
 
     document.querySelector("#newGameButton").addEventListener("click", newGame);
 
+    document.querySelector(".button.home").addEventListener("click", goHome);
+
     keyOnTabIndex();
 
     gameBoardOverFlow();
@@ -614,7 +616,7 @@ function setCurrPlayerInfo() {
 function winBoard() {
     updateBoxesUI(boxes);
 
-    document.querySelector("body").classList.add("winBoard-container");
+    document.querySelector("body").classList.add("winBoard-container", "pop-up-container");
 
     sortPlayerByScore();
     setupPlayerRankList();

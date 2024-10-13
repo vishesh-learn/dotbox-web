@@ -221,8 +221,7 @@ a {
   height: 100%;
   background-color: var(--bg);
   background-image: url(../../assets/images/endless-constellation.svg);
-  /* background-repeat: no-repeat; */
-  /* background-size: cover; */
+  filter: blur(1px);
   background-position: center;
   z-index: -1;
 }
@@ -305,15 +304,20 @@ footer {
 
 .pop-up-bg {
   display: none;
-}
-
-.pop-up-container .pop-up-bg {
-  display: unset;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  z-index: 1;
+}
+
+.pop-up {
+  z-index: 2;
+}
+
+.pop-up-container .pop-up-bg {
+  display: unset;
 }
 
 .close-pop-up {
@@ -350,8 +354,6 @@ footer {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-
-  transition: opacity 2s 2s;
 }
 
 .loading-container .pop-up.loading {
