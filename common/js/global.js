@@ -1,4 +1,4 @@
-window.addEventListener("load", () => {
+addEventListener("load", () => {
   const title = document.querySelector("title");
 
   let titleText = [title.innerText, window.location.hostname].filter(e => e && e != "").join(" - ");
@@ -8,6 +8,8 @@ window.addEventListener("load", () => {
   }
 
   updateVersionUI();
+
+  addEventListener("resize", ElementGuide.refreshState);
 });
 
 function keyOnTabIndex() {

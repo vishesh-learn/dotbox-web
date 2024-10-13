@@ -60,7 +60,8 @@ body {
   height: 100%;
 }
 
-.highlight> :not(.highlight, .highlight-container > *) {
+.highlight> :not(.highlight, .highlight-container > *,
+  .tooltip, .highlight-container > *) {
   filter: blur(1px);
   z-index: 2;
 }
@@ -68,7 +69,6 @@ body {
 .tooltip {
   min-width: 200px;
   line-height: 1;
-  position: fixed;
   background-color: #f0ebeb;
   border: 3px solid var(--brown);
   border-radius: 3px;
@@ -77,10 +77,18 @@ body {
   display: flex;
   flex-direction: column;
   gap: 7px;
+
+  position: fixed;
+
+  transition-property: top, left;
+  transform-style: flat;
+  transition-duration: 100ms;
+  transition-timing-function: linear;
 }
 
 .tooltip .title {
   margin: 0;
+  font-size: 14px;
 }
 
 .tooltip .instruction {
@@ -119,43 +127,43 @@ body {
   height: 16px;
 }
 
-.connector-container.top.right {
+.tooltip.top.right .connector-container {
   rotate: 225deg;
 }
 
-.connector-container.bottom.right {
+.tooltip.bottom.right .connector-container {
   rotate: 315deg;
 }
 
-.connector-container.bottom.left {
+.tooltip.bottom.left .connector-container {
   rotate: 45deg;
 }
 
-.connector-container.top.left {
+.tooltip.top.left .connector-container {
   rotate: 135deg;
 }
 
-.connector-container.top {
+.tooltip.top .connector-container {
   top: -16px;
 }
 
-.connector-container.right {
+.tooltip.right .connector-container {
   right: -16px;
 }
 
-.connector-container.bottom {
+.tooltip.bottom .connector-container {
   bottom: -16px;
 }
 
-.connector-container.left {
+.tooltip.left .connector-container {
   left: -16px;
 }
 
-.connector-container.middle {
+.tooltip.middle .connector-container {
   top: -10px;
 }
 
-.connector-container.center {
+.tooltip.center .connector-container {
   left: calc(50% - 8px);
 }
 
