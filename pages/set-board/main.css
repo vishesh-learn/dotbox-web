@@ -43,11 +43,6 @@ body {
     overflow: auto;
 }
 
-.page-content .instruction {
-    margin: 0;
-    text-align: center;
-}
-
 .svgC {
     width: 100%;
     height: 100%;

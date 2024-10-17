@@ -27,6 +27,8 @@ window.onload = () => {
         setCurrPlayerInfo();
 
         loadingEndUI();
+
+        tooltip_init();
     }, 0);
 
     document.querySelector(".playerTurnList").addEventListener("transitionend", setupPlayerTurnListUI);
@@ -43,6 +45,17 @@ window.onload = () => {
     addEventListener("resize", gameBoardOverFlow);
 }
 
+function tooltip_init() {
+    ElementGuide.data = [
+        new ElementGuide("#homeButton", "Return to the main menu"),
+        new ElementGuide(".svgC", "Drag between two dots to draw your line!")
+    ];
+
+    document.querySelector("#guide")?.addEventListener("click", ElementGuide.nextState);
+
+    document.querySelector(".page-bg")?.addEventListener("click", ElementGuide.nextState);
+}
+
 function gameBoardOverFlow() {
     let pageContentSize = getComputedSize(document.querySelector(".page-content"));
     let boardSize = getComputedSize(document.querySelector(".svgC"));
@@ -56,7 +69,7 @@ function gameBoardOverFlow() {
     if (boardSize.height > pageContentSize.height) {
         document.documentElement.style.setProperty('--align-y-board', `flex-start`);
     } else {
-        document.documentElement.style.setProperty('--align-y-board', `center`);
+        document.documentElement.style.setProperty('--align-y-board', `space-evenly`);
     }
 }
 
@@ -610,6 +623,7 @@ function setCurrPlayerInfo() {
 
     document.querySelector('.curr-player-id .value').innerText = `${currPlayer.id}`;
     document.querySelector('.curr-player-name .value').innerText = `${currPlayer.placeholderName}`;
+    document.querySelector('.instruction i').innerText = `${currPlayer.placeholderName}'s`;
     document.querySelector('.curr-player-score .value').innerText = `${currPlayer.score}`;
 }
 

@@ -1,13 +1,5 @@
 var targetPlayerIndex = 0;
 
-ElementGuide.data = [
-  new ElementGuide(".avatar", "Player Color", "Choose your player color!"),
-  new ElementGuide(".playerName", "Player Name", "Type your name"),
-  new ElementGuide(".isAlgo", "Autoplayer", "Enable Autoplayer (Let the robot play!)"),
-  new ElementGuide(".removePlayerB", "Remove Player", "Remove this player"),
-  new ElementGuide(".addb", "Add Player", "Add a new player to the game!"),
-];
-
 window.onload = function () {
   document.querySelector("#backButton")
     .addEventListener("click", () => window.location.href = `../${pages.setBoard}/${pages.indexPage}`);
@@ -51,6 +43,14 @@ function playerUILoaded() {
 }
 
 function tooltip_init() {
+  ElementGuide.data = [
+    new ElementGuide(".avatar", "Player Color", "Choose your player color!"),
+    new ElementGuide(".playerName", "Player Name", "Type your name"),
+    new ElementGuide(".isAlgo", "Autoplayer", "Enable Autoplayer (Let the robot play!)"),
+    new ElementGuide(".removePlayerB", "Remove Player", "Remove this player"),
+    new ElementGuide(".addb", "Add Player", "Add a new player to the game!"),
+  ];
+
   document.querySelector("#guide").addEventListener("click", ElementGuide.nextState);
 
   document.querySelector(".page-bg").addEventListener("click", ElementGuide.nextState);

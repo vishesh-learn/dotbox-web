@@ -59,6 +59,16 @@ function elementTooltip(element, title, instruction) {
 
     if (!tooltip) {
         tooltip = newTooltip(title, instruction);
+    } else {
+        const titleElement = document.querySelector(".tooltip .title");
+        if (titleElement) {
+            titleElement.innerText = title;
+        }
+
+        const instructionElement = document.querySelector(".tooltip .instruction");
+        if (instructionElement) {
+            instructionElement.innerText = instruction;
+        }
     }
 
     const tooltipBoundingClientRect = tooltip.getBoundingClientRect();

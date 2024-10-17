@@ -22,10 +22,13 @@ header {
 
 #homeButton {
   position: fixed;
+  left: 15px;
+  top: 10px;
 }
 
-#homeButton {
-  left: 15px;
+#guide {
+  position: absolute;
+  right: 15px;
   top: 10px;
 }
 
@@ -115,12 +118,11 @@ header {
 
 .page-content {
   flex: 1;
-  position: relative;
-  margin: 25px;
 
   display: flex;
-  justify-content: var(--align-x-board);
-  align-items: var(--align-y-board);
+  flex-direction: column;
+  justify-content: var(--align-y-board);
+  align-items: var(--align-x-board);
   overflow: auto;
 }
 
