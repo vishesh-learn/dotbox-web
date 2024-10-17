@@ -68,21 +68,21 @@ body {
 
 .highlight> :not(.highlight, .highlight-container > *,
   .tooltip, .highlight-container > *) {
-  filter: blur(1px);
+  filter: blur(1.5px);
   z-index: 2;
+  pointer-events: none;
 }
 
 .tooltip {
+  z-index: 2;
   min-width: 200px;
-  line-height: 1;
-  background-color: #f0ebeb;
+  background-color: #f6781a82;
   border: 3px solid var(--brown);
   border-radius: 3px;
   padding: 10px;
 
   display: flex;
   flex-direction: column;
-  gap: 7px;
 
   position: fixed;
 
@@ -97,12 +97,22 @@ body {
 .tooltip .title {
   margin: 0;
   font-size: 14px;
+  overflow: visible;
 }
 
 .tooltip .instruction {
+  overflow: visible;
   margin: 0;
-  line-height: 1;
   font-size: 14px;
+  text-align: left;
+}
+
+.tooltip .actionButtons {
+  align-self: flex-end;
+  display: flex;
+  gap: 16px;
+  padding-top: 7px;
+  text-decoration: underline;
 }
 
 .corner-dots {
@@ -200,8 +210,6 @@ header {
   padding: 0 20px 0 10px;
   box-shadow: -2px -2px 5px .5px #000000;
   position: relative;
-
-  z-index: 1;
 }
 
 header .left {
@@ -280,8 +288,6 @@ input {
   text-align: center;
   font-size: 18px;
 }
-
-
 
 .avatar {
   width: 30px;

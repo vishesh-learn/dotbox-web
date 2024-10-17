@@ -19,6 +19,8 @@ class ElementGuide {
     }
 
     static refreshState() {
+        removeHighlight();
+
         if (!ElementGuide.data.length) {
             return false;
         }
@@ -44,6 +46,8 @@ class ElementGuide {
         removeHighlight();
 
         removeTooltip();
+
+        ElementGuide.currentIndex = -1;
     }
 }
 
@@ -61,12 +65,12 @@ function elementTooltip(element, title, instruction) {
         tooltip = newTooltip(title, instruction);
     } else {
         const titleElement = document.querySelector(".tooltip .title");
-        if (titleElement) {
+        if (titleElement && title) {
             titleElement.innerText = title;
         }
 
         const instructionElement = document.querySelector(".tooltip .instruction");
-        if (instructionElement) {
+        if (instructionElement && instruction) {
             instructionElement.innerText = instruction;
         }
     }
@@ -126,19 +130,38 @@ function newTooltip(title, instruction) {
     const tooltip = document.createElement("div");
     tooltip.classList = "tooltip";
 
+    const titleElement = document.createElement("div");
+    titleElement.classList = "title";
+    tooltip.append(titleElement);
+
+    const instructionElement = document.createElement("div");
+    instructionElement.classList = "instruction";
+
+    tooltip.append(instructionElement);
+
     if (title) {
-        const titleElement = document.createElement("div");
-        titleElement.classList = "title";
         titleElement.innerText = title;
-        tooltip.append(titleElement);
     }
 
     if (instruction) {
-        const instructionElement = document.createElement("div");
-        instructionElement.classList = "instruction";
         instructionElement.innerText = instruction;
-        tooltip.append(instructionElement);
     }
+
+    const actionButtons = document.createElement("div");
+    actionButtons.classList = "actionButtons";
+    tooltip.append(actionButtons);
+
+    const skipButton = document.createElement("button");
+    skipButton.classList = "skip button";
+    skipButton.innerText = "skip";
+    skipButton.addEventListener("click", ElementGuide.deactivate);
+    actionButtons.append(skipButton);
+
+    const nextStateButton = document.createElement("button");
+    nextStateButton.classList = "nextState button";
+    nextStateButton.innerText = "ok";
+    nextStateButton.addEventListener("click", ElementGuide.nextState);
+    actionButtons.append(nextStateButton);
 
     const cornerDot_TopLeft = document.createElement("div");
     cornerDot_TopLeft.classList = "corner-dots top left";
