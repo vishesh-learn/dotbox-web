@@ -30,7 +30,6 @@ window.onload = function () {
   playersUI.addEventListener("focusin", scrollAbove);
 
   document.querySelector(".color-hue").addEventListener("click", selectColor);
-  document.querySelector(".pop-up-bg").addEventListener("click", closePopUP);
   document.querySelector(".close-pop-up").addEventListener("click", closePopUP);
 
   document.querySelector('#colorSlider').addEventListener('input', colorRange_Input);
@@ -58,12 +57,6 @@ function tooltip_init() {
 
 function goHome() {
   window.location.href = `../../${pages.indexPage}`;
-}
-
-function closePopUP() {
-  const colorSelector = document.querySelector(".set-color");
-
-  colorSelector.close();
 }
 
 function scrollAbove(event) {
@@ -138,13 +131,11 @@ function createColorBalls() {
 }
 
 function colorSelector(event) {
-  const colorSelector = document.querySelector(".set-color");
-
   if (event.target.className.includes("avatar")) {
     targetPlayerIndex = getIndexOfDom(event.target.parentElement);
 
-    // document.querySelector("body").classList.add("pop-up-container");
-    colorSelector.showModal();
+    document.querySelector("body").classList.add("pop-up-container");
+    document.querySelector(".set-color").showModal();
 
     let color = currGame.players[targetPlayerIndex].color;
 
@@ -152,6 +143,12 @@ function colorSelector(event) {
 
     setupColorRange(toHslObject(color).h);
   }
+}
+
+function closePopUP() {
+  document.querySelector(".set-color").close();
+
+  document.querySelector("body").classList.remove("pop-up-container");
 }
 
 function setupColorRange(h = 0) {

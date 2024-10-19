@@ -628,7 +628,8 @@ function setCurrPlayerInfo() {
 function winBoard() {
     updateBoxesUI(boxes);
 
-    document.querySelector("body").classList.add("winBoard-container", "pop-up-container");
+    document.querySelector("dialog").showModal();
+    document.querySelector("body").classList.add("winBoard-container");
 
     sortPlayerByScore();
     setupPlayerRankList();

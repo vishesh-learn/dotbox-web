@@ -1,5 +1,5 @@
 @media only screen and (min-height: 480px) and (orientation: landscape) {
-    .pop-up.set-color {
+    .set-color {
         padding: 45px;
     }
 
@@ -40,10 +40,11 @@
         bottom: 30px;
     }
 
-    .pop-up.set-color {
+    .set-color {
         flex-direction: row;
         height: 100%;
         justify-content: center;
+        max-width: calc(100% - 50px);
     }
 
     #colorSlider {

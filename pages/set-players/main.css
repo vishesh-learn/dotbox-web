@@ -126,20 +126,18 @@ header {
   stroke-linecap: round;
 }
 
-.pop-up-container .page-content {
-  opacity: 0.2;
+.pop-up-container .page,
+.pop-up-container header,
+.pop-up-container footer {
+  opacity: 0.4;
 }
 
-.pop-up .top.left {
+.set-color .top.left {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 30px;
 }
-
-/* .pop-up.set-color {
-  display: none;
-} */
 
 .set-color[open] {
   display: flex;

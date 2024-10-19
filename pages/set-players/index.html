@@ -56,23 +56,22 @@
         <polyline points="25,50 75,50" />
       </svg>
     </div>
-    <div class="pop-up-bg"></div>
-
-    <dialog class="pop-up set-color">
-      <button class="button close-pop-up">✕</button>
-
-      <div class="top left">
-        <div class="avatar color-prev"></div>
-        <input type="range" id="colorSlider" min="0" max="359" />
-      </div>
-
-      <div class="right bottom color-hue"></div>
-    </div>
   </div>
 
   <footer>
     <button class="button" tabindex="0" id="nextButton">CONTINUE</button>
   </footer>
+
+  <dialog class="set-color">
+    <button class="button close-pop-up">✕</button>
+
+    <div class="top left">
+      <div class="avatar color-prev"></div>
+      <input type="range" id="colorSlider" min="0" max="359" />
+    </div>
+
+    <div class="right bottom color-hue"></div>
+  </dialog>
 
   <script src="../../common/js/color.js" charset="utf-8"></script>
   <script src="../../common/js/variables.js"></script>
