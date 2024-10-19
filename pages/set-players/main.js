@@ -61,7 +61,9 @@ function goHome() {
 }
 
 function closePopUP() {
-  document.querySelector("body").classList.remove("pop-up-container");
+  const colorSelector = document.querySelector(".set-color");
+
+  colorSelector.close();
 }
 
 function scrollAbove(event) {
@@ -136,10 +138,13 @@ function createColorBalls() {
 }
 
 function colorSelector(event) {
+  const colorSelector = document.querySelector(".set-color");
+
   if (event.target.className.includes("avatar")) {
     targetPlayerIndex = getIndexOfDom(event.target.parentElement);
 
-    document.querySelector("body").classList.add("pop-up-container");
+    // document.querySelector("body").classList.add("pop-up-container");
+    colorSelector.showModal();
 
     let color = currGame.players[targetPlayerIndex].color;
 

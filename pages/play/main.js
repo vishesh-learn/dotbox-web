@@ -52,8 +52,6 @@ function tooltip_init() {
     ];
 
     document.querySelector("#guide")?.addEventListener("click", ElementGuide.nextState);
-
-    document.querySelector(".page-bg")?.addEventListener("click", ElementGuide.nextState);
 }
 
 function gameBoardOverFlow() {

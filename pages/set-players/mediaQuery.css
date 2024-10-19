@@ -1,6 +1,5 @@
 @media only screen and (min-height: 480px) and (orientation: landscape) {
     .pop-up.set-color {
-        box-shadow: none;
         padding: 45px;
     }
 

@@ -1,6 +1,17 @@
+:root {
+  --headerHeight: unset;
+}
+
 body {
   display: flex;
   flex-direction: column;
+}
+
+header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px;
+  box-shadow: none;
 }
 
 .page-content {
@@ -11,9 +22,6 @@ body {
 share-button {
   width: 50px;
   height: 50px;
-  position: fixed;
-  top: 15px;
-  right: 15px;
 }
 
 .line {

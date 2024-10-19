@@ -10,6 +10,8 @@ window.addEventListener("load", () => {
 
   initHome();
 
+  tooltip_init();
+
   keyOnTabIndex();
 });
 
@@ -29,4 +31,13 @@ function newGame() {
   loadCurrGame();
 
   window.location.href = `pages/${pages.setBoard}/${pages.indexPage}`;
+}
+
+function tooltip_init() {
+    ElementGuide.data = [
+        new ElementGuide("#homeButton", "Return to the main menu"),
+        new ElementGuide(".svgC", "Drag between two dots to draw your line!")
+    ];
+
+    document.querySelector("#guide")?.addEventListener("click", ElementGuide.nextState);
 }

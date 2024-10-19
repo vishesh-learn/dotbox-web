@@ -46,6 +46,16 @@ body {
   color: var(--brown);
 }
 
+::backdrop {
+  backdrop-filter: blur(1px);
+}
+
+dialog {
+  border: none;
+  background-color: #ff62000d;
+  box-shadow: 0 0 46px 46px #ff62000d;
+}
+
 .instruction {
   width: 100%;
   font-weight: normal;
@@ -68,7 +78,7 @@ body {
 
 .highlight> :not(.highlight, .highlight-container > *,
   .tooltip, .highlight-container > *) {
-  filter: blur(1.5px);
+  filter: blur(2px);
   z-index: 2;
   pointer-events: none;
 }
@@ -79,7 +89,7 @@ body {
   background-color: #f6781a82;
   border: 3px solid var(--brown);
   border-radius: 3px;
-  padding: 10px;
+  padding: 10px 12px;
 
   display: flex;
   flex-direction: column;
@@ -96,14 +106,14 @@ body {
 
 .tooltip .title {
   margin: 0;
-  font-size: 14px;
+  font-size: 15px;
   overflow: visible;
 }
 
 .tooltip .instruction {
   overflow: visible;
   margin: 0;
-  font-size: 14px;
+  font-size: 15px;
   text-align: left;
 }
 
@@ -112,7 +122,13 @@ body {
   display: flex;
   gap: 16px;
   padding-top: 7px;
+  padding-right: 2px;
   text-decoration: underline;
+  font-size: 16px;
+}
+
+.tooltip .actionButtons > * {
+  font-size: inherit;
 }
 
 .corner-dots {
