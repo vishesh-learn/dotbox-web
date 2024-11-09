@@ -204,6 +204,8 @@ function highlightElement(element) {
     const container = document.querySelector("body");
     container.classList.add("highlight");
 
+    element.classList.add("highlight-container")
+
     let reachedElement = false;
 
     while (!reachedElement) {

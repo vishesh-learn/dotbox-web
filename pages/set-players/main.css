@@ -21,6 +21,11 @@ header {
   height: var(--headerHeight);
 }
 
+/* .header-right {
+  display: flex;
+  gap: 16px;
+} */
+
 #info br {
   display: none;
 }

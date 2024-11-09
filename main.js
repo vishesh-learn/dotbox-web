@@ -4,10 +4,6 @@ window.addEventListener("load", () => {
   document.querySelector("#continueButton").addEventListener("click", continueGame);
   document.querySelector("#newGameButton").addEventListener("click", newGame);
 
-  document.querySelector(".privacy-policy-link").addEventListener("click",
-    () => window.location.href = `${pages.privacyPolicy}/${pages.indexPage}`
-  );
-
   initHome();
 
   tooltip_init();
