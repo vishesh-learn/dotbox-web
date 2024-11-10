@@ -221,18 +221,18 @@ button {
 }
 
 header {
-  height: var(--headerHeight);
+  min-height: var(--headerHeight);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 15px;
   flex-wrap: wrap;
-  padding: 0 20px 0 10px;
+  padding: 10px 20px;
   box-shadow: -2px -2px 5px .5px #000000;
   position: relative;
 }
 
-header .left {
+header .start {
   display: flex;
   flex-direction: row;
   gap: inherit;

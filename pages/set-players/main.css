@@ -17,17 +17,22 @@ body {
   flex-direction: column;
 }
 
-header {
-  height: var(--headerHeight);
+header .end {
+  display: flex;
+  gap: 20px;
 }
 
-/* .header-right {
-  display: flex;
-  gap: 16px;
-} */
+header {
+  min-height: var(--headerHeight);
+}
 
 #info br {
   display: none;
+}
+
+#guide {
+  margin-right: 20px;
+  margin-left: 20px;
 }
 
 .page {

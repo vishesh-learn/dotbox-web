@@ -11,6 +11,8 @@
 
     #homeButton {
         left: 30px;
+        left: 50%;
+        transform: translateX(-50%);
     }
 
     .playerTurn {
@@ -71,5 +73,12 @@
 
     .winBoard {
       gap: 30px;
+    }
+
+    #guide {
+        top: unset;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 20px;
     }
 }

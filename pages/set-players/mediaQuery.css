@@ -27,8 +27,6 @@
 
         min-width: var(--headerWidth);
         width: min-content;
-
-        padding-right: 10px;
     }
 
     #info br {

@@ -7,7 +7,16 @@
         --playFooterHeight: 100%;
     }
 
-    header .left {
+    header {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    header .start {
+        flex-direction: column;
+    }
+
+    header .end {
         flex-direction: column;
     }
 }

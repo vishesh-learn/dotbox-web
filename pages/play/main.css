@@ -21,15 +21,15 @@ header {
 }
 
 #homeButton {
-  position: fixed;
+  position: absolute;
   left: 15px;
-  top: 10px;
+  top: 15px;
 }
 
 #guide {
   position: absolute;
   right: 15px;
-  top: 10px;
+  top: 15px;
 }
 
 .hidden {
@@ -38,9 +38,9 @@ header {
 
 .playerTurn {
   width: 270px;
-  height: 100%;
+  height: 70px;
   position: absolute;
-  bottom: 0;
+  bottom: 5px;
   left: 50%;
   transform: translateX(-50%);
   border-radius: 30px;
