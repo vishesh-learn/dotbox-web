@@ -1,5 +1,5 @@
 :root {
-    --dotRadius: 11;
+    --dotRadius: 11px;
     --svgWidth: 100%;
     --svgHeight: 100%;
 
@@ -26,7 +26,7 @@ body {
 }
 
 .hidden {
-    opacity: 0;
+    /* opacity: 0; */
 }
 
 .page-content {
@@ -76,6 +76,7 @@ body {
 
 .dot.hidden {
     outline-offset: 2px;
+    fill: transparent;
 }
 
 .dot:focus-visible {

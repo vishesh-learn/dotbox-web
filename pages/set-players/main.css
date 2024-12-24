@@ -197,6 +197,17 @@ header {
   cursor: pointer;
 }
 
+#colorSlider::-moz-range-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: var(--currentPlayerColor);
+  border: 2px solid var(--brown);
+  cursor: pointer;
+}
+
 #colorSlider:focus-visible {
   outline: 2px dashed #000000;
 }
