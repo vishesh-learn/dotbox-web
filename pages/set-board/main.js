@@ -19,7 +19,7 @@ window.onload = () => {
     () => gameBoardSVG.removeEventListener("pointermove", pointerHandler)
   );
 
-  gameBoardSVG.addEventListener('keypress', keyHandler);
+  gameBoardSVG.addEventListener('keydown', keyHandler);
 
   nextButton.addEventListener("click", () => window.location.href = `../${pages.setPlayers}/${pages.indexPage}`);
 
@@ -52,8 +52,6 @@ function startupVariables() {
   let dotRadius = getDotRadius();
 
   let boardSize = getComputedSize(document.querySelector(".svgC"));
-
-  console.log(boardSize);
 
   let scrollbarSize = getScrollbarSize();
 
@@ -145,10 +143,75 @@ function pointerHandler(event) {
 }
 
 function keyHandler(event) {
-  if (event.keyCode === 13) {
-    optedDot(event.target);
+  switch (event.keyCode) {
+    case 13:
+      optedDot(event.target);
+      break;
+
+    case 37:
+      dotNavigate(event.target, "left");
+      break;
+
+    case 38:
+      dotNavigate(event.target, "top");
+      break;
+
+    case 39:
+      dotNavigate(event.target, "right");
+      break;
+
+    case 40:
+      dotNavigate(event.target, "bottom");
+      break;
+
+    default:
+      break;
   }
-  //more functions on different key codes...
+}
+
+function dotNavigate(dotE, direction) {
+  if (dotE.tagName != "circle") {
+    console.log("dotNavigate -> dot tagname not circle");
+
+    return false;
+  }
+
+  dot1 = new Dot(
+    dotE.cx.baseVal.value,
+    dotE.cy.baseVal.value
+  );
+
+  let dot2;
+
+  switch (direction) {
+    case "top":
+      dot2 = getDotAtTop(dot1);
+      break;
+
+    case "right":
+      dot2 = getDotAtRight(dot1);
+      break;
+
+    case "bottom":
+      dot2 = getDotAtBottom(dot1);
+      break;
+
+    case "left":
+      dot2 = getDotAtLeft(dot1);
+      break;
+
+    default:
+      console.log('dotNavigate -> default direction');
+      break;
+  }
+
+  if (!dot2) {
+    return false;
+  }
+
+  optedDot(dot2);
+
+  dot2.focus();
 }
 
 function optedDot(dot) {

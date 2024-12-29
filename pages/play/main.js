@@ -138,35 +138,6 @@ function linePrev(event) {
     }
 }
 
-function getSurroundingDots(initDot) {
-    var top = new Dot(
-        initDot.x,
-        initDot.y - currGame.gameBoard.gap,
-        'top'
-    );
-
-    var right = new Dot(
-        initDot.x + currGame.gameBoard.gap,
-        initDot.y,
-        "right",
-    );
-
-    var bottom = new Dot(
-        initDot.x,
-        initDot.y + currGame.gameBoard.gap,
-        "bottom",
-    );
-
-    var left = new Dot(
-        initDot.x - currGame.gameBoard.gap,
-        initDot.y,
-        'left',
-    );
-
-    var options = [top, right, bottom, left].filter(dotExists);
-    return options;
-}
-
 function nearDot(x, y) {
     var validFinalDots = getSurroundingDots(initDot);
 
@@ -495,27 +466,6 @@ const compareLineObj = (obj1, obj2) => {
             (obj1.y2 == obj2.y1)
         )
     );
-}
-
-function compareDots(dot1, dot2) {
-    return (dot1.x == dot2.x) && (dot1.y == dot2.y);
-}
-
-function dotExists(dot) {
-    var dotsE = document.querySelectorAll("circle"), existingDot;
-
-    for (const existingDotUI of dotsE) {
-        existingDot = new Dot(
-            existingDotUI.cx.baseVal.value,
-            existingDotUI.cy.baseVal.value
-        );
-
-        if (compareDots(dot, existingDot)) {
-            return true;
-        }
-    }
-
-    return false;
 }
 
 function lineNotExists(line, linelist) {
