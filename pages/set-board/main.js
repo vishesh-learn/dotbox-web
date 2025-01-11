@@ -1,5 +1,5 @@
 window.onload = () => {
-  const gameBoardSVG = document.querySelector(".svgC svg")
+  const gameBoardSVG = document.querySelector(".svgC");
   const nextButton = document.querySelector("#nextButton");
 
   document.querySelector("#homeButton").addEventListener("click", goHome);
@@ -16,12 +16,14 @@ window.onload = () => {
 
   gameBoardSVG.addEventListener("pointerdown", pointerHandler);
   gameBoardSVG.addEventListener("pointerup",
-    () => gameBoardSVG.removeEventListener("pointermove", pointerHandler)
+    () => {
+      gameBoardSVG.removeEventListener("pointermove", pointerHandler);
+    }
   );
 
   gameBoardSVG.addEventListener('keydown', keyHandler);
 
-  nextButton.addEventListener("click", () => window.location.href = `../${pages.setPlayers}/${pages.indexPage}`);
+  nextButton.addEventListener("click", goNext);
 
   keyOnTabIndex();
 }
@@ -32,6 +34,10 @@ function goHome() {
 
 function goBack() {
   window.location.href = `../../${pages.indexPage}`;
+}
+
+function goNext() {
+  window.location.href = `../${pages.setPlayers}/${pages.indexPage}`;
 }
 
 function setupGameBoard() {
@@ -123,8 +129,6 @@ function GameBoardBuilder() {
       dot.setAttribute("cx", x);
       dot.setAttribute("cy", y);
 
-      dot.setAttribute('tabindex', 0);
-
       document.querySelector(".svgC svg").appendChild(dot);
     }
   }
@@ -138,30 +142,30 @@ function pointerHandler(event) {
 
   optedDot(nearDot);
 
-  document.querySelector(".svgC svg")
+  document.querySelector(".svgC")
     .addEventListener("pointermove", pointerHandler);
 }
 
 function keyHandler(event) {
   switch (event.keyCode) {
     case 13:
-      optedDot(event.target);
+      dotNavigate(event, "enter");
       break;
 
     case 37:
-      dotNavigate(event.target, "left");
+      dotNavigate(event, "left");
       break;
 
     case 38:
-      dotNavigate(event.target, "top");
+      dotNavigate(event, "top");
       break;
 
     case 39:
-      dotNavigate(event.target, "right");
+      dotNavigate(event, "right");
       break;
 
     case 40:
-      dotNavigate(event.target, "bottom");
+      dotNavigate(event, "bottom");
       break;
 
     default:
@@ -169,35 +173,32 @@ function keyHandler(event) {
   }
 }
 
-function dotNavigate(dotE, direction) {
-  if (dotE.tagName != "circle") {
-    console.log("dotNavigate -> dot tagname not circle");
+function dotNavigate(event, direction) {
+  if (!event.target.classList.contains("svgC")) {
+    console.log("dotNavigate -> not svgC");
 
     return false;
   }
 
-  dot1 = new Dot(
-    dotE.cx.baseVal.value,
-    dotE.cy.baseVal.value
-  );
-
-  let dot2;
-
   switch (direction) {
     case "top":
-      dot2 = getDotAtTop(dot1);
+      currGame.gameBoard.row--;
       break;
 
     case "right":
-      dot2 = getDotAtRight(dot1);
+      currGame.gameBoard.col++;
       break;
 
     case "bottom":
-      dot2 = getDotAtBottom(dot1);
+      currGame.gameBoard.row++;
       break;
 
     case "left":
-      dot2 = getDotAtLeft(dot1);
+      currGame.gameBoard.col--;
+      break;
+
+    case "enter":
+      goNext();
       break;
 
     default:
@@ -205,13 +206,7 @@ function dotNavigate(dotE, direction) {
       break;
   }
 
-  if (!dot2) {
-    return false;
-  }
-
-  optedDot(dot2);
-
-  dot2.focus();
+  optedCnR();
 }
 
 function optedDot(dot) {
