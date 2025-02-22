@@ -19,7 +19,7 @@ class ElementGuide {
             }
         }
 
-        return null;
+        return elements.length ? elements[0] : null;
     }
 
     activate() {
