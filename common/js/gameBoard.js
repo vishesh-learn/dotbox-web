@@ -6,10 +6,10 @@ function getSurroundingDots(dot) {
     var bottom = getDotAtBottom(dot);
 
     var left = getDotAtLeft(dot);
-
+    
     var options = [top, right, bottom, left]
         .filter(findDotE);
-
+    
     return options;
 }
 
@@ -20,7 +20,7 @@ function getDotAtTop(dot) {
         'top'
     );
 
-    return findDotE(dotAtTop);
+    return findDotE(dotAtTop) ? dotAtTop : false;
 }
 
 function getDotAtRight(dot) {
@@ -30,7 +30,7 @@ function getDotAtRight(dot) {
         "right",
     );
 
-    return findDotE(dotAtRight);
+    return findDotE(dotAtRight) ? dotAtRight : false;
 }
 
 function getDotAtBottom(dot) {
@@ -40,7 +40,7 @@ function getDotAtBottom(dot) {
         "bottom",
     );
 
-    return findDotE(dotAtBottom);
+    return findDotE(dotAtBottom) ? dotAtBottom : false;
 }
 
 function getDotAtLeft(dot) {
@@ -50,7 +50,7 @@ function getDotAtLeft(dot) {
         'left',
     );
 
-    return findDotE(dotAtLeft);
+    return findDotE(dotAtLeft) ? dotAtLeft : false;
 }
 
 function findDotE(dot) {
@@ -66,10 +66,22 @@ function findDotE(dot) {
             return existingDotUI;
         }
     }
-
+    
     return false;
 }
 
 function compareDots(dot1, dot2) {
+    if (typeof dot1.x != "number" || typeof dot1.y != "number") {
+        console.error("invalid dot1 provided for comparison");
+
+        return false;
+    }
+
+    if (typeof dot2.x != "number" || typeof dot2.y != "number") {
+        console.error("invalid dot2 provided for comparison");
+
+        return false;
+    }
+
     return (dot1.x == dot2.x) && (dot1.y == dot2.y);
 }
