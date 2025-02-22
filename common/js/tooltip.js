@@ -9,13 +9,25 @@ class ElementGuide {
     }
 
     get element() {
-        return document.querySelector(this.elementSelector);
+        const elements = document.querySelectorAll(this.elementSelector);
+
+        for (const element of elements) {
+            const boundingClientRect = element.getBoundingClientRect();
+
+            if (boundingClientRect.top >= 50 && boundingClientRect.bottom <= innerHeight) {
+                return element;
+            }
+        }
+
+        return null;
     }
 
     activate() {
-        highlightElement(this.element);
+        if (this.element) {
+            highlightElement(this.element);
 
-        elementTooltip(this.element, this.title, this.instruction);
+            elementTooltip(this.element, this.title, this.instruction);
+        }
     }
 
     static refreshState() {

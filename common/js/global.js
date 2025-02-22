@@ -139,13 +139,6 @@ function updateVersionUI() {
   }
 }
 
-function getScrollbarSize() {
-  return Number(
-    getComputedStyle(document.documentElement)
-      .getPropertyValue('--scrollbarSize').trim().replace(/\D/g, '')
-  ) || 0;
-}
-
 function getDotRadius() {
   let dotRadius = Number(
     getComputedStyle(document.documentElement)
@@ -157,6 +150,13 @@ function getDotRadius() {
   const totalRadius = dotRadius + accountForIncreasingOutlineOffset;
 
   return totalRadius;
+}
+
+function getScrollbarSize() {
+  return Number(
+    getComputedStyle(document.documentElement)
+      .getPropertyValue('--scrollbarSize').trim().replace(/\D/g, '')
+  ) || 0;
 }
 
 function getComputedSize(element) {

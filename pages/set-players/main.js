@@ -1,6 +1,7 @@
 var targetPlayerIndex = 0;
 
 window.onload = function () {
+  // event listeners
   document.querySelector("#backButton")
     .addEventListener("click", () => window.location.href = `../${pages.setBoard}/${pages.indexPage}`);
 
@@ -9,20 +10,9 @@ window.onload = function () {
 
   document.querySelector("#homeButton").addEventListener("click", goHome);
 
-  createColorBalls();
-
-  loadCurrGame();
-
-  currGame.currPage = pages.setPlayers;
-
-  saveCurrGame();
-
-  setupPlayersUI();
-
   document.querySelector(".addb").addEventListener("click", addPlayer);
 
   const playersUI = document.querySelector(".players");
-
   playersUI.addEventListener("keypress", goButtonHandler);
   playersUI.addEventListener("click", colorSelector);
   playersUI.addEventListener("change", updatePlayer);
@@ -34,7 +24,27 @@ window.onload = function () {
 
   document.querySelector('#colorSlider').addEventListener('input', colorRange_Input);
 
+  // function calls
+
+  playerColorEditor_init();
+
+  setCurrentPageInCurrentGame();
+
+  setupPlayersUI();
+
   keyOnTabIndex();
+}
+
+function setCurrentPageInCurrentGame() {
+  loadCurrGame();
+
+  currGame.currPage = pages.setPlayers;
+
+  saveCurrGame();
+}
+
+function playerColorEditor_init() {
+  createColorBalls();
 }
 
 function playerUILoaded() {

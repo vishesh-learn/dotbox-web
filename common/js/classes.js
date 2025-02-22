@@ -1,11 +1,11 @@
 class Game {
   constructor() {
-    this.dateTime = new Date(),
-      this.gameBoard = gameBoard(),
-      this.minPlayer = 2,
-      this.players = players(this.minPlayer, this.maxPlayer),
-      this.lines = [],
-      this.currPage = ""
+    this.dateTime = new Date();
+    this.gameBoard = gameBoard();
+    this.minPlayer = 2;
+    this.players = players(this.minPlayer, this.maxPlayer);
+    this.lines = [];
+    this.currPage = "";
   }
 
   get maxPlayer() {
