@@ -52,6 +52,13 @@ function tooltip_init() {
     ];
 
     document.querySelector("#guide")?.addEventListener("click", ElementGuide.nextState);
+
+    const tooltipPlayedKey = "tooltip played once for play page";
+    if (!localStorage.getItem(tooltipPlayedKey)) {
+      ElementGuide.nextState();
+  
+      localStorage.setItem(tooltipPlayedKey, true);
+    }
 }
 
 function gameBoardOverFlow() {

@@ -36,4 +36,11 @@ function tooltip_init() {
     ];
 
     document.querySelector("#guide")?.addEventListener("click", ElementGuide.nextState);
+
+    const tooltipPlayedKey = "tooltip played once for home";
+    if (!localStorage.getItem(tooltipPlayedKey)) {
+      ElementGuide.nextState();
+  
+      localStorage.setItem(tooltipPlayedKey, true);
+    }
 }

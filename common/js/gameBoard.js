@@ -71,8 +71,12 @@ function findDotE(dot) {
 }
 
 function compareDots(dot1, dot2) {
+    if (typeof dot1 != "object" || typeof dot2 != "object") {
+        return false;
+    }
+
     if (typeof dot1.x != "number" || typeof dot1.y != "number") {
-        console.error("invalid dot1 provided for comparison");
+        console.error("invalid dot1 provided for comparison", { dot1, dot2 });
 
         return false;
     }
