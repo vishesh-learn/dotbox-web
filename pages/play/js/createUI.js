@@ -58,21 +58,36 @@ function gameBoardBuilder() {
     dots.forEach(dot => dot.remove());
 
     for (let i = 0; i < currGame.gameBoard.row; i++) {
+        const row = i + 1;
+
         for (let j = 0; j < currGame.gameBoard.col; j++) {
+            const col = j + 1;
+
             cx = (currGame.gameBoard.gap * j + dotRadius).toString();
             cy = (currGame.gameBoard.gap * i + dotRadius).toString();
 
-            let dot = document.createElementNS('http://www.w3.org/2000/svg', "circle");
-            dot.setAttribute("class", "dot");
+            let dot = createDotUI(cx, cy, row, col);
 
-            dot.setAttribute("cx", cx);
-            dot.setAttribute("cy", cy);
-            
             svg.appendChild(dot);
         }
     }
 
     svgResize();
+}
+
+function createDotUI(cx, cy, row, col) {
+    var dotElement = document.createElementNS('http://www.w3.org/2000/svg', "circle");
+    dotElement.setAttribute("class", "dot");
+
+    dotElement.setAttribute("tabindex", "0");
+
+    dotElement.setAttribute("cx", cx);
+    dotElement.setAttribute("cy", cy);
+
+    dotElement.setAttribute("data-row", row);
+    dotElement.setAttribute("data-col", col);
+
+    return dotElement;
 }
 
 function createSquareUI(box) {

@@ -67,7 +67,7 @@ body {
     box-shadow: 0 0 30px 15px var(--bg-low-opacity);
 }
 
-.svgC:focus {
+.svgC:focus-visible {
     outline: 2px dashed #000;
     border-radius: 2px;
 }

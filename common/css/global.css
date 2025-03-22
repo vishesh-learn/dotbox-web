@@ -389,3 +389,7 @@ footer {
 .displayNone {
   display: none;
 }
+
+.svgC,svg {
+  overflow: visible;
+}

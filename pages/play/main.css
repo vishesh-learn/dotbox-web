@@ -171,6 +171,12 @@ header {
   filter: brightness(1.5) drop-shadow(0px 0px 1px rgb(0, 0, 0, 0.5));
 }
 
+.dot:focus-visible {
+  stroke: none;
+  outline: 3px dashed var(--brown);
+  outline-offset: 4px;
+}
+
 .line {
   stroke-width: var(--strokeWidth);
   stroke-linecap: round;

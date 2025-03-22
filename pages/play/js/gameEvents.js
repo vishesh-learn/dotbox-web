@@ -3,8 +3,12 @@ function pointerDownEvent(listen = true) {
 
   if (listen) {
     board.addEventListener("pointerdown", pointerDown);
+
+    board.addEventListener("keydown", keyHandler);
   } else {
     board.removeEventListener("pointerdown", pointerDown);
+
+    board.removeEventListener("keydown", keyHandler);
   }
 }
 
@@ -31,19 +35,19 @@ function pointerDown(event) {
       nearInitDot.cy.baseVal.value
     );
 
-    if (difference(x, initDot.x) <= currGame.gameBoard.gap / 2
-      && difference(y, initDot.y) <= currGame.gameBoard.gap / 2) {
+    const inRange = difference(x, initDot.x) <= currGame.gameBoard.gap / 2
+      && difference(y, initDot.y) <= currGame.gameBoard.gap / 2;
+
+    if (inRange) {
       pointerMoveAndUPEvents(true);
 
-      let validFinalDots = getSurroundingDots(initDot).filter(validFinalDot => {
+      getSurroundingDots(initDot).filter(validFinalDot => {
         var possibleLine = new Line(
           initDot.x, initDot.y, validFinalDot.x, validFinalDot.y
         );
 
         return !lineNotExists(possibleLine, pendingPossiblelines);
-      })
-
-      // console.log(validFinalDots);
+      });
     } else {
       console.log("line drawing canceled");
     }
@@ -150,4 +154,91 @@ function playerTurn() {
 
 function isEnd() {
   return pendingPossiblelines.length <= 0;
+}
+
+/* ------------ */
+
+function keyHandler(event) {
+  switch (event.keyCode) {
+    case 13:
+      dotNavigate(event, "enter");
+      break;
+
+    case 37:
+      dotNavigate(event, "left");
+      break;
+
+    case 38:
+      dotNavigate(event, "top");
+      break;
+
+    case 39:
+      dotNavigate(event, "right");
+      break;
+
+    case 40:
+      dotNavigate(event, "bottom");
+      break;
+
+    default:
+      break;
+  }
+}
+
+let selectedDot;
+
+function dotNavigate(event, direction) {
+  if (!event.target.classList.contains("dot")) {
+    console.log("dotNavigate -> not dot");
+
+    return false;
+  }
+
+  console.log(event, direction);
+
+  switch (direction) {
+    case "top":
+      console.log(event.target.dataset.row, event.target.dataset.col);
+
+      if (event.target.dataset.row > 1) {
+        let nextRow = parseInt(event.target.dataset.row) - 1;
+
+        document.querySelector(`.dot[data-row="${nextRow}"][data-col="${event.target.dataset.col}"]`).focus();
+      }
+      break;
+
+    case "right":
+      if (event.target.dataset.col < currGame.gameBoard.col) {
+        let nextCol = parseInt(event.target.dataset.col) + 1;
+
+        document.querySelector(`.dot[data-row="${event.target.dataset.row}"][data-col="${nextCol}"]`).focus();
+      }
+      break;
+
+    case "bottom":
+      if (event.target.dataset.row < currGame.gameBoard.row) {
+        let nextRow = parseInt(event.target.dataset.row) + 1;
+
+        document.querySelector(`.dot[data-row="${nextRow}"][data-col="${event.target.dataset.col}"]`).focus();
+      }
+      break;
+
+    case "left":
+      if (event.target.dataset.col > 1) {
+        let nextCol = parseInt(event.target.dataset.col) - 1;
+
+        document.querySelector(`.dot[data-row="${event.target.dataset.row}"][data-col="${nextCol}"]`).focus();
+      }
+      break;
+
+    case "enter":
+      selectedDot = event.target;
+
+      console.log("selectedDot", selectedDot);
+      break;
+
+    default:
+      console.log('dotNavigate -> default direction');
+      break;
+  }
 }
