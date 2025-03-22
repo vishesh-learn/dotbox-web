@@ -55,9 +55,9 @@ function tooltip_init() {
 
     const tooltipPlayedKey = "tooltip played once for play page";
     if (!localStorage.getItem(tooltipPlayedKey)) {
-      ElementGuide.nextState();
-  
-      localStorage.setItem(tooltipPlayedKey, true);
+        ElementGuide.nextState();
+
+        localStorage.setItem(tooltipPlayedKey, true);
     }
 }
 
@@ -110,39 +110,41 @@ function footerInfo() {
     rowColInfoHtml.innerHTML = `${currGame.gameBoard.col} x ${currGame.gameBoard.row}`;
 }
 
-function linePrev(event) {
+function linePreview(event) {
     var x = event.offsetX, y = event.offsetY;
 
-    if (initDot) {
-        var left = initDot.x - currGame.gameBoard.gap;
-        var top = initDot.y - currGame.gameBoard.gap;
-        var bottom = initDot.y + currGame.gameBoard.gap;
-        var right = initDot.x + currGame.gameBoard.gap;
-
-        if (x < left) {
-            x = left;
-        }
-
-        if (x > right) {
-            x = right;
-        }
-
-        if (y < top) {
-            y = top;
-        }
-
-        if (y > bottom) {
-            y = bottom;
-        }
-
-        var pseudoDot = new Dot(x, y);
-
-        prevLineMaker(
-            new Line(
-                initDot.x, initDot.y, pseudoDot.x, pseudoDot.y
-            )
-        );
+    if (!initDot) {
+        return false;
     }
+
+    var left = initDot.x - currGame.gameBoard.gap;
+    var top = initDot.y - currGame.gameBoard.gap;
+    var bottom = initDot.y + currGame.gameBoard.gap;
+    var right = initDot.x + currGame.gameBoard.gap;
+
+    if (x < left) {
+        x = left;
+    }
+
+    if (x > right) {
+        x = right;
+    }
+
+    if (y < top) {
+        y = top;
+    }
+
+    if (y > bottom) {
+        y = bottom;
+    }
+
+    var pseudoDot = new Dot(x, y);
+
+    prevLineMaker(
+        new Line(
+            initDot.x, initDot.y, pseudoDot.x, pseudoDot.y
+        )
+    );
 }
 
 function nearDot(x, y) {

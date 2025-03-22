@@ -16,10 +16,10 @@ function pointerMoveAndUPEvents(listen = true) {
   const board = document.querySelector(".svgC");
 
   if (listen) {
-    board.addEventListener("pointermove", linePrev);
+    board.addEventListener("pointermove", linePreview);
     board.addEventListener("pointerup", pointerUp);
   } else {
-    board.removeEventListener("pointermove", linePrev);
+    board.removeEventListener("pointermove", linePreview);
     board.removeEventListener("pointerup", pointerUp);
   }
 }
@@ -198,13 +198,22 @@ function dotNavigate(event, direction) {
 
   switch (direction) {
     case "top":
-      console.log(event.target.dataset.row, event.target.dataset.col);
-
       if (event.target.dataset.row > 1) {
         let nextRow = parseInt(event.target.dataset.row) - 1;
 
-        document.querySelector(`.dot[data-row="${nextRow}"][data-col="${event.target.dataset.col}"]`).focus();
+        const nextDot = document.querySelector(`.dot[data-row="${nextRow}"][data-col="${event.target.dataset.col}"]`);
+
+        nextDot.focus();
+
+        if (selectedDot) {
+          prevLineMaker(
+            new Line(
+              selectedDot.cx.baseVal.value, selectedDot.cy.baseVal.value, nextDot.cx.baseVal.value, nextDot.cy.baseVal.value
+            )
+          );
+        }
       }
+
       break;
 
     case "right":
