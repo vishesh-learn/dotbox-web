@@ -1,7 +1,6 @@
 var targetPlayerIndex = 0;
 
 window.onload = function () {
-  // event listeners
   document.querySelector("#backButton")
     .addEventListener("click", () => window.location.href = `../${pages.setBoard}/${pages.indexPage}`);
 
@@ -23,8 +22,6 @@ window.onload = function () {
   document.querySelector(".close-pop-up").addEventListener("click", closePopUP);
 
   document.querySelector('#colorSlider').addEventListener('input', colorRange_Input);
-
-  // function calls
 
   playerColorEditor_init();
 
@@ -79,9 +76,11 @@ function goHome() {
 function scrollAbove(event) {
   const target = event.target;
 
+  const playerElements = document.querySelectorAll(".player");
+
   if (target.className.includes("playerName")) {
     const targetPlayer = target.parentElement;
-    const targetPlayerIndex = getIndexOfDom(targetPlayer);
+    const targetPlayerIndex = Array.from(playerElements).indexOf(targetPlayer);
 
     document.querySelector(".page-content")
       .scrollTop = targetPlayer.clientHeight * (targetPlayerIndex - 2);
@@ -97,11 +96,15 @@ function goButtonHandler(event) {
 
 function addPlayer() {
   if (currGame.players.length < currGame.maxPlayer) {
-    currGame.players.push(new Player());
+    const player = new Player();
+    currGame.players.push(player);
 
     saveCurrGame();
 
-    setupPlayersUI();
+    const playersUI = document.querySelector(".players");
+    playersUI.append(createPlayerUI(player));
+
+    updatePlayerCountView();
   }
 }
 
@@ -112,25 +115,24 @@ function updatePlayerCountView() {
 
 function updatePlayer(event) {
   const target = event.target;
+  const playerElements = document.querySelectorAll(".player");
 
-  if (
-    target.className.includes("playerName")
-    || target.className.includes("isAlgo")
-  ) {
-    const targetPlayerIndex = getIndexOfDom(target.parentElement);
+  if (target.className.includes("playerName") || target.className.includes("isAlgo")) {
+    const targetPlayerIndex = Array.from(playerElements).indexOf(target.parentElement);
 
     if (target.className.includes("playerName")) {
       var name = target.value;
+
       currGame.players[targetPlayerIndex].name = name;
     }
 
     if (target.className.includes("isAlgo")) {
       var isAlgo = target.checked;
+
       currGame.players[targetPlayerIndex].isAlgo = isAlgo;
     }
 
     saveCurrGame();
-    setupPlayersUI();
   }
 }
 
@@ -148,8 +150,10 @@ function createColorBalls() {
 }
 
 function colorSelector(event) {
+  const playerElements = document.querySelectorAll(".player");
+
   if (event.target.className.includes("avatar")) {
-    targetPlayerIndex = getIndexOfDom(event.target.parentElement);
+    targetPlayerIndex = Array.from(playerElements).indexOf(event.target.parentElement);
 
     document.querySelector("body").classList.add("pop-up-container");
     document.querySelector(".set-color").showModal();
@@ -194,12 +198,18 @@ function colorRange_Input(event) {
   document.documentElement.style.setProperty('--currentPlayerColor', hex);
 
   saveCurrGame();
-  setupPlayersUI();
+
+  const playerElements = document.querySelectorAll(".player");
+  const targetPlayer = playerElements[targetPlayerIndex];
+
+  targetPlayer.querySelector(".avatar").style.backgroundColor = hex;
 }
 
 function selectColor(event) {
-  if (event.target.className.includes("colorBall")) {
+  const playerElements = document.querySelectorAll(".player");
+  const targetPlayer = playerElements[targetPlayerIndex];
 
+  if (event.target.className.includes("colorBall")) {
     var color = event.target.style.backgroundColor;
 
     currGame.players[targetPlayerIndex].color = color;
@@ -209,25 +219,26 @@ function selectColor(event) {
     setupColorRange(toHslObject(color).h);
 
     saveCurrGame();
-    setupPlayersUI();
+
+    targetPlayer.querySelector(".avatar").style.backgroundColor = color;
   }
 }
 
 function removePlayer(event) {
   const target = event.target;
+  const targetPlayer = target.parentElement;
+
+  const playerElements = document.querySelectorAll(".player");
 
   if (target.className.includes("removePlayerB")) {
-    currGame.players.splice(getIndexOfDom(target.parentElement), 1);
+    const targetPlayerIndex = Array.from(playerElements).indexOf(targetPlayer);
+
+    currGame.players.splice(targetPlayerIndex, 1);
 
     saveCurrGame();
-    setupPlayersUI();
+
+    targetPlayer.remove();
   }
-}
-
-function getIndexOfDom(childDom) {
-  const parentDom = childDom.parentElement;
-
-  return Array.prototype.indexOf.call(parentDom.children, childDom);
 }
 
 async function setupPlayersUI() {
