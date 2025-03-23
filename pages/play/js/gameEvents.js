@@ -185,8 +185,6 @@ function keyHandler(event) {
   }
 }
 
-let selectedDot;
-
 function dotNavigate(event, direction) {
   if (!event.target.classList.contains("dot")) {
     console.log("dotNavigate -> not dot");
@@ -288,6 +286,7 @@ function dotNavigate(event, direction) {
         updateLinesUI();
 
         selectedDot = null;
+        initDot = null;
       } else {
         selectedDot = event.target;
       }

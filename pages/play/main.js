@@ -224,6 +224,7 @@ function addLine(line) {
     }
 
     initDot = undefined;
+    selectedDot = null;
 }
 
 function updateLinesUI() {

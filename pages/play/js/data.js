@@ -1,6 +1,6 @@
 let currPlayer;
 
-let playerTurnList, initDot, finalDot, orient, made;
+let playerTurnList, initDot, selectedDot, finalDot, orient, made;
 
 let allPossibleLines = [], pendingPossiblelines = [], removePrevLinesTimeOut, boxes = [];
 
