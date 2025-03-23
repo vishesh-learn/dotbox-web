@@ -200,8 +200,9 @@ function dotNavigate(event, direction) {
     case "top":
       if (event.target.dataset.row > 1) {
         let nextRow = selectedDot ? parseInt(selectedDot.dataset.row) - 1 : parseInt(event.target.dataset.row) - 1;
+        let nextCol = selectedDot ? parseInt(selectedDot.dataset.col) : parseInt(event.target.dataset.col);
 
-        const nextDot = document.querySelector(`.dot[data-row="${nextRow}"][data-col="${event.target.dataset.col}"]`);
+        const nextDot = document.querySelector(`.dot[data-row="${nextRow}"][data-col="${nextCol}"]`);
 
         nextDot.focus();
 
@@ -218,9 +219,10 @@ function dotNavigate(event, direction) {
 
     case "right":
       if (event.target.dataset.col < currGame.gameBoard.col) {
+        let nextRow = selectedDot ? parseInt(selectedDot.dataset.row) : parseInt(event.target.dataset.row);
         let nextCol = selectedDot ? parseInt(selectedDot.dataset.col) + 1 : parseInt(event.target.dataset.col) + 1;
 
-        const nextDot = document.querySelector(`.dot[data-row="${event.target.dataset.row}"][data-col="${nextCol}"]`);
+        const nextDot = document.querySelector(`.dot[data-row="${nextRow}"][data-col="${nextCol}"]`);
 
         nextDot.focus();
 
@@ -237,8 +239,9 @@ function dotNavigate(event, direction) {
     case "bottom":
       if (event.target.dataset.row < currGame.gameBoard.row) {
         let nextRow = selectedDot ? parseInt(selectedDot.dataset.row) + 1 : parseInt(event.target.dataset.row) + 1;
+        let nextCol = selectedDot ? parseInt(selectedDot.dataset.col) : parseInt(event.target.dataset.col);
 
-        const nextDot = document.querySelector(`.dot[data-row="${nextRow}"][data-col="${event.target.dataset.col}"]`);
+        const nextDot = document.querySelector(`.dot[data-row="${nextRow}"][data-col="${nextCol}"]`);
 
         nextDot.focus();
 
@@ -254,9 +257,10 @@ function dotNavigate(event, direction) {
 
     case "left":
       if (event.target.dataset.col > 1) {
+        let nextRow = selectedDot ? parseInt(selectedDot.dataset.row) : parseInt(event.target.dataset.row);
         let nextCol = selectedDot ? parseInt(selectedDot.dataset.col) - 1 : parseInt(event.target.dataset.col) - 1;
 
-        const nextDot = document.querySelector(`.dot[data-row="${event.target.dataset.row}"][data-col="${nextCol}"]`);
+        const nextDot = document.querySelector(`.dot[data-row="${nextRow}"][data-col="${nextCol}"]`);
 
         nextDot.focus();
 
@@ -271,9 +275,22 @@ function dotNavigate(event, direction) {
       break;
 
     case "enter":
-      selectedDot = event.target;
+      if (selectedDot) {
+        made = new Made();
 
-      console.log("selectedDot", selectedDot);
+        removePrevLines();
+
+        addLine(new Line(
+          selectedDot.cx.baseVal.value, selectedDot.cy.baseVal.value,
+          event.target.cx.baseVal.value, event.target.cy.baseVal.value, currPlayer.id
+        ));
+
+        updateLinesUI();
+
+        selectedDot = null;
+      } else {
+        selectedDot = event.target;
+      }
       break;
 
     default:
