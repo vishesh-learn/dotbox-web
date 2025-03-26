@@ -13,12 +13,20 @@ addEventListener("load", () => {
 });
 
 function keyOnTabIndex() {
-  document.querySelectorAll("[tabindex]").forEach((tabIndexItem) => {
-    tabIndexItem.addEventListener("keypress", event => {
-      if (event.keyCode === 13) {
-        tabIndexItem.dispatchEvent(new Event("click"));
+  document.querySelectorAll("[tabindex]").forEach(keyOnElement);
+}
+
+function keyOnElement(element) {
+  element.addEventListener("keypress", event => {
+    if (event.keyCode === 13) {
+      console.log("clicking", element);
+      
+      if (element.click) {
+        element.click();
+      } else {
+        element.dispatchEvent(new Event("click"));
       }
-    });
+    }
   });
 }
 

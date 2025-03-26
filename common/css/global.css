@@ -346,6 +346,11 @@ footer {
   line-height: 1em;
 }
 
+.close-pop-up:focus-visible {
+  top: 2px;
+  right: 2px;
+}
+
 ::-webkit-scrollbar {
   width: var(--scrollbarSize);
   height: var(--scrollbarSize);

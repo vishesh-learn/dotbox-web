@@ -88,8 +88,10 @@ function scrollAbove(event) {
 }
 
 function goButtonHandler(event) {
-  if (event.key === "Enter") {
-    console.log(event.target);
+  if (event.keyCode === 13 && event.target.type === "text"
+  ) {
+    console.log("blur", event.target);
+    
     event.target.blur();
   }
 }
@@ -281,6 +283,7 @@ function createPlayerUI(player) {
   isAlgo.classList = "isAlgo button";
   isAlgo.type = "checkbox";
   isAlgo.checked = player.isAlgo;
+  keyOnElement(isAlgo);
 
   playerUI.append(isAlgo);
 
