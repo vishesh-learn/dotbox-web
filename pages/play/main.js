@@ -215,6 +215,8 @@ function svgResize() {
 }
 
 function addLine(line) {
+    console.log("addLine", line);
+
     if (line && lineNotExists(line, currGame.lines)) {
         currGame.lines.push(line);
 

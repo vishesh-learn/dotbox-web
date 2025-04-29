@@ -47,10 +47,9 @@ class Player {
 }
 
 class Dot {
-  constructor(x, y, side) {
+  constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.side = side;
   }
 }
 
@@ -74,4 +73,31 @@ class Line {
   }
 
   //include comparison method to compare parameter/argument with this object.
+}
+
+/* v2 */
+
+class Dot_v2 {
+  constructor(row, col) {
+    this.row = row;
+    this.col = col;
+  }
+}
+
+class Line_v2 {
+  constructor(dot1 = new Dot_v2(), dot2 = new Dot_v2(), byPlayerID, prev = false) {
+    this.dot1 = dot1;
+    this.dot2 = dot2;
+    this.byPlayerID = byPlayerID;
+    this.prev = prev;
+  }
+
+  get orient() {
+    return (this.dot1.row == this.dot2.row) && (this.dot1.col != this.dot2.col)
+      ? 'horizontal' : 'vertical';
+  }
+  
+  get byPlayer() {
+    return currGame.players.find(player => player.id == this.byPlayerID);
+  }
 }
