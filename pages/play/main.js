@@ -47,8 +47,8 @@ window.onload = () => {
 
 function tooltip_init() {
     ElementGuide.data = [
-        new ElementGuide("#homeButton", "Return to the main menu"),
-        new ElementGuide(".svgC", "Drag between two dots to draw your line!")
+        new ElementGuide(".svgC", "Drag between two dots to draw your line!"),
+        new ElementGuide("#homeButton", "Return to the main menu")
     ];
 
     document.querySelector("#guide")?.addEventListener("click", ElementGuide.nextState);
