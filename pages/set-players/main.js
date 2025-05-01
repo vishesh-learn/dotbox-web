@@ -33,11 +33,11 @@ window.onload = function () {
 }
 
 function setCurrentPageInCurrentGame() {
-  loadCurrGame();
+  Game.load();
 
   currGame.currPage = pages.setPlayers;
 
-  saveCurrGame();
+  currGame.save();
 }
 
 function playerColorEditor_init() {
@@ -101,7 +101,7 @@ function addPlayer() {
     const player = new Player();
     currGame.players.push(player);
 
-    saveCurrGame();
+    currGame.save();
 
     const playersUI = document.querySelector(".players");
     playersUI.append(createPlayerUI(player));
@@ -134,7 +134,7 @@ function updatePlayer(event) {
       currGame.players[targetPlayerIndex].isAlgo = isAlgo;
     }
 
-    saveCurrGame();
+    currGame.save();
   }
 }
 
@@ -199,7 +199,7 @@ function colorRange_Input(event) {
 
   document.documentElement.style.setProperty('--currentPlayerColor', hex);
 
-  saveCurrGame();
+  currGame.save();
 
   const playerElements = document.querySelectorAll(".player");
   const targetPlayer = playerElements[targetPlayerIndex];
@@ -220,7 +220,7 @@ function selectColor(event) {
 
     setupColorRange(toHslObject(color).h);
 
-    saveCurrGame();
+    currGame.save();
 
     targetPlayer.querySelector(".avatar").style.backgroundColor = color;
   }
@@ -237,7 +237,7 @@ function removePlayer(event) {
 
     currGame.players.splice(targetPlayerIndex, 1);
 
-    saveCurrGame();
+    currGame.save();
 
     targetPlayer.remove();
   }

@@ -1,9 +1,9 @@
 class Game {
   constructor() {
     this.dateTime = new Date();
-    this.gameBoard = gameBoard();
+    this.gameBoard = new GameBoard();
     this.minPlayer = 2;
-    this.players = players(this.minPlayer, this.maxPlayer);
+    this.players = [];
     this.lines = [];
     this.currPage = "";
   }
@@ -15,6 +15,60 @@ class Game {
       return this.minPlayer;
     }
   }
+
+  validatePlayers() {
+    console.log("validating players");
+
+    if (this.minPlayer < 2) {
+      this.minPlayer = 2;
+    }
+
+    if (this.maxPlayer < this.minPlayer) {
+      this.maxPlayer = this.minPlayer;
+    }
+
+    if (this.players.length > this.maxPlayer) {
+      this.players = this.players.slice(0, this.maxPlayer);
+    }
+
+    while (this.players.length < this.minPlayer) {
+      this.players.push(new Player(this.players));
+    }
+
+    this.players.forEach((player, index) => {
+      player.id = index + 1;
+    });
+
+    this.players = this.players.map(player => {
+      return Object.assign(new Player, player);
+    });
+  }
+
+  save() {
+    localStorage.setItem('currGame', JSON.stringify(this));
+  }
+
+  reset() {
+    this.lines = [];
+
+    this.save();
+  }
+
+  static load() {
+    currGame = localStorage.currGame ? JSON.parse(localStorage.currGame) : new Game();
+
+    currGame = Object.assign(new Game, currGame);
+
+    currGame.gameBoard = Object.assign(new GameBoard, currGame.gameBoard);
+
+    currGame.gameBoard.validate();
+
+    currGame.validatePlayers();
+
+    currGame.lines = currGame.lines.map(line => {
+      return Object.assign(new Line, line);
+    });
+  }
 }
 
 class GameBoard {
@@ -22,11 +76,33 @@ class GameBoard {
     this.gap = 50;
     this.minRow = 3;
     this.minCol = 3;
+
     this.maxRow = this.minRow;
     this.maxCol = this.minCol;
+
     this.row = this.minRow;
     this.col = this.minCol;
+
     this.x = 130;
+  }
+
+  validate() {
+    console.log("validating game board");
+    if (this.maxRow < this.minRow) {
+      this.maxRow = this.minRow;
+    }
+
+    if (this.maxCol < this.minCol) {
+      this.maxCol = this.minCol;
+    }
+
+    if (this.row < this.minRow) {
+      this.row = this.minRow;
+    }
+
+    if (this.col < this.minCol) {
+      this.col = this.minCol;
+    }
   }
 }
 
@@ -77,7 +153,7 @@ class Line {
 
 /* v2 */
 
-class Dot_v2 {
+class Dot_v2 { // can directly replace the original Dot class as it's objects are not stored in local storage.
   constructor(row, col) {
     this.row = row;
     this.col = col;
@@ -96,8 +172,45 @@ class Line_v2 {
     return (this.dot1.row == this.dot2.row) && (this.dot1.col != this.dot2.col)
       ? 'horizontal' : 'vertical';
   }
-  
+
   get byPlayer() {
     return currGame.players.find(player => player.id == this.byPlayerID);
+  }
+}
+
+class Version {
+  static setVersion(versionName) {
+    localStorage.setItem('versionName', versionName);
+
+    updateVersionUI();
+  }
+
+  static updateVersionUI() {
+    const versionUI = document.querySelector('.version');
+    const versionSeparatorUI = document.querySelector('.versionSeparator');
+
+    if (!versionUI) {
+      return false;
+    }
+
+    let versionName = localStorage.getItem('versionName');
+
+    if (versionName) {
+      versionUI.innerHTML = `v${versionName}`;
+
+      versionUI.classList.remove('displayNone');
+
+      if (versionSeparatorUI) {
+        versionSeparatorUI.classList.remove('displayNone');
+      }
+    } else {
+      console.log('versionName not found in local storage');
+
+      versionUI.classList.add('displayNone');
+
+      if (versionSeparatorUI) {
+        versionSeparatorUI.classList.add('displayNone');
+      }
+    }
   }
 }

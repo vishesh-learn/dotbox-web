@@ -16,7 +16,7 @@ function initHome() {
 }
 
 function continueGame() { // todo: go to last visited page
-  loadCurrGame();
+  Game.load();
 
   window.location.href = `pages/${currGame.currPage ? currGame.currPage : pages.setBoard}/${pages.indexPage}`;
 }
@@ -24,7 +24,7 @@ function continueGame() { // todo: go to last visited page
 function newGame() {
   localStorage.removeItem('currGame');
 
-  loadCurrGame();
+  Game.load();
 
   window.location.href = `pages/${pages.setBoard}/${pages.indexPage}`;
 }

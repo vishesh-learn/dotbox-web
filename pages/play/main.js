@@ -3,7 +3,7 @@ window.onload = () => {
 
     made = new Made();
 
-    loadCurrGame();
+    Game.load();
 
     footerInfo();
 
@@ -87,16 +87,18 @@ function refreshGameLines() {
         return playerExists && !isNotPossibleLine;
     });
 
-    saveCurrGame();
+    currGame.save();
 }
 
 function replay() {
-    resetGame();
+    currGame.reset();
+
     window.location.reload();
 }
 
 function newGame() {
-    resetGame();
+    currGame.reset();
+
     window.location.href = `../${pages.setBoard}/${pages.indexPage}`
 }
 

@@ -77,7 +77,7 @@ function pointerUp(event) {
     console.log("no x and y");
   }
 
-  saveCurrGame();
+  currGame.save();
 }
 
 function removePrevLines() {

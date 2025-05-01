@@ -6,7 +6,7 @@ window.onload = () => {
 
   document.querySelector("#backButton").addEventListener("click", goBack);
 
-  loadCurrGame();
+  Game.load();
 
   currGame.currPage = pages.setBoard;
 
@@ -261,7 +261,7 @@ function optedXnY(x, y) {
       }
     }
 
-    saveCurrGame();
+    currGame.save();
   } else {
     console.log("invalid x or y");
   }

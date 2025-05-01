@@ -23,7 +23,7 @@ function findAndMakeBoxMakingLines() {
     findAndMakeBoxMakingLines();
   }
 
-  saveCurrGame();
+  currGame.save();
 }
 
 function makeSafeOrRandomLine() {
@@ -40,7 +40,7 @@ function makeSafeOrRandomLine() {
   line.byPlayerID = currPlayer.id;
   addLine(line);
 
-  saveCurrGame();
+  currGame.save();
 }
 
 function getSquareMakingLine() {
