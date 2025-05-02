@@ -140,7 +140,7 @@ function linePreview(event) {
         y = bottom;
     }
 
-    var pseudoDot = new Dot(x, y);
+    var pseudoDot = new PseudoDot(x, y);
 
     prevLineMaker(
         new Line(

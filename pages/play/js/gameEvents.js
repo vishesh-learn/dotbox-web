@@ -31,8 +31,8 @@ function pointerDown(event) {
     let nearInitDot = nearestDot(x, y);
 
     initDot = new Dot(
-      nearInitDot.cx.baseVal.value,
-      nearInitDot.cy.baseVal.value
+      Number(nearInitDot.dataset.row),
+      Number(nearInitDot.dataset.col)
     );
 
     const inRange = difference(x, initDot.x) <= currGame.gameBoard.gap / 2
@@ -196,7 +196,7 @@ function dotNavigate(event, direction) {
 
   switch (direction) {
     case "top":
-      if (event.target.dataset.row > 1) {
+      if (Number(event.target.dataset.row) > 1) {
         let nextRow = selectedDot ? parseInt(selectedDot.dataset.row) - 1 : parseInt(event.target.dataset.row) - 1;
         let nextCol = selectedDot ? parseInt(selectedDot.dataset.col) : parseInt(event.target.dataset.col);
 
@@ -207,7 +207,8 @@ function dotNavigate(event, direction) {
         if (selectedDot) {
           prevLineMaker(
             new Line(
-              selectedDot.cx.baseVal.value, selectedDot.cy.baseVal.value, nextDot.cx.baseVal.value, nextDot.cy.baseVal.value
+              selectedDot.cx.baseVal.value, selectedDot.cy.baseVal.value,
+              nextDot.cx.baseVal.value, nextDot.cy.baseVal.value
             )
           );
         }
@@ -216,7 +217,7 @@ function dotNavigate(event, direction) {
       break;
 
     case "right":
-      if (event.target.dataset.col < currGame.gameBoard.col) {
+      if (Number(event.target.dataset.col) < currGame.gameBoard.col) {
         let nextRow = selectedDot ? parseInt(selectedDot.dataset.row) : parseInt(event.target.dataset.row);
         let nextCol = selectedDot ? parseInt(selectedDot.dataset.col) + 1 : parseInt(event.target.dataset.col) + 1;
 
@@ -235,7 +236,7 @@ function dotNavigate(event, direction) {
       break;
 
     case "bottom":
-      if (event.target.dataset.row < currGame.gameBoard.row) {
+      if (Number(event.target.dataset.row) < currGame.gameBoard.row) {
         let nextRow = selectedDot ? parseInt(selectedDot.dataset.row) + 1 : parseInt(event.target.dataset.row) + 1;
         let nextCol = selectedDot ? parseInt(selectedDot.dataset.col) : parseInt(event.target.dataset.col);
 
@@ -254,7 +255,7 @@ function dotNavigate(event, direction) {
       break;
 
     case "left":
-      if (event.target.dataset.col > 1) {
+      if (Number(event.target.dataset.col) > 1) {
         let nextRow = selectedDot ? parseInt(selectedDot.dataset.row) : parseInt(event.target.dataset.row);
         let nextCol = selectedDot ? parseInt(selectedDot.dataset.col) - 1 : parseInt(event.target.dataset.col) - 1;
 

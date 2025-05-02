@@ -15,8 +15,8 @@ function getSurroundingDots(dot) {
 
 function getDotAtTop(dot) {
     var dotAtTop = new Dot(
-        dot.x,
-        dot.y - currGame.gameBoard.gap,
+        dot.row - 1,
+        dot.col,
         'top'
     );
 
@@ -25,8 +25,8 @@ function getDotAtTop(dot) {
 
 function getDotAtRight(dot) {
     var dotAtRight = new Dot(
-        dot.x + currGame.gameBoard.gap,
-        dot.y,
+        dot.row,
+        dot.col + 1,
         "right",
     );
 
@@ -35,8 +35,8 @@ function getDotAtRight(dot) {
 
 function getDotAtBottom(dot) {
     var dotAtBottom = new Dot(
-        dot.x,
-        dot.y + currGame.gameBoard.gap,
+        dot.row + 1,
+        dot.col,
         "bottom",
     );
 
@@ -45,8 +45,8 @@ function getDotAtBottom(dot) {
 
 function getDotAtLeft(dot) {
     var dotAtLeft = new Dot(
-        dot.x - currGame.gameBoard.gap,
-        dot.y,
+        dot.row,
+        dot.col - 1,
         'left',
     );
 
@@ -54,12 +54,16 @@ function getDotAtLeft(dot) {
 }
 
 function findDotE(dot) {
+    if (typeof dot != "object") {
+        return false;
+    }
+
     var dotsE = document.querySelectorAll("circle"), existingDot;
 
     for (const existingDotUI of dotsE) {
         existingDot = new Dot(
-            existingDotUI.cx.baseVal.value,
-            existingDotUI.cy.baseVal.value
+            Number(existingDotUI.dataset.row),
+            Number(existingDotUI.dataset.col),
         );
 
         if (compareDots(dot, existingDot)) {
@@ -72,6 +76,8 @@ function findDotE(dot) {
 
 function compareDots(dot1, dot2) {
     if (typeof dot1 != "object" || typeof dot2 != "object") {
+        console.error("invalid dot1 or dot2 provided for comparison", { dot1, dot2 });
+
         return false;
     }
 

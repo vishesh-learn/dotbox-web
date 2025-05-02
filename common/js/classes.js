@@ -122,10 +122,27 @@ class Player {
   }
 }
 
-class Dot {
+class PseudoDot {
   constructor(x, y) {
     this.x = x;
     this.y = y;
+  }
+}
+
+class Dot {
+  constructor(row, col) {
+    this.row = row;
+    this.col = col;
+  }
+
+  get x() {
+    const dotRadius = getDotRadius();
+    return (this.col - 1) * currGame.gameBoard.gap + dotRadius;
+  }
+
+  get y() {
+    const dotRadius = getDotRadius();
+    return (this.row - 1) * currGame.gameBoard.gap + dotRadius;
   }
 }
 
@@ -151,21 +168,18 @@ class Line {
   //include comparison method to compare parameter/argument with this object.
 }
 
-/* v2 */
-
-class Dot_v2 { // can directly replace the original Dot class as it's objects are not stored in local storage.
-  constructor(row, col) {
-    this.row = row;
-    this.col = col;
-  }
-}
-
-class Line_v2 {
-  constructor(dot1 = new Dot_v2(), dot2 = new Dot_v2(), byPlayerID, prev = false) {
+class Line_v2 { // Can replace Line class as it allows reading of all properties as in original Line class. It will just write the properties in a different way.
+  constructor(dot1 = new Dot(), dot2 = new Dot(), byPlayerID, prev = false) {
     this.dot1 = dot1;
     this.dot2 = dot2;
     this.byPlayerID = byPlayerID;
     this.prev = prev;
+
+    this.x1 = dot1.x;
+    this.y1 = dot1.y;
+
+    this.x2 = dot2.x;
+    this.y2 = dot2.y;
   }
 
   get orient() {
