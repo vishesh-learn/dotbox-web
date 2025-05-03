@@ -143,9 +143,7 @@ function linePreview(event) {
     var pseudoDot = new PseudoDot(x, y);
 
     prevLineMaker(
-        new Line(
-            initDot.x, initDot.y, pseudoDot.x, pseudoDot.y
-        )
+        new Line(initDot, pseudoDot)
     );
 }
 
@@ -174,10 +172,8 @@ function nearDot(x, y) {
     return nearDot;
 }
 
-const nearestDot = (x, y) => {
+function nearestDot(x, y) {
     var dotEs = document.querySelectorAll(".dot");
-
-    var nearDot = dotEs[0];
 
     let dotDiffs = [...dotEs].map(dotE => ({
         element: dotE,
@@ -193,9 +189,7 @@ const nearestDot = (x, y) => {
 
     let minXYdotDiff = minXdotDiffs.find(minXdotDiff => minXdotDiff.Ydiff == minYValue);
 
-    // console.log(minXYdotDiff);
-
-    return minXYdotDiff.element;
+    return minXYdotDiff?.element;
 }
 
 function prevLineMaker(line) {
@@ -246,7 +240,9 @@ function updateLinesUI() {
 
             lineSVG.appendChild(lineUI);
 
-            makeBox(getSurroundingLines(line), line);
+            let surroundingLines = getSurroundingLines(line);
+
+            makeBox(surroundingLines, line);
 
             lineMade(line);
         }
@@ -264,109 +260,77 @@ function updateBoxesUI(boxes) {
 }
 
 function getBoxMakingLines(line) {
+    let newVersionOfLine = Line.constructFromOldLine(line);
+    
     if (line.orient == "vertical") {
-        var left = new Line(
-            line.x1 - currGame.gameBoard.gap,
-            line.y1,
-            line.x2 - currGame.gameBoard.gap,
-            line.y2
-        );
+        let left = Line.constructFromOldLine(line);
+        left.dot1.col -= 1;
+        left.dot2.col -= 1;
 
-        var right = new Line(
-            line.x1 + currGame.gameBoard.gap,
-            line.y1,
-            line.x2 + currGame.gameBoard.gap,
-            line.y2
-        );
+        let leftTop = Line.constructFromOldLine(line);
+        leftTop.dot2.row = leftTop.dot1.row;
+        leftTop.dot2.col -= 1;
 
-        var leftTop = new Line(
-            line.x1,
-            line.y1,
-            line.x1 - currGame.gameBoard.gap,
-            line.y1
-        );
+        let leftBottom = Line.constructFromOldLine(line);
+        leftBottom.dot1.row = leftBottom.dot2.row;
+        leftBottom.dot1.col -= 1;
 
-        var leftBottom = new Line(
-            line.x2,
-            line.y2,
-            line.x2 - currGame.gameBoard.gap,
-            line.y2
-        );
+        let right = Line.constructFromOldLine(line);
+        right.dot1.col += 1;
+        right.dot2.col += 1;
 
-        var rightTop = new Line(
-            line.x1,
-            line.y1,
-            line.x1 + currGame.gameBoard.gap,
-            line.y1
-        );
+        let rightTop = Line.constructFromOldLine(line);
+        rightTop.dot2.row = rightTop.dot1.row;
+        rightTop.dot2.col += 1;
 
-        var rightBottom = new Line(
-            line.x2,
-            line.y2,
-            line.x2 + currGame.gameBoard.gap,
-            line.y2
-        );
+        let rightBottom = Line.constructFromOldLine(line);
+        rightBottom.dot1.row = rightBottom.dot2.row;
+        rightBottom.dot1.col += 1;
 
         return {
-            'line': line,
-            "orient": line.orient,
-            "leftBoxMakingLines": [left, leftBottom, leftTop, line],
-            "rightBoxMakingLines": [line, rightBottom, right, rightTop]
+            'line': newVersionOfLine,
+            "orient": newVersionOfLine.orient,
+            "leftBoxMakingLines": [left, leftBottom, leftTop, newVersionOfLine],
+            "rightBoxMakingLines": [newVersionOfLine, rightBottom, right, rightTop]
         };
 
     } else if (line.orient == "horizontal") {
-        var top = new Line(
-            line.x1,
-            line.y1 - currGame.gameBoard.gap,
-            line.x2,
-            line.y2 - currGame.gameBoard.gap
-        );
+        let top = Line.constructFromOldLine(line);
+        top.dot1.row -= 1;
+        top.dot2.row -= 1;
 
-        var topRight = new Line(
-            line.x2,
-            line.y2,
-            line.x2,
-            line.y2 - currGame.gameBoard.gap
-        );
+        let topRight = Line.constructFromOldLine(line);
+        topRight.dot1.col = topRight.dot2.col;
+        topRight.dot1.row -= 1;
 
-        var topLeft = new Line(
-            line.x1,
-            line.y1,
-            line.x1,
-            line.y1 - currGame.gameBoard.gap
-        );
+        let topLeft = Line.constructFromOldLine(line);
+        topLeft.dot2.col -= 1;
+        topLeft.dot2.row -= 1;
 
-        var bottomRight = new Line(
-            line.x2,
-            line.y2,
-            line.x2,
-            line.y2 + currGame.gameBoard.gap
-        );
+        let bottom = Line.constructFromOldLine(line);
+        bottom.dot1.row += 1;
+        bottom.dot2.row += 1;
 
-        var bottom = new Line(
-            line.x1,
-            line.y1 + currGame.gameBoard.gap,
-            line.x2,
-            line.y2 + currGame.gameBoard.gap
-        );
+        let bottomRight = Line.constructFromOldLine(line);
+        bottomRight.dot1.col = bottomRight.dot2.col;
+        bottomRight.dot1.row += 1;
 
-        var bottomLeft = new Line(
-            line.x1,
-            line.y1,
-            line.x1,
-            line.y1 + currGame.gameBoard.gap
-        );
+        let bottomLeft = Line.constructFromOldLine(line);
+        bottomLeft.dot2.col = bottomLeft.dot1.col;
+        bottomLeft.dot2.row += 1;
 
         return {
-            'line': line,
-            "orient": line.orient,
-            "topBoxMakingLines": [top, topRight, topLeft, line],
-            "bottomBoxMakingLines": [line, bottomRight, bottom, bottomLeft]
+            'line': newVersionOfLine,
+            "orient": newVersionOfLine.orient,
+            "topBoxMakingLines": [top, topRight, topLeft, newVersionOfLine],
+            "bottomBoxMakingLines": [newVersionOfLine, bottomRight, bottom, bottomLeft]
         };
     }
 }
 
 function getSurroundingLines(line) {
+    console.log("-------------");
+
     var existingLineList = lineEsToJSON();
     var boxMakingLines = getBoxMakingLines(line);
     var square = new Object();
@@ -407,8 +371,9 @@ function getSurroundingLines(line) {
             });
 
             boxMakingLines.bottomBoxMakingLines.forEach(boxMakingLine => {
-                if (compareLineObj(existingLine, boxMakingLine) && !bottomSquare.includes(boxMakingLine))
+                if (compareLineObj(existingLine, boxMakingLine) && !bottomSquare.includes(boxMakingLine)) {
                     bottomSquare.push(boxMakingLine);
+                }
             });
         });
 
@@ -450,10 +415,14 @@ function makeBox(square, line) {
         }
     }
 
+    console.log("currBoxes", currBoxes);
+
     currBoxes.forEach(addBox);
 }
 
 function addBox(box) {
+    console.log("addBox", box);
+
     if (boxNotExists(box, boxes)) {
         boxes.push(box);
 
@@ -465,21 +434,27 @@ function addBox(box) {
     }
 }
 
-const compareLineObj = (obj1, obj2) => {
-    return (
+function compareLineObj(obj1, obj2) {
+    let sameLine = (
         (
-            (obj1.x1 == obj2.x1) &&
-            (obj1.y1 == obj2.y1) &&
-            (obj1.x2 == obj2.x2) &&
-            (obj1.y2 == obj2.y2)
+            obj1.dot1.row == obj2.dot1.row &&
+            obj1.dot1.col == obj2.dot1.col
+        ) &&
+        (
+            obj1.dot2.row == obj2.dot2.row &&
+            obj1.dot2.col == obj2.dot2.col
         ) ||
         (
-            (obj1.x1 == obj2.x2) &&
-            (obj1.y1 == obj2.y2) &&
-            (obj1.x2 == obj2.x1) &&
-            (obj1.y2 == obj2.y1)
+            obj1.dot1.row == obj2.dot2.row &&
+            obj1.dot1.col == obj2.dot2.col
+        ) &&
+        (
+            obj1.dot2.row == obj2.dot1.row &&
+            obj1.dot2.col == obj2.dot1.col
         )
     );
+
+    return sameLine;
 }
 
 function lineNotExists(line, linelist) {

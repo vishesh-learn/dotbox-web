@@ -91,6 +91,8 @@ function createDotUI(cx, cy, row, col) {
 }
 
 function createSquareUI(box) {
+    console.log("createSquareUI", box);
+
     if (box.x && box.y) {
         var squareE = document.createElementNS('http://www.w3.org/2000/svg', "rect");
         squareE.setAttribute("class", "winBox");
@@ -152,15 +154,19 @@ function getSVGLine(line) {
     lineE.setAttribute("x2", line.x2);
     lineE.setAttribute("y2", line.y2);
 
-    if (line.byPlayer.color) {
+    if (!line.byPlayerID) {
+        console.log("no byPlayerID", line.byPlayerID);
+
+        return false;
+    }
+
+    if (line?.byPlayer?.color) {
         lineE.setAttribute("stroke", line.byPlayer.color);
     } else {
         console.log("color not found");
     }
 
-    if (line.byPlayerID) {
-        lineE.setAttribute("byPlayer", line.byPlayerID);
-    }
+    lineE.setAttribute("byPlayer", line.byPlayerID);
 
     return lineE;
 }

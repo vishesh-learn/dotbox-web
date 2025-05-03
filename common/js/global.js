@@ -79,6 +79,10 @@ function loadingEndUI() {
   document.querySelector("body").classList.remove("loading-container");
 }
 
+function length_to_dotCount(length) {
+  return (length - length % currGame.gameBoard.gap + currGame.gameBoard.gap) / currGame.gameBoard.gap;
+}
+
 // window.onerror = (message, source, lineno, colno, error) => {
 //   document.querySelector("pre").innerHTML = lineno + ": " + message + "\nat col: " + colno;
 // }

@@ -15,7 +15,7 @@ function getAllPossibleLines() {
 
         for (dot2 of validFinalDots) {
             var possibleLine = new Line(
-                dot1.x, dot1.y, dot2.x, dot2.y
+                dot1, dot2
             );
 
             if (lineNotExists(possibleLine, allPossibleLines)) {

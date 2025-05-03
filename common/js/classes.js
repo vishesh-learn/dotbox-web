@@ -65,9 +65,7 @@ class Game {
 
     currGame.validatePlayers();
 
-    currGame.lines = currGame.lines.map(line => {
-      return Object.assign(new Line, line);
-    });
+    currGame.lines = currGame.lines.map(Line.constructFromOldLine);
   }
 }
 
@@ -147,39 +145,27 @@ class Dot {
 }
 
 class Line {
-  constructor(x1, y1, x2, y2, byPlayerID, prev = false) {
-    this.x1 = x1;
-    this.y1 = y1;
-    this.x2 = x2;
-    this.y2 = y2;
-    this.byPlayerID = byPlayerID;
-    this.prev = prev;
-  }
-
-  get orient() {
-    return (this.x1 == this.x2) && (this.y1 != this.y2)
-      ? 'vertical' : 'horizontal';
-  }
-
-  get byPlayer() {
-    return currGame.players.find(player => player.id == this.byPlayerID);
-  }
-
-  //include comparison method to compare parameter/argument with this object.
-}
-
-class Line_v2 { // Can replace Line class as it allows reading of all properties as in original Line class. It will just write the properties in a different way.
   constructor(dot1 = new Dot(), dot2 = new Dot(), byPlayerID, prev = false) {
     this.dot1 = dot1;
     this.dot2 = dot2;
     this.byPlayerID = byPlayerID;
     this.prev = prev;
+  }
 
-    this.x1 = dot1.x;
-    this.y1 = dot1.y;
+  get x1() {
+    return this.dot1.x;
+  }
 
-    this.x2 = dot2.x;
-    this.y2 = dot2.y;
+  get y1() {
+    return this.dot1.y;
+  }
+
+  get x2() {
+    return this.dot2.x;
+  }
+
+  get y2() {
+    return this.dot2.y;
   }
 
   get orient() {
@@ -190,6 +176,36 @@ class Line_v2 { // Can replace Line class as it allows reading of all properties
   get byPlayer() {
     return currGame.players.find(player => player.id == this.byPlayerID);
   }
+
+  static isOldLine(line) {
+    return !line.dot1;
+  }
+
+  static constructFromOldLine(line) {
+    if (Line.isOldLine(line)) {
+      const dot1 = new Dot(
+        length_to_dotCount(line.y1),
+        length_to_dotCount(line.x1)
+      );
+
+      const dot2 = new Dot(
+        length_to_dotCount(line.y2),
+        length_to_dotCount(line.x2)
+      );
+
+      return new Line(dot1, dot2, line.byPlayerID, line.prev);
+    } else {
+      const newLine = Object.assign(new Line, line);
+
+      newLine.dot1 = Object.assign(new Dot, line.dot1);
+      newLine.dot2 = Object.assign(new Dot, line.dot2);
+      
+      return newLine;
+    }
+  }
+
+  //include comparison method to compare parameter/argument with this object.
+
 }
 
 class Version {

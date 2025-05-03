@@ -43,7 +43,7 @@ function pointerDown(event) {
 
       getSurroundingDots(initDot).filter(validFinalDot => {
         var possibleLine = new Line(
-          initDot.x, initDot.y, validFinalDot.x, validFinalDot.y
+          initDot, validFinalDot
         );
 
         return !lineNotExists(possibleLine, pendingPossiblelines);
@@ -71,7 +71,7 @@ function pointerUp(event) {
       && difference(x, finalDot.x) <= currGame.gameBoard.gap / 2
       && difference(y, finalDot.y) <= currGame.gameBoard.gap / 2
     ) {
-      addLine(new Line(initDot.x, initDot.y, finalDot.x, finalDot.y, currPlayer.id));
+      addLine(new Line(initDot, finalDot, currPlayer.id));
     }
   } else {
     console.log("no x and y");
@@ -85,6 +85,8 @@ function removePrevLines() {
 }
 
 function lineMade(line) {
+  console.log("lineMade", line);
+
   made.lineMade = true;
 
   pendingPossiblelines.forEach((possibleLine, index) => {
@@ -146,7 +148,6 @@ function playerTurn() {
 
   if (currPlayer.isAlgo) {
     requestAnimationFrame(autoDrawLine);
-    // autoDrawLine();
   } else {
     pointerDownEvent(true);
   }
@@ -207,8 +208,12 @@ function dotNavigate(event, direction) {
         if (selectedDot) {
           prevLineMaker(
             new Line(
-              selectedDot.cx.baseVal.value, selectedDot.cy.baseVal.value,
-              nextDot.cx.baseVal.value, nextDot.cy.baseVal.value
+              new Dot(
+                selectedDot.dataset.row, selectedDot.dataset.col
+              ),
+              new Dot(
+                nextRow, nextCol
+              )
             )
           );
         }
@@ -228,7 +233,12 @@ function dotNavigate(event, direction) {
         if (selectedDot) {
           prevLineMaker(
             new Line(
-              selectedDot.cx.baseVal.value, selectedDot.cy.baseVal.value, nextDot.cx.baseVal.value, nextDot.cy.baseVal.value
+              new Dot(
+                selectedDot.dataset.row, selectedDot.dataset.col
+              ),
+              new Dot(
+                nextRow, nextCol
+              )
             )
           );
         }
@@ -247,7 +257,12 @@ function dotNavigate(event, direction) {
         if (selectedDot) {
           prevLineMaker(
             new Line(
-              selectedDot.cx.baseVal.value, selectedDot.cy.baseVal.value, nextDot.cx.baseVal.value, nextDot.cy.baseVal.value
+              new Dot(
+                selectedDot.dataset.row, selectedDot.dataset.col
+              ),
+              new Dot(
+                nextRow, nextCol
+              )
             )
           );
         }
@@ -266,7 +281,12 @@ function dotNavigate(event, direction) {
         if (selectedDot) {
           prevLineMaker(
             new Line(
-              selectedDot.cx.baseVal.value, selectedDot.cy.baseVal.value, nextDot.cx.baseVal.value, nextDot.cy.baseVal.value
+              new Dot(
+                selectedDot.dataset.row, selectedDot.dataset.col
+              ),
+              new Dot(
+                nextRow, nextCol
+              )
             )
           );
         }
@@ -280,8 +300,13 @@ function dotNavigate(event, direction) {
         removePrevLines();
 
         addLine(new Line(
-          selectedDot.cx.baseVal.value, selectedDot.cy.baseVal.value,
-          event.target.cx.baseVal.value, event.target.cy.baseVal.value, currPlayer.id
+          new Dot(
+            selectedDot.dataset.row, selectedDot.dataset.col
+          ),
+          new Dot(
+            event.target.dataset.row, event.target.dataset.col
+          ),
+          currPlayer.id
         ));
 
         updateLinesUI();

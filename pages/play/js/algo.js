@@ -18,8 +18,7 @@ function findAndMakeBoxMakingLines() {
   if (squareMakingLine = getSquareMakingLine()) {
     squareMakingLine.byPlayerID = currPlayer.id;
     addLine(squareMakingLine);
-    
-    // try to make a square
+  
     findAndMakeBoxMakingLines();
   }
 

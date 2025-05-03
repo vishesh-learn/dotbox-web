@@ -295,10 +295,6 @@ function nearestDot(x, y) {
   return nearDot;
 }
 
-function length_to_dotCount(length) {
-  return (length - length % currGame.gameBoard.gap + currGame.gameBoard.gap) / currGame.gameBoard.gap;
-}
-
 function dotCount_to_length(dotCount) {
   let dotRadius = getDotRadius();
 

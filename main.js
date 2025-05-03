@@ -15,7 +15,7 @@ function initHome() {
   document.querySelector("#continueButton").disabled = !Boolean(localStorage.currGame);
 }
 
-function continueGame() { // todo: go to last visited page
+function continueGame() {
   Game.load();
 
   window.location.href = `pages/${currGame.currPage ? currGame.currPage : pages.setBoard}/${pages.indexPage}`;
