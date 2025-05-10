@@ -261,7 +261,9 @@ function updateBoxesUI(boxes) {
 
 function getBoxMakingLines(line) {
     let newVersionOfLine = Line.constructFromOldLine(line);
-    
+
+    console.log("getBoxMakingLines", { line, newVersionOfLine });
+
     if (line.orient == "vertical") {
         let left = Line.constructFromOldLine(line);
         left.dot1.col -= 1;
@@ -290,8 +292,8 @@ function getBoxMakingLines(line) {
         return {
             'line': newVersionOfLine,
             "orient": newVersionOfLine.orient,
-            "leftBoxMakingLines": [left, leftBottom, leftTop, newVersionOfLine],
-            "rightBoxMakingLines": [newVersionOfLine, rightBottom, right, rightTop]
+            "leftBoxMakingLines": { left, leftBottom, leftTop, current: newVersionOfLine },
+            "rightBoxMakingLines": { current: newVersionOfLine, rightBottom, right, rightTop }
         };
 
     } else if (line.orient == "horizontal") {
@@ -301,11 +303,11 @@ function getBoxMakingLines(line) {
 
         let topRight = Line.constructFromOldLine(line);
         topRight.dot1.col = topRight.dot2.col;
-        topRight.dot1.row -= 1;
+        topRight.dot1.row = topRight.dot2.row - 1;
 
         let topLeft = Line.constructFromOldLine(line);
-        topLeft.dot2.col -= 1;
-        topLeft.dot2.row -= 1;
+        topLeft.dot2.col = topLeft.dot1.col;
+        topLeft.dot2.row = topLeft.dot1.row - 1;
 
         let bottom = Line.constructFromOldLine(line);
         bottom.dot1.row += 1;
@@ -313,17 +315,17 @@ function getBoxMakingLines(line) {
 
         let bottomRight = Line.constructFromOldLine(line);
         bottomRight.dot1.col = bottomRight.dot2.col;
-        bottomRight.dot1.row += 1;
+        bottomRight.dot1.row = bottomRight.dot2.row + 1;
 
         let bottomLeft = Line.constructFromOldLine(line);
         bottomLeft.dot2.col = bottomLeft.dot1.col;
-        bottomLeft.dot2.row += 1;
+        bottomLeft.dot2.row = bottomLeft.dot1.row + 1;
 
         return {
             'line': newVersionOfLine,
             "orient": newVersionOfLine.orient,
-            "topBoxMakingLines": [top, topRight, topLeft, newVersionOfLine],
-            "bottomBoxMakingLines": [newVersionOfLine, bottomRight, bottom, bottomLeft]
+            "topBoxMakingLines": { top, topRight, topLeft, current: newVersionOfLine },
+            "bottomBoxMakingLines": { current: newVersionOfLine, bottomRight, bottom, bottomLeft }
         };
     }
 }
@@ -335,21 +337,30 @@ function getSurroundingLines(line) {
     var boxMakingLines = getBoxMakingLines(line);
     var square = new Object();
 
+    console.log("getSurroundingLines", line, boxMakingLines);
+
     if (line.orient == "vertical") {
         square.orient = "vertical";
         var leftSquare = [];
         var rightSquare = [];
 
         square.vline = line;
+
         existingLineList.forEach(existingLine => {
-            boxMakingLines.leftBoxMakingLines.forEach(boxMakingLine => {
-                if (compareLineObj(existingLine, boxMakingLine) && !leftSquare.includes(boxMakingLine))
+            Object.values(
+                boxMakingLines.leftBoxMakingLines
+            ).forEach(boxMakingLine => {
+                if (compareLineObj(existingLine, boxMakingLine) && !leftSquare.includes(boxMakingLine)) {
                     leftSquare.push(boxMakingLine);
+                }
             });
 
-            boxMakingLines.rightBoxMakingLines.forEach(boxMakingLine => {
-                if (compareLineObj(existingLine, boxMakingLine) && !rightSquare.includes(boxMakingLine))
+            Object.values(
+                boxMakingLines.rightBoxMakingLines
+            ).forEach(boxMakingLine => {
+                if (compareLineObj(existingLine, boxMakingLine) && !rightSquare.includes(boxMakingLine)) {
                     rightSquare.push(boxMakingLine);
+                }
             });
         });
 
@@ -359,18 +370,24 @@ function getSurroundingLines(line) {
 
     if (line.orient == "horizontal") {
         square.orient = "horizontal";
+
         var topSquare = [];
         var bottomSquare = [];
 
         square.hline = line;
 
         existingLineList.forEach(existingLine => {
-            boxMakingLines.topBoxMakingLines.forEach(boxMakingLine => {
-                if (compareLineObj(existingLine, boxMakingLine) && !topSquare.includes(boxMakingLine))
+            Object.values(
+                boxMakingLines.topBoxMakingLines
+            ).forEach(boxMakingLine => {
+                if (compareLineObj(existingLine, boxMakingLine) && !topSquare.includes(boxMakingLine)) {
                     topSquare.push(boxMakingLine);
+                }
             });
 
-            boxMakingLines.bottomBoxMakingLines.forEach(boxMakingLine => {
+            Object.values(
+                boxMakingLines.bottomBoxMakingLines
+            ).forEach(boxMakingLine => {
                 if (compareLineObj(existingLine, boxMakingLine) && !bottomSquare.includes(boxMakingLine)) {
                     bottomSquare.push(boxMakingLine);
                 }
@@ -387,13 +404,17 @@ function getSurroundingLines(line) {
 function makeBox(square, line) {
     var x, y, currBoxes = [];
 
+    console.trace("makeBox", square, line);
+
     if (square.orient == "horizontal") {
         x = Math.min(square.hline.x1, square.hline.x2);
+
         if (square.top.length == 4) {
             y = Math.min(square.hline.y1, square.hline.y2) - currGame.gameBoard.gap;
 
             currBoxes.push(new Box(x, y, line));
         }
+
         if (square.bottom.length == 4) {
             y = Math.min(square.hline.y1, square.hline.y2);
 
