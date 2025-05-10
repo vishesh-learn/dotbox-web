@@ -168,10 +168,10 @@ function getSVGLine(line) {
 
     lineE.setAttribute("byPlayer", line.byPlayerID);
 
-    lineE.setAttribute("data-dot1-row", line.dot1.row);
-    lineE.setAttribute("data-dot1-col", line.dot1.col);
-    lineE.setAttribute("data-dot2-row", line.dot2.row);
-    lineE.setAttribute("data-dot2-col", line.dot2.col);
+    line.dot1.row && lineE.setAttribute("data-dot1-row", line.dot1.row);
+    line.dot1.col && lineE.setAttribute("data-dot1-col", line.dot1.col);
+    line.dot2.row && lineE.setAttribute("data-dot2-row", line.dot2.row);
+    line.dot2.col && lineE.setAttribute("data-dot2-col", line.dot2.col);
 
     return lineE;
 }

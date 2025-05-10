@@ -90,7 +90,7 @@ function lineMade(line) {
   made.lineMade = true;
 
   pendingPossiblelines.forEach((possibleLine, index) => {
-    if (compareLineObj(possibleLine, line)) {
+    if (Line.compareLineObj(possibleLine, line)) {
       pendingPossiblelines.splice(index, 1);
     }
   });

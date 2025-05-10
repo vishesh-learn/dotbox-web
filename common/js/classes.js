@@ -148,7 +148,7 @@ class Line {
   constructor(dot1 = new Dot(), dot2 = new Dot(), byPlayerID, prev = false) {
     this.dot1 = dot1;
     this.dot2 = dot2;
-    this.byPlayerID = byPlayerID;
+    this.byPlayerID = byPlayerID || currPlayer?.id;
     this.prev = prev;
   }
 
@@ -181,6 +181,20 @@ class Line {
     return !line.dot1;
   }
 
+  static constructorFromElement(line) {
+    const dot1 = new Dot(
+      length_to_dotCount(line.y1.baseVal.value),
+      length_to_dotCount(line.x1.baseVal.value)
+    );
+
+    const dot2 = new Dot(
+      length_to_dotCount(line.y2.baseVal.value),
+      length_to_dotCount(line.x2.baseVal.value)
+    );
+
+    return new Line(dot1, dot2, line.byPlayerID, line.prev);
+  }
+
   static constructFromOldLine(line) {
     if (Line.isOldLine(line)) {
       const dot1 = new Dot(
@@ -203,6 +217,29 @@ class Line {
       return newLine;
     }
   }
+
+  static compareLineObj(obj1, obj2) {
+    let sameLine = (
+        (
+            obj1.dot1.row == obj2.dot1.row &&
+            obj1.dot1.col == obj2.dot1.col
+        ) &&
+        (
+            obj1.dot2.row == obj2.dot2.row &&
+            obj1.dot2.col == obj2.dot2.col
+        ) ||
+        (
+            obj1.dot1.row == obj2.dot2.row &&
+            obj1.dot1.col == obj2.dot2.col
+        ) &&
+        (
+            obj1.dot2.row == obj2.dot1.row &&
+            obj1.dot2.col == obj2.dot1.col
+        )
+    );
+
+    return sameLine;
+}
 
   //include comparison method to compare parameter/argument with this object.
 

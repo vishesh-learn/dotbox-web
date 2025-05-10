@@ -350,7 +350,7 @@ function getSurroundingLines(line) {
             Object.values(
                 boxMakingLines.leftBoxMakingLines
             ).forEach(boxMakingLine => {
-                if (compareLineObj(existingLine, boxMakingLine) && !leftSquare.includes(boxMakingLine)) {
+                if (Line.compareLineObj(existingLine, boxMakingLine) && !leftSquare.includes(boxMakingLine)) {
                     leftSquare.push(boxMakingLine);
                 }
             });
@@ -358,7 +358,7 @@ function getSurroundingLines(line) {
             Object.values(
                 boxMakingLines.rightBoxMakingLines
             ).forEach(boxMakingLine => {
-                if (compareLineObj(existingLine, boxMakingLine) && !rightSquare.includes(boxMakingLine)) {
+                if (Line.compareLineObj(existingLine, boxMakingLine) && !rightSquare.includes(boxMakingLine)) {
                     rightSquare.push(boxMakingLine);
                 }
             });
@@ -380,7 +380,7 @@ function getSurroundingLines(line) {
             Object.values(
                 boxMakingLines.topBoxMakingLines
             ).forEach(boxMakingLine => {
-                if (compareLineObj(existingLine, boxMakingLine) && !topSquare.includes(boxMakingLine)) {
+                if (Line.compareLineObj(existingLine, boxMakingLine) && !topSquare.includes(boxMakingLine)) {
                     topSquare.push(boxMakingLine);
                 }
             });
@@ -388,7 +388,7 @@ function getSurroundingLines(line) {
             Object.values(
                 boxMakingLines.bottomBoxMakingLines
             ).forEach(boxMakingLine => {
-                if (compareLineObj(existingLine, boxMakingLine) && !bottomSquare.includes(boxMakingLine)) {
+                if (Line.compareLineObj(existingLine, boxMakingLine) && !bottomSquare.includes(boxMakingLine)) {
                     bottomSquare.push(boxMakingLine);
                 }
             });
@@ -455,32 +455,9 @@ function addBox(box) {
     }
 }
 
-function compareLineObj(obj1, obj2) {
-    let sameLine = (
-        (
-            obj1.dot1.row == obj2.dot1.row &&
-            obj1.dot1.col == obj2.dot1.col
-        ) &&
-        (
-            obj1.dot2.row == obj2.dot2.row &&
-            obj1.dot2.col == obj2.dot2.col
-        ) ||
-        (
-            obj1.dot1.row == obj2.dot2.row &&
-            obj1.dot1.col == obj2.dot2.col
-        ) &&
-        (
-            obj1.dot2.row == obj2.dot1.row &&
-            obj1.dot2.col == obj2.dot1.col
-        )
-    );
-
-    return sameLine;
-}
-
 function lineNotExists(line, linelist) {
     for (let listLine of linelist) {
-        if (compareLineObj(line, listLine)) {
+        if (Line.compareLineObj(line, listLine)) {
             return false;
         }
     }
