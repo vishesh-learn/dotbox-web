@@ -91,8 +91,6 @@ function createDotUI(cx, cy, row, col) {
 }
 
 function createSquareUI(box) {
-    console.log("createSquareUI", box);
-
     if (box.x && box.y) {
         var squareE = document.createElementNS('http://www.w3.org/2000/svg', "rect");
         squareE.setAttribute("class", "winBox");

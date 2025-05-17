@@ -89,8 +89,6 @@ function elementTooltip(element, title, instruction) {
 
     const tooltipBoundingClientRect = tooltip.getBoundingClientRect();
 
-    console.log({ tooltipBoundingClientRect, elementBoundingClientRect });
-
     const isSpaceOnTop = elementBoundingClientRect.top - tooltipBoundingClientRect.height - gap > containerBoundingClientRect.top;
     const isSpaceOnBottom = elementBoundingClientRect.bottom + tooltipBoundingClientRect.height + gap < containerBoundingClientRect.height;
 
@@ -132,8 +130,6 @@ function elementTooltip(element, title, instruction) {
 
         tooltip.classList.add("center");
     }
-
-    console.log({ isSpaceOnTop, isSpaceOnRight, isSpaceOnBottom, isSpaceOnLeft });
 }
 
 function newTooltip(title, instruction) {

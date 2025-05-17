@@ -210,21 +210,6 @@ function svgResize() {
     document.documentElement.style.setProperty('--boardHeight', `${height}px`);
 }
 
-function addLine(line) {
-    console.log("addLine", line);
-
-    if (line && lineNotExists(line, currGame.lines)) {
-        currGame.lines.push(line);
-
-        updateLinesUI();
-    } else {
-        console.log('line exists');
-    }
-
-    initDot = undefined;
-    selectedDot = null;
-}
-
 function updateLinesUI() {
     const lineSVG = document.querySelector(".lineSVG");
 
@@ -261,8 +246,6 @@ function updateBoxesUI(boxes) {
 
 function getBoxMakingLines(line) {
     let newVersionOfLine = Line.constructFromOldLine(line);
-
-    console.log("getBoxMakingLines", { line, newVersionOfLine });
 
     if (line.orient == "vertical") {
         let left = Line.constructFromOldLine(line);
@@ -331,13 +314,9 @@ function getBoxMakingLines(line) {
 }
 
 function getSurroundingLines(line) {
-    console.log("-------------");
-
     var existingLineList = lineEsToJSON();
     var boxMakingLines = getBoxMakingLines(line);
     var square = new Object();
-
-    console.log("getSurroundingLines", line, boxMakingLines);
 
     if (line.orient == "vertical") {
         square.orient = "vertical";
@@ -436,14 +415,10 @@ function makeBox(square, line) {
         }
     }
 
-    console.log("currBoxes", currBoxes);
-
     currBoxes.forEach(addBox);
 }
 
 function addBox(box) {
-    console.log("addBox", box);
-
     if (boxNotExists(box, boxes)) {
         boxes.push(box);
 

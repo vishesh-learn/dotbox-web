@@ -15,8 +15,8 @@ function getSurroundingDots(dot) {
 
 function getDotAtTop(dot) {
     var dotAtTop = new Dot(
-        dot.row - 1,
         dot.col,
+        dot.row - 1,
         'top'
     );
 
@@ -25,8 +25,8 @@ function getDotAtTop(dot) {
 
 function getDotAtRight(dot) {
     var dotAtRight = new Dot(
-        dot.row,
         dot.col + 1,
+        dot.row,
         "right",
     );
 
@@ -35,8 +35,8 @@ function getDotAtRight(dot) {
 
 function getDotAtBottom(dot) {
     var dotAtBottom = new Dot(
-        dot.row + 1,
         dot.col,
+        dot.row + 1,
         "bottom",
     );
 
@@ -45,8 +45,8 @@ function getDotAtBottom(dot) {
 
 function getDotAtLeft(dot) {
     var dotAtLeft = new Dot(
-        dot.row,
         dot.col - 1,
+        dot.row,
         'left',
     );
 
@@ -62,8 +62,8 @@ function findDotE(dot) {
 
     for (const existingDotUI of dotsE) {
         existingDot = new Dot(
-            Number(existingDotUI.dataset.row),
             Number(existingDotUI.dataset.col),
+            Number(existingDotUI.dataset.row),
         );
 
         if (compareDots(dot, existingDot)) {

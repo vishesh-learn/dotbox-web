@@ -21,8 +21,6 @@ class Game {
   }
 
   validatePlayers() {
-    console.log("validating players");
-
     if (this.minPlayer < 2) {
       this.minPlayer = 2;
     }
@@ -93,7 +91,6 @@ class GameBoard {
   }
 
   validate() {
-    console.log("validating game board");
     if (this.maxRow < this.minRow) {
       this.maxRow = this.minRow;
     }
@@ -144,13 +141,13 @@ class PseudoDot {
 }
 
 class Dot {
-  constructor(row, col) {
+  constructor(col, row) {
     this.meta_type = 'dot';
     this.meta_version = '2.0';
     this.meta_createdAt = new Date();
 
-    this.row = row;
     this.col = col;
+    this.row = row;
   }
 
   get x() {
@@ -172,7 +169,7 @@ class Line {
 
     this.dot1 = dot1;
     this.dot2 = dot2;
-    this.byPlayerID = byPlayerID || currPlayer?.id;
+    this.byPlayerID = byPlayerID;
     this.prev = prev;
   }
 
@@ -217,13 +214,13 @@ class Line {
 
   static constructorFromElement(line) {
     const dot1 = new Dot(
+      length_to_dotCount(line.x1.baseVal.value),
       length_to_dotCount(line.y1.baseVal.value),
-      length_to_dotCount(line.x1.baseVal.value)
     );
 
     const dot2 = new Dot(
+      length_to_dotCount(line.x2.baseVal.value),
       length_to_dotCount(line.y2.baseVal.value),
-      length_to_dotCount(line.x2.baseVal.value)
     );
 
     return new Line(dot1, dot2, line.byPlayerID, line.prev);
@@ -232,13 +229,13 @@ class Line {
   static constructFromOldLine(line) {
     if (Line.isOldLine(line)) {
       const dot1 = new Dot(
+        length_to_dotCount(line.x1),
         length_to_dotCount(line.y1),
-        length_to_dotCount(line.x1)
       );
 
       const dot2 = new Dot(
+        length_to_dotCount(line.x2),
         length_to_dotCount(line.y2),
-        length_to_dotCount(line.x2)
       );
 
       return new Line(dot1, dot2, line.byPlayerID, line.prev);
@@ -281,17 +278,42 @@ class Line {
   }
 
   findHTMLElement() {
-    const selector1Part1 = `[data-row1="${this.dot1.row}"][data-col1="${this.dot1.col}"]`;
-    const selector1Part2 = `[data-row2="${this.dot2.row}"][data-col2="${this.dot2.col}"]`;
+    const selector1Part1 = `[data-dot1-row="${this.dot1.row}"][data-dot1-col="${this.dot1.col}"]`;
+    const selector1Part2 = `[data-dot2-row="${this.dot2.row}"][data-dot2-col="${this.dot2.col}"]`;
 
     const lineInOneWay = document.querySelector(`.line${selector1Part1}${selector1Part2}`);
 
-    const selector2Part1 = `[data-row1="${this.dot2.row}"][data-col1="${this.dot2.col}"]`;
-    const selector2Part2 = `[data-row2="${this.dot1.row}"][data-col2="${this.dot1.col}"]`;
+    const selector2Part1 = `[data-dot1-row="${this.dot2.row}"][data-dot1-col="${this.dot2.col}"]`;
+    const selector2Part2 = `[data-dot2-row="${this.dot1.row}"][data-dot2-col="${this.dot1.col}"]`;
 
     const lineInOtherWay = document.querySelector(`.line${selector2Part1}${selector2Part2}`);
 
     return lineInOneWay || lineInOtherWay;
+  }
+
+  addLine() {
+    if (!this.findHTMLElement()) {
+      const lineSVG = document.querySelector(".lineSVG");
+
+      currGame.lines.push(this);
+
+      let lineUI = getSVGLine(this);
+
+      lineSVG.appendChild(lineUI);
+
+      let surroundingLines = getSurroundingLines(this);
+
+      makeBox(surroundingLines, this);
+
+      lineMade(this);
+
+      updateBoxesUI(boxes);
+    } else {
+      console.log('line exists');
+    }
+
+    initDot = undefined;
+    selectedDot = null;
   }
 }
 

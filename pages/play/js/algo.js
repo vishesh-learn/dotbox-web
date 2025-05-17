@@ -14,10 +14,14 @@ function autoDrawLine() {
 }
 
 let squareMakingLine;
+
 function findAndMakeBoxMakingLines() {
   if (squareMakingLine = getSquareMakingLine()) {
     squareMakingLine.byPlayerID = currPlayer.id;
-    addLine(squareMakingLine);
+
+    console.log("findAndMakeBoxMakingLines - adding line", squareMakingLine);
+    
+    squareMakingLine.addLine();
   
     findAndMakeBoxMakingLines();
   }
@@ -37,7 +41,10 @@ function makeSafeOrRandomLine() {
   }
 
   line.byPlayerID = currPlayer.id;
-  addLine(line);
+
+  console.log("makeSafeOrRandomLine - adding line", line);
+
+  line.addLine(line);
 
   currGame.save();
 }

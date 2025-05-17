@@ -31,8 +31,8 @@ function pointerDown(event) {
     let nearInitDot = nearestDot(x, y);
 
     initDot = new Dot(
+      Number(nearInitDot.dataset.col),
       Number(nearInitDot.dataset.row),
-      Number(nearInitDot.dataset.col)
     );
 
     const inRange = difference(x, initDot.x) <= currGame.gameBoard.gap / 2
@@ -67,11 +67,11 @@ function pointerUp(event) {
     finalDot = nearDot(x, y);
 
     if (
-      validateLines(initDot, finalDot)
+      new Line(initDot, finalDot).isValid()
       && difference(x, finalDot.x) <= currGame.gameBoard.gap / 2
       && difference(y, finalDot.y) <= currGame.gameBoard.gap / 2
     ) {
-      addLine(new Line(initDot, finalDot, currPlayer.id));
+      new Line(initDot, finalDot, currPlayer.id).addLine();
     }
   } else {
     console.log("no x and y");
@@ -85,8 +85,6 @@ function removePrevLines() {
 }
 
 function lineMade(line) {
-  console.log("lineMade", line);
-
   made.lineMade = true;
 
   pendingPossiblelines.forEach((possibleLine, index) => {
@@ -193,8 +191,6 @@ function dotNavigate(event, direction) {
     return false;
   }
 
-  console.log(event, direction);
-
   switch (direction) {
     case "top":
       if (Number(event.target.dataset.row) > 1) {
@@ -209,10 +205,10 @@ function dotNavigate(event, direction) {
           prevLineMaker(
             new Line(
               new Dot(
-                selectedDot.dataset.row, selectedDot.dataset.col
+                selectedDot.dataset.col, selectedDot.dataset.row,
               ),
               new Dot(
-                nextRow, nextCol
+                nextCol, nextRow,
               )
             )
           );
@@ -234,10 +230,12 @@ function dotNavigate(event, direction) {
           prevLineMaker(
             new Line(
               new Dot(
-                selectedDot.dataset.row, selectedDot.dataset.col
+                selectedDot.dataset.col,
+                selectedDot.dataset.row,
               ),
               new Dot(
-                nextRow, nextCol
+                nextCol,
+                nextRow,
               )
             )
           );
@@ -258,10 +256,12 @@ function dotNavigate(event, direction) {
           prevLineMaker(
             new Line(
               new Dot(
-                selectedDot.dataset.row, selectedDot.dataset.col
+                selectedDot.dataset.col,
+                selectedDot.dataset.row,
               ),
               new Dot(
-                nextRow, nextCol
+                nextCol,
+                nextRow,
               )
             )
           );
@@ -282,10 +282,12 @@ function dotNavigate(event, direction) {
           prevLineMaker(
             new Line(
               new Dot(
-                selectedDot.dataset.row, selectedDot.dataset.col
+                selectedDot.dataset.col,
+                selectedDot.dataset.row,
               ),
               new Dot(
-                nextRow, nextCol
+                nextCol,
+                nextRow,
               )
             )
           );
@@ -299,15 +301,17 @@ function dotNavigate(event, direction) {
 
         removePrevLines();
 
-        addLine(new Line(
+        new Line(
           new Dot(
-            selectedDot.dataset.row, selectedDot.dataset.col
+            selectedDot.dataset.col,
+            selectedDot.dataset.row,
           ),
           new Dot(
-            event.target.dataset.row, event.target.dataset.col
+            event.target.dataset.col,
+            event.target.dataset.row,
           ),
           currPlayer.id
-        ));
+        ).addLine();
 
         updateLinesUI();
 
