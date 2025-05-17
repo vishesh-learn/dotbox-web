@@ -1,4 +1,4 @@
-function validateLines(finalDot) {
+function validateLines(initDot, finalDot) {
   if (initDot && finalDot.x >= 0 && finalDot.y >= 0) {
       var deltaX = Math.abs(initDot.x - finalDot.x);
       var deltaY = Math.abs(initDot.y - finalDot.y);

@@ -67,7 +67,7 @@ function pointerUp(event) {
     finalDot = nearDot(x, y);
 
     if (
-      validateLines(finalDot)
+      validateLines(initDot, finalDot)
       && difference(x, finalDot.x) <= currGame.gameBoard.gap / 2
       && difference(y, finalDot.y) <= currGame.gameBoard.gap / 2
     ) {

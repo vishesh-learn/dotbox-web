@@ -1,5 +1,9 @@
 class Game {
   constructor() {
+    this.meta_type = 'game';
+    this.meta_version = '1.0';
+    this.meta_createdAt = new Date();
+
     this.dateTime = new Date();
     this.gameBoard = new GameBoard();
     this.minPlayer = 2;
@@ -71,6 +75,10 @@ class Game {
 
 class GameBoard {
   constructor() {
+    this.meta_type = 'gameBoard';
+    this.meta_version = '1.0';
+    this.meta_createdAt = new Date();
+
     this.gap = 50;
     this.minRow = 3;
     this.minCol = 3;
@@ -106,6 +114,10 @@ class GameBoard {
 
 class Player {
   constructor(players = [], id = 0, name = '', color = null, isAlgo = false, rank = 0, score = 0, avatar = null) {
+    this.meta_type = 'player';
+    this.meta_version = '1.0';
+    this.meta_createdAt = new Date();
+
     this.avatar = avatar;
     this.color = color || newColor(players.map(player => player.color));
     this.id = id;
@@ -122,6 +134,10 @@ class Player {
 
 class PseudoDot {
   constructor(x, y) {
+    this.meta_type = 'pseudoDot';
+    this.meta_version = '1.0';
+    this.meta_createdAt = new Date();
+
     this.x = x;
     this.y = y;
   }
@@ -129,6 +145,10 @@ class PseudoDot {
 
 class Dot {
   constructor(row, col) {
+    this.meta_type = 'dot';
+    this.meta_version = '2.0';
+    this.meta_createdAt = new Date();
+
     this.row = row;
     this.col = col;
   }
@@ -146,6 +166,10 @@ class Dot {
 
 class Line {
   constructor(dot1 = new Dot(), dot2 = new Dot(), byPlayerID, prev = false) {
+    this.meta_type = 'line';
+    this.meta_version = '2.0';
+    this.meta_createdAt = new Date();
+
     this.dot1 = dot1;
     this.dot2 = dot2;
     this.byPlayerID = byPlayerID || currPlayer?.id;
@@ -175,6 +199,16 @@ class Line {
 
   get byPlayer() {
     return currGame.players.find(player => player.id == this.byPlayerID);
+  }
+
+  isValid() {
+    const deltaCol = Math.abs(this.dot1.col - this.dot2.col);
+    const deltaRow = Math.abs(this.dot1.row - this.dot2.row);
+
+    return (
+      (this.dot1.row == this.dot2.row && deltaRow == 0 && deltaCol == 1) ||
+      (this.dot1.col == this.dot2.col && deltaCol == 0 && deltaRow == 1)
+    );
   }
 
   static isOldLine(line) {
@@ -213,36 +247,52 @@ class Line {
 
       newLine.dot1 = Object.assign(new Dot, line.dot1);
       newLine.dot2 = Object.assign(new Dot, line.dot2);
-      
+
       return newLine;
     }
   }
 
   static compareLineObj(obj1, obj2) {
-    let sameLine = (
-        (
-            obj1.dot1.row == obj2.dot1.row &&
-            obj1.dot1.col == obj2.dot1.col
-        ) &&
-        (
-            obj1.dot2.row == obj2.dot2.row &&
-            obj1.dot2.col == obj2.dot2.col
-        ) ||
-        (
-            obj1.dot1.row == obj2.dot2.row &&
-            obj1.dot1.col == obj2.dot2.col
-        ) &&
-        (
-            obj1.dot2.row == obj2.dot1.row &&
-            obj1.dot2.col == obj2.dot1.col
-        )
+    let isSameInOneWay = (
+      (
+        obj1.dot1.row == obj2.dot1.row &&
+        obj1.dot1.col == obj2.dot1.col
+      ) &&
+      (
+        obj1.dot2.row == obj2.dot2.row &&
+        obj1.dot2.col == obj2.dot2.col
+      )
     );
 
+    let isSameInOtherWay = (
+      (
+        obj1.dot1.row == obj2.dot2.row &&
+        obj1.dot1.col == obj2.dot2.col
+      ) &&
+      (
+        obj1.dot2.row == obj2.dot1.row &&
+        obj1.dot2.col == obj2.dot1.col
+      )
+    );
+
+    let sameLine = isSameInOneWay || isSameInOtherWay;
+
     return sameLine;
-}
+  }
 
-  //include comparison method to compare parameter/argument with this object.
+  findHTMLElement() {
+    const selector1Part1 = `[data-row1="${this.dot1.row}"][data-col1="${this.dot1.col}"]`;
+    const selector1Part2 = `[data-row2="${this.dot2.row}"][data-col2="${this.dot2.col}"]`;
 
+    const lineInOneWay = document.querySelector(`.line${selector1Part1}${selector1Part2}`);
+
+    const selector2Part1 = `[data-row1="${this.dot2.row}"][data-col1="${this.dot2.col}"]`;
+    const selector2Part2 = `[data-row2="${this.dot1.row}"][data-col2="${this.dot1.col}"]`;
+
+    const lineInOtherWay = document.querySelector(`.line${selector2Part1}${selector2Part2}`);
+
+    return lineInOneWay || lineInOtherWay;
+  }
 }
 
 class Version {
