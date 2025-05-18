@@ -293,27 +293,31 @@ class Line {
 
   addLine() {
     if (!this.findHTMLElement()) {
-      const lineSVG = document.querySelector(".lineSVG");
-
       currGame.lines.push(this);
 
-      let lineUI = getSVGLine(this);
-
-      lineSVG.appendChild(lineUI);
-
-      let surroundingLines = getSurroundingLines(this);
-
-      makeBox(surroundingLines, this);
-
-      lineMade(this);
-
-      updateBoxesUI(boxes);
+      this.drawLine();
     } else {
       console.log('line exists');
     }
 
     initDot = undefined;
     selectedDot = null;
+  }
+
+  drawLine() {
+    const lineSVG = document.querySelector(".lineSVG");
+
+    let lineUI = getSVGLine(this);
+
+    lineSVG.appendChild(lineUI);
+
+    let surroundingLines = getSurroundingLines(this);
+
+    makeBox(surroundingLines, this);
+
+    lineMade(this);
+
+    updateBoxesUI(boxes);
   }
 }
 

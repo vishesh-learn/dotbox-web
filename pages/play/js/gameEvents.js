@@ -118,6 +118,8 @@ function gameEvent() {
 function playerTurn() {
   pointerDownEvent(false);
 
+  console.trace("playerTurn - currPlayerId", currPlayer?.id);
+
   if (!(currGame?.players?.length > 0)) {
     console.error('not enough players for the game', currGame);
     return false;

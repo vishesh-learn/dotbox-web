@@ -211,29 +211,15 @@ function svgResize() {
 }
 
 function updateLinesUI() {
-    const lineSVG = document.querySelector(".lineSVG");
-
     currGame.players.forEach(player => {
         player.score = 0;
     });
 
-    currGame.lines.forEach(line => {
-        let DOMLines = lineEsToJSON();
+    currGame.lines.forEach((line, index) => {
+        console.trace("updateLinesUI", index, "line", line, "byPlayerID", line.byPlayerID, "currPlayerID", currPlayer.id);
 
-        if (lineNotExists(line, DOMLines)) {
-            let lineUI = getSVGLine(line);
-
-            lineSVG.appendChild(lineUI);
-
-            let surroundingLines = getSurroundingLines(line);
-
-            makeBox(surroundingLines, line);
-
-            lineMade(line);
-        }
+        line.drawLine();
     });
-
-    updateBoxesUI(boxes);
 }
 
 function updateBoxesUI(boxes) {
@@ -382,8 +368,6 @@ function getSurroundingLines(line) {
 
 function makeBox(square, line) {
     var x, y, currBoxes = [];
-
-    console.trace("makeBox", square, line);
 
     if (square.orient == "horizontal") {
         x = Math.min(square.hline.x1, square.hline.x2);
