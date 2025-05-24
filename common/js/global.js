@@ -80,7 +80,7 @@ function loadingEndUI() {
 }
 
 function length_to_dotCount(length) {
-  return (length - length % currGame.gameBoard.gap + currGame.gameBoard.gap) / currGame.gameBoard.gap;
+  return (length - length % Game.currGame.gameBoard.gap + Game.currGame.gameBoard.gap) / Game.currGame.gameBoard.gap;
 }
 
 // window.onerror = (message, source, lineno, colno, error) => {

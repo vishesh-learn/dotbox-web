@@ -35,9 +35,9 @@ window.onload = function () {
 function setCurrentPageInCurrentGame() {
   Game.load();
 
-  currGame.currPage = pages.setPlayers;
+  Game.currGame.currPage = pages.setPlayers;
 
-  currGame.save();
+  Game.currGame.save();
 }
 
 function playerColorEditor_init() {
@@ -97,11 +97,11 @@ function goButtonHandler(event) {
 }
 
 function addPlayer() {
-  if (currGame.players.length < currGame.maxPlayer) {
+  if (Game.currGame.players.length < Game.currGame.maxPlayer) {
     const player = new Player();
-    currGame.players.push(player);
+    Game.currGame.players.push(player);
 
-    currGame.save();
+    Game.currGame.save();
 
     const playersUI = document.querySelector(".players");
     playersUI.append(createPlayerUI(player));
@@ -112,7 +112,7 @@ function addPlayer() {
 
 function updatePlayerCountView() {
   document.querySelector("#info")
-    .innerHTML = `${currGame.players.length}<br /> ${currGame.players.length == 1 ? "player" : "players"}`;
+    .innerHTML = `${Game.currGame.players.length}<br /> ${Game.currGame.players.length == 1 ? "player" : "players"}`;
 }
 
 function updatePlayer(event) {
@@ -125,16 +125,16 @@ function updatePlayer(event) {
     if (target.className.includes("playerName")) {
       var name = target.value;
 
-      currGame.players[targetPlayerIndex].name = name;
+      Game.currGame.players[targetPlayerIndex].name = name;
     }
 
     if (target.className.includes("isAlgo")) {
       var isAlgo = target.checked;
 
-      currGame.players[targetPlayerIndex].isAlgo = isAlgo;
+      Game.currGame.players[targetPlayerIndex].isAlgo = isAlgo;
     }
 
-    currGame.save();
+    Game.currGame.save();
   }
 }
 
@@ -160,7 +160,7 @@ function colorSelector(event) {
     document.querySelector("body").classList.add("pop-up-container");
     document.querySelector(".set-color").showModal();
 
-    let color = currGame.players[targetPlayerIndex].color;
+    let color = Game.currGame.players[targetPlayerIndex].color;
 
     document.documentElement.style.setProperty('--currentPlayerColor', color);
 
@@ -195,11 +195,11 @@ function setupColorRange(h = 0) {
 function colorRange_Input(event) {
   let hex = hueToHex(event.target.value);
 
-  currGame.players[targetPlayerIndex].color = hex;
+  Game.currGame.players[targetPlayerIndex].color = hex;
 
   document.documentElement.style.setProperty('--currentPlayerColor', hex);
 
-  currGame.save();
+  Game.currGame.save();
 
   const playerElements = document.querySelectorAll(".player");
   const targetPlayer = playerElements[targetPlayerIndex];
@@ -214,13 +214,13 @@ function selectColor(event) {
   if (event.target.className.includes("colorBall")) {
     var color = event.target.style.backgroundColor;
 
-    currGame.players[targetPlayerIndex].color = color;
+    Game.currGame.players[targetPlayerIndex].color = color;
 
     document.documentElement.style.setProperty('--currentPlayerColor', color);
 
     setupColorRange(toHslObject(color).h);
 
-    currGame.save();
+    Game.currGame.save();
 
     targetPlayer.querySelector(".avatar").style.backgroundColor = color;
   }
@@ -235,9 +235,9 @@ function removePlayer(event) {
   if (target.className.includes("removePlayerB")) {
     const targetPlayerIndex = Array.from(playerElements).indexOf(targetPlayer);
 
-    currGame.players.splice(targetPlayerIndex, 1);
+    Game.currGame.players.splice(targetPlayerIndex, 1);
 
-    currGame.save();
+    Game.currGame.save();
 
     targetPlayer.remove();
   }
@@ -251,7 +251,7 @@ async function setupPlayersUI() {
 
     playersUI.innerHTML = "";
 
-    for (let player of currGame.players) {
+    for (let player of Game.currGame.players) {
       playersUI.append(createPlayerUI(player));
     }
 

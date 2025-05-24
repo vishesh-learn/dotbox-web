@@ -7,7 +7,7 @@ window.onload = () => {
 
     footerInfo();
 
-    currGame.currPage = pages.play;
+    Game.currGame.currPage = pages.play;
 
     gameBoardBuilder();
 
@@ -79,25 +79,25 @@ function gameBoardOverFlow() {
 }
 
 function refreshGameLines() {
-    currGame.lines = currGame.lines.filter(line => {
-        let playerExists = currGame.players.some(player => player.id == line.byPlayerID);
+    Game.currGame.lines = Game.currGame.lines.filter(line => {
+        let playerExists = Game.currGame.players.some(player => player.id == line.byPlayerID);
 
         let isNotPossibleLine = lineNotExists(line, allPossibleLines);
 
         return playerExists && !isNotPossibleLine;
     });
 
-    currGame.save();
+    Game.currGame.save();
 }
 
 function replay() {
-    currGame.reset();
+    Game.currGame.reset();
 
     window.location.reload();
 }
 
 function newGame() {
-    currGame.reset();
+    Game.currGame.reset();
 
     window.location.href = `../${pages.setBoard}/${pages.indexPage}`
 }
@@ -109,7 +109,7 @@ function goHome() {
 function footerInfo() {
     const rowColInfoHtml = document.querySelector('.rowAndCol .value');
 
-    rowColInfoHtml.innerHTML = `${currGame.gameBoard.col} x ${currGame.gameBoard.row}`;
+    rowColInfoHtml.innerHTML = `${Game.currGame.gameBoard.col} x ${Game.currGame.gameBoard.row}`;
 }
 
 function linePreview(event) {
@@ -119,10 +119,10 @@ function linePreview(event) {
         return false;
     }
 
-    var left = initDot.x - currGame.gameBoard.gap;
-    var top = initDot.y - currGame.gameBoard.gap;
-    var bottom = initDot.y + currGame.gameBoard.gap;
-    var right = initDot.x + currGame.gameBoard.gap;
+    var left = initDot.x - Game.currGame.gameBoard.gap;
+    var top = initDot.y - Game.currGame.gameBoard.gap;
+    var bottom = initDot.y + Game.currGame.gameBoard.gap;
+    var right = initDot.x + Game.currGame.gameBoard.gap;
 
     if (x < left) {
         x = left;
@@ -195,7 +195,7 @@ function nearestDot(x, y) {
 function prevLineMaker(line) {
     removePrevLines();
 
-    line.byPlayerID = currPlayer.id;
+    line.byPlayerID = Game.currGame.currPlayerId;
     line.prev = true;
     document.querySelector(".lineSVG").appendChild(getSVGLine(line));
 }
@@ -203,27 +203,27 @@ function prevLineMaker(line) {
 function svgResize() {
     let dotRadius = getDotRadius();
 
-    var width = ((currGame.gameBoard.col - 1) * currGame.gameBoard.gap) + (2 * dotRadius);
-    var height = ((currGame.gameBoard.row - 1) * currGame.gameBoard.gap) + (2 * dotRadius);
+    var width = ((Game.currGame.gameBoard.col - 1) * Game.currGame.gameBoard.gap) + (2 * dotRadius);
+    var height = ((Game.currGame.gameBoard.row - 1) * Game.currGame.gameBoard.gap) + (2 * dotRadius);
 
     document.documentElement.style.setProperty('--boardWidth', `${width}px`);
     document.documentElement.style.setProperty('--boardHeight', `${height}px`);
 }
 
 function updateLinesUI() {
-    currGame.players.forEach(player => {
+    Game.currGame.players.forEach(player => {
         player.score = 0;
     });
 
-    currGame.lines.forEach((line, index) => {
-        console.trace("updateLinesUI", index, "line", line, "byPlayerID", line.byPlayerID, "currPlayerID", currPlayer.id);
+    Game.currGame.lines.forEach((line, index) => {
+        console.trace("updateLinesUI", index, "line", line, "byPlayerID", line.byPlayerID, "currPlayerID", Game.currGame.currPlayerId);
 
         line.drawLine();
     });
 }
 
 function updateBoxesUI(boxes) {
-    currGame.players.forEach(player => {
+    Game.currGame.players.forEach(player => {
         player.score = boxes.filter(box => box.byLine.byPlayer == player).length;
     });
 
@@ -373,7 +373,7 @@ function makeBox(square, line) {
         x = Math.min(square.hline.x1, square.hline.x2);
 
         if (square.top.length == 4) {
-            y = Math.min(square.hline.y1, square.hline.y2) - currGame.gameBoard.gap;
+            y = Math.min(square.hline.y1, square.hline.y2) - Game.currGame.gameBoard.gap;
 
             currBoxes.push(new Box(x, y, line));
         }
@@ -388,7 +388,7 @@ function makeBox(square, line) {
     if (square.orient == "vertical") {
         y = Math.min(square.vline.y1, square.vline.y2);
         if (square.left.length == 4) {
-            x = Math.min(square.vline.x1, square.vline.x2) - currGame.gameBoard.gap;
+            x = Math.min(square.vline.x1, square.vline.x2) - Game.currGame.gameBoard.gap;
 
             currBoxes.push(new Box(x, y, line));
         }
@@ -463,27 +463,27 @@ function resetBoardUI() {
 
 function setupPlayerTurnList() {
     playerTurnList = [];
-    var currIndex = currPlayer.id - 1;
+    var currIndex = Game.currGame.currPlayerId - 1;
 
-    prevIndex = currIndex === 0 ? currGame.players.length - 1 : currIndex - 1;
+    prevIndex = currIndex === 0 ? Game.currGame.players.length - 1 : currIndex - 1;
 
-    if (currIndex === currGame.players.length - 1) {
+    if (currIndex === Game.currGame.players.length - 1) {
         nextIndex = 0;
     } else {
         nextIndex = currIndex + 1;
     }
 
-    if (nextIndex === currGame.players.length - 1) {
+    if (nextIndex === Game.currGame.players.length - 1) {
         nextIndex2 = 0;
     } else {
         nextIndex2 = nextIndex + 1;
     }
 
     playerTurnList.push(
-        currGame.players[prevIndex],
-        currGame.players[currIndex],
-        currGame.players[nextIndex],
-        currGame.players[nextIndex2]
+        Game.currGame.players[prevIndex],
+        Game.currGame.players[currIndex],
+        Game.currGame.players[nextIndex],
+        Game.currGame.players[nextIndex2]
     );
 }
 
@@ -510,15 +510,15 @@ function setupPlayerTurnListUI() {
 }
 
 function setCurrPlayerInfo() {
-    if (!currPlayer) {
-        console.error('currPlayer not found for game', currGame);
+    if (!Game.currGame.currPlayer) {
+        console.error('currPlayer not found for game', Game.currGame);
         return false;
     }
 
-    document.querySelector('.curr-player-id .value').innerText = `${currPlayer.id}`;
-    document.querySelector('.curr-player-name .value').innerText = `${currPlayer.placeholderName}`;
-    document.querySelector('.instruction i').innerText = `${currPlayer.placeholderName}'s`;
-    document.querySelector('.curr-player-score .value').innerText = `${currPlayer.score}`;
+    document.querySelector('.curr-player-id .value').innerText = `${Game.currGame.currPlayer.id}`;
+    document.querySelector('.curr-player-name .value').innerText = `${Game.currGame.currPlayer.placeholderName}`;
+    document.querySelector('.instruction i').innerText = `${Game.currGame.currPlayer.placeholderName}'s`;
+    document.querySelector('.curr-player-score .value').innerText = `${Game.currGame.currPlayer.score}`;
 }
 
 function winBoard() {
@@ -532,7 +532,7 @@ function winBoard() {
 }
 
 function sortPlayerByScore() {
-    currGame.players.sort((a, b) => b.score - a.score);
+    Game.currGame.players.sort((a, b) => b.score - a.score);
 }
 
 function setupPlayerRankList() {
@@ -540,7 +540,7 @@ function setupPlayerRankList() {
 
     playerRankListUI.innerHTML = "";
     var rank = 1;
-    currGame.players.forEach((player, i, players) => {
+    Game.currGame.players.forEach((player, i, players) => {
         if (i > 0) {
             let prevPlayer = players[i - 1];
 

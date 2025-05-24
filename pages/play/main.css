@@ -37,10 +37,10 @@ header {
 }
 
 .playerTurn {
-  width: 270px;
-  height: 70px;
+  width: 12em;
+  height: 3em;
   position: absolute;
-  bottom: 5px;
+  bottom: 0.5em;
   left: 50%;
   transform: translateX(-50%);
   border-radius: 30px;
@@ -48,7 +48,7 @@ header {
 
 .playerTurnList {
   width: 400px;
-  height: 70px;
+  height: 3em;
   position: absolute;
   left: 0;
   bottom: 50%;
@@ -62,8 +62,8 @@ header {
 }
 
 .playerTurnList .player {
-  width: 90px;
-  height: 50px;
+  width: 4em;
+  height: 2.8em;
   float: left;
   position: relative;
   top: 50%;
@@ -81,7 +81,7 @@ header {
 
 .playerTurnList:not(.slideLeft) .player:nth-child(2),
 .playerTurnList.slideLeft .player:nth-child(3) {
-  height: 65px;
+  height: 3em;
 }
 
 .avatar {
@@ -109,9 +109,9 @@ header {
 }
 
 .playerTurnList .player .playerName {
-  height: 20px;
+  height: 1.3em;
   text-align: center;
-  font-size: 14px;
+  font-size: 1em;
   padding-left: 3px;
   padding-right: 3px;
 }
@@ -135,6 +135,8 @@ header {
 
   background: var(--bg-low-opacity);
   box-shadow: 0 0 30px 30px var(--bg-low-opacity);
+
+  margin: 1em;
 }
 
 .winBoard-container header,

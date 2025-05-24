@@ -2,38 +2,6 @@ class ShareButton extends HTMLElement {
     constructor() {
         super();
 
-        this.attachShadow({ mode: "open" });
-
-        const STYLE = document.createElement("style");
-
-        STYLE.innerHTML = `
-            .button {
-                cursor: pointer;
-                user-select: none;
-                -webkit-tap-highlight-color: transparent;
-            }
-
-            .button:focus, .button:focus-visible, a:focus-visible, input[type=checkbox]:focus-visible {
-                outline: 2px dashed #000000;
-            }
-
-            .button:active {
-                scale: 0.98;
-                filter: brightness(1.1);
-            }
-
-            .line {
-                stroke: var(--brown);
-                stroke-width: 5;
-            }
-
-            .dot{
-                fill: var(--brown);
-            }
-        `;
-
-        this.shadowRoot.appendChild(STYLE);
-
         const SVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         SVG.setAttribute("viewBox", "0 0 50 50");
         SVG.setAttribute("preserveAspectRatio", "none");
@@ -45,7 +13,7 @@ class ShareButton extends HTMLElement {
         SVG.appendChild(getSVGDot("9", "25"));
         SVG.appendChild(getSVGDot("41", "41"));
 
-        this.shadowRoot.appendChild(SVG);
+        this.appendChild(SVG);
     }
 }
 

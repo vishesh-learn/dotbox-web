@@ -8,8 +8,20 @@ class Game {
     this.gameBoard = new GameBoard();
     this.minPlayer = 2;
     this.players = [];
-    this.lines = [];
     this.currPage = "";
+
+    this.lines = [];
+    this.boxes = [];
+
+    this.currPlayerId = null;
+  }
+
+  get currPlayer() {
+    if (this.currPlayerId) {
+      return this.players.find(player => player.id == this.currPlayerId);
+    } else {
+      return null;
+    }
   }
 
   get maxPlayer() {
@@ -56,18 +68,20 @@ class Game {
     this.save();
   }
 
+  static currGame = null;
+
   static load() {
-    currGame = localStorage.currGame ? JSON.parse(localStorage.currGame) : new Game();
+    Game.currGame = localStorage.currGame ? JSON.parse(localStorage.currGame) : new Game();
 
-    currGame = Object.assign(new Game, currGame);
+    Game.currGame = Object.assign(new Game, Game.currGame);
 
-    currGame.gameBoard = Object.assign(new GameBoard, currGame.gameBoard);
+    Game.currGame.gameBoard = Object.assign(new GameBoard, Game.currGame.gameBoard);
 
-    currGame.gameBoard.validate();
+    Game.currGame.gameBoard.validate();
 
-    currGame.validatePlayers();
+    Game.currGame.validatePlayers();
 
-    currGame.lines = currGame.lines.map(Line.constructFromOldLine);
+    Game.currGame.lines = Game.currGame.lines.map(Line.constructFromOldLine);
   }
 }
 
@@ -152,12 +166,12 @@ class Dot {
 
   get x() {
     const dotRadius = getDotRadius();
-    return (this.col - 1) * currGame.gameBoard.gap + dotRadius;
+    return (this.col - 1) * Game.currGame.gameBoard.gap + dotRadius;
   }
 
   get y() {
     const dotRadius = getDotRadius();
-    return (this.row - 1) * currGame.gameBoard.gap + dotRadius;
+    return (this.row - 1) * Game.currGame.gameBoard.gap + dotRadius;
   }
 }
 
@@ -195,7 +209,7 @@ class Line {
   }
 
   get byPlayer() {
-    return currGame.players.find(player => player.id == this.byPlayerID);
+    return Game.currGame.players.find(player => player.id == this.byPlayerID);
   }
 
   isValid() {
@@ -293,7 +307,7 @@ class Line {
 
   addLine() {
     if (!this.findHTMLElement()) {
-      currGame.lines.push(this);
+      Game.currGame.lines.push(this);
 
       this.drawLine();
     } else {

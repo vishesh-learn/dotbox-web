@@ -18,7 +18,8 @@ function initHome() {
 function continueGame() {
   Game.load();
 
-  window.location.href = `pages/${currGame.currPage ? currGame.currPage : pages.setBoard}/${pages.indexPage}`;
+  window.location.href = `pages/${Game.currGame.currPage ?
+    Game.currGame.currPage : pages.setBoard}/${pages.indexPage}`;
 }
 
 function newGame() {
@@ -30,17 +31,17 @@ function newGame() {
 }
 
 function tooltip_init() {
-    ElementGuide.data = [
-        new ElementGuide("#homeButton", "Return to the main menu"),
-        new ElementGuide(".svgC", "Drag between two dots to draw your line!")
-    ];
+  ElementGuide.data = [
+    new ElementGuide("#homeButton", "Return to the main menu"),
+    new ElementGuide(".svgC", "Drag between two dots to draw your line!")
+  ];
 
-    document.querySelector("#guide")?.addEventListener("click", ElementGuide.nextState);
+  document.querySelector("#guide")?.addEventListener("click", ElementGuide.nextState);
 
-    const tooltipPlayedKey = "tooltip played once for home";
-    if (!localStorage.getItem(tooltipPlayedKey)) {
-      ElementGuide.nextState();
-  
-      localStorage.setItem(tooltipPlayedKey, true);
-    }
+  const tooltipPlayedKey = "tooltip played once for home";
+  if (!localStorage.getItem(tooltipPlayedKey)) {
+    ElementGuide.nextState();
+
+    localStorage.setItem(tooltipPlayedKey, true);
+  }
 }

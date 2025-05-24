@@ -35,8 +35,8 @@ function pointerDown(event) {
       Number(nearInitDot.dataset.row),
     );
 
-    const inRange = difference(x, initDot.x) <= currGame.gameBoard.gap / 2
-      && difference(y, initDot.y) <= currGame.gameBoard.gap / 2;
+    const inRange = difference(x, initDot.x) <= Game.currGame.gameBoard.gap / 2
+      && difference(y, initDot.y) <= Game.currGame.gameBoard.gap / 2;
 
     if (inRange) {
       pointerMoveAndUPEvents(true);
@@ -68,16 +68,16 @@ function pointerUp(event) {
 
     if (
       new Line(initDot, finalDot).isValid()
-      && difference(x, finalDot.x) <= currGame.gameBoard.gap / 2
-      && difference(y, finalDot.y) <= currGame.gameBoard.gap / 2
+      && difference(x, finalDot.x) <= Game.currGame.gameBoard.gap / 2
+      && difference(y, finalDot.y) <= Game.currGame.gameBoard.gap / 2
     ) {
-      new Line(initDot, finalDot, currPlayer.id).addLine();
+      new Line(initDot, finalDot, Game.currGame.currPlayerId).addLine();
     }
   } else {
     console.log("no x and y");
   }
 
-  currGame.save();
+  Game.currGame.save();
 }
 
 function removePrevLines() {
@@ -118,35 +118,35 @@ function gameEvent() {
 function playerTurn() {
   pointerDownEvent(false);
 
-  console.trace("playerTurn - currPlayerId", currPlayer?.id);
+  console.trace("playerTurn - currPlayerId", Game.currGame.currPlayerId);
 
-  if (!(currGame?.players?.length > 0)) {
-    console.error('not enough players for the game', currGame);
+  if (!(Game.currGame?.players?.length > 0)) {
+    console.error('not enough players for the game', Game.currGame);
     return false;
   }
 
-  if (currPlayer != undefined) {
-    if (currPlayer.id == currGame.players.length) {
-      currPlayer = currGame.players[0];
+  if (Game.currGame.currPlayer != undefined) {
+    if (Game.currGame.currPlayerId == Game.currGame.players.length) {
+      Game.currGame.currPlayerId = Game.currGame.players[0].id;
     } else {
-      currPlayer = currGame.players[currPlayer.id];
+      Game.currGame.currPlayerId = Game.currGame.players[Game.currGame.currPlayerId].id;
     }
 
     setupPlayerTurnList();
-    if (currPlayer.isAlgo) {
+    if (Game.currGame.currPlayer.isAlgo) {
       setupPlayerTurnListUI();
     } else {
       slideLeft();
     }
 
   } else {
-    currPlayer = currGame.players[0];
+    Game.currGame.currPlayerId = Game.currGame.players[0].id;
 
     setupPlayerTurnList();
     setupPlayerTurnListUI();
   }
 
-  if (currPlayer.isAlgo) {
+  if (Game.currGame.currPlayer.isAlgo) {
     requestAnimationFrame(autoDrawLine);
   } else {
     pointerDownEvent(true);
@@ -220,7 +220,7 @@ function dotNavigate(event, direction) {
       break;
 
     case "right":
-      if (Number(event.target.dataset.col) < currGame.gameBoard.col) {
+      if (Number(event.target.dataset.col) < Game.currGame.gameBoard.col) {
         let nextRow = selectedDot ? parseInt(selectedDot.dataset.row) : parseInt(event.target.dataset.row);
         let nextCol = selectedDot ? parseInt(selectedDot.dataset.col) + 1 : parseInt(event.target.dataset.col) + 1;
 
@@ -246,7 +246,7 @@ function dotNavigate(event, direction) {
       break;
 
     case "bottom":
-      if (Number(event.target.dataset.row) < currGame.gameBoard.row) {
+      if (Number(event.target.dataset.row) < Game.currGame.gameBoard.row) {
         let nextRow = selectedDot ? parseInt(selectedDot.dataset.row) + 1 : parseInt(event.target.dataset.row) + 1;
         let nextCol = selectedDot ? parseInt(selectedDot.dataset.col) : parseInt(event.target.dataset.col);
 
@@ -312,7 +312,7 @@ function dotNavigate(event, direction) {
             event.target.dataset.col,
             event.target.dataset.row,
           ),
-          currPlayer.id
+          Game.currGame.currPlayerId
         ).addLine();
 
         updateLinesUI();
