@@ -14,6 +14,8 @@ class Game {
     this.boxes = [];
 
     this.currPlayerId = null;
+
+    this.addPlayer = this.addPlayer.bind(this);
   }
 
   get currPlayer() {
@@ -83,6 +85,25 @@ class Game {
 
     Game.currGame.lines = Game.currGame.lines.map(Line.constructFromOldLine);
   }
+
+  addPlayer() {
+    console.log('addPlayer called', this);
+
+    if (this.players.length < this.maxPlayer) {
+      const player = new Player();
+
+      player.id = this.players.length + 1;
+
+      this.players.push(player);
+
+      this.save();
+
+      const playersUI = document.querySelector(".players");
+      playersUI.append(createPlayerUI(player));
+
+      updatePlayerCountView();
+    }
+  }
 }
 
 class GameBoard {
@@ -139,7 +160,7 @@ class Player {
   }
 
   get placeholderName() {
-    return this.name || `player${this.id}`;
+    return this.name || `Player ${this.id}`;
   }
 }
 

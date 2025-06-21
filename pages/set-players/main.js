@@ -9,8 +9,6 @@ window.onload = function () {
 
   document.querySelector("#homeButton").addEventListener("click", goHome);
 
-  document.querySelector(".addb").addEventListener("click", addPlayer);
-
   const playersUI = document.querySelector(".players");
   playersUI.addEventListener("keypress", goButtonHandler);
   playersUI.addEventListener("click", colorSelector);
@@ -26,6 +24,8 @@ window.onload = function () {
   playerColorEditor_init();
 
   setCurrentPageInCurrentGame();
+
+  document.querySelector(".addb").addEventListener("click", Game.currGame.addPlayer);
 
   setupPlayersUI();
 
@@ -93,20 +93,6 @@ function goButtonHandler(event) {
     console.log("blur", event.target);
     
     event.target.blur();
-  }
-}
-
-function addPlayer() {
-  if (Game.currGame.players.length < Game.currGame.maxPlayer) {
-    const player = new Player();
-    Game.currGame.players.push(player);
-
-    Game.currGame.save();
-
-    const playersUI = document.querySelector(".players");
-    playersUI.append(createPlayerUI(player));
-
-    updatePlayerCountView();
   }
 }
 
