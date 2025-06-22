@@ -111,7 +111,7 @@ header {
 .playerTurnList .player .playerName {
   height: 1.3em;
   text-align: center;
-  font-size: 1em;
+  font-size: 0.8em;
   padding-left: 3px;
   padding-right: 3px;
 }
@@ -204,6 +204,8 @@ footer {
   overflow-x: scroll;
   height: 100%;
   white-space: nowrap;
+
+  font-size: 0.8em;
 }
 
 .info {
