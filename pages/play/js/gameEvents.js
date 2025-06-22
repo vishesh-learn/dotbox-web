@@ -115,7 +115,11 @@ function gameEvent() {
   setCurrPlayerInfo();
 }
 
-function playerTurn() {
+function playerTurn(isInitial = false) {
+  if (isInitial && Game?.currGame?.currPlayerId) {
+    return false;
+  }
+
   pointerDownEvent(false);
 
   console.trace("playerTurn - currPlayerId", Game.currGame.currPlayerId);

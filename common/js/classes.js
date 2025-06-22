@@ -87,8 +87,6 @@ class Game {
   }
 
   addPlayer() {
-    console.log('addPlayer called', this);
-
     if (this.players.length < this.maxPlayer) {
       const player = new Player();
 

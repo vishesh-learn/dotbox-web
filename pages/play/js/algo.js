@@ -4,8 +4,6 @@ function autoDrawLine() {
     return false;
   }
 
-  console.trace("autoDrawLine - currPlayerId", Game.currGame.currPlayer.id);
-
   findAndMakeBoxMakingLines();
  
   if (isEnd()) {

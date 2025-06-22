@@ -136,7 +136,7 @@ header {
   background: var(--bg-low-opacity);
   box-shadow: 0 0 30px 30px var(--bg-low-opacity);
 
-  margin: 1em;
+  margin: 0.3em 1em 1em 1em;
 }
 
 .winBoard-container header,

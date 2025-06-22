@@ -17,16 +17,16 @@ window.onload = () => {
 
     getPendingPossiblelines();
 
-    playerTurn();
-
     loadingStartUI();
 
     setTimeout(() => {
         updateLinesUI(); // time comsuming function
 
-        setCurrPlayerInfo();
-
         loadingEndUI();
+
+        playerTurn(true);
+
+        setCurrPlayerInfo();
 
         tooltip_init();
     }, 0);
@@ -510,7 +510,7 @@ function setupPlayerTurnListUI() {
 }
 
 function setCurrPlayerInfo() {
-    if (!Game.currGame.currPlayer) {
+    if (!Game?.currGame?.currPlayer) {
         console.error('currPlayer not found for game', Game.currGame);
         return false;
     }
