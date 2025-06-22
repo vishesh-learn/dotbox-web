@@ -1,6 +1,6 @@
 
 function autoDrawLine() {
-  if (!currPlayer.isAlgo) {
+  if (!Game.currGame.currPlayer.isAlgo) {
     return false;
   }
 
@@ -14,15 +14,17 @@ function autoDrawLine() {
 }
 
 let squareMakingLine;
+
 function findAndMakeBoxMakingLines() {
   if (squareMakingLine = getSquareMakingLine()) {
-    squareMakingLine.byPlayerID = currPlayer.id;
-    addLine(squareMakingLine);
+    squareMakingLine.byPlayerID = Game.currGame.currPlayerId;
+    
+    squareMakingLine.addLine();
   
     findAndMakeBoxMakingLines();
   }
 
-  currGame.save();
+  Game.currGame.save();
 }
 
 function makeSafeOrRandomLine() {
@@ -36,10 +38,11 @@ function makeSafeOrRandomLine() {
     line = pendingPossiblelines[getRndInteger(0, pendingPossiblelines.length - 1)];
   }
 
-  line.byPlayerID = currPlayer.id;
-  addLine(line);
+  line.byPlayerID = Game.currGame.currPlayerId;
 
-  currGame.save();
+  line.addLine();
+
+  Game.currGame.save();
 }
 
 function getSquareMakingLine() {

@@ -8,7 +8,7 @@ window.onload = () => {
 
   Game.load();
 
-  currGame.currPage = pages.setBoard;
+  Game.currGame.currPage = pages.setBoard;
 
   setupGameBoard();
 
@@ -65,20 +65,20 @@ function startupVariables() {
 
   var drawableHeight = boardSize.height - (dotRadius * 2) - scrollbarSize;
 
-  currGame.gameBoard.maxCol = length_to_dotCount(drawableWidth);
+  Game.currGame.gameBoard.maxCol = length_to_dotCount(drawableWidth);
 
-  if (currGame.gameBoard.maxCol <= currGame.gameBoard.minCol) {
-    currGame.gameBoard.maxCol = currGame.gameBoard.minCol;
+  if (Game.currGame.gameBoard.maxCol <= Game.currGame.gameBoard.minCol) {
+    Game.currGame.gameBoard.maxCol = Game.currGame.gameBoard.minCol;
   }
 
-  currGame.gameBoard.maxRow = length_to_dotCount(drawableHeight);
+  Game.currGame.gameBoard.maxRow = length_to_dotCount(drawableHeight);
 
-  if (currGame.gameBoard.maxRow <= currGame.gameBoard.minRow) {
-    currGame.gameBoard.maxRow = currGame.gameBoard.minRow;
+  if (Game.currGame.gameBoard.maxRow <= Game.currGame.gameBoard.minRow) {
+    Game.currGame.gameBoard.maxRow = Game.currGame.gameBoard.minRow;
   }
 
-  let width = dotCount_to_length(currGame.gameBoard.maxCol);
-  let height = dotCount_to_length(currGame.gameBoard.maxRow);
+  let width = dotCount_to_length(Game.currGame.gameBoard.maxCol);
+  let height = dotCount_to_length(Game.currGame.gameBoard.maxRow);
 
   document.documentElement.style.setProperty('--svgWidth', `${width}px`);
   document.documentElement.style.setProperty('--svgHeight', `${height}px`);
@@ -105,8 +105,8 @@ function svgResize() {
   var gameBoardSVG = document.querySelector(".svgC");
   let dotRadius = getDotRadius();
 
-  var width = ((currGame.gameBoard.maxCol - 1) * currGame.gameBoard.gap) + dotRadius;
-  var height = ((currGame.gameBoard.maxRow - 1) * currGame.gameBoard.gap) + dotRadius;
+  var width = ((Game.currGame.gameBoard.maxCol - 1) * Game.currGame.gameBoard.gap) + dotRadius;
+  var height = ((Game.currGame.gameBoard.maxRow - 1) * Game.currGame.gameBoard.gap) + dotRadius;
 
   gameBoardSVG.style.width = width + "px";
   gameBoardSVG.style.height = height + "px";
@@ -117,10 +117,10 @@ function GameBoardBuilder() {
 
   let dotRadius = getDotRadius();
 
-  for (let i = 0; i < currGame.gameBoard.maxRow; i++) {
-    for (let j = 0; j < currGame.gameBoard.maxCol; j++) {
-      var x = (currGame.gameBoard.gap * j + dotRadius).toString(10);
-      var y = (currGame.gameBoard.gap * i + dotRadius).toString(10);
+  for (let i = 0; i < Game.currGame.gameBoard.maxRow; i++) {
+    for (let j = 0; j < Game.currGame.gameBoard.maxCol; j++) {
+      var x = (Game.currGame.gameBoard.gap * j + dotRadius).toString(10);
+      var y = (Game.currGame.gameBoard.gap * i + dotRadius).toString(10);
 
       let dot = document.createElementNS('http://www.w3.org/2000/svg', "circle");
       dot.setAttribute("class", "dot hidden");
@@ -182,19 +182,19 @@ function dotNavigate(event, direction) {
 
   switch (direction) {
     case "top":
-      currGame.gameBoard.row--;
+      Game.currGame.gameBoard.row--;
       break;
 
     case "right":
-      currGame.gameBoard.col++;
+      Game.currGame.gameBoard.col++;
       break;
 
     case "bottom":
-      currGame.gameBoard.row++;
+      Game.currGame.gameBoard.row++;
       break;
 
     case "left":
-      currGame.gameBoard.col--;
+      Game.currGame.gameBoard.col--;
       break;
 
     case "enter":
@@ -217,27 +217,27 @@ function optedDot(dot) {
   var optedX = dot.cx.baseVal.value;
   var optedY = dot.cy.baseVal.value;
 
-  currGame.gameBoard.col = length_to_dotCount(optedX, currGame.gameBoard.gap);
-  currGame.gameBoard.row = length_to_dotCount(optedY, currGame.gameBoard.gap);
+  Game.currGame.gameBoard.col = length_to_dotCount(optedX, Game.currGame.gameBoard.gap);
+  Game.currGame.gameBoard.row = length_to_dotCount(optedY, Game.currGame.gameBoard.gap);
 
   optedCnR();
 }
 
 function optedCnR() {
-  if (currGame.gameBoard.col > currGame.gameBoard.maxCol) {
-    currGame.gameBoard.col = currGame.gameBoard.maxCol;
-  } else if (currGame.gameBoard.col < currGame.gameBoard.minCol) {
-    currGame.gameBoard.col = currGame.gameBoard.minCol;
+  if (Game.currGame.gameBoard.col > Game.currGame.gameBoard.maxCol) {
+    Game.currGame.gameBoard.col = Game.currGame.gameBoard.maxCol;
+  } else if (Game.currGame.gameBoard.col < Game.currGame.gameBoard.minCol) {
+    Game.currGame.gameBoard.col = Game.currGame.gameBoard.minCol;
   }
 
-  if (currGame.gameBoard.row > currGame.gameBoard.maxRow) {
-    currGame.gameBoard.row = currGame.gameBoard.maxRow;
-  } else if (currGame.gameBoard.row < currGame.gameBoard.minRow) {
-    currGame.gameBoard.row = currGame.gameBoard.minRow;
+  if (Game.currGame.gameBoard.row > Game.currGame.gameBoard.maxRow) {
+    Game.currGame.gameBoard.row = Game.currGame.gameBoard.maxRow;
+  } else if (Game.currGame.gameBoard.row < Game.currGame.gameBoard.minRow) {
+    Game.currGame.gameBoard.row = Game.currGame.gameBoard.minRow;
   }
 
-  var x = dotCount_to_length(currGame.gameBoard.col);
-  var y = dotCount_to_length(currGame.gameBoard.row);
+  var x = dotCount_to_length(Game.currGame.gameBoard.col);
+  var y = dotCount_to_length(Game.currGame.gameBoard.row);
 
   optedXnY(x, y);
 }
@@ -247,7 +247,7 @@ function optedXnY(x, y) {
   const infoE = document.querySelector("#info");
 
   if (x && y) {
-    infoE.innerHTML = currGame.gameBoard.col + " x " + currGame.gameBoard.row;
+    infoE.innerHTML = Game.currGame.gameBoard.col + " x " + Game.currGame.gameBoard.row;
 
     for (var dotE of dotEs) {
       let cx = dotE.cx.baseVal.value;
@@ -261,7 +261,7 @@ function optedXnY(x, y) {
       }
     }
 
-    currGame.save();
+    Game.currGame.save();
   } else {
     console.log("invalid x or y");
   }
@@ -298,7 +298,7 @@ function nearestDot(x, y) {
 function dotCount_to_length(dotCount) {
   let dotRadius = getDotRadius();
 
-  return (dotCount * currGame.gameBoard.gap) - currGame.gameBoard.gap + dotRadius * 2;
+  return (dotCount * Game.currGame.gameBoard.gap) - Game.currGame.gameBoard.gap + dotRadius * 2;
 }
 
 function difference(a, b) { return Math.abs(a - b); }

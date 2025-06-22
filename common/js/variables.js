@@ -16,5 +16,3 @@ const pages = {
     shareUrl = window.location.href;
   
   const playStoreLink = `${onAppStore.googlePlay}${onAppStore.packageName}`;
-  
-  var currGame = {};

@@ -57,14 +57,14 @@ function gameBoardBuilder() {
 
     dots.forEach(dot => dot.remove());
 
-    for (let i = 0; i < currGame.gameBoard.row; i++) {
+    for (let i = 0; i < Game.currGame.gameBoard.row; i++) {
         const row = i + 1;
 
-        for (let j = 0; j < currGame.gameBoard.col; j++) {
+        for (let j = 0; j < Game.currGame.gameBoard.col; j++) {
             const col = j + 1;
 
-            cx = (currGame.gameBoard.gap * j + dotRadius).toString();
-            cy = (currGame.gameBoard.gap * i + dotRadius).toString();
+            cx = (Game.currGame.gameBoard.gap * j + dotRadius).toString();
+            cy = (Game.currGame.gameBoard.gap * i + dotRadius).toString();
 
             let dot = createDotUI(cx, cy, row, col);
 
@@ -91,15 +91,13 @@ function createDotUI(cx, cy, row, col) {
 }
 
 function createSquareUI(box) {
-    console.log("createSquareUI", box);
-
     if (box.x && box.y) {
         var squareE = document.createElementNS('http://www.w3.org/2000/svg', "rect");
         squareE.setAttribute("class", "winBox");
         squareE.setAttribute("x", box.x);
         squareE.setAttribute("y", box.y);
-        squareE.setAttribute("width", currGame.gameBoard.gap);
-        squareE.setAttribute("height", currGame.gameBoard.gap);
+        squareE.setAttribute("width", Game.currGame.gameBoard.gap);
+        squareE.setAttribute("height", Game.currGame.gameBoard.gap);
 
         if (box.byLine.byPlayer.color) {
             squareE.style.fill = box.byLine.byPlayer.color;
