@@ -41,11 +41,13 @@ share-button {
 
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 12px;
   padding: 20px;
 }
 
 #home-menu .button {
+  width: max-content;
   color: unset;
   font-size: 26px;
   background: none;

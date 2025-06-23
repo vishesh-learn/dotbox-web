@@ -1,6 +1,7 @@
 @media only screen and (min-height: 480px) and (orientation: landscape) {
     .set-color {
         padding: 45px;
+        max-width: 400px;
     }
 
     .close-pop-up {

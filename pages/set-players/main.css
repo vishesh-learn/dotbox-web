@@ -156,7 +156,6 @@ header {
 
 .set-color {
   width: 100%;
-  max-width: 400px;
   min-height: 50%;
   max-height: calc(100% - 50px);
   padding: 25px;
