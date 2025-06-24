@@ -116,6 +116,7 @@ header {
 }
 
 .removePlayerB {
+  font-size: 20px;
   font-weight: bold;
   width: 30px;
   height: 30px;
@@ -166,7 +167,7 @@ header {
 }
 
 .set-color .color-prev {
-  background-color: var(--currentPlayerColor);
+  background: var(--currentPlayerColor);
   width: 80px;
   height: 60px;
   outline: 2px dotted var(--brown);

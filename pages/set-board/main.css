@@ -35,7 +35,7 @@ body {
     display: flex;
     flex-direction: column;
 
-    padding: 25px;
+    padding: 10px 20px;
 
     justify-content: var(--align-y-board);
     align-items: var(--align-x-board);

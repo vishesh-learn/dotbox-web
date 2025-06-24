@@ -10,7 +10,7 @@ function createPlayerUI(player) {
 
     const avatarUI = document.createElement("div");
     avatarUI.classList = "avatar";
-    avatarUI.style.backgroundColor = player.color;
+    avatarUI.style.background = toRadialGradientCSSValue(player.color) || player.color;
     playerUI.append(avatarUI);
 
     const playerName = document.createElement("div");
@@ -32,7 +32,7 @@ function createRankPlayerUI(player) {
 
     const avatarUI = document.createElement("div");
     avatarUI.classList = "avatar";
-    avatarUI.style.backgroundColor = player.color;
+    avatarUI.style.background = toRadialGradientCSSValue(player.color) || player.color;
     playerUI.append(avatarUI);
 
     const playerName = document.createElement("div");

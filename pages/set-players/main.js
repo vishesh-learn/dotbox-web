@@ -91,7 +91,7 @@ function goButtonHandler(event) {
   if (event.keyCode === 13 && event.target.type === "text"
   ) {
     console.log("blur", event.target);
-    
+
     event.target.blur();
   }
 }
@@ -131,7 +131,12 @@ function createColorBalls() {
   for (let i = 0; i < 18; i++) {
     colorBall = document.createElement('button');
     colorBall.classList = "button avatar colorBall";
-    colorBall.style.backgroundColor = hueToHex(i * 20);
+
+    const color = hueToHex(i * 20);
+
+    colorBall.dataset.color = color;
+
+    colorBall.style.background = toRadialGradientCSSValue(color) || color;
 
     colorHueHtml.append(colorBall);
   }
@@ -198,17 +203,18 @@ function selectColor(event) {
   const targetPlayer = playerElements[targetPlayerIndex];
 
   if (event.target.className.includes("colorBall")) {
-    var color = event.target.style.backgroundColor;
+    console.log(event.target);
+    var color = event.target.dataset.color;
 
     Game.currGame.players[targetPlayerIndex].color = color;
 
-    document.documentElement.style.setProperty('--currentPlayerColor', color);
+    document.documentElement.style.setProperty('--currentPlayerColor', toRadialGradientCSSValue(color));
 
     setupColorRange(toHslObject(color).h);
 
     Game.currGame.save();
 
-    targetPlayer.querySelector(".avatar").style.backgroundColor = color;
+    targetPlayer.querySelector(".avatar").style.background = toRadialGradientCSSValue(color);
   }
 }
 
@@ -255,7 +261,7 @@ function createPlayerUI(player) {
 
   const avatarUI = document.createElement("button");
   avatarUI.classList = "avatar button";
-  avatarUI.style.backgroundColor = player.color;
+  avatarUI.style.background = toRadialGradientCSSValue(player.color) || player.color;
   playerUI.append(avatarUI);
 
   const playerName = document.createElement("input");

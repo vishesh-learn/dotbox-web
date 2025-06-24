@@ -38,6 +38,16 @@ function hslToHex(hslObject) {
 	return rgbToHex(rgbValues[0], rgbValues[1], rgbValues[2]);
 }
 
+function toRadialGradientCSSValue(color) {
+  let hslO1 = toHslObject(color);
+
+  hslO1.l = 50;
+
+  let stopColor2 = hslToHex(hslO1);
+
+  return `radial-gradient(${color} 50%, ${stopColor2} 100%)`;
+}
+
 /************ by ChatGPT */
 class Color {
 	constructor(colorValue) {
