@@ -270,16 +270,15 @@ footer {
 
 .bar {
   display: flex;
+  flex-direction: column;
   width: 100%;
   min-height: 50px;
-  flex-shrink: 0;
   gap: 16px 10px;
   justify-content: space-around;
   flex-wrap: wrap;
 }
 
 .bar .button {
-  width: calc(50% - 10px);
   font-weight: bold;
   min-width: 100px;
   max-width: 100%;
@@ -295,7 +294,6 @@ footer {
 }
 
 .bar .home.button {
-  width: 100%;
   padding: 8px;
 }
 
@@ -310,8 +308,6 @@ footer {
   padding: 25px;
   gap: 60px;
 
-  flex-direction: column;
-  gap: 10px;
   align-items: center;
 
   /* background-color: #ff62000d;

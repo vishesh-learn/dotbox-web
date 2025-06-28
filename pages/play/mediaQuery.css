@@ -1,3 +1,4 @@
+/* Mobile Landscape */
 @media only screen and (max-height: 480px) and (orientation: landscape) {
     body {
         flex-direction: row;
@@ -47,6 +48,12 @@
 
     .winBoard {
         min-height: 70%;
+        gap: 2em;
+        flex-direction: row;
+    }
+
+    .bar {
+        flex-direction: column;
     }
 
     footer {
@@ -71,14 +78,30 @@
         border-style: none;
     }
 
-    .winBoard {
-      gap: 30px;
-    }
-
     #guide {
         top: unset;
         left: 50%;
         transform: translateX(-50%);
         bottom: 20px;
+    }
+}
+
+/* Mobile Portrait */
+@media only screen and (max-width: 480px) and (orientation: portrait) {
+    .winBoard {
+        flex-direction: column;
+    }
+
+    .bar {
+        flex-direction: row;
+    }
+
+    .bar .button {
+        width: calc(50% - 10px);
+    }
+
+    .bar .home.button {
+        width: 100%;
+        flex-shrink: 0;
     }
 }

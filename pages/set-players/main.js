@@ -153,7 +153,7 @@ function colorSelector(event) {
 
     let color = Game.currGame.players[targetPlayerIndex].color;
 
-    document.documentElement.style.setProperty('--currentPlayerColor', color);
+    document.documentElement.style.setProperty('--currentPlayerColor', toRadialGradientCSSValue(color) || color);
 
     setupColorRange(toHslObject(color).h);
   }

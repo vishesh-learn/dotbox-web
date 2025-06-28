@@ -65,6 +65,8 @@ class Game {
   }
 
   reset() {
+    this.currPlayerId = null;
+
     this.lines = [];
 
     this.save();
@@ -84,6 +86,10 @@ class Game {
     Game.currGame.validatePlayers();
 
     Game.currGame.lines = Game.currGame.lines.map(Line.constructFromOldLine);
+
+    if (!Game.currGame.lines.length) {
+      Game.currGame.reset();
+    }
   }
 
   addPlayer() {

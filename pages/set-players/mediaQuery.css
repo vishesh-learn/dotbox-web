@@ -1,7 +1,21 @@
+@media only screen and (min-width: 480px) and (orientation: portrait) {
+    .set-color {
+        max-width: 18em;
+    }
+}
+
+@media only screen and (orientation: landscape) {
+    .set-color {
+        flex-direction: row;
+        max-width: 28em;
+    }
+}
+
 @media only screen and (min-height: 480px) and (orientation: landscape) {
     .set-color {
-        padding: 45px;
-        max-width: 400px;
+        padding: 3em;
+        max-width: 30em;
+        gap: 3em;
     }
 
     .close-pop-up {
