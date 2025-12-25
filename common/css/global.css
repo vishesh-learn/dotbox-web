@@ -16,8 +16,8 @@
   --headerHeight: 2.5em;
   --footerHeight: 2.5em;
 
-  --playHeaderHeight: 5em;
-  --playFooterHeight: 4em;
+  --playHeaderHeight: 4.5em;
+  --playFooterHeight: 5rem;
   --playerTurnHeight: 60px;
 
   --dotRadius: 10px;
@@ -65,7 +65,7 @@ input {
 .instruction {
   width: 100%;
   font-weight: normal;
-  font-size: x-large;
+  font-size: 1.3rem;
   margin: 0;
   text-align: center;
 

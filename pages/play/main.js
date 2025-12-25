@@ -158,11 +158,11 @@ function nearDot(x, y) {
         let oldcx = nearDot.x;
         let oldcy = nearDot.y;
 
-        let x_cx = difference(x, cx);
-        let y_cy = difference(y, cy);
+        let x_cx = Math.abs(x - cx);
+        let y_cy = Math.abs(y - cy);
 
-        let oldxcx = difference(x, oldcx);
-        let oldycy = difference(y, oldcy);
+        let oldxcx = Math.abs(x - oldcx);
+        let oldycy = Math.abs(y - oldcy);
 
         if ((x_cx <= oldxcx) && y_cy <= oldycy) {
             nearDot = dot;
@@ -177,8 +177,8 @@ function nearestDot(x, y) {
 
     let dotDiffs = [...dotEs].map(dotE => ({
         element: dotE,
-        Xdiff: difference(x, dotE.cx.baseVal.value),
-        Ydiff: difference(y, dotE.cy.baseVal.value)
+        Xdiff: Math.abs(x - dotE.cx.baseVal.value),
+        Ydiff: Math.abs(y - dotE.cy.baseVal.value)
     }));
 
     let minXValue = Math.min(...dotDiffs.map(dotDiff => dotDiff.Xdiff));
@@ -517,7 +517,6 @@ function setCurrPlayerInfo() {
 
     document.querySelector('.curr-player-id .value').innerText = `${Game.currGame.currPlayer.id}`;
     document.querySelector('.curr-player-name .value').innerText = `${Game.currGame.currPlayer.placeholderName}`;
-    document.querySelector('.instruction i').innerText = `${Game.currGame.currPlayer.placeholderName}'s`;
     document.querySelector('.curr-player-score .value').innerText = `${Game.currGame.currPlayer.score}`;
 }
 

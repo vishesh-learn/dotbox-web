@@ -30,8 +30,6 @@ function keyOnElement(element) {
   });
 }
 
-function difference(a, b) { return Math.abs(a - b); }
-
 function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }

@@ -281,11 +281,11 @@ function nearestDot(x, y) {
     let oldcx = nearDot.cx.baseVal.value;
     let oldcy = nearDot.cy.baseVal.value;
 
-    let xcx = difference(x, cx);
-    let ycy = difference(y, cy);
+    let xcx = Math.abs(x - cx);
+    let ycy = Math.abs(y - cy);
 
-    let oldxcx = difference(x, oldcx);
-    let oldycy = difference(y, oldcy);
+    let oldxcx = Math.abs(x - oldcx);
+    let oldycy = Math.abs(y - oldcy);
 
     if ((xcx <= oldxcx) && ycy <= oldycy) {
       nearDot = dotE;
@@ -300,5 +300,3 @@ function dotCount_to_length(dotCount) {
 
   return (dotCount * Game.currGame.gameBoard.gap) - Game.currGame.gameBoard.gap + dotRadius * 2;
 }
-
-function difference(a, b) { return Math.abs(a - b); }

@@ -35,8 +35,8 @@ function pointerDown(event) {
       Number(nearInitDot.dataset.row),
     );
 
-    const inRange = difference(x, initDot.x) <= Game.currGame.gameBoard.gap / 2
-      && difference(y, initDot.y) <= Game.currGame.gameBoard.gap / 2;
+    const inRange = Math.abs(x - initDot.x) <= Game.currGame.gameBoard.gap / 2
+      && Math.abs(y - initDot.y) <= Game.currGame.gameBoard.gap / 2;
 
     if (inRange) {
       pointerMoveAndUPEvents(true);
@@ -68,8 +68,8 @@ function pointerUp(event) {
 
     if (
       new Line(initDot, finalDot).isValid()
-      && difference(x, finalDot.x) <= Game.currGame.gameBoard.gap / 2
-      && difference(y, finalDot.y) <= Game.currGame.gameBoard.gap / 2
+      && Math.abs(x - finalDot.x) <= Game.currGame.gameBoard.gap / 2
+      && Math.abs(y - finalDot.y) <= Game.currGame.gameBoard.gap / 2
     ) {
       new Line(initDot, finalDot, Game.currGame.currPlayerId).addLine();
     }

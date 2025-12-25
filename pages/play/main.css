@@ -79,6 +79,14 @@ header {
   gap: 0.1rem;
 }
 
+.playerTurnList:not(.slideLeft) .player:nth-child(1) {
+  filter: blur(0.8px);
+}
+
+.playerTurnList:not(.slideLeft) .player:nth-child(3) {
+  filter: blur(0.6px);
+}
+
 .playerTurnList:not(.slideLeft) .player:nth-child(2),
 .playerTurnList.slideLeft .player:nth-child(3) {
   height: 3em;
@@ -111,9 +119,13 @@ header {
 .playerTurnList .player .playerName {
   height: 1.3em;
   text-align: center;
-  font-size: 0.8em;
+  font-size: 0.6em;
   padding-left: 3px;
   padding-right: 3px;
+}
+
+.playerTurnList:not(.slideLeft) .player:nth-child(2) .playerName {
+  font-size: 0.8em;
 }
 
 .page-content {
@@ -136,7 +148,7 @@ header {
   background: var(--bg-low-opacity);
   box-shadow: 0 0 30px 30px var(--bg-low-opacity);
 
-  margin: 0.3em 1em 1em 1em;
+  margin: 1em;
 }
 
 .winBoard-container header,
@@ -238,10 +250,17 @@ footer {
 }
 
 .playerRankList .player {
-  min-height: 50px;
+  min-height: 40px;
   display: flex;
   align-items: center;
   font-size: 18px;
+
+  border-right: 2px solid #7c6157;
+  padding-right: 2rem;
+}
+
+.playerRankList .player:not(:last-child) {
+  margin-bottom: 1rem;
 }
 
 .playerRankList .player .rank {
@@ -263,7 +282,6 @@ footer {
 }
 
 .playerRankList .player .score {
-  min-width: 25px;
   text-align: center;
   font-size: 16px;
 }
@@ -276,6 +294,8 @@ footer {
   gap: 16px 10px;
   justify-content: space-around;
   flex-wrap: wrap;
+
+  padding-left: 2rem;
 }
 
 .bar .button {
@@ -306,10 +326,8 @@ footer {
   min-height: 50%;
   max-height: calc(100% - 50px);
   padding: 25px;
-  gap: 60px;
+  row-gap: 2rem;
 
   align-items: center;
-
-  /* background-color: #ff62000d;
-  box-shadow: 0 0 46px 46px #ff62000d; */
+  overflow: auto;
 }
