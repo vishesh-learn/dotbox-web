@@ -3,9 +3,9 @@ class ElementGuide {
     static data = [];
 
     constructor(elementSelector, title, instruction) {
-        this.elementSelector = elementSelector,
-            this.title = title,
-            this.instruction = instruction
+        this.elementSelector = elementSelector;
+        this.title = title;
+        this.instruction = instruction;
     }
 
     get element() {
