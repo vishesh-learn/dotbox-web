@@ -188,7 +188,7 @@ function colorRange_Input(event) {
 
   Game.currGame.players[targetPlayerIndex].color = hex;
 
-  document.documentElement.style.setProperty('--currentPlayerColor', hex);
+  document.documentElement.style.setProperty('--currentPlayerColor', toRadialGradientCSSValue(hex));
 
   Game.currGame.save();
 

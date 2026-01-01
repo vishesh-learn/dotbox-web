@@ -254,9 +254,6 @@ footer {
   display: flex;
   align-items: center;
   font-size: 18px;
-
-  border-right: 2px solid #7c6157;
-  padding-right: 2rem;
 }
 
 .playerRankList .player:not(:last-child) {
@@ -294,8 +291,6 @@ footer {
   gap: 16px 10px;
   justify-content: space-around;
   flex-wrap: wrap;
-
-  padding-left: 2rem;
 }
 
 .bar .button {
@@ -330,4 +325,5 @@ footer {
 
   align-items: center;
   overflow: auto;
+  flex-direction: column;
 }

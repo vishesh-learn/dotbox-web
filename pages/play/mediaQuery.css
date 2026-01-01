@@ -1,3 +1,19 @@
+/* Any size portrait */
+@media only screen and (orientation: landscape) {
+    .winBoard {
+        flex-direction: row;
+    }
+
+    .playerRankList .player {
+        border-right: 2px solid #7c6157;
+        padding-right: 2rem;
+    }
+
+    .bar {
+        padding-left: 2rem;
+    }
+}
+
 /* Mobile Landscape */
 @media only screen and (max-height: 480px) and (orientation: landscape) {
     body {
@@ -96,27 +112,42 @@
 
     .bar .button {
         font-size: 1.2rem;
-        padding-left: 30px;
-        padding-right: 30px;
+        padding-left: 20px;
+        padding-right: 20px;
     }
 }
 
 /* Mobile Portrait */
 @media only screen and (max-width: 480px) and (orientation: portrait) {
     .winBoard {
+        max-width: 100%;
         flex-direction: column;
+    }
+
+    .playerRankList .player {
+        padding-right: 0;
+        border-right: none;
     }
 
     .bar {
         flex-direction: row;
+        padding-left: 0;
     }
 
     .bar .button {
+        font-size: 1.2rem;
         width: calc(50% - 10px);
     }
 
     .bar .home.button {
         width: 100%;
         flex-shrink: 0;
+    }
+}
+
+@media only screen and (max-width: 400px) and (orientation: portrait) {
+    .bar .button {
+        font-size: 1rem;
+        width: calc(50% - 10px);
     }
 }
