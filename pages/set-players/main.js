@@ -1,6 +1,6 @@
 var targetPlayerIndex = 0;
 
-window.onload = function () {
+onload = function () {
   document.querySelector("#backButton")
     .addEventListener("click", () => window.location.href = `../${pages.setBoard}/${pages.indexPage}`);
 
@@ -132,7 +132,7 @@ function createColorBalls() {
     colorBall = document.createElement('button');
     colorBall.classList = "button avatar colorBall";
 
-    const color = hueToHex(i * 20);
+    const color = hueToHex(i * 20 + 10);
 
     colorBall.dataset.color = color;
 
@@ -168,7 +168,7 @@ function closePopUP() {
 function setupColorRange(h = 0) {
   const colorSlider = document.querySelector('#colorSlider');
 
-  let min = h - 18, max = h + 18;
+  let min = h - 10, max = h + 10;
 
   colorSlider.min = min >= 0 ? min : 0;
 
