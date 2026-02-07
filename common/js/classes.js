@@ -362,20 +362,14 @@ class Line {
 
 class Version {
   static setVersion(versionName) {
-    localStorage.setItem('versionName', versionName);
+    console.log('setting version', versionName);
 
-    updateVersionUI();
-  }
-
-  static updateVersionUI() {
     const versionUI = document.querySelector('.version');
     const versionSeparatorUI = document.querySelector('.versionSeparator');
 
     if (!versionUI) {
       return false;
     }
-
-    let versionName = localStorage.getItem('versionName');
 
     if (versionName) {
       versionUI.innerHTML = `v${versionName}`;

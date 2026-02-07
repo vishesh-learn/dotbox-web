@@ -7,8 +7,6 @@ addEventListener("load", () => {
     title.innerText = titleText;
   }
 
-  Version.updateVersionUI();
-
   addEventListener("resize", ElementGuide.refreshState);
 });
 
