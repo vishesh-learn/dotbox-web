@@ -3,6 +3,7 @@ window.addEventListener("load", () => {
 
   document.querySelector("#continueButton").addEventListener("click", continueGame);
   document.querySelector("#newGameButton").addEventListener("click", newGame);
+  document.querySelector('#savedGamesButton').addEventListener('click', savedGames);
 
   initHome();
 
@@ -32,6 +33,39 @@ function newGame() {
   new Game().save();
 
   window.location.href = `pages/${pages.setBoard}/${pages.indexPage}`;
+}
+
+function savedGames() {
+  const dialog = document.querySelector('.saved-games');
+  const listUI = dialog.querySelector(".games-list");
+
+  Game.load();
+
+  Game.games.forEach(game => {
+    const gameUI = createSavedGameUI(game);
+
+    listUI.appendChild(gameUI);
+  });
+
+  dialog.showModal();
+}
+
+function createSavedGameUI(game) {
+  const gameUI = document.createElement("div");
+  gameUI.classList = "saved-game";
+
+  const nameUI = document.createElement("div");
+  nameUI.classList = "name";
+  nameUI.innerText = game.meta_updatedAt;
+  gameUI.append(nameUI);
+
+  gameUI.addEventListener('click', () => {
+    game.save();
+
+    continueGame();
+  });
+
+  return gameUI;
 }
 
 function tooltip_init() {
