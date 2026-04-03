@@ -12,7 +12,9 @@ window.addEventListener("load", () => {
 });
 
 function initHome() {
-  document.querySelector("#continueButton").disabled = !Boolean(localStorage.currGame);
+  Game.load();
+
+  document.querySelector("#continueButton").disabled = !Boolean(Game.currGame);
 }
 
 function continueGame() {
@@ -23,9 +25,11 @@ function continueGame() {
 }
 
 function newGame() {
-  localStorage.removeItem('currGame');
+  console.log('newGame called');
 
   Game.load();
+
+  new Game().save();
 
   window.location.href = `pages/${pages.setBoard}/${pages.indexPage}`;
 }
