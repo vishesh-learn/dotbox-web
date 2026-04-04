@@ -56,7 +56,7 @@ function createSavedGameUI(game) {
 
   const nameUI = document.createElement("div");
   nameUI.classList = "name";
-  nameUI.innerText = game.meta_updatedAt;
+  nameUI.innerText = formatDateTimeWithRelativeEn(game.meta_updatedAt);
   gameUI.append(nameUI);
 
   gameUI.addEventListener('click', () => {
