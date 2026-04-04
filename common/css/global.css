@@ -406,3 +406,12 @@ footer {
 .svgC,svg {
   overflow: visible;
 }
+
+.date {
+  font-size: 1.4rem;
+  margin-bottom: 1.4rem;
+}
+
+.date .relative {
+  font-size: 1rem;
+}
