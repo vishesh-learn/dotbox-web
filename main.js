@@ -4,6 +4,7 @@ window.addEventListener("load", () => {
   document.querySelector("#continueButton").addEventListener("click", continueGame);
   document.querySelector("#newGameButton").addEventListener("click", newGame);
   document.querySelector('#savedGamesButton').addEventListener('click', savedGames);
+  document.querySelector(".close-pop-up").addEventListener("click", savedGames_close);
 
   initHome();
 
@@ -39,6 +40,8 @@ function savedGames() {
   const dialog = document.querySelector('.saved-games');
   const listUI = dialog.querySelector(".games-list");
 
+  listUI.innerHTML = "";
+  
   Game.load();
 
   Game.games.forEach(game => {
@@ -48,6 +51,12 @@ function savedGames() {
   });
 
   dialog.showModal();
+}
+
+function savedGames_close() {
+  const dialog = document.querySelector('.saved-games');
+
+  dialog.close();
 }
 
 function createSavedGameUI(game) {
