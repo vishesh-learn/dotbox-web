@@ -31,6 +31,7 @@
     <div id="home-menu">
       <button class="button" id="continueButton">Continue</button>
       <button class="button" id="newGameButton">New Game</button>
+      <button class="button" id="savedGamesButton">Saved Games</button>
     </div>
   </div>
 
@@ -48,6 +49,12 @@
     <a href="./pages/credits/index.html" class="button privacy-policy-link" tabindex="0">credits</a>
   </footer>
 
+  <dialog class="saved-games">
+    <button class="button close-pop-up">✕</button>
+
+    <div class="games-list"></div>
+  </dialog>
+
   <script src="web-components/tooltip/index.js"></script>
   <script src="common/js/color.js"></script>
   <script src="common/js/variables.js"></script>
@@ -55,6 +62,7 @@
   <script src="common/js/tooltip.js"></script>
   <script src="web-components/share-button/index.js"></script>
   <script src="common/js/global.js"></script>
+  <script src="common/js/datetimeFormat.js"></script>
   <script src="variations/platform-specific-home.js"></script>
   <script src="main.js"></script>
 </body>

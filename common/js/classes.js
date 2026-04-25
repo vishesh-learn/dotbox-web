@@ -1,8 +1,14 @@
 class Game {
+  static games = [];
+  static currGame = null;
+
   constructor() {
+    this.id = crypto.randomUUID();
+
     this.meta_type = 'game';
     this.meta_version = '1.0';
     this.meta_createdAt = new Date();
+    this.meta_updatedAt = new Date();
 
     this.dateTime = new Date();
     this.gameBoard = new GameBoard();
@@ -16,6 +22,68 @@ class Game {
     this.currPlayerId = null;
 
     this.addPlayer = this.addPlayer.bind(this);
+  }
+
+  save() {
+    console.trace('save called');
+
+    this.meta_updatedAt = new Date();
+
+    console.log(Game.games, Game.currGame);
+
+    const gameIndex = Game.games.findIndex(game => game.id == this.id);
+
+    if (gameIndex != -1) {
+      Game.games[gameIndex] = this;
+    } else {
+      Game.games.push(this);
+    }
+
+    localStorage.setItem('games', JSON.stringify(Game.games));
+  }
+
+  static load() {
+    console.log('load called');
+
+    Game.games = localStorage.games ? JSON.parse(localStorage.games) : [];
+
+    console.log('load -> games', Game.games);
+
+    Game.games = Game.games.map(this.parseGame)
+      .sort((a, b) => b.meta_updatedAt - a.meta_updatedAt);
+
+    console.log('load -> parsed games', Game.games);
+
+    if (!Game.games.length) {
+      Game.currGame = localStorage.currGame ? JSON.parse(localStorage.currGame) : new Game();
+
+      Game.currGame = Game.parseGame(Game.currGame);
+    } else {
+      Game.currGame = Game.games[0];
+    }
+  }
+
+  static parseGame(game) {
+    game = Object.assign(new Game, game);
+
+    game.gameBoard = Object.assign(new GameBoard, game.gameBoard);
+
+    game.gameBoard.validate();
+
+    game.validatePlayers();
+
+    game.lines = game.lines.map(Line.constructFromOldLine);
+
+    if (!game.lines.length) {
+      game.currPlayerId = null;
+
+      game.lines = [];
+    }
+
+    game.meta_createdAt = new Date(game.meta_createdAt);
+    game.meta_updatedAt = new Date(game.meta_updatedAt);
+
+    return game;
   }
 
   get currPlayer() {
@@ -60,36 +128,12 @@ class Game {
     });
   }
 
-  save() {
-    localStorage.setItem('currGame', JSON.stringify(this));
-  }
-
   reset() {
     this.currPlayerId = null;
 
     this.lines = [];
 
     this.save();
-  }
-
-  static currGame = null;
-
-  static load() {
-    Game.currGame = localStorage.currGame ? JSON.parse(localStorage.currGame) : new Game();
-
-    Game.currGame = Object.assign(new Game, Game.currGame);
-
-    Game.currGame.gameBoard = Object.assign(new GameBoard, Game.currGame.gameBoard);
-
-    Game.currGame.gameBoard.validate();
-
-    Game.currGame.validatePlayers();
-
-    Game.currGame.lines = Game.currGame.lines.map(Line.constructFromOldLine);
-
-    if (!Game.currGame.lines.length) {
-      Game.currGame.reset();
-    }
   }
 
   addPlayer() {
@@ -362,20 +406,14 @@ class Line {
 
 class Version {
   static setVersion(versionName) {
-    localStorage.setItem('versionName', versionName);
+    console.log('setting version', versionName);
 
-    updateVersionUI();
-  }
-
-  static updateVersionUI() {
     const versionUI = document.querySelector('.version');
     const versionSeparatorUI = document.querySelector('.versionSeparator');
 
     if (!versionUI) {
       return false;
     }
-
-    let versionName = localStorage.getItem('versionName');
 
     if (versionName) {
       versionUI.innerHTML = `v${versionName}`;

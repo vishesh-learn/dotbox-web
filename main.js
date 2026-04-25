@@ -3,6 +3,8 @@ window.addEventListener("load", () => {
 
   document.querySelector("#continueButton").addEventListener("click", continueGame);
   document.querySelector("#newGameButton").addEventListener("click", newGame);
+  document.querySelector('#savedGamesButton').addEventListener('click', savedGames);
+  document.querySelector(".close-pop-up").addEventListener("click", savedGames_close);
 
   initHome();
 
@@ -12,7 +14,9 @@ window.addEventListener("load", () => {
 });
 
 function initHome() {
-  document.querySelector("#continueButton").disabled = !Boolean(localStorage.currGame);
+  Game.load();
+
+  document.querySelector("#continueButton").disabled = !Boolean(Game.currGame);
 }
 
 function continueGame() {
@@ -23,11 +27,54 @@ function continueGame() {
 }
 
 function newGame() {
-  localStorage.removeItem('currGame');
+  console.log('newGame called');
 
   Game.load();
 
+  new Game().save();
+
   window.location.href = `pages/${pages.setBoard}/${pages.indexPage}`;
+}
+
+function savedGames() {
+  const dialog = document.querySelector('.saved-games');
+  const listUI = dialog.querySelector(".games-list");
+
+  listUI.innerHTML = "";
+  
+  Game.load();
+
+  Game.games.forEach(game => {
+    const gameUI = createSavedGameUI(game);
+
+    listUI.appendChild(gameUI);
+  });
+
+  dialog.showModal();
+}
+
+function savedGames_close() {
+  const dialog = document.querySelector('.saved-games');
+
+  dialog.close();
+}
+
+function createSavedGameUI(game) {
+  const gameUI = document.createElement("div");
+  gameUI.classList = "saved-game";
+
+  const nameUI = document.createElement("div");
+  nameUI.classList = "name date";
+  nameUI.innerHTML = formatDateTimeWithRelativeEn(game.meta_updatedAt);
+  gameUI.append(nameUI);
+
+  gameUI.addEventListener('click', () => {
+    game.save();
+
+    continueGame();
+  });
+
+  return gameUI;
 }
 
 function tooltip_init() {

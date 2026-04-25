@@ -94,6 +94,42 @@ footer {
   text-decoration: underline;
 }
 
+.saved-games {
+  max-width: calc(100% - 50px);
+  min-height: 50%;
+  max-height: calc(100% - 180px);
+
+  margin: auto 40px;
+  padding: 50px 0;
+  row-gap: 2rem;
+
+  align-items: center;
+  overflow: auto;
+  flex-direction: column;
+}
+
+.saved-games[open] {
+  display: flex;
+}
+
+.saved-games::backdrop {
+  backdrop-filter: blur(10px);
+}
+
+.games-list {
+  max-width: 340px;
+  min-width: 250px;
+
+  width: calc(100% - 60px);
+  margin: auto;
+
+  flex: 1;
+  flex-shrink: 2;
+
+  overflow-x: overlay;
+  overflow-y: scroll;
+}
+
 @media only screen and (min-height: 480px) {
   #home-menu {
     gap: 10px;
