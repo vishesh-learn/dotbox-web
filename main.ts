@@ -16,7 +16,7 @@ window.addEventListener("load", () => {
 function initHome() {
   Game.load();
 
-  document.querySelector("#continueButton").disabled = !Boolean(Game.currGame);
+  (document.querySelector("#continueButton") as HTMLButtonElement).disabled = !Boolean(Game.currGame);
 }
 
 function continueGame() {
@@ -50,13 +50,13 @@ function savedGames() {
     listUI.appendChild(gameUI);
   });
 
-  dialog.showModal();
+  (dialog as HTMLDialogElement).showModal();
 }
 
 function savedGames_close() {
   const dialog = document.querySelector('.saved-games');
 
-  dialog.close();
+  (dialog as HTMLDialogElement).close();
 }
 
 function createSavedGameUI(game) {
@@ -89,6 +89,6 @@ function tooltip_init() {
   if (!localStorage.getItem(tooltipPlayedKey)) {
     ElementGuide.nextState();
 
-    localStorage.setItem(tooltipPlayedKey, true);
+    localStorage.setItem(tooltipPlayedKey, 'true');
   }
 }

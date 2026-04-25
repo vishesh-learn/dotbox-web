@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "files": [
+    "globals.d.ts",
+    "web-components/tooltip/index.ts",
+    "common/js/color.ts",
+    "common/js/variables.ts",
+    "common/js/classes.ts",
+    "common/js/tooltip.ts",
+    "web-components/share-button/index.ts",
+    "common/js/global.ts",
+    "common/js/datetimeFormat.ts",
+    "variations/platform-specific-home.ts",
+    "main.ts"
+  ]
+}

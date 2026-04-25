@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "files": [
+    "globals.d.ts",
+    "common/js/color.ts",
+    "common/js/variables.ts",
+    "common/js/classes.ts",
+    "common/js/tooltip.ts",
+    "common/js/global.ts",
+    "common/js/gameBoard.ts",
+    "pages/set-board/main.ts"
+  ]
+}

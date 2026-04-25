@@ -72,6 +72,8 @@ class Tooltip extends HTMLElement {
         this.append(tooltip);
     }
 
+    render() {}
+
     connectedCallback() {
         this.render();
     }

@@ -5,8 +5,8 @@ function getAllPossibleLines() {
 
     for (var dotE of dotEs) {
         dot1 = new Dot(
-            Number(dotE.dataset.col),
-            Number(dotE.dataset.row),
+            Number((dotE as HTMLElement).dataset.col),
+            Number((dotE as HTMLElement).dataset.row),
         );
 
         validFinalDots = getSurroundingDots(dot1);

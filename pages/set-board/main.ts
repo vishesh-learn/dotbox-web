@@ -108,8 +108,8 @@ function svgResize() {
   var width = ((Game.currGame.gameBoard.maxCol - 1) * Game.currGame.gameBoard.gap) + dotRadius;
   var height = ((Game.currGame.gameBoard.maxRow - 1) * Game.currGame.gameBoard.gap) + dotRadius;
 
-  gameBoardSVG.style.width = width + "px";
-  gameBoardSVG.style.height = height + "px";
+  (gameBoardSVG as HTMLElement).style.width = width + "px";
+  (gameBoardSVG as HTMLElement).style.height = height + "px";
 }
 
 function GameBoardBuilder() {
@@ -217,8 +217,8 @@ function optedDot(dot) {
   var optedX = dot.cx.baseVal.value;
   var optedY = dot.cy.baseVal.value;
 
-  Game.currGame.gameBoard.col = length_to_dotCount(optedX, Game.currGame.gameBoard.gap);
-  Game.currGame.gameBoard.row = length_to_dotCount(optedY, Game.currGame.gameBoard.gap);
+  Game.currGame.gameBoard.col = length_to_dotCount(optedX);
+  Game.currGame.gameBoard.row = length_to_dotCount(optedY);
 
   optedCnR();
 }
@@ -250,8 +250,8 @@ function optedXnY(x, y) {
     infoE.innerHTML = Game.currGame.gameBoard.col + " x " + Game.currGame.gameBoard.row;
 
     for (var dotE of dotEs) {
-      let cx = dotE.cx.baseVal.value;
-      let cy = dotE.cy.baseVal.value;
+      let cx = (dotE as SVGCircleElement).cx.baseVal.value;
+      let cy = (dotE as SVGCircleElement).cy.baseVal.value;
 
       if (cx <= x && cy <= y) {
         dotE.classList.remove("hidden");
@@ -275,11 +275,11 @@ function nearestDot(x, y) {
   for (var i = 1; i < dotEs.length; i++) {
     let dotE = dotEs[i];
 
-    let cx = dotE.cx.baseVal.value;
-    let cy = dotE.cy.baseVal.value;
+    let cx = (dotE as SVGCircleElement).cx.baseVal.value;
+    let cy = (dotE as SVGCircleElement).cy.baseVal.value;
 
-    let oldcx = nearDot.cx.baseVal.value;
-    let oldcy = nearDot.cy.baseVal.value;
+    let oldcx = (nearDot as SVGCircleElement).cx.baseVal.value;
+    let oldcy = (nearDot as SVGCircleElement).cy.baseVal.value;
 
     let xcx = Math.abs(x - cx);
     let ycy = Math.abs(y - cy);

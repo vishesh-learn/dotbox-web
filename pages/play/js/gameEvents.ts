@@ -28,7 +28,7 @@ function pointerDown(event) {
   var x = event.offsetX, y = event.offsetY;
 
   if (x && y) {
-    let nearInitDot = nearestDot(x, y);
+    let nearInitDot = nearestDot(x, y) as HTMLElement;
 
     initDot = new Dot(
       Number(nearInitDot.dataset.col),
@@ -203,7 +203,7 @@ function dotNavigate(event, direction) {
         let nextRow = selectedDot ? parseInt(selectedDot.dataset.row) - 1 : parseInt(event.target.dataset.row) - 1;
         let nextCol = selectedDot ? parseInt(selectedDot.dataset.col) : parseInt(event.target.dataset.col);
 
-        const nextDot = document.querySelector(`.dot[data-row="${nextRow}"][data-col="${nextCol}"]`);
+        const nextDot = document.querySelector<HTMLElement>(`.dot[data-row="${nextRow}"][data-col="${nextCol}"]`);
 
         nextDot.focus();
 
@@ -228,7 +228,7 @@ function dotNavigate(event, direction) {
         let nextRow = selectedDot ? parseInt(selectedDot.dataset.row) : parseInt(event.target.dataset.row);
         let nextCol = selectedDot ? parseInt(selectedDot.dataset.col) + 1 : parseInt(event.target.dataset.col) + 1;
 
-        const nextDot = document.querySelector(`.dot[data-row="${nextRow}"][data-col="${nextCol}"]`);
+        const nextDot = document.querySelector<HTMLElement>(`.dot[data-row="${nextRow}"][data-col="${nextCol}"]`);
 
         nextDot.focus();
 
@@ -254,7 +254,7 @@ function dotNavigate(event, direction) {
         let nextRow = selectedDot ? parseInt(selectedDot.dataset.row) + 1 : parseInt(event.target.dataset.row) + 1;
         let nextCol = selectedDot ? parseInt(selectedDot.dataset.col) : parseInt(event.target.dataset.col);
 
-        const nextDot = document.querySelector(`.dot[data-row="${nextRow}"][data-col="${nextCol}"]`);
+        const nextDot = document.querySelector<HTMLElement>(`.dot[data-row="${nextRow}"][data-col="${nextCol}"]`);
 
         nextDot.focus();
 
@@ -280,7 +280,7 @@ function dotNavigate(event, direction) {
         let nextRow = selectedDot ? parseInt(selectedDot.dataset.row) : parseInt(event.target.dataset.row);
         let nextCol = selectedDot ? parseInt(selectedDot.dataset.col) - 1 : parseInt(event.target.dataset.col) - 1;
 
-        const nextDot = document.querySelector(`.dot[data-row="${nextRow}"][data-col="${nextCol}"]`);
+        const nextDot = document.querySelector<HTMLElement>(`.dot[data-row="${nextRow}"][data-col="${nextCol}"]`);
 
         nextDot.focus();
 

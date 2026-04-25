@@ -1,0 +1,19 @@
+{
+  "extends": "./tsconfig.json",
+  "files": [
+    "globals.d.ts",
+    "common/js/variables.ts",
+    "common/js/classes.ts",
+    "common/js/color.ts",
+    "common/js/tooltip.ts",
+    "common/js/global.ts",
+    "common/js/gameBoard.ts",
+    "pages/play/js/data.ts",
+    "pages/play/main.ts",
+    "pages/play/js/setup.ts",
+    "pages/play/js/createUI.ts",
+    "pages/play/js/converter.ts",
+    "pages/play/js/gameEvents.ts",
+    "pages/play/js/algo.ts"
+  ]
+}

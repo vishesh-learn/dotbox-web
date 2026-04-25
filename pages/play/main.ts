@@ -57,7 +57,7 @@ function tooltip_init() {
     if (!localStorage.getItem(tooltipPlayedKey)) {
         ElementGuide.nextState();
 
-        localStorage.setItem(tooltipPlayedKey, true);
+        localStorage.setItem(tooltipPlayedKey, 'true');
     }
 }
 
@@ -177,8 +177,8 @@ function nearestDot(x, y) {
 
     let dotDiffs = [...dotEs].map(dotE => ({
         element: dotE,
-        Xdiff: Math.abs(x - dotE.cx.baseVal.value),
-        Ydiff: Math.abs(y - dotE.cy.baseVal.value)
+        Xdiff: Math.abs(x - (dotE as SVGCircleElement).cx.baseVal.value),
+        Ydiff: Math.abs(y - (dotE as SVGCircleElement).cy.baseVal.value)
     }));
 
     let minXValue = Math.min(...dotDiffs.map(dotDiff => dotDiff.Xdiff));
@@ -197,7 +197,7 @@ function prevLineMaker(line) {
 
     line.byPlayerID = Game.currGame.currPlayerId;
     line.prev = true;
-    document.querySelector(".lineSVG").appendChild(getSVGLine(line));
+    document.querySelector(".lineSVG").appendChild(getSVGLine(line) as Node);
 }
 
 function svgResize() {
@@ -302,7 +302,7 @@ function getBoxMakingLines(line) {
 function getSurroundingLines(line) {
     var existingLineList = lineEsToJSON();
     var boxMakingLines = getBoxMakingLines(line);
-    var square = new Object();
+    var square: any = {};
 
     if (line.orient == "vertical") {
         square.orient = "vertical";
@@ -464,6 +464,7 @@ function resetBoardUI() {
 function setupPlayerTurnList() {
     playerTurnList = [];
     var currIndex = Game.currGame.currPlayerId - 1;
+    var prevIndex: number, nextIndex: number, nextIndex2: number;
 
     prevIndex = currIndex === 0 ? Game.currGame.players.length - 1 : currIndex - 1;
 
@@ -515,9 +516,9 @@ function setCurrPlayerInfo() {
         return false;
     }
 
-    document.querySelector('.curr-player-id .value').innerText = `${Game.currGame.currPlayer.id}`;
-    document.querySelector('.curr-player-name .value').innerText = `${Game.currGame.currPlayer.placeholderName}`;
-    document.querySelector('.curr-player-score .value').innerText = `${Game.currGame.currPlayer.score}`;
+    (document.querySelector('.curr-player-id .value') as HTMLElement).innerText = `${Game.currGame.currPlayer.id}`;
+    (document.querySelector('.curr-player-name .value') as HTMLElement).innerText = `${Game.currGame.currPlayer.placeholderName}`;
+    (document.querySelector('.curr-player-score .value') as HTMLElement).innerText = `${Game.currGame.currPlayer.score}`;
 }
 
 function winBoard() {

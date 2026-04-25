@@ -65,7 +65,7 @@ function tooltip_init() {
   if (!localStorage.getItem(tooltipPlayedKey)) {
     ElementGuide.nextState();
 
-    localStorage.setItem(tooltipPlayedKey, true);
+    localStorage.setItem(tooltipPlayedKey, 'true');
   }
 }
 
@@ -149,7 +149,7 @@ function colorSelector(event) {
     targetPlayerIndex = Array.from(playerElements).indexOf(event.target.parentElement);
 
     document.querySelector("body").classList.add("pop-up-container");
-    document.querySelector(".set-color").showModal();
+    (document.querySelector(".set-color") as HTMLDialogElement).showModal();
 
     let color = Game.currGame.players[targetPlayerIndex].color;
 
@@ -160,19 +160,19 @@ function colorSelector(event) {
 }
 
 function closePopUP() {
-  document.querySelector(".set-color").close();
+  (document.querySelector(".set-color") as HTMLDialogElement).close();
 
   document.querySelector("body").classList.remove("pop-up-container");
 }
 
 function setupColorRange(h = 0) {
-  const colorSlider = document.querySelector('#colorSlider');
+  const colorSlider = document.querySelector('#colorSlider') as HTMLInputElement;
 
   let min = h - 10, max = h + 10;
 
-  colorSlider.min = min >= 0 ? min : 0;
+  colorSlider.min = String(min >= 0 ? min : 0);
 
-  colorSlider.max = max < 360 ? max : 360;
+  colorSlider.max = String(max < 360 ? max : 360);
 
   let minHex = hueToHex(colorSlider.min);
   let maxHex = hueToHex(colorSlider.max);
@@ -180,7 +180,7 @@ function setupColorRange(h = 0) {
   document.documentElement.style.setProperty('--colorSliderMinHex', minHex);
   document.documentElement.style.setProperty('--colorSliderMaxHex', maxHex);
 
-  colorSlider.value = h;
+  colorSlider.value = String(h);
 }
 
 function colorRange_Input(event) {
@@ -195,7 +195,7 @@ function colorRange_Input(event) {
   const playerElements = document.querySelectorAll(".player");
   const targetPlayer = playerElements[targetPlayerIndex];
 
-  targetPlayer.querySelector(".avatar").style.backgroundColor = hex;
+  (targetPlayer.querySelector(".avatar") as HTMLElement).style.backgroundColor = hex;
 }
 
 function selectColor(event) {
@@ -214,7 +214,7 @@ function selectColor(event) {
 
     Game.currGame.save();
 
-    targetPlayer.querySelector(".avatar").style.background = toRadialGradientCSSValue(color);
+    (targetPlayer.querySelector(".avatar") as HTMLElement).style.background = toRadialGradientCSSValue(color);
   }
 }
 

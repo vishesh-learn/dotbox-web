@@ -1,6 +1,20 @@
 class Game {
-  static games = [];
-  static currGame = null;
+  static games: any[] = [];
+  static currGame: any = null;
+
+  id: string;
+  meta_type: string;
+  meta_version: string;
+  meta_createdAt: Date;
+  meta_updatedAt: Date;
+  dateTime: Date;
+  gameBoard: GameBoard;
+  minPlayer: number;
+  players: Player[];
+  currPage: string;
+  lines: Line[];
+  boxes: any[];
+  currPlayerId: number | null;
 
   constructor() {
     this.id = crypto.randomUUID();
@@ -107,10 +121,6 @@ class Game {
       this.minPlayer = 2;
     }
 
-    if (this.maxPlayer < this.minPlayer) {
-      this.maxPlayer = this.minPlayer;
-    }
-
     if (this.players.length > this.maxPlayer) {
       this.players = this.players.slice(0, this.maxPlayer);
     }
@@ -147,7 +157,7 @@ class Game {
       this.save();
 
       const playersUI = document.querySelector(".players");
-      playersUI.append(createPlayerUI(player));
+      playersUI.append(createPlayerUI(player) as Node);
 
       updatePlayerCountView();
     }
@@ -155,6 +165,18 @@ class Game {
 }
 
 class GameBoard {
+  meta_type: string;
+  meta_version: string;
+  meta_createdAt: Date;
+  gap: number;
+  minRow: number;
+  minCol: number;
+  maxRow: number;
+  maxCol: number;
+  row: number;
+  col: number;
+  x: number;
+
   constructor() {
     this.meta_type = 'gameBoard';
     this.meta_version = '1.0';
@@ -193,6 +215,17 @@ class GameBoard {
 }
 
 class Player {
+  meta_type: string;
+  meta_version: string;
+  meta_createdAt: Date;
+  avatar: any;
+  color: string | null;
+  id: number;
+  isAlgo: boolean;
+  name: string;
+  rank: number;
+  score: number;
+
   constructor(players = [], id = 0, name = '', color = null, isAlgo = false, rank = 0, score = 0, avatar = null) {
     this.meta_type = 'player';
     this.meta_version = '1.0';
@@ -213,6 +246,12 @@ class Player {
 }
 
 class PseudoDot {
+  meta_type: string;
+  meta_version: string;
+  meta_createdAt: Date;
+  x: number;
+  y: number;
+
   constructor(x, y) {
     this.meta_type = 'pseudoDot';
     this.meta_version = '1.0';
@@ -224,7 +263,13 @@ class PseudoDot {
 }
 
 class Dot {
-  constructor(col, row) {
+  meta_type: string;
+  meta_version: string;
+  meta_createdAt: Date;
+  col: number;
+  row: number;
+
+  constructor(col = 0, row = 0, _direction?: string) {
     this.meta_type = 'dot';
     this.meta_version = '2.0';
     this.meta_createdAt = new Date();
@@ -245,7 +290,15 @@ class Dot {
 }
 
 class Line {
-  constructor(dot1 = new Dot(), dot2 = new Dot(), byPlayerID, prev = false) {
+  meta_type: string;
+  meta_version: string;
+  meta_createdAt: Date;
+  dot1: any;
+  dot2: any;
+  byPlayerID: number | null | undefined;
+  prev: boolean;
+
+  constructor(dot1: any = new Dot(), dot2: any = new Dot(), byPlayerID?: number | null, prev = false) {
     this.meta_type = 'line';
     this.meta_version = '2.0';
     this.meta_createdAt = new Date();
@@ -392,7 +445,7 @@ class Line {
 
     let lineUI = getSVGLine(this);
 
-    lineSVG.appendChild(lineUI);
+    lineSVG.appendChild(lineUI as Node);
 
     let surroundingLines = getSurroundingLines(this);
 

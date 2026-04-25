@@ -1,8 +1,12 @@
 class ElementGuide {
     static currentIndex = -1;
-    static data = [];
+    static data: ElementGuide[] = [];
 
-    constructor(elementSelector, title, instruction) {
+    elementSelector: string;
+    title: string;
+    instruction: string;
+
+    constructor(elementSelector, title, instruction?) {
         this.elementSelector = elementSelector;
         this.title = title;
         this.instruction = instruction;
@@ -76,12 +80,12 @@ function elementTooltip(element, title, instruction) {
     if (!tooltip) {
         tooltip = newTooltip(title, instruction);
     } else {
-        const titleElement = document.querySelector(".tooltip .title");
+        const titleElement = document.querySelector<HTMLElement>(".tooltip .title");
         if (titleElement && title) {
             titleElement.innerText = title;
         }
 
-        const instructionElement = document.querySelector(".tooltip .instruction");
+        const instructionElement = document.querySelector<HTMLElement>(".tooltip .instruction");
         if (instructionElement && instruction) {
             instructionElement.innerText = instruction;
         }
@@ -94,16 +98,18 @@ function elementTooltip(element, title, instruction) {
 
     tooltip.classList.remove("bottom", "top", "middle");
 
+    const tooltipEl = tooltip as HTMLElement;
+
     if (isSpaceOnTop) {
-        tooltip.style.top = `${elementBoundingClientRect.top - tooltipBoundingClientRect.height - gap}px`;
+        tooltipEl.style.top = `${elementBoundingClientRect.top - tooltipBoundingClientRect.height - gap}px`;
 
         tooltip.classList.add("bottom");
     } else if (isSpaceOnBottom) {
-        tooltip.style.top = `${elementBoundingClientRect.bottom + gap}px`;
+        tooltipEl.style.top = `${elementBoundingClientRect.bottom + gap}px`;
 
         tooltip.classList.add("top");
     } else {
-        tooltip.style.top = `${(elementBoundingClientRect.top
+        tooltipEl.style.top = `${(elementBoundingClientRect.top
             + Math.round(elementBoundingClientRect.height / 2))
             - Math.round(tooltipBoundingClientRect.height / 2)}px`;
 
@@ -116,15 +122,15 @@ function elementTooltip(element, title, instruction) {
     tooltip.classList.remove("left", "right", "center");
 
     if (isSpaceOnRight) {
-        tooltip.style.left = `${elementBoundingClientRect.right + gap}px`;
+        tooltipEl.style.left = `${elementBoundingClientRect.right + gap}px`;
 
         tooltip.classList.add("left");
     } else if (isSpaceOnLeft) {
-        tooltip.style.left = `${elementBoundingClientRect.left - tooltipBoundingClientRect.width - gap}px`;
+        tooltipEl.style.left = `${elementBoundingClientRect.left - tooltipBoundingClientRect.width - gap}px`;
 
         tooltip.classList.add("right");
     } else {
-        tooltip.style.left = `${(elementBoundingClientRect.left
+        tooltipEl.style.left = `${(elementBoundingClientRect.left
             + Math.round(elementBoundingClientRect.width / 2))
             - Math.round(tooltipBoundingClientRect.width / 2)}px`;
 

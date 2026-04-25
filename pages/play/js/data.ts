@@ -1,8 +1,12 @@
-let playerTurnList, initDot, selectedDot, finalDot, orient, made;
+var playerTurnList, initDot, selectedDot, finalDot, orient, made;
 
-let allPossibleLines = [], pendingPossiblelines = [], removePrevLinesTimeOut, boxes = [];
+var allPossibleLines = [], pendingPossiblelines = [], removePrevLinesTimeOut, boxes = [];
 
 class Box {
+  x: number;
+  y: number;
+  byLine: any;
+
   constructor(x, y, byLine) {
     this.x = x,
     this.y = y,
@@ -11,6 +15,9 @@ class Box {
 }
 
 class Made {
+  lineMade: boolean;
+  boxMade: number;
+
   constructor() {
     this.lineMade = false;
     this.boxMade = 0;

@@ -50,6 +50,8 @@ function toRadialGradientCSSValue(color) {
 
 /************ by ChatGPT */
 class Color {
+	colorValue: string;
+
 	constructor(colorValue) {
 		this.colorValue = colorValue;
 	}

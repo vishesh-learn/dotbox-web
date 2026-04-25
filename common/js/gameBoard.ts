@@ -8,8 +8,8 @@ function getSurroundingDots(dot) {
     var left = getDotAtLeft(dot);
     
     var options = [top, right, bottom, left]
-        .filter(findDotE);
-    
+        .filter(findDotE) as Dot[];
+
     return options;
 }
 
