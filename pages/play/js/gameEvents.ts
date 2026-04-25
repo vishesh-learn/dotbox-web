@@ -1,4 +1,15 @@
-function pointerDownEvent(listen = true) {
+import { Game, Line, Dot } from '../../../common/js/classes.js';
+import { Made, state } from './data.js';
+import { autoDrawLine } from './algo.js';
+import {
+    nearestDot, nearDot, prevLineMaker, linePreview,
+    setupPlayerTurnList, setupPlayerTurnListUI, slideLeft,
+    setCurrPlayerInfo, winBoard, updateLinesUI, addLine
+} from '../main.js';
+
+var made: Made = new Made();
+
+export function pointerDownEvent(listen = true) {
   const board = document.querySelector(".dotSVG");
 
   if (listen) {
@@ -30,24 +41,16 @@ function pointerDown(event) {
   if (x && y) {
     let nearInitDot = nearestDot(x, y) as HTMLElement;
 
-    initDot = new Dot(
+    state.initDot = new Dot(
       Number(nearInitDot.dataset.col),
       Number(nearInitDot.dataset.row),
     );
 
-    const inRange = Math.abs(x - initDot.x) <= Game.currGame.gameBoard.gap / 2
-      && Math.abs(y - initDot.y) <= Game.currGame.gameBoard.gap / 2;
+    const inRange = Math.abs(x - state.initDot.x) <= Game.currGame.gameBoard.gap / 2
+      && Math.abs(y - state.initDot.y) <= Game.currGame.gameBoard.gap / 2;
 
     if (inRange) {
       pointerMoveAndUPEvents(true);
-
-      getSurroundingDots(initDot).filter(validFinalDot => {
-        var possibleLine = new Line(
-          initDot, validFinalDot
-        );
-
-        return !lineNotExists(possibleLine, pendingPossiblelines);
-      });
     } else {
       console.log("line drawing canceled");
     }
@@ -63,15 +66,15 @@ function pointerUp(event) {
 
   removePrevLines();
 
-  if (initDot && x && y) {
-    finalDot = nearDot(x, y);
+  if (state.initDot && x && y) {
+    var finalDot = nearDot(x, y);
 
     if (
-      new Line(initDot, finalDot).isValid()
+      new Line(state.initDot, finalDot).isValid()
       && Math.abs(x - finalDot.x) <= Game.currGame.gameBoard.gap / 2
       && Math.abs(y - finalDot.y) <= Game.currGame.gameBoard.gap / 2
     ) {
-      new Line(initDot, finalDot, Game.currGame.currPlayerId).addLine();
+      addLine(new Line(state.initDot, finalDot, Game.currGame.currPlayerId));
     }
   } else {
     console.log("no x and y");
@@ -84,19 +87,19 @@ function removePrevLines() {
   document.querySelectorAll(".preview").forEach(line => line.remove());
 }
 
-function lineMade(line) {
+export function lineMade(line) {
   made.lineMade = true;
 
-  pendingPossiblelines.forEach((possibleLine, index) => {
+  state.pendingPossiblelines.forEach((possibleLine, index) => {
     if (Line.compareLineObj(possibleLine, line)) {
-      pendingPossiblelines.splice(index, 1);
+      state.pendingPossiblelines.splice(index, 1);
     }
   });
 
   gameEvent();
 }
 
-function boxMade(box) {
+export function boxMade(box) {
   made.boxMade++;
 }
 
@@ -115,7 +118,7 @@ function gameEvent() {
   setCurrPlayerInfo();
 }
 
-function playerTurn(isInitial = false) {
+export function playerTurn(isInitial = false) {
   if (isInitial && Game?.currGame?.currPlayerId) {
     return false;
   }
@@ -157,11 +160,9 @@ function playerTurn(isInitial = false) {
   }
 }
 
-function isEnd() {
-  return pendingPossiblelines.length <= 0;
+export function isEnd() {
+  return state.pendingPossiblelines.length <= 0;
 }
-
-/* ------------ */
 
 function keyHandler(event) {
   switch (event.keyCode) {
@@ -200,49 +201,38 @@ function dotNavigate(event, direction) {
   switch (direction) {
     case "top":
       if (Number(event.target.dataset.row) > 1) {
-        let nextRow = selectedDot ? parseInt(selectedDot.dataset.row) - 1 : parseInt(event.target.dataset.row) - 1;
-        let nextCol = selectedDot ? parseInt(selectedDot.dataset.col) : parseInt(event.target.dataset.col);
+        let nextRow = state.selectedDot ? parseInt(state.selectedDot.dataset.row) - 1 : parseInt(event.target.dataset.row) - 1;
+        let nextCol = state.selectedDot ? parseInt(state.selectedDot.dataset.col) : parseInt(event.target.dataset.col);
 
         const nextDot = document.querySelector<HTMLElement>(`.dot[data-row="${nextRow}"][data-col="${nextCol}"]`);
 
         nextDot.focus();
 
-        if (selectedDot) {
+        if (state.selectedDot) {
           prevLineMaker(
             new Line(
-              new Dot(
-                selectedDot.dataset.col, selectedDot.dataset.row,
-              ),
-              new Dot(
-                nextCol, nextRow,
-              )
+              new Dot(state.selectedDot.dataset.col, state.selectedDot.dataset.row),
+              new Dot(nextCol, nextRow)
             )
           );
         }
       }
-
       break;
 
     case "right":
       if (Number(event.target.dataset.col) < Game.currGame.gameBoard.col) {
-        let nextRow = selectedDot ? parseInt(selectedDot.dataset.row) : parseInt(event.target.dataset.row);
-        let nextCol = selectedDot ? parseInt(selectedDot.dataset.col) + 1 : parseInt(event.target.dataset.col) + 1;
+        let nextRow = state.selectedDot ? parseInt(state.selectedDot.dataset.row) : parseInt(event.target.dataset.row);
+        let nextCol = state.selectedDot ? parseInt(state.selectedDot.dataset.col) + 1 : parseInt(event.target.dataset.col) + 1;
 
         const nextDot = document.querySelector<HTMLElement>(`.dot[data-row="${nextRow}"][data-col="${nextCol}"]`);
 
         nextDot.focus();
 
-        if (selectedDot) {
+        if (state.selectedDot) {
           prevLineMaker(
             new Line(
-              new Dot(
-                selectedDot.dataset.col,
-                selectedDot.dataset.row,
-              ),
-              new Dot(
-                nextCol,
-                nextRow,
-              )
+              new Dot(state.selectedDot.dataset.col, state.selectedDot.dataset.row),
+              new Dot(nextCol, nextRow)
             )
           );
         }
@@ -251,24 +241,18 @@ function dotNavigate(event, direction) {
 
     case "bottom":
       if (Number(event.target.dataset.row) < Game.currGame.gameBoard.row) {
-        let nextRow = selectedDot ? parseInt(selectedDot.dataset.row) + 1 : parseInt(event.target.dataset.row) + 1;
-        let nextCol = selectedDot ? parseInt(selectedDot.dataset.col) : parseInt(event.target.dataset.col);
+        let nextRow = state.selectedDot ? parseInt(state.selectedDot.dataset.row) + 1 : parseInt(event.target.dataset.row) + 1;
+        let nextCol = state.selectedDot ? parseInt(state.selectedDot.dataset.col) : parseInt(event.target.dataset.col);
 
         const nextDot = document.querySelector<HTMLElement>(`.dot[data-row="${nextRow}"][data-col="${nextCol}"]`);
 
         nextDot.focus();
 
-        if (selectedDot) {
+        if (state.selectedDot) {
           prevLineMaker(
             new Line(
-              new Dot(
-                selectedDot.dataset.col,
-                selectedDot.dataset.row,
-              ),
-              new Dot(
-                nextCol,
-                nextRow,
-              )
+              new Dot(state.selectedDot.dataset.col, state.selectedDot.dataset.row),
+              new Dot(nextCol, nextRow)
             )
           );
         }
@@ -277,24 +261,18 @@ function dotNavigate(event, direction) {
 
     case "left":
       if (Number(event.target.dataset.col) > 1) {
-        let nextRow = selectedDot ? parseInt(selectedDot.dataset.row) : parseInt(event.target.dataset.row);
-        let nextCol = selectedDot ? parseInt(selectedDot.dataset.col) - 1 : parseInt(event.target.dataset.col) - 1;
+        let nextRow = state.selectedDot ? parseInt(state.selectedDot.dataset.row) : parseInt(event.target.dataset.row);
+        let nextCol = state.selectedDot ? parseInt(state.selectedDot.dataset.col) - 1 : parseInt(event.target.dataset.col) - 1;
 
         const nextDot = document.querySelector<HTMLElement>(`.dot[data-row="${nextRow}"][data-col="${nextCol}"]`);
 
         nextDot.focus();
 
-        if (selectedDot) {
+        if (state.selectedDot) {
           prevLineMaker(
             new Line(
-              new Dot(
-                selectedDot.dataset.col,
-                selectedDot.dataset.row,
-              ),
-              new Dot(
-                nextCol,
-                nextRow,
-              )
+              new Dot(state.selectedDot.dataset.col, state.selectedDot.dataset.row),
+              new Dot(nextCol, nextRow)
             )
           );
         }
@@ -302,29 +280,23 @@ function dotNavigate(event, direction) {
       break;
 
     case "enter":
-      if (selectedDot) {
+      if (state.selectedDot) {
         made = new Made();
 
-        removePrevLines();
+        document.querySelectorAll(".preview").forEach(line => line.remove());
 
-        new Line(
-          new Dot(
-            selectedDot.dataset.col,
-            selectedDot.dataset.row,
-          ),
-          new Dot(
-            event.target.dataset.col,
-            event.target.dataset.row,
-          ),
+        addLine(new Line(
+          new Dot(state.selectedDot.dataset.col, state.selectedDot.dataset.row),
+          new Dot(event.target.dataset.col, event.target.dataset.row),
           Game.currGame.currPlayerId
-        ).addLine();
+        ));
 
         updateLinesUI();
 
-        selectedDot = null;
-        initDot = null;
+        state.selectedDot = null;
+        state.initDot = null;
       } else {
-        selectedDot = event.target;
+        state.selectedDot = event.target;
       }
       break;
 

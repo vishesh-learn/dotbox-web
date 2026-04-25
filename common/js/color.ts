@@ -1,4 +1,4 @@
-function newColor(existingColors) {
+export function newColor(existingColors) {
 	var hueList = [];
 
 	existingColors.forEach(color => {
@@ -17,11 +17,11 @@ function newColor(existingColors) {
 	}
 }
 
-function hueToHex(hue) {
+export function hueToHex(hue) {
 	return new Color(`hsl(${hue}, 100%, 80%)`).hex;
 }
 
-function toHslObject(hex) {
+export function toHslObject(hex) {
 	let hsl = new Color(hex).hsl;
 
 	let hslValues = hsl.substring(4, hsl.length - 1).split(',');
@@ -33,12 +33,12 @@ function toHslObject(hex) {
 	}
 }
 
-function hslToHex(hslObject) {
+export function hslToHex(hslObject) {
 	let rgbValues = hslToRgb(hslObject.h, hslObject.s, hslObject.l);
 	return rgbToHex(rgbValues[0], rgbValues[1], rgbValues[2]);
 }
 
-function toRadialGradientCSSValue(color) {
+export function toRadialGradientCSSValue(color) {
   let hslO1 = toHslObject(color);
 
   hslO1.l = 50;
@@ -49,7 +49,7 @@ function toRadialGradientCSSValue(color) {
 }
 
 /************ by ChatGPT */
-class Color {
+export class Color {
 	colorValue: string;
 
 	constructor(colorValue) {
@@ -125,11 +125,11 @@ class Color {
 	}
 }
 
-function rgbToHex(r, g, b) {
+export function rgbToHex(r, g, b) {
 	return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
 }
 
-function hslToRgb(h, s, l) {
+export function hslToRgb(h, s, l) {
 	// Convert hue to a value between 0 and 360
 	if (h < 0) {
 		h = h + 360;
@@ -192,7 +192,7 @@ function hslToRgb(h, s, l) {
 	return [r, g, b];
 }
 
-function rgbToHsl(r, g, b) {
+export function rgbToHsl(r, g, b) {
 	r /= 255;
 	g /= 255;
 	b /= 255;

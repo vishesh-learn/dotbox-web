@@ -1,4 +1,8 @@
-function createPlayerUI(player) {
+import { Game, Line } from '../../../common/js/classes.js';
+import { getDotRadius } from '../../../common/js/global.js';
+import { toRadialGradientCSSValue, toHslObject, hslToHex } from '../../../common/js/color.js';
+
+export function createPlayerUI(player) {
     if (!player) {
         console.trace("no player");
 
@@ -21,7 +25,7 @@ function createPlayerUI(player) {
     return playerUI;
 }
 
-function createRankPlayerUI(player) {
+export function createRankPlayerUI(player) {
     const playerUI = document.createElement("div");
     playerUI.classList = "player";
 
@@ -48,7 +52,7 @@ function createRankPlayerUI(player) {
     return playerUI;
 }
 
-function gameBoardBuilder() {
+export function gameBoardBuilder() {
     var cx, cy;
     var svg = document.querySelector(".dotSVG");
     var dots = document.querySelectorAll("circle");
@@ -90,7 +94,7 @@ function createDotUI(cx, cy, row, col) {
     return dotElement;
 }
 
-function createSquareUI(box) {
+export function createSquareUI(box) {
     if (box.x && box.y) {
         var squareE = document.createElementNS('http://www.w3.org/2000/svg', "rect");
         squareE.setAttribute("class", "winBox");
@@ -139,7 +143,7 @@ function createStopUI(offset, stopColor) {
     return stopUI;
 }
 
-function getSVGLine(line) {
+export function getSVGLine(line) {
     let lineE = document.createElementNS('http://www.w3.org/2000/svg', "line");
     lineE.classList = "line";
 
@@ -172,4 +176,14 @@ function getSVGLine(line) {
     line.dot2.col && lineE.setAttribute("data-dot2-col", line.dot2.col);
 
     return lineE;
+}
+
+function svgResize() {
+    let dotRadius = getDotRadius();
+
+    var width = ((Game.currGame.gameBoard.col - 1) * Game.currGame.gameBoard.gap) + (2 * dotRadius);
+    var height = ((Game.currGame.gameBoard.row - 1) * Game.currGame.gameBoard.gap) + (2 * dotRadius);
+
+    document.documentElement.style.setProperty('--boardWidth', `${width}px`);
+    document.documentElement.style.setProperty('--boardHeight', `${height}px`);
 }

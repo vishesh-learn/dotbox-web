@@ -1,3 +1,5 @@
+import { ElementGuide } from './tooltip.js';
+
 addEventListener("load", () => {
   const title = document.querySelector("title");
 
@@ -10,15 +12,15 @@ addEventListener("load", () => {
   addEventListener("resize", ElementGuide.refreshState);
 });
 
-function keyOnTabIndex() {
+export function keyOnTabIndex() {
   document.querySelectorAll("[tabindex]").forEach(keyOnElement);
 }
 
-function keyOnElement(element) {
+export function keyOnElement(element) {
   element.addEventListener("keypress", event => {
     if (event.keyCode === 13) {
       console.log("clicking", element);
-      
+
       if (element.click) {
         element.click();
       } else {
@@ -28,11 +30,11 @@ function keyOnElement(element) {
   });
 }
 
-function getRndInteger(min, max) {
+export function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function getDotRadius() {
+export function getDotRadius() {
   let dotRadius = Number(
     getComputedStyle(document.documentElement)
       .getPropertyValue('--dotRadius').trim().replace(/\D/g, '')
@@ -45,14 +47,14 @@ function getDotRadius() {
   return totalRadius;
 }
 
-function getScrollbarSize() {
+export function getScrollbarSize() {
   return Number(
     getComputedStyle(document.documentElement)
       .getPropertyValue('--scrollbarSize').trim().replace(/\D/g, '')
   ) || 0;
 }
 
-function getComputedSize(element) {
+export function getComputedSize(element) {
 
   let widthValue = getComputedStyle(element, null)
     .getPropertyValue("width");
@@ -67,16 +69,12 @@ function getComputedSize(element) {
   return { width, height };
 }
 
-function loadingStartUI() {
+export function loadingStartUI() {
   document.querySelector("body").classList.add("loading-container");
 }
 
-function loadingEndUI() {
+export function loadingEndUI() {
   document.querySelector("body").classList.remove("loading-container");
-}
-
-function length_to_dotCount(length) {
-  return (length - length % Game.currGame.gameBoard.gap + Game.currGame.gameBoard.gap) / Game.currGame.gameBoard.gap;
 }
 
 // window.onerror = (message, source, lineno, colno, error) => {

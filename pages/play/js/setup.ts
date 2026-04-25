@@ -1,6 +1,10 @@
-//this file contains function that need to run only once per load to set up gameplay.
+import { Dot, Line } from '../../../common/js/classes.js';
+import { getSurroundingDots } from '../../../common/js/gameBoard.js';
+import { lineEsToJSON } from './converter.js';
+import { state } from './data.js';
+import { lineNotExists } from '../main.js';
 
-function getAllPossibleLines() {
+export function getAllPossibleLines() {
     let dotEs = document.querySelectorAll(".dot"), validFinalDots, dot1, dot2;
 
     for (var dotE of dotEs) {
@@ -12,23 +16,21 @@ function getAllPossibleLines() {
         validFinalDots = getSurroundingDots(dot1);
 
         for (dot2 of validFinalDots) {
-            var possibleLine = new Line(
-                dot1, dot2
-            );
+            var possibleLine = new Line(dot1, dot2);
 
-            if (lineNotExists(possibleLine, allPossibleLines)) {
-                allPossibleLines.push(possibleLine);
+            if (lineNotExists(possibleLine, state.allPossibleLines)) {
+                state.allPossibleLines.push(possibleLine);
             }
         }
     }
 
-    return allPossibleLines;
+    return state.allPossibleLines;
 }
 
-function getPendingPossiblelines() {
-    pendingPossiblelines = allPossibleLines.filter((line) => {
+export function getPendingPossiblelines() {
+    state.pendingPossiblelines = state.allPossibleLines.filter((line) => {
         return lineNotExists(line, lineEsToJSON());
     });
-    
-    return pendingPossiblelines;
+
+    return state.pendingPossiblelines;
 }

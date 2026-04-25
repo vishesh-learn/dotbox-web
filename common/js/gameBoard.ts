@@ -1,4 +1,6 @@
-function getSurroundingDots(dot) {
+import { Dot } from './classes.js';
+
+export function getSurroundingDots(dot) {
     var top = getDotAtTop(dot);
 
     var right = getDotAtRight(dot);
@@ -6,7 +8,7 @@ function getSurroundingDots(dot) {
     var bottom = getDotAtBottom(dot);
 
     var left = getDotAtLeft(dot);
-    
+
     var options = [top, right, bottom, left]
         .filter(findDotE) as Dot[];
 
@@ -70,7 +72,7 @@ function findDotE(dot) {
             return existingDotUI;
         }
     }
-    
+
     return false;
 }
 

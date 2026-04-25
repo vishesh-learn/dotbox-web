@@ -1,15 +1,21 @@
+import { Game } from '../../../common/js/classes.js';
+import { getRndInteger } from '../../../common/js/global.js';
+import { state } from './data.js';
+import { getPendingPossiblelines } from './setup.js';
+import { getSurroundingLines, doesMakesSquare, addLine } from '../main.js';
+import { isEnd } from './gameEvents.js';
 
-function autoDrawLine() {
+export function autoDrawLine() {
   if (!Game.currGame.currPlayer.isAlgo) {
     return false;
   }
 
   findAndMakeBoxMakingLines();
- 
+
   if (isEnd()) {
     return true;
   }
-  
+
   makeSafeOrRandomLine();
 }
 
@@ -18,9 +24,9 @@ let squareMakingLine;
 function findAndMakeBoxMakingLines() {
   if (squareMakingLine = getSquareMakingLine()) {
     squareMakingLine.byPlayerID = Game.currGame.currPlayerId;
-    
-    squareMakingLine.addLine();
-  
+
+    addLine(squareMakingLine);
+
     findAndMakeBoxMakingLines();
   }
 
@@ -30,17 +36,17 @@ function findAndMakeBoxMakingLines() {
 function makeSafeOrRandomLine() {
   var line;
 
-  var currSafeMoves = pendingPossiblelines.filter(possibleLine => isSafeMove(possibleLine));
+  var currSafeMoves = state.pendingPossiblelines.filter(possibleLine => isSafeMove(possibleLine));
 
-  if (currSafeMoves.length > 0) { // draw safe line if exist
+  if (currSafeMoves.length > 0) {
     line = currSafeMoves[getRndInteger(0, currSafeMoves.length - 1)];
-  } else { // else draw any random line - *need to find and draw less unsafe line
-    line = pendingPossiblelines[getRndInteger(0, pendingPossiblelines.length - 1)];
+  } else {
+    line = state.pendingPossiblelines[getRndInteger(0, state.pendingPossiblelines.length - 1)];
   }
 
   line.byPlayerID = Game.currGame.currPlayerId;
 
-  line.addLine();
+  addLine(line);
 
   Game.currGame.save();
 }
@@ -48,7 +54,7 @@ function makeSafeOrRandomLine() {
 function getSquareMakingLine() {
   getPendingPossiblelines();
 
-  for (var possibleLine of pendingPossiblelines) {
+  for (var possibleLine of state.pendingPossiblelines) {
     if (doesMakesSquare(possibleLine)) {
       return possibleLine;
     }

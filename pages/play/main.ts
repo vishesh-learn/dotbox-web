@@ -1,7 +1,19 @@
+import { Game, Line, PseudoDot } from '../../common/js/classes.js';
+import { pages } from '../../common/js/variables.js';
+import { keyOnTabIndex, loadingStartUI, loadingEndUI, getComputedSize } from '../../common/js/global.js';
+import { ElementGuide } from '../../common/js/tooltip.js';
+import { getSurroundingDots } from '../../common/js/gameBoard.js';
+import { getSVGLine, createPlayerUI, createRankPlayerUI, gameBoardBuilder, createSquareUI } from './js/createUI.js';
+import { lineEsToJSON } from './js/converter.js';
+import { Box, state } from './js/data.js';
+import { getAllPossibleLines, getPendingPossiblelines } from './js/setup.js';
+import { playerTurn, lineMade, boxMade } from './js/gameEvents.js';
+
+var boxes: any[] = [];
+var playerTurnList: any[] = [];
+
 window.onload = () => {
     document.querySelector("#homeButton").addEventListener("click", goHome);
-
-    made = new Made();
 
     Game.load();
 
@@ -20,7 +32,7 @@ window.onload = () => {
     loadingStartUI();
 
     setTimeout(() => {
-        updateLinesUI(); // time comsuming function
+        updateLinesUI();
 
         loadingEndUI();
 
@@ -61,7 +73,7 @@ function tooltip_init() {
     }
 }
 
-function gameBoardOverFlow() {
+export function gameBoardOverFlow() {
     let pageContentSize = getComputedSize(document.querySelector(".page-content"));
     let boardSize = getComputedSize(document.querySelector(".svgC"));
 
@@ -78,11 +90,11 @@ function gameBoardOverFlow() {
     }
 }
 
-function refreshGameLines() {
+export function refreshGameLines() {
     Game.currGame.lines = Game.currGame.lines.filter(line => {
         let playerExists = Game.currGame.players.some(player => player.id == line.byPlayerID);
 
-        let isNotPossibleLine = lineNotExists(line, allPossibleLines);
+        let isNotPossibleLine = lineNotExists(line, state.allPossibleLines);
 
         return playerExists && !isNotPossibleLine;
     });
@@ -112,17 +124,17 @@ function footerInfo() {
     rowColInfoHtml.innerHTML = `${Game.currGame.gameBoard.col} x ${Game.currGame.gameBoard.row}`;
 }
 
-function linePreview(event) {
+export function linePreview(event) {
     var x = event.offsetX, y = event.offsetY;
 
-    if (!initDot) {
+    if (!state.initDot) {
         return false;
     }
 
-    var left = initDot.x - Game.currGame.gameBoard.gap;
-    var top = initDot.y - Game.currGame.gameBoard.gap;
-    var bottom = initDot.y + Game.currGame.gameBoard.gap;
-    var right = initDot.x + Game.currGame.gameBoard.gap;
+    var left = state.initDot.x - Game.currGame.gameBoard.gap;
+    var top = state.initDot.y - Game.currGame.gameBoard.gap;
+    var bottom = state.initDot.y + Game.currGame.gameBoard.gap;
+    var right = state.initDot.x + Game.currGame.gameBoard.gap;
 
     if (x < left) {
         x = left;
@@ -143,20 +155,20 @@ function linePreview(event) {
     var pseudoDot = new PseudoDot(x, y);
 
     prevLineMaker(
-        new Line(initDot, pseudoDot)
+        new Line(state.initDot, pseudoDot)
     );
 }
 
-function nearDot(x, y) {
-    var validFinalDots = getSurroundingDots(initDot);
+export function nearDot(x, y) {
+    var validFinalDots = getSurroundingDots(state.initDot);
 
-    var nearDot = validFinalDots[0];
+    var nearest = validFinalDots[0];
     for (var dot of validFinalDots) {
         let cx = dot.x;
         let cy = dot.y;
 
-        let oldcx = nearDot.x;
-        let oldcy = nearDot.y;
+        let oldcx = nearest.x;
+        let oldcy = nearest.y;
 
         let x_cx = Math.abs(x - cx);
         let y_cy = Math.abs(y - cy);
@@ -165,14 +177,14 @@ function nearDot(x, y) {
         let oldycy = Math.abs(y - oldcy);
 
         if ((x_cx <= oldxcx) && y_cy <= oldycy) {
-            nearDot = dot;
+            nearest = dot;
         }
     }
 
-    return nearDot;
+    return nearest;
 }
 
-function nearestDot(x, y) {
+export function nearestDot(x, y) {
     var dotEs = document.querySelectorAll(".dot");
 
     let dotDiffs = [...dotEs].map(dotE => ({
@@ -192,7 +204,7 @@ function nearestDot(x, y) {
     return minXYdotDiff?.element;
 }
 
-function prevLineMaker(line) {
+export function prevLineMaker(line) {
     removePrevLines();
 
     line.byPlayerID = Game.currGame.currPlayerId;
@@ -200,17 +212,11 @@ function prevLineMaker(line) {
     document.querySelector(".lineSVG").appendChild(getSVGLine(line) as Node);
 }
 
-function svgResize() {
-    let dotRadius = getDotRadius();
-
-    var width = ((Game.currGame.gameBoard.col - 1) * Game.currGame.gameBoard.gap) + (2 * dotRadius);
-    var height = ((Game.currGame.gameBoard.row - 1) * Game.currGame.gameBoard.gap) + (2 * dotRadius);
-
-    document.documentElement.style.setProperty('--boardWidth', `${width}px`);
-    document.documentElement.style.setProperty('--boardHeight', `${height}px`);
+function removePrevLines() {
+    document.querySelectorAll(".preview").forEach(line => line.remove());
 }
 
-function updateLinesUI() {
+export function updateLinesUI() {
     Game.currGame.players.forEach(player => {
         player.score = 0;
     });
@@ -218,19 +224,48 @@ function updateLinesUI() {
     Game.currGame.lines.forEach((line, index) => {
         console.trace("updateLinesUI", index, "line", line, "byPlayerID", line.byPlayerID, "currPlayerID", Game.currGame.currPlayerId);
 
-        line.drawLine();
+        drawLine(line);
     });
 }
 
-function updateBoxesUI(boxes) {
+export function updateBoxesUI(boxList) {
     Game.currGame.players.forEach(player => {
-        player.score = boxes.filter(box => box.byLine.byPlayer == player).length;
+        player.score = boxList.filter(box => box.byLine.byPlayer == player).length;
     });
 
     setCurrPlayerInfo();
 }
 
-function getBoxMakingLines(line) {
+export function addLine(line: Line) {
+    if (!line.findHTMLElement()) {
+        Game.currGame.lines.push(line);
+
+        drawLine(line);
+    } else {
+        console.log('line exists');
+    }
+
+    state.initDot = undefined;
+    state.selectedDot = null;
+}
+
+export function drawLine(line: Line) {
+    const lineSVG = document.querySelector(".lineSVG");
+
+    let lineUI = getSVGLine(line);
+
+    lineSVG.appendChild(lineUI as Node);
+
+    let surroundingLines = getSurroundingLines(line);
+
+    makeBox(surroundingLines, line);
+
+    lineMade(line);
+
+    updateBoxesUI(boxes);
+}
+
+export function getBoxMakingLines(line) {
     let newVersionOfLine = Line.constructFromOldLine(line);
 
     if (line.orient == "vertical") {
@@ -299,7 +334,7 @@ function getBoxMakingLines(line) {
     }
 }
 
-function getSurroundingLines(line) {
+export function getSurroundingLines(line) {
     var existingLineList = lineEsToJSON();
     var boxMakingLines = getBoxMakingLines(line);
     var square: any = {};
@@ -366,7 +401,7 @@ function getSurroundingLines(line) {
     return square;
 }
 
-function makeBox(square, line) {
+export function makeBox(square, line) {
     var x, y, currBoxes = [];
 
     if (square.orient == "horizontal") {
@@ -414,7 +449,7 @@ function addBox(box) {
     }
 }
 
-function lineNotExists(line, linelist) {
+export function lineNotExists(line, linelist) {
     for (let listLine of linelist) {
         if (Line.compareLineObj(line, listLine)) {
             return false;
@@ -438,7 +473,7 @@ function compareBoxObj(box1, box2) {
     return (box1.x == box2.x) && (box1.y == box2.y);
 }
 
-function doesMakesSquare(middleLine) {
+export function doesMakesSquare(middleLine) {
     var possibleSquare = getSurroundingLines(middleLine);
 
     if (possibleSquare.orient == "horizontal") {
@@ -461,7 +496,7 @@ function resetBoardUI() {
     [...squaresE, ...linesE].forEach(element => element.remove());
 }
 
-function setupPlayerTurnList() {
+export function setupPlayerTurnList() {
     playerTurnList = [];
     var currIndex = Game.currGame.currPlayerId - 1;
     var prevIndex: number, nextIndex: number, nextIndex2: number;
@@ -488,13 +523,13 @@ function setupPlayerTurnList() {
     );
 }
 
-function slideLeft() {
+export function slideLeft() {
     const frame = document.querySelector(".playerTurnList");
 
     frame.classList.add("slideLeft");
 }
 
-function setupPlayerTurnListUI() {
+export function setupPlayerTurnListUI() {
     const frame = document.querySelector(".playerTurnList");
     var playerUI;
 
@@ -510,7 +545,7 @@ function setupPlayerTurnListUI() {
     setCurrPlayerInfo();
 }
 
-function setCurrPlayerInfo() {
+export function setCurrPlayerInfo() {
     if (!Game?.currGame?.currPlayer) {
         console.error('currPlayer not found for game', Game.currGame);
         return false;
@@ -521,7 +556,7 @@ function setCurrPlayerInfo() {
     (document.querySelector('.curr-player-score .value') as HTMLElement).innerText = `${Game.currGame.currPlayer.score}`;
 }
 
-function winBoard() {
+export function winBoard() {
     updateBoxesUI(boxes);
 
     document.querySelector("dialog").showModal();
@@ -554,3 +589,4 @@ function setupPlayerRankList() {
         playerRankListUI.append(createRankPlayerUI(player));
     });
 }
+

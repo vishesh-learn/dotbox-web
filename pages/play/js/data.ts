@@ -1,8 +1,4 @@
-var playerTurnList, initDot, selectedDot, finalDot, orient, made;
-
-var allPossibleLines = [], pendingPossiblelines = [], removePrevLinesTimeOut, boxes = [];
-
-class Box {
+export class Box {
   x: number;
   y: number;
   byLine: any;
@@ -14,7 +10,7 @@ class Box {
   }
 }
 
-class Made {
+export class Made {
   lineMade: boolean;
   boxMade: number;
 
@@ -23,3 +19,10 @@ class Made {
     this.boxMade = 0;
   }
 }
+
+export const state = {
+  allPossibleLines: [] as any[],
+  pendingPossiblelines: [] as any[],
+  initDot: undefined as any,
+  selectedDot: null as any,
+};

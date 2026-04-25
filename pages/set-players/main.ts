@@ -1,3 +1,9 @@
+import { Game, Player } from '../../common/js/classes.js';
+import { pages } from '../../common/js/variables.js';
+import { keyOnTabIndex, loadingStartUI, loadingEndUI } from '../../common/js/global.js';
+import { ElementGuide } from '../../common/js/tooltip.js';
+import { hueToHex, toHslObject, toRadialGradientCSSValue } from '../../common/js/color.js';
+
 var targetPlayerIndex = 0;
 
 onload = function () {
@@ -25,7 +31,7 @@ onload = function () {
 
   setCurrentPageInCurrentGame();
 
-  document.querySelector(".addb").addEventListener("click", Game.currGame.addPlayer);
+  document.querySelector(".addb").addEventListener("click", addPlayer);
 
   setupPlayersUI();
 
@@ -88,8 +94,7 @@ function scrollAbove(event) {
 }
 
 function goButtonHandler(event) {
-  if (event.keyCode === 13 && event.target.type === "text"
-  ) {
+  if (event.keyCode === 13 && event.target.type === "text") {
     console.log("blur", event.target);
 
     event.target.blur();
@@ -255,6 +260,23 @@ async function setupPlayersUI() {
   }, 0);
 }
 
+function addPlayer() {
+  if (Game.currGame.players.length < Game.currGame.maxPlayer) {
+    const player = new Player();
+
+    player.id = Game.currGame.players.length + 1;
+
+    Game.currGame.players.push(player);
+
+    Game.currGame.save();
+
+    const playersUI = document.querySelector(".players");
+    playersUI.append(createPlayerUI(player));
+
+    updatePlayerCountView();
+  }
+}
+
 function createPlayerUI(player) {
   const playerUI = document.createElement("div");
   playerUI.classList = "player";
@@ -285,4 +307,16 @@ function createPlayerUI(player) {
   playerUI.append(removePlayerB);
 
   return playerUI;
+}
+
+function keyOnElement(element) {
+  element.addEventListener("keypress", event => {
+    if (event.keyCode === 13) {
+      if (element.click) {
+        element.click();
+      } else {
+        element.dispatchEvent(new Event("click"));
+      }
+    }
+  });
 }

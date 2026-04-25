@@ -1,7 +1,6 @@
-//Only one platform specific code is to be kept uncommented at a time.
+import { shareTitle, shareText, shareUrl } from '../common/js/variables.js';
 
-//platform specific code for web app:
-function shareApp() {
+export function shareApp() {
     if (navigator.share) {
         navigator.share({
             title: shareTitle,
@@ -12,13 +11,3 @@ function shareApp() {
         window.open(shareUrl);
     }
 }
-
-/* ------------------------------------- */
-
-//platform specific code for android app:
-// function shareApp() {
-//     Android.shareApp(shareTitle, shareText);
-// }
-
-/* ------------------------------------- */
-

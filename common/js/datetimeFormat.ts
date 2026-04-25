@@ -1,4 +1,4 @@
-function ordinalSuffix(day) {
+export function ordinalSuffix(day) {
   const n = Math.abs(Number(day));
   const v = n % 100;
   if (v >= 11 && v <= 13) {
@@ -16,7 +16,7 @@ function ordinalSuffix(day) {
   }
 }
 
-function formatOrdinalDateTime12hEn(date) {
+export function formatOrdinalDateTime12hEn(date) {
   if (!(date instanceof Date) || Number.isNaN(date.getTime())) {
     return "Unknown date";
   }
@@ -38,7 +38,7 @@ function formatOrdinalDateTime12hEn(date) {
   return `${day}<sup>${ordinalSuffix(day)}</sup> ${month}, ${year} at ${hh}:${mm} ${ampm}`;
 }
 
-function formatRelativePastEn(date, nowDate = new Date()) {
+export function formatRelativePastEn(date, nowDate = new Date()) {
   if (!(date instanceof Date) || Number.isNaN(date.getTime())) {
     return "unknown";
   }
@@ -88,7 +88,7 @@ function formatRelativePastEn(date, nowDate = new Date()) {
   return `${yearsTotal} year${yearsTotal === 1 ? "" : "s"} ago`;
 }
 
-function formatDateTimeWithRelativeEn(date, nowDate = new Date()) {
+export function formatDateTimeWithRelativeEn(date, nowDate = new Date()) {
   const absolute = formatOrdinalDateTime12hEn(date);
   const relative = formatRelativePastEn(date, nowDate);
   return `${absolute}<br /><span class="relative">${relative}</span>`;

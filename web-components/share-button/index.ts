@@ -19,6 +19,8 @@ class ShareButton extends HTMLElement {
 
 customElements.define("share-button", ShareButton);
 
+export {};
+
 function getSVGLine(x1, y1, x2, y2) {
     let lineE = document.createElementNS('http://www.w3.org/2000/svg', "line");
 

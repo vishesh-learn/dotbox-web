@@ -1,4 +1,7 @@
-class Game {
+import { newColor } from './color.js';
+import { getDotRadius } from './global.js';
+
+export class Game {
   static games: any[] = [];
   static currGame: any = null;
 
@@ -34,8 +37,6 @@ class Game {
     this.boxes = [];
 
     this.currPlayerId = null;
-
-    this.addPlayer = this.addPlayer.bind(this);
   }
 
   save() {
@@ -145,26 +146,9 @@ class Game {
 
     this.save();
   }
-
-  addPlayer() {
-    if (this.players.length < this.maxPlayer) {
-      const player = new Player();
-
-      player.id = this.players.length + 1;
-
-      this.players.push(player);
-
-      this.save();
-
-      const playersUI = document.querySelector(".players");
-      playersUI.append(createPlayerUI(player) as Node);
-
-      updatePlayerCountView();
-    }
-  }
 }
 
-class GameBoard {
+export class GameBoard {
   meta_type: string;
   meta_version: string;
   meta_createdAt: Date;
@@ -214,7 +198,7 @@ class GameBoard {
   }
 }
 
-class Player {
+export class Player {
   meta_type: string;
   meta_version: string;
   meta_createdAt: Date;
@@ -245,7 +229,7 @@ class Player {
   }
 }
 
-class PseudoDot {
+export class PseudoDot {
   meta_type: string;
   meta_version: string;
   meta_createdAt: Date;
@@ -262,7 +246,7 @@ class PseudoDot {
   }
 }
 
-class Dot {
+export class Dot {
   meta_type: string;
   meta_version: string;
   meta_createdAt: Date;
@@ -289,7 +273,7 @@ class Dot {
   }
 }
 
-class Line {
+export class Line {
   meta_type: string;
   meta_version: string;
   meta_createdAt: Date;
@@ -426,38 +410,9 @@ class Line {
 
     return lineInOneWay || lineInOtherWay;
   }
-
-  addLine() {
-    if (!this.findHTMLElement()) {
-      Game.currGame.lines.push(this);
-
-      this.drawLine();
-    } else {
-      console.log('line exists');
-    }
-
-    initDot = undefined;
-    selectedDot = null;
-  }
-
-  drawLine() {
-    const lineSVG = document.querySelector(".lineSVG");
-
-    let lineUI = getSVGLine(this);
-
-    lineSVG.appendChild(lineUI as Node);
-
-    let surroundingLines = getSurroundingLines(this);
-
-    makeBox(surroundingLines, this);
-
-    lineMade(this);
-
-    updateBoxesUI(boxes);
-  }
 }
 
-class Version {
+export class Version {
   static setVersion(versionName) {
     console.log('setting version', versionName);
 
@@ -486,4 +441,8 @@ class Version {
       }
     }
   }
+}
+
+export function length_to_dotCount(length) {
+  return (length - length % Game.currGame.gameBoard.gap + Game.currGame.gameBoard.gap) / Game.currGame.gameBoard.gap;
 }
