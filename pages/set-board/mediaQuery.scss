@@ -1,0 +1,29 @@
+@use '../../scss/mixins' as m;
+
+@include m.mobile-landscape {
+  :root {
+    --calcPlayBoardWidth: calc(100% - var(--playHeaderWidth) - var(--playFooterWidth) + var(--headerWidth) + var(--footerWidth) - var(--scrollbarSize));
+
+    --calcPlayBoardHeight: 100%;
+
+    --headerWidth: 90px;
+    --headerHeight: 100%;
+
+    --footerWidth: 100px;
+    --footerHeight: 100%;
+  }
+
+  body {
+    flex-direction: row;
+  }
+
+  header {
+    flex-direction: column;
+    justify-content: space-evenly;
+    min-width: var(--headerWidth);
+  }
+
+  .svgC {
+    max-width: var(--calcPlayBoardWidth);
+  }
+}

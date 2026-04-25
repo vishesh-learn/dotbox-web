@@ -1,0 +1,139 @@
+@use 'scss/mixins' as m;
+
+:root {
+  --headerHeight: unset;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px;
+  box-shadow: none;
+}
+
+.page-content {
+  flex: 1;
+  display: flex;
+}
+
+share-button {
+  width: 2em;
+}
+
+.line {
+  stroke: var(--brown);
+  stroke-width: 5;
+}
+
+.dot {
+  fill: var(--brown);
+}
+
+#home-menu {
+  position: fixed;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+
+  .button {
+    width: max-content;
+    color: unset;
+    font-size: 26px;
+    background: none;
+    border: none;
+    border-radius: 20px;
+    user-select: none;
+    background: var(--bg-low-opacity);
+    box-shadow: 0 0 10px 10px var(--bg-low-opacity);
+    padding: 0 0.4em;
+  }
+}
+
+#continueButton:disabled {
+  opacity: 0.5;
+}
+
+#newGameButton:active {
+  scale: 0.99;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  height: 3.1em;
+  position: relative;
+  font-size: 14px;
+}
+
+.version,
+.privacy-policy-link {
+  line-height: 1em;
+  padding: 0 5px;
+}
+
+.version {
+  text-align: center;
+  color: var(--brown);
+}
+
+.privacy-policy-link {
+  text-decoration: underline;
+}
+
+.saved-games {
+  max-width: calc(100% - 50px);
+  min-height: 50%;
+  max-height: calc(100% - 180px);
+  margin: auto 40px;
+  padding: 50px 0;
+  row-gap: 2rem;
+  align-items: center;
+  overflow: auto;
+  flex-direction: column;
+
+  &[open] {
+    display: flex;
+  }
+
+  &::backdrop {
+    backdrop-filter: blur(10px);
+  }
+}
+
+.games-list {
+  max-width: 340px;
+  min-width: 250px;
+  width: calc(100% - 60px);
+  margin: auto;
+  flex: 1;
+  flex-shrink: 2;
+  overflow-x: overlay;
+  overflow-y: scroll;
+}
+
+@include m.min-height-480 {
+  #home-menu {
+    gap: 10px;
+
+    .button {
+      font-size: 30px;
+    }
+  }
+
+  footer {
+    font-size: 0.8em;
+  }
+}

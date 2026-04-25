@@ -1,0 +1,26 @@
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+h4 {
+  margin-top: 0;
+}
+
+.privacy-policy {
+  max-width: 900px;
+  flex: 1;
+  overflow-y: scroll;
+  margin: auto;
+  padding: 30px;
+}
+
+.game-title,
+.email-id {
+  font-weight: bold;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}

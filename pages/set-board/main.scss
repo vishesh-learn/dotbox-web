@@ -1,0 +1,83 @@
+@use '../../scss/mixins' as m;
+
+:root {
+  --dotRadius: 11px;
+  --svgWidth: 100%;
+  --svgHeight: 100%;
+
+  --align-x-board: center;
+  --align-y-board: space-evenly;
+
+  --calcPlayBoardWidth: 100%;
+
+  --headerWidth: 100%;
+
+  --calcPlayBoardHeight: calc(100% - var(--playHeaderHeight) - var(--playFooterHeight) + var(--headerHeight) + var(--footerHeight) - var(--scrollbarSize));
+}
+
+* {
+  box-sizing: border-box;
+  outline-style: none;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
+.hidden {
+  /* opacity: 0; */
+}
+
+.page-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+  justify-content: var(--align-y-board);
+  align-items: var(--align-x-board);
+  overflow: auto;
+}
+
+.svgC {
+  width: 100%;
+  height: 100%;
+  max-width: var(--calcPlayBoardWidth);
+  max-height: var(--calcPlayBoardHeight);
+  overflow: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: var(--align-y-board);
+  align-items: var(--align-x-board);
+
+  svg {
+    width: var(--svgWidth);
+    height: var(--svgHeight);
+    background: var(--bg-low-opacity);
+    box-shadow: 0 0 30px 15px var(--bg-low-opacity);
+  }
+
+  &:focus-visible {
+    outline: 2px dashed #000;
+    border-radius: 2px;
+  }
+}
+
+.dot {
+  fill: var(--brown);
+  border-radius: 50%;
+  outline: 1px solid var(--brown);
+  outline-offset: 3px;
+
+  &.hidden {
+    outline-offset: 2px;
+    fill: transparent;
+  }
+
+  &:focus-visible {
+    outline: 1px dashed;
+  }
+}

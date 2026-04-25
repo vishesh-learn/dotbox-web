@@ -1,0 +1,17 @@
+{
+  "name": "dotbox-web",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "npm run build:css && npm run build:js",
+    "build:css": "sass common/scss/global.scss:dist/common/css/global.css common/scss/globalMediaQuery.scss:dist/common/css/globalMediaQuery.css main.scss:dist/main.css pages/play/main.scss:dist/pages/play/main.css pages/play/mediaQuery.scss:dist/pages/play/mediaQuery.css pages/set-board/main.scss:dist/pages/set-board/main.css pages/set-board/mediaQuery.scss:dist/pages/set-board/mediaQuery.css pages/set-players/main.scss:dist/pages/set-players/main.css pages/set-players/mediaQuery.scss:dist/pages/set-players/mediaQuery.css pages/privacy-policy/main.scss:dist/pages/privacy-policy/main.css pages/credits/main.scss:dist/pages/credits/main.css",
+    "build:js": "tsc",
+    "watch:css": "sass --watch common/scss/global.scss:dist/common/css/global.css common/scss/globalMediaQuery.scss:dist/common/css/globalMediaQuery.css main.scss:dist/main.css pages/play/main.scss:dist/pages/play/main.css pages/play/mediaQuery.scss:dist/pages/play/mediaQuery.css pages/set-board/main.scss:dist/pages/set-board/main.css pages/set-board/mediaQuery.scss:dist/pages/set-board/mediaQuery.css pages/set-players/main.scss:dist/pages/set-players/main.css pages/set-players/mediaQuery.scss:dist/pages/set-players/mediaQuery.css pages/privacy-policy/main.scss:dist/pages/privacy-policy/main.css pages/credits/main.scss:dist/pages/credits/main.css",
+    "watch:js": "tsc --watch"
+  },
+  "devDependencies": {
+    "sass": "^1.77.0",
+    "typescript": "^5.5.0"
+  }
+}

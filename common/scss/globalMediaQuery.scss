@@ -1,0 +1,24 @@
+@use '../../scss/mixins' as m;
+
+@include m.mobile-landscape {
+  :root {
+    --playHeaderWidth: 90px;
+    --playHeaderHeight: 100%;
+
+    --playFooterWidth: 100px;
+    --playFooterHeight: 100%;
+  }
+
+  header {
+    padding-right: 10px;
+    padding-left: 10px;
+
+    .start {
+      flex-direction: column;
+    }
+
+    .end {
+      flex-direction: column;
+    }
+  }
+}
