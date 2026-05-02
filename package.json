@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "npm run build:css && npm run build:js",
+    "build": "npm run build:css && npm run build:js && npm run build:static",
     "build:css": "sass --no-source-map .:dist",
-    "build:js": "tsc -p tsconfig.home.json && tsc -p tsconfig.play.json && tsc -p tsconfig.set-board.json && tsc -p tsconfig.set-players.json && tsc -p tsconfig.privacy-policy.json && tsc -p tsconfig.credits.json",
+    "build:js": "tsc",
+    "build:static": "node scripts/build-static.js",
     "watch:css": "sass --no-source-map --watch .:dist",
-    "watch:js": "tsc -p tsconfig.home.json --watch",
+    "watch:js": "tsc --watch",
     "dev": "npm run watch:css & npm run watch:js"
   },
   "devDependencies": {

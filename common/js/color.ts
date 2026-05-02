@@ -1,3 +1,5 @@
+import { getRndInteger } from './global.js';
+
 export function newColor(existingColors) {
 	var hueList = [];
 
