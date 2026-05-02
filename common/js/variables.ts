@@ -1,9 +1,10 @@
 export const pages = {
-    indexPage: "index.html",
-    setBoard: "set-board",
-    setPlayers: "set-players",
-    play: "play",
-    privacyPolicy: "privacy-policy"
+    index: '/',
+    setBoard: '/pages/set-board/',
+    setPlayers: '/pages/set-players/',
+    play: '/pages/play/',
+    privacyPolicy: '/pages/privacy-policy/',
+    credits: '/pages/credits/',
   };
 
   export const onAppStore = {

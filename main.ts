@@ -31,8 +31,7 @@ function initHome() {
 function continueGame() {
   Game.load();
 
-  window.location.href = `pages/${Game.currGame.currPage ?
-    Game.currGame.currPage : pages.setBoard}/${pages.indexPage}`;
+  window.location.href = Game.currGame.currPage ?? pages.setBoard;
 }
 
 function newGame() {
@@ -42,7 +41,7 @@ function newGame() {
 
   new Game().save();
 
-  window.location.href = `pages/${pages.setBoard}/${pages.indexPage}`;
+  window.location.href = pages.setBoard;
 }
 
 function savedGames() {

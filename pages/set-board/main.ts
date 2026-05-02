@@ -33,15 +33,15 @@ window.onload = () => {
 }
 
 function goHome() {
-  window.location.href = `../../${pages.indexPage}`;
+  window.location.href = pages.index;
 }
 
 function goBack() {
-  window.location.href = `../../${pages.indexPage}`;
+  window.location.href = pages.index;
 }
 
 function goNext() {
-  window.location.href = `${pages.setPlayers}/${pages.indexPage}`;
+  window.location.href = pages.setPlayers;
 }
 
 function setupGameBoard() {

@@ -8,10 +8,10 @@ var targetPlayerIndex = 0;
 
 onload = function () {
   document.querySelector("#backButton")
-    .addEventListener("click", () => window.location.href = `../${pages.setBoard}/${pages.indexPage}`);
+    .addEventListener("click", () => window.location.href = pages.setBoard);
 
   document.querySelector("#nextButton")
-    .addEventListener("click", () => window.location.href = `${pages.play}/${pages.indexPage}`);
+    .addEventListener("click", () => window.location.href = pages.play);
 
   document.querySelector("#homeButton").addEventListener("click", goHome);
 
@@ -76,7 +76,7 @@ function tooltip_init() {
 }
 
 function goHome() {
-  window.location.href = `../../${pages.indexPage}`;
+  window.location.href = pages.index;
 }
 
 function scrollAbove(event) {

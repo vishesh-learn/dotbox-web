@@ -111,11 +111,11 @@ function replay() {
 function newGame() {
     Game.currGame.reset();
 
-    window.location.href = `../${pages.setBoard}/${pages.indexPage}`
+    window.location.href = pages.setBoard;
 }
 
 function goHome() {
-    window.location.href = `../../${pages.indexPage}`;
+    window.location.href = pages.index;
 }
 
 function footerInfo() {
