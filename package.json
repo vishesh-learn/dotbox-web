@@ -10,10 +10,11 @@
     "build:static": "node scripts/build-static.js",
     "watch:css": "sass --no-source-map --watch common/css:dist/common/css pages:dist/pages main.scss:dist/main.css",
     "watch:js": "tsc --watch",
-    "dev": "concurrently \"npm run watch:css\" \"npm run watch:js\" \"npx serve .\"",
+    "dev": "concurrently \"npm run watch:css\" \"npm run watch:js\" \"browser-sync start --server . --files 'dist/**,index.html,pages/**/index.html' --no-notify\"",
     "preview": "npx serve dist"
   },
   "devDependencies": {
+    "browser-sync": "^3.0.4",
     "concurrently": "^9.2.1",
     "sass": "^1.77.0",
     "typescript": "^5.5.0"

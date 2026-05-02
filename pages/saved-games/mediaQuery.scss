@@ -1,0 +1,67 @@
+@use '../../scss/mixins' as m;
+
+@include m.min-width-480-portrait {
+  .set-color {
+    max-width: 18em;
+  }
+}
+
+@include m.landscape {
+  .set-color {
+    flex-direction: row;
+    max-width: 28em;
+  }
+}
+
+@include m.min-height-480-landscape {
+  .set-color {
+    padding: 3em;
+    max-width: 30em;
+    gap: 3em;
+  }
+
+  .close-pop-up {
+    font-size: large;
+  }
+}
+
+@include m.mobile-landscape {
+  :root {
+    --headerWidth: 90px;
+    --headerHeight: 100%;
+
+    --footerWidth: 100px;
+    --footerHeight: 100%;
+  }
+
+  body {
+    flex-direction: row;
+  }
+
+  header {
+    flex-direction: column;
+    justify-content: space-evenly;
+    min-width: var(--headerWidth);
+    width: min-content;
+  }
+
+  #info br {
+    display: unset;
+  }
+
+  .addb {
+    right: calc(var(--footerWidth) + 25px);
+    bottom: 30px;
+  }
+
+  .set-color {
+    flex-direction: row;
+    height: 100%;
+    justify-content: center;
+    max-width: calc(100% - 50px);
+  }
+
+  #colorSlider {
+    max-width: 180px;
+  }
+}

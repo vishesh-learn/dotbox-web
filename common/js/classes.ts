@@ -1,5 +1,13 @@
 import { newColor } from './color.js';
 import { getDotRadius } from './global.js';
+import { formatDateTimeWithRelativeEn } from './datetimeFormat.js';
+import { pages } from './variables.js';
+
+function randomUUID(): string {
+    return '10000000-1000-4000-8000-100000000000'.replace(/[018]/g, c =>
+        (+c ^ Math.random() * 16 >> +c / 4).toString(16)
+    );
+}
 
 export class Game {
   static games: any[] = [];
@@ -20,7 +28,7 @@ export class Game {
   currPlayerId: number | null;
 
   constructor() {
-    this.id = crypto.randomUUID();
+    this.id = crypto.randomUUID?.() ?? randomUUID();
 
     this.meta_type = 'game';
     this.meta_version = '1.0';
@@ -139,12 +147,36 @@ export class Game {
     });
   }
 
+  static continue() {
+    Game.load();
+  
+    window.location.href = Game.currGame.currPage ?? pages.setBoard;
+  }
+
   reset() {
     this.currPlayerId = null;
 
     this.lines = [];
 
     this.save();
+  }
+
+  get listItemUI() {
+    const gameUI = document.createElement("div");
+    gameUI.classList = "saved-game";
+  
+    const nameUI = document.createElement("div");
+    nameUI.classList = "name date";
+    nameUI.innerHTML = formatDateTimeWithRelativeEn(this.meta_updatedAt);
+    gameUI.append(nameUI);
+  
+    gameUI.addEventListener('click', () => {
+      this.save();
+  
+      Game.continue();
+    });
+  
+    return gameUI;
   }
 }
 

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>DotBox - Saved Games</title>
+
+  <link rel="shortcut icon" href="../../icon.png" />
+  <link rel="stylesheet" href="../../dist/common/css/global.css" />
+  <link rel="stylesheet" href="../../dist/common/css/globalMediaQuery.css" />
+  <link rel="stylesheet" href="../../dist/pages/set-players/main.css" />
+  <link rel="stylesheet" href="../../dist/pages/set-players/mediaQuery.css" />
+</head>
+
+<body>
+  <div class="page-bg"></div>
+
+  <div class="pop-up loading">
+    <div>loading...</div>
+  </div>
+
+  <header>
+    <div class="start">
+      <svg class="icon button" tabindex="0" id="backButton" width="30" height="30" viewBox="0 0 133 155"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M0.282059 76.8295C0.282059 76.8295 5.63139 33.2513 50.8417 7.37631C94.7489 -17.7528 97.8138 33.8928 97.8138 33.8928C97.8138 33.8928 132.572 33.258 132.266 78.9723C131.778 122.901 97.8138 122.901 97.8138 122.901C97.8138 122.901 94.5678 171.88 51.3427 147.838C5.6392 119.554 0.282059 76.8295 0.282059 76.8295Z" />
+      </svg>
+
+      <svg class="icon button" tabindex="0" id="homeButton" width="30" height="30" viewBox="0 0 214 200"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M107 0C107 0 147 0 197 60C247 120 166.029 136.764 166.029 136.764C166.029 136.764 167 200 107 199.997C47 200 47.3282 136.764 47.3282 136.764C47.3282 136.764 -33 120 17 60C67 0 107 0 107 0Z" />
+      </svg>
+    </div>
+
+    <div class="end">
+      <div id="info"></div>
+      <button id="guide" class="icon button"></button>
+    </div>
+
+  </header>
+
+  <div class="page">
+    <div class="page-content">
+      <p class="instruction"><i>Set up your players!</i> Choose your color, name your player, and decide who's human or
+        robot!
+      </p>
+
+      <div class="players"></div>
+
+      <svg class="button addb" tabindex="0" xmlns="http://www.w3.org/2000/svg" width="100" height="100"
+        viewBox="0 0 100 100" title="Add a new player to the game!">
+
+        <polyline points="50,25 50,75" />
+        <polyline points="25,50 75,50" />
+      </svg>
+    </div>
+  </div>
+
+  <footer>
+    <button class="button" tabindex="0" id="nextButton">NEXT</button>
+  </footer>
+
+  <dialog class="set-color">
+    <button class="button close-pop-up">✕</button>
+
+    <div class="top left">
+      <div class="avatar color-prev"></div>
+      <input type="range" id="colorSlider" min="0" max="359" />
+    </div>
+
+    <div class="right bottom color-hue"></div>
+  </dialog>
+
+  <script type="module" src="../../dist/pages/set-players/main.js"></script>
+</body>
+
+</html>

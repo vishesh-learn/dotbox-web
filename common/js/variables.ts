@@ -3,6 +3,7 @@ export const pages = {
     setBoard: '/pages/set-board/',
     setPlayers: '/pages/set-players/',
     play: '/pages/play/',
+    savedGames: '/pages/saved-games/',
     privacyPolicy: '/pages/privacy-policy/',
     credits: '/pages/credits/',
   };
