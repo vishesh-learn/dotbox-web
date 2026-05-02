@@ -12,7 +12,7 @@ window.addEventListener("load", () => {
 
   document.querySelector("#continueButton").addEventListener("click", continueGame);
   document.querySelector("#newGameButton").addEventListener("click", newGame);
-  document.querySelector('#savedGamesButton').addEventListener('click', savedGames);
+  // document.querySelector('#savedGamesButton').addEventListener('click', savedGames);
   document.querySelector(".close-pop-up").addEventListener("click", savedGames_close);
 
   initHome();
