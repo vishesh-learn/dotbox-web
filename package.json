@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "clean": "rm -rf dist",
+    "clean": "node -e \"require('fs').rmSync('dist', {recursive:true, force:true})\"",
     "build": "npm run build:css && npm run build:js && npm run build:static",
-    "build:css": "sass --no-source-map .:dist",
+    "build:css": "sass --no-source-map common/css:dist/common/css pages:dist/pages main.scss:dist/main.css",
     "build:js": "tsc",
     "build:static": "node scripts/build-static.js",
-    "watch:css": "sass --no-source-map --watch .:dist",
+    "watch:css": "sass --no-source-map --watch common/css:dist/common/css pages:dist/pages main.scss:dist/main.css",
     "watch:js": "tsc --watch",
     "dev": "npm run watch:css & npm run watch:js"
   },
