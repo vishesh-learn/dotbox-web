@@ -10,9 +10,11 @@
     "build:static": "node scripts/build-static.js",
     "watch:css": "sass --no-source-map --watch common/css:dist/common/css pages:dist/pages main.scss:dist/main.css",
     "watch:js": "tsc --watch",
-    "dev": "npm run watch:css & npm run watch:js"
+    "dev": "concurrently \"npm run watch:css\" \"npm run watch:js\" \"npx serve .\"",
+    "preview": "npx serve dist"
   },
   "devDependencies": {
+    "concurrently": "^9.2.1",
     "sass": "^1.77.0",
     "typescript": "^5.5.0"
   }

@@ -11,7 +11,7 @@ onload = function () {
     .addEventListener("click", () => window.location.href = `../${pages.setBoard}/${pages.indexPage}`);
 
   document.querySelector("#nextButton")
-    .addEventListener("click", () => window.location.href = `../${pages.play}/${pages.indexPage}`);
+    .addEventListener("click", () => window.location.href = `${pages.play}/${pages.indexPage}`);
 
   document.querySelector("#homeButton").addEventListener("click", goHome);
 

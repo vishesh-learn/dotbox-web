@@ -41,7 +41,7 @@ function goBack() {
 }
 
 function goNext() {
-  window.location.href = `../${pages.setPlayers}/${pages.indexPage}`;
+  window.location.href = `${pages.setPlayers}/${pages.indexPage}`;
 }
 
 function setupGameBoard() {
