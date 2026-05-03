@@ -10,7 +10,7 @@ function randomUUID(): string {
 }
 
 export class Game {
-  static games: any[] = [];
+  static games: Game[] = [];
   static currGame: any = null;
 
   id: string;

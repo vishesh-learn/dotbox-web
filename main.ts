@@ -38,19 +38,6 @@ function newGame() {
 }
 
 function savedGames() {
-  // const dialog = document.querySelector('.saved-games');
-  // const listUI = dialog.querySelector(".games-list");
-
-  // listUI.innerHTML = "";
-
-  // Game.load();
-
-  // Game.games.forEach(game => {
-  //   const gameUI = createSavedGameUI(game);
-
-  //   listUI.appendChild(gameUI);
-  // });
-
   window.location.href = pages.savedGames;
 }
 
