@@ -16,219 +16,44 @@ body {
   font-weight: bold;
   display: flex;
   flex-direction: column;
-}
 
-header {
-  min-height: var(--headerHeight);
+  header {
+    min-height: var(--headerHeight);
 
-  .end {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-  }
-}
+    .end {
+      display: flex;
+      gap: 20px;
+      align-items: center;
 
-#info br {
-  display: none;
-}
-
-#guide {
-  margin-right: 20px;
-  margin-left: 20px;
-}
-
-.page {
-  flex: 1;
-  position: relative;
-}
-
-.page-content {
-  width: 100%;
-  height: 100%;
-  flex: 1;
-  position: absolute;
-  overflow: auto;
-
-  .instruction {
-    padding: 20px 20px 10px 20px;
-    background: var(--bg-low-opacity);
-    box-shadow: 0 0 30px 15px var(--bg-low-opacity);
-    text-align: center;
-  }
-}
-
-.players {
-  margin-top: 5px;
-  margin-bottom: calc(45vh);
-  background: var(--bg-low-opacity);
-  box-shadow: 0 0 20px 30px var(--bg-low-opacity);
-}
-
-.player {
-  height: var(--playerHeight);
-  display: flex;
-  align-items: center;
-
-  .avatar {
-    width: 30px;
-    height: 25px;
-    margin: 0 15px;
-  }
-}
-
-.playerName {
-  background-color: transparent;
-  border-style: none none solid none;
-  border-bottom-style: solid;
-  border-bottom-color: var(--brown);
-  padding: 10px;
-  height: 30px;
-  flex: 1;
-  min-width: 80px;
-
-  &::placeholder {
-    color: #4c191ba0;
+      #info br {
+        display: none;
+      }
+    }
   }
 
-  &:focus {
-    background-color: var(--bg-low-opacity);
-    font-weight: bold;
-    letter-spacing: 0.3px;
-  }
-}
-
-.isAlgo {
-  width: 40px;
-  height: 40px;
-  margin: 0 5px 0 15px;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  background-image: url(../../../assets/images/robo-avatar.svg);
-
-  &:not(:checked) {
-    opacity: .3;
-  }
-}
-
-.removePlayerB {
-  font-size: 20px;
-  font-weight: bold;
-  width: 30px;
-  height: 30px;
-  margin: 0 10px 0 5px;
-}
-
-.addb {
-  width: 50px;
-  height: 40px;
-  position: fixed;
-  right: 25px;
-  bottom: calc(var(--footerHeight) + 30px);
-  border: 3px solid var(--brown-light);
-  border-radius: 50%;
-  background-color: hsl(26 100% 70% / 1);
-  fill: none;
-  stroke: var(--brown-light);
-  stroke-width: 10px;
-  stroke-linecap: round;
-}
-
-.pop-up-container {
-  .page,
-  header,
-  footer {
-    opacity: 0.4;
-  }
-}
-
-.set-color {
-  width: 100%;
-  max-height: calc(100% - 50px);
-  padding: 1.4em;
-  flex-direction: column;
-  gap: 2em;
-  align-items: center;
-
-  &[open] {
-    display: flex;
+  #guide {
+    margin-right: 20px;
+    margin-left: 20px;
   }
 
-  .top.left {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5em;
+  .page {
+    flex: 1;
+    position: relative;
+
+    .page-content {
+      width: 100%;
+      height: 100%;
+      flex: 1;
+      position: absolute;
+      overflow: auto;
+
+      .instruction {
+        padding: 20px 20px 10px 20px;
+        background: var(--bg-low-opacity);
+        box-shadow: 0 0 30px 15px var(--bg-low-opacity);
+        text-align: center;
+      }
+    }
   }
 
-  .color-prev {
-    background: var(--currentPlayerColor);
-    width: 80px;
-    height: 60px;
-    outline: 2px dotted var(--brown);
-    outline-offset: 1px;
-  }
-}
-
-#colorSlider {
-  -webkit-appearance: none;
-  width: 100%;
-  min-width: 180px;
-  height: 10px;
-  border-radius: 5px;
-  background: linear-gradient(to right, var(--colorSliderMinHex), var(--colorSliderMaxHex));
-  outline: none;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
-  cursor: pointer;
-
-  &::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: var(--currentPlayerColor);
-    border: 2px solid var(--brown);
-    cursor: pointer;
-  }
-
-  &::-moz-range-thumb {
-    appearance: none;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: var(--currentPlayerColor);
-    border: 2px solid var(--brown);
-    cursor: pointer;
-  }
-
-  &:focus-visible {
-    outline: 2px dashed #000000;
-  }
-
-  &::-webkit-slider-runnable-track:focus-visible {
-    outline: 2px dashed #000000;
-  }
-}
-
-.colorBall {
-  border-radius: 45%;
-}
-
-.color-hue {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(45px, 1fr));
-  align-items: center;
-  justify-items: center;
-  gap: 20px;
-
-  .avatar {
-    width: 45px;
-    height: 35px;
-  }
 }

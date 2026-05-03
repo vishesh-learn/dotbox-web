@@ -19,29 +19,29 @@ onload = function () {
 }
 
 function gamesUILoaded() {
-  tooltip_init();
+  // tooltip_init();
 }
 
-function tooltip_init() {
-  ElementGuide.data = [
-    new ElementGuide(".avatar", "Player Color", "Choose your player color!"),
-    new ElementGuide(".playerName", "Player Name", "Type your name"),
-    new ElementGuide(".isAlgo", "Autoplayer", "Enable Autoplayer (Let the robot play!)"),
-    new ElementGuide(".removePlayerB", "Remove Player", "Remove this player"),
-    new ElementGuide(".addb", "Add Player", "Add a new player to the game!"),
-  ];
+// function tooltip_init() {
+//   ElementGuide.data = [
+//     new ElementGuide(".avatar", "Player Color", "Choose your player color!"),
+//     new ElementGuide(".playerName", "Player Name", "Type your name"),
+//     new ElementGuide(".isAlgo", "Autoplayer", "Enable Autoplayer (Let the robot play!)"),
+//     new ElementGuide(".removePlayerB", "Remove Player", "Remove this player"),
+//     new ElementGuide(".addb", "Add Player", "Add a new player to the game!"),
+//   ];
 
-  document.querySelector("#guide").addEventListener("click", ElementGuide.nextState);
+//   document.querySelector("#guide").addEventListener("click", ElementGuide.nextState);
 
-  document.querySelector(".page-bg").addEventListener("click", ElementGuide.nextState);
+//   document.querySelector(".page-bg").addEventListener("click", ElementGuide.nextState);
 
-  const tooltipPlayedKey = "tooltip played once for player selector";
-  if (!localStorage.getItem(tooltipPlayedKey)) {
-    ElementGuide.nextState();
+//   const tooltipPlayedKey = "tooltip played once for saved games";
+//   if (!localStorage.getItem(tooltipPlayedKey)) {
+//     ElementGuide.nextState();
 
-    localStorage.setItem(tooltipPlayedKey, 'true');
-  }
-}
+//     localStorage.setItem(tooltipPlayedKey, 'true');
+//   }
+// }
 
 function updatePlayerCountView() {
   document.querySelector("#info")
