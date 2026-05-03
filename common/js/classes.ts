@@ -11,7 +11,7 @@ function randomUUID(): string {
 
 export class Game {
   static games: Game[] = [];
-  static currGame: any = null;
+  static currGame: Game = null;
 
   id: string;
   meta_type: string;
@@ -24,7 +24,7 @@ export class Game {
   players: Player[];
   currPage: string;
   lines: Line[];
-  boxes: any[];
+  boxes: Box[];
   currPlayerId: number | null;
 
   constructor() {
@@ -52,8 +52,6 @@ export class Game {
 
     this.meta_updatedAt = new Date();
 
-    console.log(Game.games, Game.currGame);
-
     const gameIndex = Game.games.findIndex(game => game.id == this.id);
 
     if (gameIndex != -1) {
@@ -66,11 +64,7 @@ export class Game {
   }
 
   static load() {
-    console.log('load called');
-
     Game.games = localStorage.games ? JSON.parse(localStorage.games) : [];
-
-    console.log('load -> games', Game.games);
 
     Game.games = Game.games.map(this.parseGame)
       .sort((a, b) => b.meta_updatedAt - a.meta_updatedAt);
@@ -227,6 +221,28 @@ export class GameBoard {
     if (this.col < this.minCol) {
       this.col = this.minCol;
     }
+  }
+}
+
+export class Box {
+  x: number;
+  y: number;
+  byLine: any;
+
+  constructor(x, y, byLine) {
+    this.x = x,
+    this.y = y,
+    this.byLine = byLine
+  }
+}
+
+export class Made {
+  lineMade: boolean;
+  boxMade: number;
+
+  constructor() {
+    this.lineMade = false;
+    this.boxMade = 0;
   }
 }
 

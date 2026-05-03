@@ -1,5 +1,5 @@
-import { Game, Line, Dot } from '../../../common/js/classes.js';
-import { Made, state } from './data.js';
+import { Game, Made, Line, Dot } from '../../../common/js/classes.js';
+import { state } from './data.js';
 import { autoDrawLine } from './algo.js';
 import {
     nearestDot, nearDot, prevLineMaker, linePreview,
@@ -125,19 +125,25 @@ export function playerTurn(isInitial = false) {
 
   pointerDownEvent(false);
 
-  console.trace("playerTurn - currPlayerId", Game.currGame.currPlayerId);
+  console.trace("playerTurn - currPlayerId", Game.currGame.currPlayerId, Game.currGame);
 
   if (!(Game.currGame?.players?.length > 0)) {
-    console.error('not enough players for the game', Game.currGame);
     return false;
   }
 
-  if (Game.currGame.currPlayer != undefined) {
-    if (Game.currGame.currPlayerId == Game.currGame.players.length) {
+  console.trace("here 0", { currPlayerId: Game.currGame.currPlayerId });
+
+  if (Game.currGame.currPlayerId != undefined) {
+    let currentPlayerIndex = Game.currGame.players.findIndex(player => player.id == Game.currGame.currPlayerId);
+    let lastPlayerIndex = Game.currGame.players.length - 1;
+
+    if (currentPlayerIndex == lastPlayerIndex) {
       Game.currGame.currPlayerId = Game.currGame.players[0].id;
     } else {
-      Game.currGame.currPlayerId = Game.currGame.players[Game.currGame.currPlayerId].id;
+      Game.currGame.currPlayerId = Game.currGame.players[currentPlayerIndex + 1].id;
     }
+
+    console.log("here 1", { currentPlayerIndex, lastPlayerIndex, currPlayerId: Game.currGame.currPlayerId });
 
     setupPlayerTurnList();
     if (Game.currGame.currPlayer.isAlgo) {

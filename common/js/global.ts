@@ -19,8 +19,6 @@ export function keyOnTabIndex() {
 export function keyOnElement(element) {
   element.addEventListener("keypress", event => {
     if (event.keyCode === 13) {
-      console.log("clicking", element);
-
       if (element.click) {
         element.click();
       } else {

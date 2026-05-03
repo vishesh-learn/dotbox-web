@@ -1,11 +1,11 @@
-import { Game, Line, PseudoDot } from '../../common/js/classes.js';
+import { Game, Box, Line, PseudoDot } from '../../common/js/classes.js';
 import { pages } from '../../common/js/variables.js';
 import { keyOnTabIndex, loadingStartUI, loadingEndUI, getComputedSize } from '../../common/js/global.js';
 import { ElementGuide } from '../../common/js/tooltip.js';
 import { getSurroundingDots } from '../../common/js/gameBoard.js';
 import { getSVGLine, createPlayerUI, createRankPlayerUI, gameBoardBuilder, createSquareUI } from './js/createUI.js';
 import { lineEsToJSON } from './js/converter.js';
-import { Box, state } from './js/data.js';
+import { state } from './js/data.js';
 import { getAllPossibleLines, getPendingPossiblelines } from './js/setup.js';
 import { playerTurn, lineMade, boxMade } from './js/gameEvents.js';
 
@@ -222,8 +222,6 @@ export function updateLinesUI() {
     });
 
     Game.currGame.lines.forEach((line, index) => {
-        console.trace("updateLinesUI", index, "line", line, "byPlayerID", line.byPlayerID, "currPlayerID", Game.currGame.currPlayerId);
-
         drawLine(line);
     });
 }
@@ -489,27 +487,22 @@ export function doesMakesSquare(middleLine) {
     return false;
 }
 
-function resetBoardUI() {
-    var linesE = document.querySelectorAll(".line");
-    var squaresE = document.querySelectorAll(".winBox");
-
-    [...squaresE, ...linesE].forEach(element => element.remove());
-}
-
 export function setupPlayerTurnList() {
     playerTurnList = [];
-    var currIndex = Game.currGame.currPlayerId - 1;
+
+    var currIndex = Game.currGame.players.findIndex(player => player.id == Game.currGame.currPlayerId);
     var prevIndex: number, nextIndex: number, nextIndex2: number;
 
     prevIndex = currIndex === 0 ? Game.currGame.players.length - 1 : currIndex - 1;
+    let lastIndex = Game.currGame.players.length - 1;
 
-    if (currIndex === Game.currGame.players.length - 1) {
+    if (currIndex === lastIndex) {
         nextIndex = 0;
     } else {
         nextIndex = currIndex + 1;
     }
 
-    if (nextIndex === Game.currGame.players.length - 1) {
+    if (nextIndex === lastIndex) {
         nextIndex2 = 0;
     } else {
         nextIndex2 = nextIndex + 1;
