@@ -53,6 +53,17 @@ body {
         box-shadow: 0 0 30px 15px var(--bg-low-opacity);
         text-align: center;
       }
+
+      .saved-games {
+        padding: 1em;
+
+        .saved-game {
+          border: 2px solid var(--brown);
+          padding: 1em;
+          margin-bottom: 1em;
+          border-radius: 0.5em;
+        }
+      }
     }
   }
 

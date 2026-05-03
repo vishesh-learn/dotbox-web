@@ -8,7 +8,8 @@ window.onload = () => {
 
   document.querySelector("#homeButton").addEventListener("click", goHome);
 
-  document.querySelector("#backButton").addEventListener("click", goBack);
+  document.querySelector("#backButton")
+    .addEventListener("click", () => window.history.back());
 
   Game.load();
 
@@ -33,10 +34,6 @@ window.onload = () => {
 }
 
 function goHome() {
-  window.location.href = pages.index;
-}
-
-function goBack() {
   window.location.href = pages.index;
 }
 

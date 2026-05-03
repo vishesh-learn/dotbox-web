@@ -93,26 +93,6 @@ footer {
   text-decoration: underline;
 }
 
-.saved-games {
-  max-width: calc(100% - 50px);
-  min-height: 50%;
-  max-height: calc(100% - 180px);
-  margin: auto 40px;
-  padding: 50px 0;
-  row-gap: 2rem;
-  align-items: center;
-  overflow: auto;
-  flex-direction: column;
-
-  &[open] {
-    display: flex;
-  }
-
-  &::backdrop {
-    backdrop-filter: blur(10px);
-  }
-}
-
 .games-list {
   max-width: 340px;
   min-width: 250px;

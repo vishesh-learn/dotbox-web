@@ -60,11 +60,18 @@ export function formatRelativePastEn(date, nowDate = new Date()) {
   }
 
   const minutesTotal = Math.floor(secondsTotal / 60);
+
+  if (minutesTotal < 2) {
+    return `a minute${minutesTotal === 1 ? "" : "s"} ago`;
+  }
   if (minutesTotal < 60) {
     return `${minutesTotal} minute${minutesTotal === 1 ? "" : "s"} ago`;
   }
 
   const hoursTotal = Math.floor(minutesTotal / 60);
+  if (hoursTotal < 2) {
+    return `an hour${hoursTotal === 1 ? "" : "s"} ago`;
+  }
   if (hoursTotal < 24) {
     return `${hoursTotal} hour${hoursTotal === 1 ? "" : "s"} ago`;
   }

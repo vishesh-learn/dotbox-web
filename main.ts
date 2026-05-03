@@ -12,7 +12,6 @@ window.addEventListener("load", () => {
   document.querySelector("#continueButton").addEventListener("click", Game.continue);
   document.querySelector("#newGameButton").addEventListener("click", newGame);
   document.querySelector('#savedGamesButton').addEventListener('click', savedGames);
-  document.querySelector(".close-pop-up").addEventListener("click", savedGames_close);
 
   initHome();
 
@@ -39,12 +38,6 @@ function newGame() {
 
 function savedGames() {
   window.location.href = pages.savedGames;
-}
-
-function savedGames_close() {
-  const dialog = document.querySelector('.saved-games');
-
-  (dialog as HTMLDialogElement).close();
 }
 
 function tooltip_init() {

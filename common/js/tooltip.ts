@@ -78,7 +78,7 @@ function elementTooltip(element, title, instruction) {
     let tooltip = document.querySelector(".tooltip");
 
     if (!tooltip) {
-        tooltip = newTooltip(title, instruction);
+        tooltip = newTooltipUI(title, instruction);
     } else {
         const titleElement = document.querySelector<HTMLElement>(".tooltip .title");
         if (titleElement && title) {
@@ -138,7 +138,7 @@ function elementTooltip(element, title, instruction) {
     }
 }
 
-function newTooltip(title, instruction) {
+function newTooltipUI(title: string, instruction: string) {
     const container = document.querySelector("body");
 
     const tooltip = document.createElement("div");

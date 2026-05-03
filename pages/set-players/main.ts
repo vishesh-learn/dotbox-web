@@ -8,7 +8,7 @@ var targetPlayerIndex = 0;
 
 onload = function () {
   document.querySelector("#backButton")
-    .addEventListener("click", () => window.location.href = pages.setBoard);
+    .addEventListener("click", () => window.history.back());
 
   document.querySelector("#nextButton")
     .addEventListener("click", () => window.location.href = pages.play);
