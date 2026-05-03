@@ -163,7 +163,7 @@ export class Game {
 
   get listItemUI() {
     const gameUI = document.createElement("div");
-    gameUI.classList = "saved-game button";
+    gameUI.classList = "saved-game";
   
     const nameUI = document.createElement("div");
     nameUI.classList = "name date";
