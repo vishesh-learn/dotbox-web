@@ -100,8 +100,8 @@ export function createSquareUI(box) {
         squareE.setAttribute("class", "winBox");
         squareE.setAttribute("x", box.x);
         squareE.setAttribute("y", box.y);
-        squareE.setAttribute("width", Game.currGame.gameBoard.gap);
-        squareE.setAttribute("height", Game.currGame.gameBoard.gap);
+        squareE.setAttribute("width", Game.currGame.gameBoard.gap.toString());
+        squareE.setAttribute("height", Game.currGame.gameBoard.gap.toString());
 
         if (box.byLine.byPlayer.color) {
             squareE.style.fill = box.byLine.byPlayer.color;
