@@ -1,6 +1,4 @@
-import { Dot } from './classes.js';
-
-export function getSurroundingDots(dot) {
+function getSurroundingDots(dot) {
     var top = getDotAtTop(dot);
 
     var right = getDotAtRight(dot);

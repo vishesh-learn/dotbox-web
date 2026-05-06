@@ -1,7 +1,3 @@
-import { Game } from '../../common/js/classes.js';
-import { pages } from '../../common/js/variables.js';
-import { keyOnTabIndex, loadingStartUI, loadingEndUI } from '../../common/js/global.js';
-
 onload = function () {
   document.querySelector("#backButton")
     .addEventListener("click", () => window.history.back());

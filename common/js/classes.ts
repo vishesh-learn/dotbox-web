@@ -1,15 +1,10 @@
-import { newColor } from './color.js';
-import { getDotRadius } from './global.js';
-import { formatDateTimeWithRelativeEn } from './datetimeFormat.js';
-import { pages } from './variables.js';
-
 function randomUUID(): string {
     return '10000000-1000-4000-8000-100000000000'.replace(/[018]/g, c =>
         (+c ^ Math.random() * 16 >> +c / 4).toString(16)
     );
 }
 
-export class Game {
+class Game {
   static games: Game[] = [];
   static currGame: Game = null;
 
@@ -143,7 +138,7 @@ export class Game {
 
   static continue() {
     Game.load();
-  
+
     window.location.href = Game.currGame.currPage ?? pages.setBoard;
   }
 
@@ -158,23 +153,23 @@ export class Game {
   get listItemUI() {
     const gameUI = document.createElement("div");
     gameUI.classList = "saved-game";
-  
+
     const nameUI = document.createElement("div");
     nameUI.classList = "name date";
     nameUI.innerHTML = formatDateTimeWithRelativeEn(this.meta_updatedAt);
     gameUI.append(nameUI);
-  
+
     gameUI.addEventListener('click', () => {
       this.save();
-  
+
       Game.continue();
     });
-  
+
     return gameUI;
   }
 }
 
-export class GameBoard {
+class GameBoard {
   meta_type: string;
   meta_version: string;
   meta_createdAt: Date;
@@ -224,7 +219,7 @@ export class GameBoard {
   }
 }
 
-export class Box {
+class Box {
   x: number;
   y: number;
   byLine: any;
@@ -236,7 +231,7 @@ export class Box {
   }
 }
 
-export class Made {
+class Made {
   lineMade: boolean;
   boxMade: number;
 
@@ -246,7 +241,7 @@ export class Made {
   }
 }
 
-export class Player {
+class Player {
   meta_type: string;
   meta_version: string;
   meta_createdAt: Date;
@@ -277,7 +272,7 @@ export class Player {
   }
 }
 
-export class PseudoDot {
+class PseudoDot {
   meta_type: string;
   meta_version: string;
   meta_createdAt: Date;
@@ -294,7 +289,7 @@ export class PseudoDot {
   }
 }
 
-export class Dot {
+class Dot {
   meta_type: string;
   meta_version: string;
   meta_createdAt: Date;
@@ -321,7 +316,7 @@ export class Dot {
   }
 }
 
-export class Line {
+class Line {
   meta_type: string;
   meta_version: string;
   meta_createdAt: Date;
@@ -460,7 +455,7 @@ export class Line {
   }
 }
 
-export class Version {
+class Version {
   static setVersion(versionName) {
     console.log('setting version', versionName);
 
@@ -491,6 +486,6 @@ export class Version {
   }
 }
 
-export function length_to_dotCount(length) {
+function length_to_dotCount(length) {
   return (length - length % Game.currGame.gameBoard.gap + Game.currGame.gameBoard.gap) / Game.currGame.gameBoard.gap;
 }

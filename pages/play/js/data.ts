@@ -1,4 +1,4 @@
-export const state = {
+const state = {
   allPossibleLines: [] as any[],
   pendingPossiblelines: [] as any[],
   initDot: undefined as any,

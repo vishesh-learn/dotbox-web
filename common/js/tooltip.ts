@@ -1,4 +1,4 @@
-export class ElementGuide {
+class ElementGuide {
     static currentIndex = -1;
     static data: ElementGuide[] = [];
 

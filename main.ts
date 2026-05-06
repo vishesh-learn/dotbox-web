@@ -1,11 +1,3 @@
-import { Game } from './common/js/classes.js';
-import { pages } from './common/js/variables.js';
-import { ElementGuide } from './common/js/tooltip.js';
-import { keyOnTabIndex } from './common/js/global.js';
-import { shareApp } from './variations/platform-specific-home.js';
-import './web-components/share-button/index.js';
-import './web-components/tooltip/index.js';
-
 window.addEventListener("load", () => {
   document.querySelector("share-button").addEventListener("click", shareApp);
 

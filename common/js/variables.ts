@@ -1,4 +1,4 @@
-export const pages = {
+const pages = {
     index: '/',
     setBoard: '/pages/set-board/',
     setPlayers: '/pages/set-players/',
@@ -8,13 +8,13 @@ export const pages = {
     credits: '/pages/credits/',
   };
 
-  export const onAppStore = {
+  const onAppStore = {
     packageName: "com.vishesh.dotbox",
     googlePlay: "http://play.google.com/store/apps/details?id="
   }
 
-  export const shareTitle = `DotBox`,
+  const shareTitle =`DotBox`,
     shareText = "Check out 'DotBox', an amazing dots and boxes gaming application!",
     shareUrl = window.location.href;
 
-  export const playStoreLink = `${onAppStore.googlePlay}${onAppStore.packageName}`;
+  const playStoreLink =`${onAppStore.googlePlay}${onAppStore.packageName}`;

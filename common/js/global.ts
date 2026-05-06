@@ -1,5 +1,3 @@
-import { ElementGuide } from './tooltip.js';
-
 addEventListener("load", () => {
   const title = document.querySelector("title");
 
@@ -12,11 +10,11 @@ addEventListener("load", () => {
   addEventListener("resize", ElementGuide.refreshState);
 });
 
-export function keyOnTabIndex() {
+function keyOnTabIndex() {
   document.querySelectorAll("[tabindex]").forEach(keyOnElement);
 }
 
-export function keyOnElement(element) {
+function keyOnElement(element) {
   element.addEventListener("keypress", event => {
     if (event.keyCode === 13) {
       if (element.click) {
@@ -28,11 +26,11 @@ export function keyOnElement(element) {
   });
 }
 
-export function getRndInteger(min, max) {
+function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-export function getDotRadius() {
+function getDotRadius() {
   let dotRadius = Number(
     getComputedStyle(document.documentElement)
       .getPropertyValue('--dotRadius').trim().replace(/\D/g, '')
@@ -45,14 +43,14 @@ export function getDotRadius() {
   return totalRadius;
 }
 
-export function getScrollbarSize() {
+function getScrollbarSize() {
   return Number(
     getComputedStyle(document.documentElement)
       .getPropertyValue('--scrollbarSize').trim().replace(/\D/g, '')
   ) || 0;
 }
 
-export function getComputedSize(element) {
+function getComputedSize(element) {
 
   let widthValue = getComputedStyle(element, null)
     .getPropertyValue("width");
@@ -67,11 +65,11 @@ export function getComputedSize(element) {
   return { width, height };
 }
 
-export function loadingStartUI() {
+function loadingStartUI() {
   document.querySelector("body").classList.add("loading-container");
 }
 
-export function loadingEndUI() {
+function loadingEndUI() {
   document.querySelector("body").classList.remove("loading-container");
 }
 

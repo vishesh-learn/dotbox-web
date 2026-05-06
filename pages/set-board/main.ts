@@ -1,7 +1,3 @@
-import { Game, length_to_dotCount } from '../../common/js/classes.js';
-import { pages } from '../../common/js/variables.js';
-import { getDotRadius, getScrollbarSize, getComputedSize, keyOnTabIndex, loadingStartUI, loadingEndUI } from '../../common/js/global.js';
-
 window.onload = () => {
   const gameBoardSVG = document.querySelector(".svgC");
   const nextButton = document.querySelector("#nextButton");

@@ -1,11 +1,4 @@
-import { Game } from '../../../common/js/classes.js';
-import { getRndInteger } from '../../../common/js/global.js';
-import { state } from './data.js';
-import { getPendingPossiblelines } from './setup.js';
-import { getSurroundingLines, doesMakesSquare, addLine } from '../main.js';
-import { isEnd } from './gameEvents.js';
-
-export function autoDrawLine() {
+function autoDrawLine() {
   if (!Game.currGame.currPlayer.isAlgo) {
     return false;
   }

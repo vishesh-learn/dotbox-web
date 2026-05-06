@@ -1,8 +1,4 @@
-import { Game, Line } from '../../../common/js/classes.js';
-import { getDotRadius } from '../../../common/js/global.js';
-import { toRadialGradientCSSValue, toHslObject, hslToHex } from '../../../common/js/color.js';
-
-export function createPlayerUI(player) {
+function createPlayerUI(player) {
     if (!player) {
         console.trace("no player");
 
@@ -25,7 +21,7 @@ export function createPlayerUI(player) {
     return playerUI;
 }
 
-export function createRankPlayerUI(player) {
+function createRankPlayerUI(player) {
     const playerUI = document.createElement("div");
     playerUI.classList = "player";
 
@@ -52,7 +48,7 @@ export function createRankPlayerUI(player) {
     return playerUI;
 }
 
-export function gameBoardBuilder() {
+function gameBoardBuilder() {
     var cx, cy;
     var svg = document.querySelector(".dotSVG");
     var dots = document.querySelectorAll("circle");
@@ -94,7 +90,7 @@ function createDotUI(cx, cy, row, col) {
     return dotElement;
 }
 
-export function createSquareUI(box) {
+function createSquareUI(box) {
     if (box.x && box.y) {
         var squareE = document.createElementNS('http://www.w3.org/2000/svg', "rect");
         squareE.setAttribute("class", "winBox");
@@ -143,7 +139,7 @@ function createStopUI(offset, stopColor) {
     return stopUI;
 }
 
-export function getSVGLine(line) {
+function getSVGLine(line) {
     let lineE = document.createElementNS('http://www.w3.org/2000/svg', "line");
     lineE.classList = "line";
 

@@ -1,15 +1,6 @@
-import { Game, Made, Line, Dot } from '../../../common/js/classes.js';
-import { state } from './data.js';
-import { autoDrawLine } from './algo.js';
-import {
-    nearestDot, nearDot, prevLineMaker, linePreview,
-    setupPlayerTurnList, setupPlayerTurnListUI, slideLeft,
-    setCurrPlayerInfo, winBoard, updateLinesUI, addLine
-} from '../main.js';
-
 var made: Made = new Made();
 
-export function pointerDownEvent(listen = true) {
+function pointerDownEvent(listen = true) {
   const board = document.querySelector(".dotSVG");
 
   if (listen) {
@@ -87,7 +78,7 @@ function removePrevLines() {
   document.querySelectorAll(".preview").forEach(line => line.remove());
 }
 
-export function lineMade(line) {
+function lineMade(line) {
   made.lineMade = true;
 
   state.pendingPossiblelines.forEach((possibleLine, index) => {
@@ -99,7 +90,7 @@ export function lineMade(line) {
   gameEvent();
 }
 
-export function boxMade(box) {
+function boxMade(box) {
   made.boxMade++;
 }
 
@@ -118,7 +109,7 @@ function gameEvent() {
   setCurrPlayerInfo();
 }
 
-export function playerTurn(isInitial = false) {
+function playerTurn(isInitial = false) {
   if (isInitial && Game?.currGame?.currPlayerId) {
     return false;
   }
@@ -166,7 +157,7 @@ export function playerTurn(isInitial = false) {
   }
 }
 
-export function isEnd() {
+function isEnd() {
   return state.pendingPossiblelines.length <= 0;
 }
 

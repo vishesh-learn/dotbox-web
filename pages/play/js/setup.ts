@@ -1,10 +1,4 @@
-import { Dot, Line } from '../../../common/js/classes.js';
-import { getSurroundingDots } from '../../../common/js/gameBoard.js';
-import { lineEsToJSON } from './converter.js';
-import { state } from './data.js';
-import { lineNotExists } from '../main.js';
-
-export function getAllPossibleLines() {
+function getAllPossibleLines() {
     let dotEs = document.querySelectorAll(".dot"), validFinalDots, dot1, dot2;
 
     for (var dotE of dotEs) {
@@ -27,7 +21,7 @@ export function getAllPossibleLines() {
     return state.allPossibleLines;
 }
 
-export function getPendingPossiblelines() {
+function getPendingPossiblelines() {
     state.pendingPossiblelines = state.allPossibleLines.filter((line) => {
         return lineNotExists(line, lineEsToJSON());
     });

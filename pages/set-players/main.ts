@@ -1,9 +1,3 @@
-import { Game, Player } from '../../common/js/classes.js';
-import { pages } from '../../common/js/variables.js';
-import { keyOnTabIndex, loadingStartUI, loadingEndUI } from '../../common/js/global.js';
-import { ElementGuide } from '../../common/js/tooltip.js';
-import { hueToHex, toHslObject, toRadialGradientCSSValue } from '../../common/js/color.js';
-
 var targetPlayerIndex = 0;
 
 onload = function () {

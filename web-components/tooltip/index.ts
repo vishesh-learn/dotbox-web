@@ -1,5 +1,3 @@
-import { ElementGuide } from '../../common/js/tooltip.js';
-
 class Tooltip extends HTMLElement {
 
     static get observedAttributes() {

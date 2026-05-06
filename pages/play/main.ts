@@ -1,14 +1,3 @@
-import { Game, Box, Line, PseudoDot } from '../../common/js/classes.js';
-import { pages } from '../../common/js/variables.js';
-import { keyOnTabIndex, loadingStartUI, loadingEndUI, getComputedSize } from '../../common/js/global.js';
-import { ElementGuide } from '../../common/js/tooltip.js';
-import { getSurroundingDots } from '../../common/js/gameBoard.js';
-import { getSVGLine, createPlayerUI, createRankPlayerUI, gameBoardBuilder, createSquareUI } from './js/createUI.js';
-import { lineEsToJSON } from './js/converter.js';
-import { state } from './js/data.js';
-import { getAllPossibleLines, getPendingPossiblelines } from './js/setup.js';
-import { playerTurn, lineMade, boxMade } from './js/gameEvents.js';
-
 var boxes: any[] = [];
 var playerTurnList: any[] = [];
 
@@ -73,7 +62,7 @@ function tooltip_init() {
     }
 }
 
-export function gameBoardOverFlow() {
+function gameBoardOverFlow() {
     let pageContentSize = getComputedSize(document.querySelector(".page-content"));
     let boardSize = getComputedSize(document.querySelector(".svgC"));
 
@@ -90,7 +79,7 @@ export function gameBoardOverFlow() {
     }
 }
 
-export function refreshGameLines() {
+function refreshGameLines() {
     Game.currGame.lines = Game.currGame.lines.filter(line => {
         let playerExists = Game.currGame.players.some(player => player.id == line.byPlayerID);
 
@@ -124,7 +113,7 @@ function footerInfo() {
     rowColInfoHtml.innerHTML = `${Game.currGame.gameBoard.col} x ${Game.currGame.gameBoard.row}`;
 }
 
-export function linePreview(event) {
+function linePreview(event) {
     var x = event.offsetX, y = event.offsetY;
 
     if (!state.initDot) {
@@ -159,7 +148,7 @@ export function linePreview(event) {
     );
 }
 
-export function nearDot(x, y) {
+function nearDot(x, y) {
     var validFinalDots = getSurroundingDots(state.initDot);
 
     var nearest = validFinalDots[0];
@@ -184,7 +173,7 @@ export function nearDot(x, y) {
     return nearest;
 }
 
-export function nearestDot(x, y) {
+function nearestDot(x, y) {
     var dotEs = document.querySelectorAll(".dot");
 
     let dotDiffs = [...dotEs].map(dotE => ({
@@ -204,7 +193,7 @@ export function nearestDot(x, y) {
     return minXYdotDiff?.element;
 }
 
-export function prevLineMaker(line) {
+function prevLineMaker(line) {
     removePrevLines();
 
     line.byPlayerID = Game.currGame.currPlayerId;
@@ -216,7 +205,7 @@ function removePrevLines() {
     document.querySelectorAll(".preview").forEach(line => line.remove());
 }
 
-export function updateLinesUI() {
+function updateLinesUI() {
     Game.currGame.players.forEach(player => {
         player.score = 0;
     });
@@ -226,7 +215,7 @@ export function updateLinesUI() {
     });
 }
 
-export function updateBoxesUI(boxList) {
+function updateBoxesUI(boxList) {
     Game.currGame.players.forEach(player => {
         player.score = boxList.filter(box => box.byLine.byPlayer == player).length;
     });
@@ -234,7 +223,7 @@ export function updateBoxesUI(boxList) {
     setCurrPlayerInfo();
 }
 
-export function addLine(line: Line) {
+function addLine(line: Line) {
     if (!line.findHTMLElement()) {
         Game.currGame.lines.push(line);
 
@@ -247,7 +236,7 @@ export function addLine(line: Line) {
     state.selectedDot = null;
 }
 
-export function drawLine(line: Line) {
+function drawLine(line: Line) {
     const lineSVG = document.querySelector(".lineSVG");
 
     let lineUI = getSVGLine(line);
@@ -263,7 +252,7 @@ export function drawLine(line: Line) {
     updateBoxesUI(boxes);
 }
 
-export function getBoxMakingLines(line) {
+function getBoxMakingLines(line) {
     let newVersionOfLine = Line.constructFromOldLine(line);
 
     if (line.orient == "vertical") {
@@ -332,7 +321,7 @@ export function getBoxMakingLines(line) {
     }
 }
 
-export function getSurroundingLines(line) {
+function getSurroundingLines(line) {
     var existingLineList = lineEsToJSON();
     var boxMakingLines = getBoxMakingLines(line);
     var square: any = {};
@@ -399,7 +388,7 @@ export function getSurroundingLines(line) {
     return square;
 }
 
-export function makeBox(square, line) {
+function makeBox(square, line) {
     var x, y, currBoxes = [];
 
     if (square.orient == "horizontal") {
@@ -447,7 +436,7 @@ function addBox(box) {
     }
 }
 
-export function lineNotExists(line, linelist) {
+function lineNotExists(line, linelist) {
     for (let listLine of linelist) {
         if (Line.compareLineObj(line, listLine)) {
             return false;
@@ -471,7 +460,7 @@ function compareBoxObj(box1, box2) {
     return (box1.x == box2.x) && (box1.y == box2.y);
 }
 
-export function doesMakesSquare(middleLine) {
+function doesMakesSquare(middleLine) {
     var possibleSquare = getSurroundingLines(middleLine);
 
     if (possibleSquare.orient == "horizontal") {
@@ -487,7 +476,7 @@ export function doesMakesSquare(middleLine) {
     return false;
 }
 
-export function setupPlayerTurnList() {
+function setupPlayerTurnList() {
     playerTurnList = [];
 
     var currIndex = Game.currGame.players.findIndex(player => player.id == Game.currGame.currPlayerId);
@@ -516,13 +505,13 @@ export function setupPlayerTurnList() {
     );
 }
 
-export function slideLeft() {
+function slideLeft() {
     const frame = document.querySelector(".playerTurnList");
 
     frame.classList.add("slideLeft");
 }
 
-export function setupPlayerTurnListUI() {
+function setupPlayerTurnListUI() {
     const frame = document.querySelector(".playerTurnList");
     var playerUI;
 
@@ -538,7 +527,7 @@ export function setupPlayerTurnListUI() {
     setCurrPlayerInfo();
 }
 
-export function setCurrPlayerInfo() {
+function setCurrPlayerInfo() {
     if (!Game?.currGame?.currPlayer) {
         console.error('currPlayer not found for game', Game.currGame);
         return false;
@@ -549,7 +538,7 @@ export function setCurrPlayerInfo() {
     (document.querySelector('.curr-player-score .value') as HTMLElement).innerText = `${Game.currGame.currPlayer.score}`;
 }
 
-export function winBoard() {
+function winBoard() {
     updateBoxesUI(boxes);
 
     document.querySelector("dialog").showModal();
@@ -582,4 +571,3 @@ function setupPlayerRankList() {
         playerRankListUI.append(createRankPlayerUI(player));
     });
 }
-
