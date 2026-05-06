@@ -73,9 +73,11 @@ footer {
   align-content: center;
   flex-wrap: wrap;
   gap: 5px;
-  height: 3.1em;
+  height: 4em;
   position: relative;
-  font-size: 14px;
+  font-size: 0.7em;
+
+  transition: height 300ms, font-size 300ms;
 }
 
 .version,
@@ -112,7 +114,15 @@ footer {
       font-size: 30px;
     }
   }
+}
 
+@media only screen and (min-width: 420px) {
+  footer {
+    height: 3em;
+  }
+}
+
+@media only screen and (min-width: 360px) {
   footer {
     font-size: 0.8em;
   }

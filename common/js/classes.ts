@@ -67,9 +67,9 @@ class Game {
     console.log('load -> parsed games', Game.games);
 
     if (!Game.games.length) {
-      Game.currGame = localStorage.currGame ? JSON.parse(localStorage.currGame) : new Game();
+      Game.currGame = localStorage.currGame ? JSON.parse(localStorage.currGame) : null;
 
-      Game.currGame = Game.parseGame(Game.currGame);
+      Game.currGame = Game.currGame ? Game.parseGame(Game.currGame) : null;
     } else {
       Game.currGame = Game.games[0];
     }
