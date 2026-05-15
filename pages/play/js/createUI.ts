@@ -57,14 +57,14 @@ function gameBoardBuilder() {
 
     dots.forEach(dot => dot.remove());
 
-    for (let i = 0; i < Game.currGame.gameBoard.row; i++) {
+    for (let i = 0; i < Game.currentGame.gameBoard.row; i++) {
         const row = i + 1;
 
-        for (let j = 0; j < Game.currGame.gameBoard.col; j++) {
+        for (let j = 0; j < Game.currentGame.gameBoard.col; j++) {
             const col = j + 1;
 
-            cx = (Game.currGame.gameBoard.gap * j + dotRadius).toString();
-            cy = (Game.currGame.gameBoard.gap * i + dotRadius).toString();
+            cx = (Game.currentGame.gameBoard.gap * j + dotRadius).toString();
+            cy = (Game.currentGame.gameBoard.gap * i + dotRadius).toString();
 
             let dot = createDotUI(cx, cy, row, col);
 
@@ -96,10 +96,10 @@ function createSquareUI(box) {
         squareE.setAttribute("class", "winBox");
         squareE.setAttribute("x", box.x);
         squareE.setAttribute("y", box.y);
-        squareE.setAttribute("width", Game.currGame.gameBoard.gap.toString());
-        squareE.setAttribute("height", Game.currGame.gameBoard.gap.toString());
+        squareE.setAttribute("width", Game.currentGame.gameBoard.gap.toString());
+        squareE.setAttribute("height", Game.currentGame.gameBoard.gap.toString());
 
-        if (box.byLine.byPlayer.color) {
+        if (box?.byLine?.byPlayer?.color) {
             squareE.style.fill = box.byLine.byPlayer.color;
 
             var gradientUI = createGradientUI(box);
@@ -107,7 +107,7 @@ function createSquareUI(box) {
             squareE.style.fill = `url(#${gradientUI.id})`;
         }
 
-        if (box.byLine.byPlayer.id) {
+        if (box?.byLine?.byPlayer?.id) {
             squareE.setAttribute("byPlayer", box.byLine.byPlayer.id);
         }
 
@@ -177,8 +177,8 @@ function getSVGLine(line) {
 function svgResize() {
     let dotRadius = getDotRadius();
 
-    var width = ((Game.currGame.gameBoard.col - 1) * Game.currGame.gameBoard.gap) + (2 * dotRadius);
-    var height = ((Game.currGame.gameBoard.row - 1) * Game.currGame.gameBoard.gap) + (2 * dotRadius);
+    var width = ((Game.currentGame.gameBoard.col - 1) * Game.currentGame.gameBoard.gap) + (2 * dotRadius);
+    var height = ((Game.currentGame.gameBoard.row - 1) * Game.currentGame.gameBoard.gap) + (2 * dotRadius);
 
     document.documentElement.style.setProperty('--boardWidth', `${width}px`);
     document.documentElement.style.setProperty('--boardHeight', `${height}px`);

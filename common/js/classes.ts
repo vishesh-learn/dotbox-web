@@ -6,7 +6,7 @@ function randomUUID(): string {
 
 class Game {
   static games: Game[] = [];
-  static currGame: Game = null;
+  static currentGame: Game = null;
 
   id: string;
   meta_type: string;
@@ -67,15 +67,15 @@ class Game {
     console.log('load -> parsed games', Game.games);
 
     if (!Game.games.length) {
-      Game.currGame = localStorage.currGame ? JSON.parse(localStorage.currGame) : null;
+      Game.currentGame = localStorage.currentGame ? JSON.parse(localStorage.currentGame) : null;
 
-      Game.currGame = Game.currGame ? Game.parseGame(Game.currGame) : null;
+      Game.currentGame = Game.currentGame ? Game.parseGame(Game.currentGame) : null;
     } else {
-      Game.currGame = Game.games[0];
+      Game.currentGame = Game.games[0];
     }
   }
 
-  static parseGame(game) {
+  static parseGame(game: Game) {
     game = Object.assign(new Game, game);
 
     game.gameBoard = Object.assign(new GameBoard, game.gameBoard);
@@ -91,6 +91,10 @@ class Game {
 
       game.lines = [];
     }
+
+    game.boxes.forEach(box => {
+      box.byLine = Object.assign(new Line, box.byLine);
+    });
 
     game.meta_createdAt = new Date(game.meta_createdAt);
     game.meta_updatedAt = new Date(game.meta_updatedAt);
@@ -139,7 +143,7 @@ class Game {
   static continue() {
     Game.load();
 
-    window.location.href = Game.currGame.currPage ?? pages.setBoard;
+    window.location.href = Game.currentGame.currPage ?? pages.setBoard;
   }
 
   reset() {
@@ -173,6 +177,7 @@ class GameBoard {
   meta_type: string;
   meta_version: string;
   meta_createdAt: Date;
+
   gap: number;
   minRow: number;
   minCol: number;
@@ -220,14 +225,22 @@ class GameBoard {
 }
 
 class Box {
+  meta_type: string;
+  meta_version: string;
+  meta_createdAt: Date;
+
   x: number;
   y: number;
-  byLine: any;
+  byLine: Line;
 
   constructor(x, y, byLine) {
-    this.x = x,
-    this.y = y,
-    this.byLine = byLine
+    this.meta_type = "box";
+    this.meta_version = "1";
+    this.meta_createdAt = new Date();
+
+    this.x = x;
+    this.y = y;
+    this.byLine = byLine;
   }
 }
 
@@ -307,12 +320,12 @@ class Dot {
 
   get x() {
     const dotRadius = getDotRadius();
-    return (this.col - 1) * Game.currGame.gameBoard.gap + dotRadius;
+    return (this.col - 1) * Game.currentGame.gameBoard.gap + dotRadius;
   }
 
   get y() {
     const dotRadius = getDotRadius();
-    return (this.row - 1) * Game.currGame.gameBoard.gap + dotRadius;
+    return (this.row - 1) * Game.currentGame.gameBoard.gap + dotRadius;
   }
 }
 
@@ -358,7 +371,7 @@ class Line {
   }
 
   get byPlayer() {
-    return Game.currGame.players.find(player => player.id == this.byPlayerID);
+    return Game.currentGame.players.find(player => player.id == this.byPlayerID);
   }
 
   isValid() {
@@ -487,5 +500,5 @@ class Version {
 }
 
 function length_to_dotCount(length) {
-  return (length - length % Game.currGame.gameBoard.gap + Game.currGame.gameBoard.gap) / Game.currGame.gameBoard.gap;
+  return (length - length % Game.currentGame.gameBoard.gap + Game.currentGame.gameBoard.gap) / Game.currentGame.gameBoard.gap;
 }

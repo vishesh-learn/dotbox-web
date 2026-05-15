@@ -37,8 +37,8 @@ function pointerDown(event) {
       Number(nearInitDot.dataset.row),
     );
 
-    const inRange = Math.abs(x - state.initDot.x) <= Game.currGame.gameBoard.gap / 2
-      && Math.abs(y - state.initDot.y) <= Game.currGame.gameBoard.gap / 2;
+    const inRange = Math.abs(x - state.initDot.x) <= Game.currentGame.gameBoard.gap / 2
+      && Math.abs(y - state.initDot.y) <= Game.currentGame.gameBoard.gap / 2;
 
     if (inRange) {
       pointerMoveAndUPEvents(true);
@@ -62,16 +62,16 @@ function pointerUp(event) {
 
     if (
       new Line(state.initDot, finalDot).isValid()
-      && Math.abs(x - finalDot.x) <= Game.currGame.gameBoard.gap / 2
-      && Math.abs(y - finalDot.y) <= Game.currGame.gameBoard.gap / 2
+      && Math.abs(x - finalDot.x) <= Game.currentGame.gameBoard.gap / 2
+      && Math.abs(y - finalDot.y) <= Game.currentGame.gameBoard.gap / 2
     ) {
-      addLine(new Line(state.initDot, finalDot, Game.currGame.currPlayerId));
+      addLine(new Line(state.initDot, finalDot, Game.currentGame.currPlayerId));
     }
   } else {
     console.log("no x and y");
   }
 
-  Game.currGame.save();
+  Game.currentGame.save();
 }
 
 function removePrevLines() {
@@ -110,47 +110,47 @@ function gameEvent() {
 }
 
 function playerTurn(isInitial = false) {
-  if (isInitial && Game?.currGame?.currPlayerId) {
+  if (isInitial && Game?.currentGame?.currPlayerId) {
     return false;
   }
 
   pointerDownEvent(false);
 
-  console.trace("playerTurn - currPlayerId", Game.currGame.currPlayerId, Game.currGame);
+  console.trace("playerTurn - currPlayerId", Game.currentGame.currPlayerId, Game.currentGame);
 
-  if (!(Game.currGame?.players?.length > 0)) {
+  if (!(Game.currentGame?.players?.length > 0)) {
     return false;
   }
 
-  console.trace("here 0", { currPlayerId: Game.currGame.currPlayerId });
+  console.trace("here 0", { currPlayerId: Game.currentGame.currPlayerId });
 
-  if (Game.currGame.currPlayerId != undefined) {
-    let currentPlayerIndex = Game.currGame.players.findIndex(player => player.id == Game.currGame.currPlayerId);
-    let lastPlayerIndex = Game.currGame.players.length - 1;
+  if (Game.currentGame.currPlayerId != undefined) {
+    let currentPlayerIndex = Game.currentGame.players.findIndex(player => player.id == Game.currentGame.currPlayerId);
+    let lastPlayerIndex = Game.currentGame.players.length - 1;
 
     if (currentPlayerIndex == lastPlayerIndex) {
-      Game.currGame.currPlayerId = Game.currGame.players[0].id;
+      Game.currentGame.currPlayerId = Game.currentGame.players[0].id;
     } else {
-      Game.currGame.currPlayerId = Game.currGame.players[currentPlayerIndex + 1].id;
+      Game.currentGame.currPlayerId = Game.currentGame.players[currentPlayerIndex + 1].id;
     }
 
-    console.log("here 1", { currentPlayerIndex, lastPlayerIndex, currPlayerId: Game.currGame.currPlayerId });
+    console.log("here 1", { currentPlayerIndex, lastPlayerIndex, currPlayerId: Game.currentGame.currPlayerId });
 
     setupPlayerTurnList();
-    if (Game.currGame.currPlayer.isAlgo) {
+    if (Game.currentGame.currPlayer.isAlgo) {
       setupPlayerTurnListUI();
     } else {
       slideLeft();
     }
 
   } else {
-    Game.currGame.currPlayerId = Game.currGame.players[0].id;
+    Game.currentGame.currPlayerId = Game.currentGame.players[0].id;
 
     setupPlayerTurnList();
     setupPlayerTurnListUI();
   }
 
-  if (Game.currGame.currPlayer.isAlgo) {
+  if (Game.currentGame.currPlayer.isAlgo) {
     requestAnimationFrame(autoDrawLine);
   } else {
     pointerDownEvent(true);
@@ -217,7 +217,7 @@ function dotNavigate(event, direction) {
       break;
 
     case "right":
-      if (Number(event.target.dataset.col) < Game.currGame.gameBoard.col) {
+      if (Number(event.target.dataset.col) < Game.currentGame.gameBoard.col) {
         let nextRow = state.selectedDot ? parseInt(state.selectedDot.dataset.row) : parseInt(event.target.dataset.row);
         let nextCol = state.selectedDot ? parseInt(state.selectedDot.dataset.col) + 1 : parseInt(event.target.dataset.col) + 1;
 
@@ -237,7 +237,7 @@ function dotNavigate(event, direction) {
       break;
 
     case "bottom":
-      if (Number(event.target.dataset.row) < Game.currGame.gameBoard.row) {
+      if (Number(event.target.dataset.row) < Game.currentGame.gameBoard.row) {
         let nextRow = state.selectedDot ? parseInt(state.selectedDot.dataset.row) + 1 : parseInt(event.target.dataset.row) + 1;
         let nextCol = state.selectedDot ? parseInt(state.selectedDot.dataset.col) : parseInt(event.target.dataset.col);
 
@@ -285,10 +285,10 @@ function dotNavigate(event, direction) {
         addLine(new Line(
           new Dot(state.selectedDot.dataset.col, state.selectedDot.dataset.row),
           new Dot(event.target.dataset.col, event.target.dataset.row),
-          Game.currGame.currPlayerId
+          Game.currentGame.currPlayerId
         ));
 
-        updateLinesUI();
+        // updateLinesAndBoxesUI();
 
         state.selectedDot = null;
         state.initDot = null;

@@ -35,9 +35,9 @@ onload = function () {
 function setCurrentPageInCurrentGame() {
   Game.load();
 
-  Game.currGame.currPage = pages.setPlayers;
+  Game.currentGame.currPage = pages.setPlayers;
 
-  Game.currGame.save();
+  Game.currentGame.save();
 }
 
 function playerColorEditor_init() {
@@ -97,7 +97,7 @@ function goButtonHandler(event) {
 
 function updatePlayerCountView() {
   document.querySelector("#info")
-    .innerHTML = `${Game.currGame.players.length}<br /> ${Game.currGame.players.length == 1 ? "player" : "players"}`;
+    .innerHTML = `${Game.currentGame.players.length}<br /> ${Game.currentGame.players.length == 1 ? "player" : "players"}`;
 }
 
 function updatePlayer(event) {
@@ -110,16 +110,16 @@ function updatePlayer(event) {
     if (target.className.includes("playerName")) {
       var name = target.value;
 
-      Game.currGame.players[targetPlayerIndex].name = name;
+      Game.currentGame.players[targetPlayerIndex].name = name;
     }
 
     if (target.className.includes("isAlgo")) {
       var isAlgo = target.checked;
 
-      Game.currGame.players[targetPlayerIndex].isAlgo = isAlgo;
+      Game.currentGame.players[targetPlayerIndex].isAlgo = isAlgo;
     }
 
-    Game.currGame.save();
+    Game.currentGame.save();
   }
 }
 
@@ -150,7 +150,7 @@ function colorSelector(event) {
     document.querySelector("body").classList.add("pop-up-container");
     (document.querySelector(".set-color") as HTMLDialogElement).showModal();
 
-    let color = Game.currGame.players[targetPlayerIndex].color;
+    let color = Game.currentGame.players[targetPlayerIndex].color;
 
     document.documentElement.style.setProperty('--currentPlayerColor', toRadialGradientCSSValue(color) || color);
 
@@ -185,11 +185,11 @@ function setupColorRange(h = 0) {
 function colorRange_Input(event) {
   let hex = hueToHex(event.target.value);
 
-  Game.currGame.players[targetPlayerIndex].color = hex;
+  Game.currentGame.players[targetPlayerIndex].color = hex;
 
   document.documentElement.style.setProperty('--currentPlayerColor', toRadialGradientCSSValue(hex));
 
-  Game.currGame.save();
+  Game.currentGame.save();
 
   const playerElements = document.querySelectorAll(".player");
   const targetPlayer = playerElements[targetPlayerIndex];
@@ -205,13 +205,13 @@ function selectColor(event) {
     console.log(event.target);
     var color = event.target.dataset.color;
 
-    Game.currGame.players[targetPlayerIndex].color = color;
+    Game.currentGame.players[targetPlayerIndex].color = color;
 
     document.documentElement.style.setProperty('--currentPlayerColor', toRadialGradientCSSValue(color));
 
     setupColorRange(toHslObject(color).h);
 
-    Game.currGame.save();
+    Game.currentGame.save();
 
     (targetPlayer.querySelector(".avatar") as HTMLElement).style.background = toRadialGradientCSSValue(color);
   }
@@ -226,9 +226,9 @@ function removePlayer(event) {
   if (target.className.includes("removePlayerB")) {
     const targetPlayerIndex = Array.from(playerElements).indexOf(targetPlayer);
 
-    Game.currGame.players.splice(targetPlayerIndex, 1);
+    Game.currentGame.players.splice(targetPlayerIndex, 1);
 
-    Game.currGame.save();
+    Game.currentGame.save();
 
     targetPlayer.remove();
   }
@@ -242,7 +242,7 @@ async function setupPlayersUI() {
 
     playersUI.innerHTML = "";
 
-    for (let player of Game.currGame.players) {
+    for (let player of Game.currentGame.players) {
       playersUI.append(createPlayerUI(player));
     }
 
@@ -255,14 +255,14 @@ async function setupPlayersUI() {
 }
 
 function addPlayer() {
-  if (Game.currGame.players.length < Game.currGame.maxPlayer) {
+  if (Game.currentGame.players.length < Game.currentGame.maxPlayer) {
     const player = new Player();
 
-    player.id = Game.currGame.players.length + 1;
+    player.id = Game.currentGame.players.length + 1;
 
-    Game.currGame.players.push(player);
+    Game.currentGame.players.push(player);
 
-    Game.currGame.save();
+    Game.currentGame.save();
 
     const playersUI = document.querySelector(".players");
     playersUI.append(createPlayerUI(player));

@@ -9,7 +9,7 @@ window.onload = () => {
 
   Game.load();
 
-  Game.currGame.currPage = pages.setBoard;
+  Game.currentGame.currPage = pages.setBoard;
 
   setupGameBoard();
 
@@ -62,20 +62,20 @@ function startupVariables() {
 
   var drawableHeight = boardSize.height - (dotRadius * 2) - scrollbarSize;
 
-  Game.currGame.gameBoard.maxCol = length_to_dotCount(drawableWidth);
+  Game.currentGame.gameBoard.maxCol = length_to_dotCount(drawableWidth);
 
-  if (Game.currGame.gameBoard.maxCol <= Game.currGame.gameBoard.minCol) {
-    Game.currGame.gameBoard.maxCol = Game.currGame.gameBoard.minCol;
+  if (Game.currentGame.gameBoard.maxCol <= Game.currentGame.gameBoard.minCol) {
+    Game.currentGame.gameBoard.maxCol = Game.currentGame.gameBoard.minCol;
   }
 
-  Game.currGame.gameBoard.maxRow = length_to_dotCount(drawableHeight);
+  Game.currentGame.gameBoard.maxRow = length_to_dotCount(drawableHeight);
 
-  if (Game.currGame.gameBoard.maxRow <= Game.currGame.gameBoard.minRow) {
-    Game.currGame.gameBoard.maxRow = Game.currGame.gameBoard.minRow;
+  if (Game.currentGame.gameBoard.maxRow <= Game.currentGame.gameBoard.minRow) {
+    Game.currentGame.gameBoard.maxRow = Game.currentGame.gameBoard.minRow;
   }
 
-  let width = dotCount_to_length(Game.currGame.gameBoard.maxCol);
-  let height = dotCount_to_length(Game.currGame.gameBoard.maxRow);
+  let width = dotCount_to_length(Game.currentGame.gameBoard.maxCol);
+  let height = dotCount_to_length(Game.currentGame.gameBoard.maxRow);
 
   document.documentElement.style.setProperty('--svgWidth', `${width}px`);
   document.documentElement.style.setProperty('--svgHeight', `${height}px`);
@@ -102,8 +102,8 @@ function svgResize() {
   var gameBoardSVG = document.querySelector(".svgC");
   let dotRadius = getDotRadius();
 
-  var width = ((Game.currGame.gameBoard.maxCol - 1) * Game.currGame.gameBoard.gap) + dotRadius;
-  var height = ((Game.currGame.gameBoard.maxRow - 1) * Game.currGame.gameBoard.gap) + dotRadius;
+  var width = ((Game.currentGame.gameBoard.maxCol - 1) * Game.currentGame.gameBoard.gap) + dotRadius;
+  var height = ((Game.currentGame.gameBoard.maxRow - 1) * Game.currentGame.gameBoard.gap) + dotRadius;
 
   (gameBoardSVG as HTMLElement).style.width = width + "px";
   (gameBoardSVG as HTMLElement).style.height = height + "px";
@@ -114,10 +114,10 @@ function GameBoardBuilder() {
 
   let dotRadius = getDotRadius();
 
-  for (let i = 0; i < Game.currGame.gameBoard.maxRow; i++) {
-    for (let j = 0; j < Game.currGame.gameBoard.maxCol; j++) {
-      var x = (Game.currGame.gameBoard.gap * j + dotRadius).toString(10);
-      var y = (Game.currGame.gameBoard.gap * i + dotRadius).toString(10);
+  for (let i = 0; i < Game.currentGame.gameBoard.maxRow; i++) {
+    for (let j = 0; j < Game.currentGame.gameBoard.maxCol; j++) {
+      var x = (Game.currentGame.gameBoard.gap * j + dotRadius).toString(10);
+      var y = (Game.currentGame.gameBoard.gap * i + dotRadius).toString(10);
 
       let dot = document.createElementNS('http://www.w3.org/2000/svg', "circle");
       dot.setAttribute("class", "dot hidden");
@@ -179,19 +179,19 @@ function dotNavigate(event, direction) {
 
   switch (direction) {
     case "top":
-      Game.currGame.gameBoard.row--;
+      Game.currentGame.gameBoard.row--;
       break;
 
     case "right":
-      Game.currGame.gameBoard.col++;
+      Game.currentGame.gameBoard.col++;
       break;
 
     case "bottom":
-      Game.currGame.gameBoard.row++;
+      Game.currentGame.gameBoard.row++;
       break;
 
     case "left":
-      Game.currGame.gameBoard.col--;
+      Game.currentGame.gameBoard.col--;
       break;
 
     case "enter":
@@ -214,27 +214,27 @@ function optedDot(dot) {
   var optedX = dot.cx.baseVal.value;
   var optedY = dot.cy.baseVal.value;
 
-  Game.currGame.gameBoard.col = length_to_dotCount(optedX);
-  Game.currGame.gameBoard.row = length_to_dotCount(optedY);
+  Game.currentGame.gameBoard.col = length_to_dotCount(optedX);
+  Game.currentGame.gameBoard.row = length_to_dotCount(optedY);
 
   optedCnR();
 }
 
 function optedCnR() {
-  if (Game.currGame.gameBoard.col > Game.currGame.gameBoard.maxCol) {
-    Game.currGame.gameBoard.col = Game.currGame.gameBoard.maxCol;
-  } else if (Game.currGame.gameBoard.col < Game.currGame.gameBoard.minCol) {
-    Game.currGame.gameBoard.col = Game.currGame.gameBoard.minCol;
+  if (Game.currentGame.gameBoard.col > Game.currentGame.gameBoard.maxCol) {
+    Game.currentGame.gameBoard.col = Game.currentGame.gameBoard.maxCol;
+  } else if (Game.currentGame.gameBoard.col < Game.currentGame.gameBoard.minCol) {
+    Game.currentGame.gameBoard.col = Game.currentGame.gameBoard.minCol;
   }
 
-  if (Game.currGame.gameBoard.row > Game.currGame.gameBoard.maxRow) {
-    Game.currGame.gameBoard.row = Game.currGame.gameBoard.maxRow;
-  } else if (Game.currGame.gameBoard.row < Game.currGame.gameBoard.minRow) {
-    Game.currGame.gameBoard.row = Game.currGame.gameBoard.minRow;
+  if (Game.currentGame.gameBoard.row > Game.currentGame.gameBoard.maxRow) {
+    Game.currentGame.gameBoard.row = Game.currentGame.gameBoard.maxRow;
+  } else if (Game.currentGame.gameBoard.row < Game.currentGame.gameBoard.minRow) {
+    Game.currentGame.gameBoard.row = Game.currentGame.gameBoard.minRow;
   }
 
-  var x = dotCount_to_length(Game.currGame.gameBoard.col);
-  var y = dotCount_to_length(Game.currGame.gameBoard.row);
+  var x = dotCount_to_length(Game.currentGame.gameBoard.col);
+  var y = dotCount_to_length(Game.currentGame.gameBoard.row);
 
   optedXnY(x, y);
 }
@@ -244,7 +244,7 @@ function optedXnY(x, y) {
   const infoE = document.querySelector("#info");
 
   if (x && y) {
-    infoE.innerHTML = Game.currGame.gameBoard.col + " x " + Game.currGame.gameBoard.row;
+    infoE.innerHTML = Game.currentGame.gameBoard.col + " x " + Game.currentGame.gameBoard.row;
 
     for (var dotE of dotEs) {
       let cx = (dotE as SVGCircleElement).cx.baseVal.value;
@@ -258,7 +258,7 @@ function optedXnY(x, y) {
       }
     }
 
-    Game.currGame.save();
+    Game.currentGame.save();
   } else {
     console.log("invalid x or y");
   }
@@ -295,5 +295,5 @@ function nearestDot(x, y) {
 function dotCount_to_length(dotCount) {
   let dotRadius = getDotRadius();
 
-  return (dotCount * Game.currGame.gameBoard.gap) - Game.currGame.gameBoard.gap + dotRadius * 2;
+  return (dotCount * Game.currentGame.gameBoard.gap) - Game.currentGame.gameBoard.gap + dotRadius * 2;
 }

@@ -15,7 +15,7 @@ window.addEventListener("load", () => {
 function initHome() {
   Game.load();
 
-  (document.querySelector("#continueButton") as HTMLButtonElement).disabled = !Boolean(Game.currGame);
+  (document.querySelector("#continueButton") as HTMLButtonElement).disabled = !Boolean(Game.currentGame);
 }
 
 function newGame() {
