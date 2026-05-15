@@ -21,6 +21,7 @@ class Game {
   lines: Line[];
   boxes: Box[];
   currPlayerId: number | null;
+  hasEnded: boolean
 
   constructor() {
     this.id = crypto.randomUUID?.() ?? randomUUID();
@@ -40,11 +41,11 @@ class Game {
     this.boxes = [];
 
     this.currPlayerId = null;
+
+    this.hasEnded = false;
   }
 
   save() {
-    console.trace('save called');
-
     this.meta_updatedAt = new Date();
 
     const gameIndex = Game.games.findIndex(game => game.id == this.id);
@@ -150,6 +151,8 @@ class Game {
     this.currPlayerId = null;
 
     this.lines = [];
+
+    this.boxes = [];
 
     this.save();
   }

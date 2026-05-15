@@ -100,7 +100,9 @@ function gameEvent() {
       playerTurn();
     }
 
-    if (isEnd()) {
+    Game.currentGame.hasEnded = isEnd();
+
+    if (Game.currentGame.hasEnded) {
       winBoard();
     }
   }
@@ -109,20 +111,12 @@ function gameEvent() {
   setCurrPlayerInfo();
 }
 
-function playerTurn(isInitial = false) {
-  if (isInitial && Game?.currentGame?.currPlayerId) {
-    return false;
-  }
-
+function playerTurn() {
   pointerDownEvent(false);
-
-  console.trace("playerTurn - currPlayerId", Game.currentGame.currPlayerId, Game.currentGame);
 
   if (!(Game.currentGame?.players?.length > 0)) {
     return false;
   }
-
-  console.trace("here 0", { currPlayerId: Game.currentGame.currPlayerId });
 
   if (Game.currentGame.currPlayerId != undefined) {
     let currentPlayerIndex = Game.currentGame.players.findIndex(player => player.id == Game.currentGame.currPlayerId);
@@ -133,8 +127,6 @@ function playerTurn(isInitial = false) {
     } else {
       Game.currentGame.currPlayerId = Game.currentGame.players[currentPlayerIndex + 1].id;
     }
-
-    console.log("here 1", { currentPlayerIndex, lastPlayerIndex, currPlayerId: Game.currentGame.currPlayerId });
 
     setupPlayerTurnList();
     if (Game.currentGame.currPlayer.isAlgo) {

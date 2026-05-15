@@ -22,9 +22,13 @@ window.onload = () => {
     setTimeout(() => {
         updateLinesAndBoxesUI();
 
+        if (Game.currentGame.hasEnded) {
+            winBoard();
+        }
+
         loadingEndUI();
 
-        playerTurn(true);
+        setupPlayerTurns();
 
         setCurrPlayerInfo();
 
@@ -518,7 +522,7 @@ function setupPlayerTurnListUI() {
     var playerUI;
 
     frame.innerHTML = "";
-    
+
     playerTurnList.forEach(player => {
         playerUI = createPlayerUI(player);
 
@@ -544,11 +548,13 @@ function setCurrPlayerInfo() {
 function winBoard() {
     updateBoxesUI(Game.currentGame.boxes);
 
-    document.querySelector("dialog").showModal();
-    document.querySelector("body").classList.add("winBoard-container");
+    requestAnimationFrame(() => {
+        document.querySelector("dialog").showModal();
+        document.querySelector("body").classList.add("winBoard-container");
 
-    sortPlayerByScore();
-    setupPlayerRankList();
+        sortPlayerByScore();
+        setupPlayerRankList();
+    });
 }
 
 function sortPlayerByScore() {

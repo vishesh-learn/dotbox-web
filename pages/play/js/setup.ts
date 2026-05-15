@@ -1,3 +1,34 @@
+function setupPlayerTurns() {
+    pointerDownEvent(false);
+
+    if (!(Game.currentGame?.players?.length > 0)) {
+        console.error("No players found in memory.");
+
+        return false;
+    }
+
+    if (Game.currentGame.currPlayerId != undefined) {
+        setupPlayerTurnList();
+
+        if (Game.currentGame.currPlayer.isAlgo) {
+            setupPlayerTurnListUI();
+        } else {
+            slideLeft();
+        }
+    } else {
+        Game.currentGame.currPlayerId = Game.currentGame.players[0].id;
+
+        setupPlayerTurnList();
+        setupPlayerTurnListUI();
+    }
+
+    if (Game.currentGame.currPlayer.isAlgo) {
+        requestAnimationFrame(autoDrawLine);
+    } else {
+        pointerDownEvent(true);
+    }
+}
+
 function getAllPossibleLines() {
     let dotEs = document.querySelectorAll(".dot"), validFinalDots, dot1, dot2;
 
