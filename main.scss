@@ -56,11 +56,12 @@ share-button {
     background: var(--bg-low-opacity);
     box-shadow: 0 0 10px 10px var(--bg-low-opacity);
     padding: 0 0.4em;
-  }
-}
 
-#continueButton:disabled {
-  opacity: 0.5;
+    &:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
 }
 
 #newGameButton:active {

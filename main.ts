@@ -16,6 +16,7 @@ function initHome() {
   Game.load();
 
   (document.querySelector("#continueButton") as HTMLButtonElement).disabled = !Boolean(Game.currentGame);
+  (document.querySelector("#savedGamesButton") as HTMLButtonElement).disabled = !Boolean(Game.games?.length);
 }
 
 function newGame() {

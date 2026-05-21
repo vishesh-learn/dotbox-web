@@ -276,7 +276,7 @@ a {
     outline: 2px dashed #000000;
   }
 
-  &:active {
+  &:active:not(:disabled) {
     scale: 0.98;
     filter: brightness(1.1);
   }
