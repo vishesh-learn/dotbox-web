@@ -1,7 +1,7 @@
 function randomUUID(): string {
-    return '10000000-1000-4000-8000-100000000000'.replace(/[018]/g, c =>
-        (+c ^ Math.random() * 16 >> +c / 4).toString(16)
-    );
+  return '10000000-1000-4000-8000-100000000000'.replace(/[018]/g, c =>
+    (+c ^ Math.random() * 16 >> +c / 4).toString(16)
+  );
 }
 
 class Game {
@@ -161,15 +161,66 @@ class Game {
     const gameUI = document.createElement("div");
     gameUI.classList = "saved-game";
 
-    const nameUI = document.createElement("div");
-    nameUI.classList = "name date";
-    nameUI.innerHTML = formatDateTimeWithRelativeEn(this.meta_updatedAt);
-    gameUI.append(nameUI);
+    const detailsContainer = document.createElement("div");
+    detailsContainer.classList = "details-container";
 
-    gameUI.addEventListener('click', () => {
+    const nameUI = document.createElement("div");
+    nameUI.classList = "name";
+
+    nameUI.innerHTML = `<span class="label">ID:</span> ${this.id}`;
+
+    detailsContainer.append(nameUI);
+
+    const createdDateUI = document.createElement("div");
+    createdDateUI.classList = "date";
+
+    const createdAtFormatted = formatDateTimeWithRelativeEn(this.meta_createdAt);
+
+    createdDateUI.innerHTML = `
+    <span class="label">Created at:</span>
+    <span class="absolute">${createdAtFormatted.absolute}</span>
+    <span class="relative">(${createdAtFormatted.relative})</span>
+    `;
+
+    detailsContainer.append(createdDateUI);
+
+    const updatedDateUI = document.createElement("div");
+    updatedDateUI.classList = "date";
+
+    const updatedAtFormatted = formatDateTimeWithRelativeEn(this.meta_updatedAt);
+
+    updatedDateUI.innerHTML = `
+    <span class="label">Updated at:</span>
+    <span class="absolute">${updatedAtFormatted.absolute}</span>
+    <span class="relative">(${updatedAtFormatted.relative})</span>
+    `;
+
+    detailsContainer.append(updatedDateUI);
+
+    const actionBar = document.createElement("div");
+    actionBar.classList = "action-bar";
+
+    const deleteButton = document.createElement("button");
+    deleteButton.classList = "button deleteButton";
+    deleteButton.innerHTML = "&#10005;";
+    actionBar.append(deleteButton);
+
+    gameUI.append(detailsContainer, actionBar);
+
+    detailsContainer.addEventListener('click', () => {
       this.save();
 
       Game.continue();
+    });
+
+    deleteButton.addEventListener('click', () => {
+      const index = Game.games.findIndex(game => game.id == this.id);
+
+      Game.games.splice(index, 1);
+
+      localStorage.setItem('games', JSON.stringify(Game.games));
+
+      gameUI.remove();
     });
 
     return gameUI;

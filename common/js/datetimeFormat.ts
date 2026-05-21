@@ -98,5 +98,8 @@ function formatRelativePastEn(date, nowDate = new Date()) {
 function formatDateTimeWithRelativeEn(date, nowDate = new Date()) {
   const absolute = formatOrdinalDateTime12hEn(date);
   const relative = formatRelativePastEn(date, nowDate);
-  return `${absolute}<br /><span class="relative">${relative}</span>`;
+
+  return {
+    date, absolute, relative
+  };
 }

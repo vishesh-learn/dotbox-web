@@ -57,15 +57,53 @@ body {
       .saved-games {
         padding: 1em;
 
+        * {
+          font-family: Nunito;
+        }
+
         .saved-game {
           border: 2px solid var(--brown);
-          padding: 1em;
           margin-bottom: 1em;
           border-radius: 0.5em;
           background: hsl(15, 100%, 83%);
 
-          &:active {
-            scale: 0.98;
+          display: flex;
+
+          .details-container {
+            flex: 1;
+            cursor: pointer;
+            padding: 1em;
+
+            &:active {
+              scale: 0.98;
+            }
+
+            .name {
+              font-size: 0.7em;
+              font-weight: 800;
+            }
+
+            .date {
+              font-size: 0.6em;
+
+              .label {
+                font-weight: 800;
+              }
+
+              .relative {
+                font-size: 0.8em;
+              }
+            }
+          }
+
+          .action-bar {
+            padding: 0.4em 0.6em;
+
+            .deleteButton {
+              &:active {
+                scale: 0.9;
+              }
+            }
           }
         }
       }

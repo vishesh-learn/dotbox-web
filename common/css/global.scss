@@ -30,7 +30,7 @@
 }
 
 * {
-  font-family: Itim-Regular;
+  font-family: Itim;
   scroll-behavior: smooth;
 }
 
@@ -394,13 +394,13 @@ footer {
 }
 
 @font-face {
-  font-family: Itim-Regular;
-  src: url(../../../assets/fonts/Itim-Regular.ttf);
+  font-family: Nunito;
+  src: url(../../../assets/fonts/Nunito/Nunito-VariableFont_wght.ttf);
 }
 
 @font-face {
-  font-family: comic;
-  src: url(../../../assets/fonts/comic.ttf);
+  font-family: Itim;
+  src: url(../../../assets/fonts/Itim-Regular.ttf);
 }
 
 .displayNone {
@@ -410,12 +410,4 @@ footer {
 .svgC,
 svg {
   overflow: visible;
-}
-
-.date {
-  font-size: 1.2rem;
-
-  .relative {
-    font-size: 1rem;
-  }
 }
