@@ -10,7 +10,9 @@ function pointerDownEvent(listen = true) {
   } else {
     board.removeEventListener("pointerdown", pointerDown);
 
-    board.removeEventListener("keydown", keyHandler);
+    board.removeEventListener("keydown", (event) =>
+      keyHandler(event, navigate_playBoard)
+    );
   }
 }
 
@@ -74,10 +76,6 @@ function pointerUp(event) {
   Game.currentGame.save();
 }
 
-function removePrevLines() {
-  document.querySelectorAll(".preview").forEach(line => line.remove());
-}
-
 function lineMade(line) {
   made.lineMade = true;
 
@@ -100,9 +98,7 @@ function gameEvent() {
       playerTurn();
     }
 
-    Game.currentGame.hasEnded = isEnd();
-
-    if (Game.currentGame.hasEnded) {
+    if (isEnd()) {
       winBoard();
     }
   }
@@ -153,36 +149,9 @@ function isEnd() {
   return state.pendingPossiblelines.length <= 0;
 }
 
-function keyHandler(event) {
-  switch (event.keyCode) {
-    case 13:
-      dotNavigate(event, "enter");
-      break;
-
-    case 37:
-      dotNavigate(event, "left");
-      break;
-
-    case 38:
-      dotNavigate(event, "top");
-      break;
-
-    case 39:
-      dotNavigate(event, "right");
-      break;
-
-    case 40:
-      dotNavigate(event, "bottom");
-      break;
-
-    default:
-      break;
-  }
-}
-
-function dotNavigate(event, direction) {
+function navigate_playBoard(event, direction) {
   if (!event.target.classList.contains("dot")) {
-    console.log("dotNavigate -> not dot");
+    console.log("navigate_playBoard -> not dot");
 
     return false;
   }
@@ -290,7 +259,7 @@ function dotNavigate(event, direction) {
       break;
 
     default:
-      console.log('dotNavigate -> default direction');
+      console.log('navigate_playBoard -> default direction');
       break;
   }
 }

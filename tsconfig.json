@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "module": "none",
-    "ignoreDeprecations": "6.0",
+    "module": "esnext",
     "strict": false,
     "outDir": "dist",
     "rootDir": ".",

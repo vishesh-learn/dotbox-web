@@ -1,23 +1,38 @@
 const fs = require('fs');
 const path = require('path');
 
+const rootDir = path.resolve(__dirname, '..');
+const distDir = path.join(rootDir, 'dist');
+
+function projectPath(...segments) {
+  return path.join(rootDir, ...segments);
+}
+
+function distPath(...segments) {
+  return path.join(distDir, ...segments);
+}
+
+function displayPath(filePath) {
+  return path.relative(rootDir, filePath).replaceAll(path.sep, '/');
+}
+
 function copyHTML(src, dest, find, replace) {
   let html = fs.readFileSync(src, 'utf8');
   html = html.replaceAll(find, replace);
   fs.mkdirSync(path.dirname(dest), { recursive: true });
   fs.writeFileSync(dest, html);
-  console.log(`  ${dest}`);
+  console.log(`  ${displayPath(dest)}`);
 }
 
 console.log('Copying HTML...');
 
-copyHTML('index.html', 'dist/index.html', '"dist/', '"');
+copyHTML(projectPath('index.html'), distPath('index.html'), '"dist/', '"');
 
-for (const entry of fs.readdirSync('pages', { withFileTypes: true })) {
+for (const entry of fs.readdirSync(projectPath('pages'), { withFileTypes: true })) {
   if (!entry.isDirectory()) continue;
-  const src = path.join('pages', entry.name, 'index.html');
+  const src = projectPath('pages', entry.name, 'index.html');
   if (!fs.existsSync(src)) continue;
-  copyHTML(src, path.join('dist', 'pages', entry.name, 'index.html'), '"../../dist/', '"../../');
+  copyHTML(src, distPath('pages', entry.name, 'index.html'), '"../../dist/', '"../../');
 }
 
 // Assets
@@ -31,7 +46,7 @@ function copyDir(src, dest) {
 }
 
 console.log('Copying assets...');
-copyDir('assets', 'dist/assets');
-fs.copyFileSync('icon.png', 'dist/icon.png');
-fs.copyFileSync('dotbox.webmanifest', 'dist/dotbox.webmanifest');
+copyDir(projectPath('assets'), distPath('assets'));
+fs.copyFileSync(projectPath('icon.png'), distPath('icon.png'));
+fs.copyFileSync(projectPath('dotbox.webmanifest'), distPath('dotbox.webmanifest'));
 console.log('  dist/assets/, dist/icon.png, dist/dotbox.webmanifest');

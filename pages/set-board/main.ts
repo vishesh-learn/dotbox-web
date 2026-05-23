@@ -2,7 +2,7 @@ window.onload = () => {
   const gameBoardSVG = document.querySelector(".svgC");
   const nextButton = document.querySelector("#nextButton");
 
-  document.querySelector("#homeButton").addEventListener("click", goHome);
+  document.querySelector("#homeButton").addEventListener("click", () => window.location.href = pages.index);
 
   document.querySelector("#backButton")
     .addEventListener("click", () => window.history.back());
@@ -22,15 +22,13 @@ window.onload = () => {
     }
   );
 
-  gameBoardSVG.addEventListener('keydown', keyHandler);
+  gameBoardSVG.addEventListener('keydown', (event) =>
+    keyHandler(event, navigate_setBoard)
+  );
 
   nextButton.addEventListener("click", goNext);
 
   keyOnTabIndex();
-}
-
-function goHome() {
-  window.location.href = pages.index;
 }
 
 function goNext() {
@@ -81,24 +79,7 @@ function startupVariables() {
   document.documentElement.style.setProperty('--svgHeight', `${height}px`);
 }
 
-function gameBoardOverFlow() {
-  let pageContentSize = getComputedSize(document.querySelector(".page-content"));
-  let boardSize = getComputedSize(document.querySelector(".svgC"));
-
-  if (boardSize.width > pageContentSize.width) {
-    document.documentElement.style.setProperty('--align-x-board', `flex-start`);
-  } else {
-    document.documentElement.style.setProperty('--align-x-board', `center`);
-  }
-
-  if (boardSize.height > pageContentSize.height) {
-    document.documentElement.style.setProperty('--align-y-board', `flex-start`);
-  } else {
-    document.documentElement.style.setProperty('--align-y-board', `space-evenly`);
-  }
-}
-
-function svgResize() {
+function setBoard_resize() {
   var gameBoardSVG = document.querySelector(".svgC");
   let dotRadius = getDotRadius();
 
@@ -135,7 +116,7 @@ function pointerHandler(event) {
   var pointX = event.offsetX;
   var pointY = event.offsetY;
 
-  var nearDot = nearestDot(pointX, pointY);
+  var nearDot = nearestDotInside(pointX, pointY);
 
   optedDot(nearDot);
 
@@ -143,36 +124,9 @@ function pointerHandler(event) {
     .addEventListener("pointermove", pointerHandler);
 }
 
-function keyHandler(event) {
-  switch (event.keyCode) {
-    case 13:
-      dotNavigate(event, "enter");
-      break;
-
-    case 37:
-      dotNavigate(event, "left");
-      break;
-
-    case 38:
-      dotNavigate(event, "top");
-      break;
-
-    case 39:
-      dotNavigate(event, "right");
-      break;
-
-    case 40:
-      dotNavigate(event, "bottom");
-      break;
-
-    default:
-      break;
-  }
-}
-
-function dotNavigate(event, direction) {
+function navigate_setBoard(event, direction) {
   if (!event.target.classList.contains("svgC")) {
-    console.log("dotNavigate -> not svgC");
+    console.log("navigate_setBoard -> not svgC");
 
     return false;
   }
@@ -199,7 +153,7 @@ function dotNavigate(event, direction) {
       break;
 
     default:
-      console.log('dotNavigate -> default direction');
+      console.log('navigate_setBoard -> default direction');
       break;
   }
 
@@ -264,7 +218,7 @@ function optedXnY(x, y) {
   }
 }
 
-function nearestDot(x, y) {
+function nearestDotInside(x, y) {
   var dotEs = document.querySelectorAll(".dot");
 
   var nearDot = dotEs[0];

@@ -45,10 +45,10 @@ function playerColorEditor_init() {
 }
 
 function playerUILoaded() {
-  tooltip_init();
+  setPlayer_tooltip_init();
 }
 
-function tooltip_init() {
+function setPlayer_tooltip_init() {
   ElementGuide.data = [
     new ElementGuide(".avatar", "Player Color", "Choose your player color!"),
     new ElementGuide(".playerName", "Player Name", "Type your name"),
@@ -243,7 +243,7 @@ async function setupPlayersUI() {
     playersUI.innerHTML = "";
 
     for (let player of Game.currentGame.players) {
-      playersUI.append(createPlayerUI(player));
+      playersUI.append(createPlayer_listItemUI(player));
     }
 
     updatePlayerCountView();
@@ -265,13 +265,13 @@ function addPlayer() {
     Game.currentGame.save();
 
     const playersUI = document.querySelector(".players");
-    playersUI.append(createPlayerUI(player));
+    playersUI.append(createPlayer_listItemUI(player));
 
     updatePlayerCountView();
   }
 }
 
-function createPlayerUI(player) {
+function createPlayer_listItemUI(player) {
   const playerUI = document.createElement("div");
   playerUI.classList = "player";
 
@@ -301,16 +301,4 @@ function createPlayerUI(player) {
   playerUI.append(removePlayerB);
 
   return playerUI;
-}
-
-function keyOnElement(element) {
-  element.addEventListener("keypress", event => {
-    if (event.keyCode === 13) {
-      if (element.click) {
-        element.click();
-      } else {
-        element.dispatchEvent(new Event("click"));
-      }
-    }
-  });
 }

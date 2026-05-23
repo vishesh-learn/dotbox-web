@@ -1,9 +1,11 @@
 var playerTurnList: Player[] = [];
 
 window.onload = () => {
-    document.querySelector("#homeButton").addEventListener("click", goHome);
+    document.querySelector("#homeButton").addEventListener("click", () => window.location.href = pages.index);
 
     Game.load();
+
+    console.log("currentGame", Game.currentGame);
 
     footerInfo();
 
@@ -15,14 +17,14 @@ window.onload = () => {
 
     // refreshGameLines();
 
-    getPendingPossiblelines();
-
     loadingStartUI();
 
     setTimeout(() => {
         updateLinesAndBoxesUI();
 
-        if (Game.currentGame.hasEnded) {
+        refreshPendingPossibleLines();
+
+        if (isEnd()) {
             winBoard();
         }
 
@@ -32,16 +34,16 @@ window.onload = () => {
 
         setCurrPlayerInfo();
 
-        tooltip_init();
+        play_tooltip_init();
     }, 0);
 
     document.querySelector(".playerTurnList").addEventListener("transitionend", setupPlayerTurnListUI);
 
     document.querySelector("#replayButton").addEventListener("click", replay);
 
-    document.querySelector("#newGameButton").addEventListener("click", newGame);
+    document.querySelector("#newGameButton").addEventListener("click", resetGame);
 
-    document.querySelector(".button.home").addEventListener("click", goHome);
+    document.querySelector(".button.home").addEventListener("click", () => window.location.href = pages.index);
 
     keyOnTabIndex();
 
@@ -49,7 +51,7 @@ window.onload = () => {
     addEventListener("resize", gameBoardOverFlow);
 }
 
-function tooltip_init() {
+function play_tooltip_init() {
     ElementGuide.data = [
         new ElementGuide(".svgC", "Drag between two dots to draw your line!"),
         new ElementGuide("#homeButton", "Return to the main menu")
@@ -65,49 +67,16 @@ function tooltip_init() {
     }
 }
 
-function gameBoardOverFlow() {
-    let pageContentSize = getComputedSize(document.querySelector(".page-content"));
-    let boardSize = getComputedSize(document.querySelector(".svgC"));
-
-    if (boardSize.width > pageContentSize.width) {
-        document.documentElement.style.setProperty('--align-x-board', `flex-start`);
-    } else {
-        document.documentElement.style.setProperty('--align-x-board', `center`);
-    }
-
-    if (boardSize.height > pageContentSize.height) {
-        document.documentElement.style.setProperty('--align-y-board', `flex-start`);
-    } else {
-        document.documentElement.style.setProperty('--align-y-board', `space-evenly`);
-    }
-}
-
-// function refreshGameLines() {
-//     Game.currentGame.lines = Game.currentGame.lines.filter(line => {
-//         let playerExists = Game.currentGame.players.some(player => player.id == line.byPlayerID);
-
-//         let isNotPossibleLine = lineNotExists(line, state.allPossibleLines);
-
-//         return playerExists && !isNotPossibleLine;
-//     });
-
-//     Game.currentGame.save();
-// }
-
 function replay() {
     Game.currentGame.reset();
 
     window.location.reload();
 }
 
-function newGame() {
+function resetGame() {
     Game.currentGame.reset();
 
     window.location.href = pages.setBoard;
-}
-
-function goHome() {
-    window.location.href = pages.index;
 }
 
 function footerInfo() {
@@ -201,7 +170,7 @@ function prevLineMaker(line) {
 
     line.byPlayerID = Game.currentGame.currPlayerId;
     line.prev = true;
-    document.querySelector(".lineSVG").appendChild(getSVGLine(line) as Node);
+    document.querySelector(".lineSVG").appendChild(line.svg as Node);
 }
 
 function removePrevLines() {
@@ -212,7 +181,7 @@ function updateLinesAndBoxesUI() {
     const lineSVG = document.querySelector(".lineSVG");
     const boxesContainer = document.querySelector('.boxG');
 
-    const lineUIs = Game.currentGame.lines.map(line => getSVGLine(line));
+    const lineUIs = Game.currentGame.lines.map(line => line.svg);
 
     lineSVG.append(...lineUIs as Node[]);
 
@@ -245,7 +214,7 @@ function addLine(line: Line) {
 function drawLine(line: Line) {
     const lineSVG = document.querySelector(".lineSVG");
 
-    let lineUI = getSVGLine(line);
+    let lineUI = line.svg;
 
     lineSVG.appendChild(lineUI as Node);
 

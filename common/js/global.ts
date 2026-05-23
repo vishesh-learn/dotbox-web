@@ -73,6 +73,50 @@ function loadingEndUI() {
   document.querySelector("body").classList.remove("loading-container");
 }
 
+function gameBoardOverFlow() {
+  let pageContentSize = getComputedSize(document.querySelector(".page-content"));
+  let boardSize = getComputedSize(document.querySelector(".svgC"));
+
+  if (boardSize.width > pageContentSize.width) {
+    document.documentElement.style.setProperty('--align-x-board', `flex-start`);
+  } else {
+    document.documentElement.style.setProperty('--align-x-board', `center`);
+  }
+
+  if (boardSize.height > pageContentSize.height) {
+    document.documentElement.style.setProperty('--align-y-board', `flex-start`);
+  } else {
+    document.documentElement.style.setProperty('--align-y-board', `space-evenly`);
+  }
+}
+
+function keyHandler(event, callback = (any, string) => {}) {
+  switch (event.keyCode) {
+    case 13:
+      callback(event, "enter");
+      break;
+
+    case 37:
+      callback(event, "left");
+      break;
+
+    case 38:
+      callback(event, "top");
+      break;
+
+    case 39:
+      callback(event, "right");
+      break;
+
+    case 40:
+      callback(event, "bottom");
+      break;
+
+    default:
+      break;
+  }
+}
+
 // window.onerror = (message, source, lineno, colno, error) => {
 //   document.querySelector("pre").innerHTML = lineno + ": " + message + "\nat col: " + colno;
 // }

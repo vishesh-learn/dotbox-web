@@ -52,7 +52,7 @@ function getAllPossibleLines() {
     return state.allPossibleLines;
 }
 
-function getPendingPossiblelines() {
+function refreshPendingPossibleLines() {
     state.pendingPossiblelines = state.allPossibleLines.filter((line) => {
         return lineNotExists(line, lineEsToJSON());
     });
