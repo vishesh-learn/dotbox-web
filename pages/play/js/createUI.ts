@@ -72,7 +72,7 @@ function gameBoardBuilder() {
         }
     }
 
-    svgResize();
+    playBoard_resize();
 }
 
 function createDotUI(cx, cy, row, col) {
@@ -174,7 +174,7 @@ function getSVGLine(line) {
     return lineE;
 }
 
-function svgResize() {
+function playBoard_resize() {
     let dotRadius = getDotRadius();
 
     var width = ((Game.currentGame.gameBoard.col - 1) * Game.currentGame.gameBoard.gap) + (2 * dotRadius);

@@ -39,10 +39,6 @@ function initHome() {
 }
 
 function newGame() {
-  console.log('newGame called');
-
-  Game.load();
-
   new Game().save();
 
   window.location.href = pages.setBoard;

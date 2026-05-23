@@ -1,7 +1,7 @@
 var playerTurnList: Player[] = [];
 
 window.onload = () => {
-    document.querySelector("#homeButton").addEventListener("click", goHome);
+    document.querySelector("#homeButton").addEventListener("click", () => window.location.href = pages.index);
 
     Game.load();
 
@@ -39,7 +39,7 @@ window.onload = () => {
 
     document.querySelector("#replayButton").addEventListener("click", replay);
 
-    document.querySelector("#newGameButton").addEventListener("click", newGame);
+    document.querySelector("#newGameButton").addEventListener("click", resetGame);
 
     document.querySelector(".button.home").addEventListener("click", goHome);
 
@@ -65,49 +65,16 @@ function tooltip_init() {
     }
 }
 
-function gameBoardOverFlow() {
-    let pageContentSize = getComputedSize(document.querySelector(".page-content"));
-    let boardSize = getComputedSize(document.querySelector(".svgC"));
-
-    if (boardSize.width > pageContentSize.width) {
-        document.documentElement.style.setProperty('--align-x-board', `flex-start`);
-    } else {
-        document.documentElement.style.setProperty('--align-x-board', `center`);
-    }
-
-    if (boardSize.height > pageContentSize.height) {
-        document.documentElement.style.setProperty('--align-y-board', `flex-start`);
-    } else {
-        document.documentElement.style.setProperty('--align-y-board', `space-evenly`);
-    }
-}
-
-// function refreshGameLines() {
-//     Game.currentGame.lines = Game.currentGame.lines.filter(line => {
-//         let playerExists = Game.currentGame.players.some(player => player.id == line.byPlayerID);
-
-//         let isNotPossibleLine = lineNotExists(line, state.allPossibleLines);
-
-//         return playerExists && !isNotPossibleLine;
-//     });
-
-//     Game.currentGame.save();
-// }
-
 function replay() {
     Game.currentGame.reset();
 
     window.location.reload();
 }
 
-function newGame() {
+function resetGame() {
     Game.currentGame.reset();
 
     window.location.href = pages.setBoard;
-}
-
-function goHome() {
-    window.location.href = pages.index;
 }
 
 function footerInfo() {
