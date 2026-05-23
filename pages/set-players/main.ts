@@ -45,10 +45,10 @@ function playerColorEditor_init() {
 }
 
 function playerUILoaded() {
-  tooltip_init();
+  setPlayer_tooltip_init();
 }
 
-function tooltip_init() {
+function setPlayer_tooltip_init() {
   ElementGuide.data = [
     new ElementGuide(".avatar", "Player Color", "Choose your player color!"),
     new ElementGuide(".playerName", "Player Name", "Type your name"),

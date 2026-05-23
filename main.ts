@@ -7,7 +7,7 @@ window.addEventListener("load", () => {
 
   initHome();
 
-  tooltip_init();
+  home_tooltip_init();
 
   keyOnTabIndex();
 });
@@ -48,7 +48,7 @@ function savedGames() {
   window.location.href = pages.savedGames;
 }
 
-function tooltip_init() {
+function home_tooltip_init() {
   ElementGuide.data = [
     new ElementGuide("#homeButton", "Return to the main menu"),
     new ElementGuide(".svgC", "Drag between two dots to draw your line!")

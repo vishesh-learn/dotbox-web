@@ -32,7 +32,7 @@ window.onload = () => {
 
         setCurrPlayerInfo();
 
-        tooltip_init();
+        play_tooltip_init();
     }, 0);
 
     document.querySelector(".playerTurnList").addEventListener("transitionend", setupPlayerTurnListUI);
@@ -49,7 +49,7 @@ window.onload = () => {
     addEventListener("resize", gameBoardOverFlow);
 }
 
-function tooltip_init() {
+function play_tooltip_init() {
     ElementGuide.data = [
         new ElementGuide(".svgC", "Drag between two dots to draw your line!"),
         new ElementGuide("#homeButton", "Return to the main menu")
