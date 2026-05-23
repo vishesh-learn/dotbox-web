@@ -12,6 +12,23 @@ window.addEventListener("load", () => {
   keyOnTabIndex();
 });
 
+function shareApp() {
+  try {
+    Android.shareApp(shareTitle, shareText);
+  } catch (error) {
+    if (navigator.share) {
+      navigator.share({
+        title: shareTitle,
+        text: shareText,
+        url: shareUrl
+      });
+    }
+    else {
+      window.open(shareUrl);
+    }
+  }
+}
+
 function initHome() {
   Game.load();
 
