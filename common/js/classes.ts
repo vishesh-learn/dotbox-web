@@ -21,7 +21,6 @@ class Game {
   lines: Line[];
   boxes: Box[];
   currPlayerId: number | null;
-  hasEnded: boolean
 
   constructor() {
     this.id = crypto.randomUUID?.() ?? randomUUID();
@@ -40,9 +39,7 @@ class Game {
     this.lines = [];
     this.boxes = [];
 
-    this.currPlayerId = null;
-
-    this.hasEnded = false;
+    this.currPlayerId = null
   }
 
   save() {

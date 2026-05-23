@@ -98,9 +98,7 @@ function gameEvent() {
       playerTurn();
     }
 
-    Game.currentGame.hasEnded = isEnd();
-
-    if (Game.currentGame.hasEnded) {
+    if (isEnd()) {
       winBoard();
     }
   }

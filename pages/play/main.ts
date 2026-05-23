@@ -6,7 +6,7 @@ window.onload = () => {
     Game.load();
 
     console.log("currentGame", Game.currentGame);
-    
+
     footerInfo();
 
     Game.currentGame.currPage = pages.play;
@@ -17,14 +17,14 @@ window.onload = () => {
 
     // refreshGameLines();
 
-    getPendingPossiblelines();
-
     loadingStartUI();
 
     setTimeout(() => {
         updateLinesAndBoxesUI();
 
-        if (Game.currentGame.hasEnded) {
+        refreshPendingPossibleLines();
+
+        if (isEnd()) {
             winBoard();
         }
 

@@ -45,7 +45,7 @@ function makeSafeOrRandomLine() {
 }
 
 function getSquareMakingLine() {
-  getPendingPossiblelines();
+  refreshPendingPossibleLines();
 
   for (var possibleLine of state.pendingPossiblelines) {
     if (doesMakesSquare(possibleLine)) {
