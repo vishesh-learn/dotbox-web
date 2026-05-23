@@ -243,7 +243,7 @@ async function setupPlayersUI() {
     playersUI.innerHTML = "";
 
     for (let player of Game.currentGame.players) {
-      playersUI.append(createPlayerUI(player));
+      playersUI.append(createPlayer_listItemUI(player));
     }
 
     updatePlayerCountView();
@@ -265,13 +265,13 @@ function addPlayer() {
     Game.currentGame.save();
 
     const playersUI = document.querySelector(".players");
-    playersUI.append(createPlayerUI(player));
+    playersUI.append(createPlayer_listItemUI(player));
 
     updatePlayerCountView();
   }
 }
 
-function createPlayerUI(player) {
+function createPlayer_listItemUI(player) {
   const playerUI = document.createElement("div");
   playerUI.classList = "player";
 
