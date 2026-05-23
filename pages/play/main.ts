@@ -5,6 +5,8 @@ window.onload = () => {
 
     Game.load();
 
+    console.log("currentGame", Game.currentGame);
+    
     footerInfo();
 
     Game.currentGame.currPage = pages.play;
@@ -41,7 +43,7 @@ window.onload = () => {
 
     document.querySelector("#newGameButton").addEventListener("click", resetGame);
 
-    document.querySelector(".button.home").addEventListener("click", goHome);
+    document.querySelector(".button.home").addEventListener("click", () => window.location.href = pages.index);
 
     keyOnTabIndex();
 
