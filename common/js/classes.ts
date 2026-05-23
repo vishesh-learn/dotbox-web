@@ -428,6 +428,41 @@ class Line {
     return Game.currentGame.players.find(player => player.id == this.byPlayerID);
   }
 
+  get svg() {
+    let lineE = document.createElementNS('http://www.w3.org/2000/svg', "line");
+    lineE.classList = "line";
+
+    if (this.prev) {
+        lineE.classList.add("preview");
+    }
+
+    lineE.setAttribute("x1", this.x1);
+    lineE.setAttribute("y1", this.y1);
+    lineE.setAttribute("x2", this.x2);
+    lineE.setAttribute("y2", this.y2);
+
+    if (!this.byPlayerID) {
+        console.log("no byPlayerID", this.byPlayerID);
+
+        return false;
+    }
+
+    if (this?.byPlayer?.color) {
+        lineE.setAttribute("stroke", this.byPlayer.color);
+    } else {
+        console.log("color not found");
+    }
+
+    lineE.setAttribute("byPlayer", this.byPlayerID.toString());
+
+    this.dot1.row && lineE.setAttribute("data-dot1-row", this.dot1.row);
+    this.dot1.col && lineE.setAttribute("data-dot1-col", this.dot1.col);
+    this.dot2.row && lineE.setAttribute("data-dot2-row", this.dot2.row);
+    this.dot2.col && lineE.setAttribute("data-dot2-col", this.dot2.col);
+
+    return lineE;
+  }
+
   isValid() {
     const deltaCol = Math.abs(this.dot1.col - this.dot2.col);
     const deltaRow = Math.abs(this.dot1.row - this.dot2.row);

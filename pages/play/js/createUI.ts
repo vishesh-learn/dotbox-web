@@ -139,40 +139,40 @@ function createStopUI(offset, stopColor) {
     return stopUI;
 }
 
-function getSVGLine(line) {
-    let lineE = document.createElementNS('http://www.w3.org/2000/svg', "line");
-    lineE.classList = "line";
+// function getSVGLine(line) {
+//     let lineE = document.createElementNS('http://www.w3.org/2000/svg', "line");
+//     lineE.classList = "line";
 
-    if (line.prev) {
-        lineE.classList.add("preview");
-    }
+//     if (line.prev) {
+//         lineE.classList.add("preview");
+//     }
 
-    lineE.setAttribute("x1", line.x1);
-    lineE.setAttribute("y1", line.y1);
-    lineE.setAttribute("x2", line.x2);
-    lineE.setAttribute("y2", line.y2);
+//     lineE.setAttribute("x1", line.x1);
+//     lineE.setAttribute("y1", line.y1);
+//     lineE.setAttribute("x2", line.x2);
+//     lineE.setAttribute("y2", line.y2);
 
-    if (!line.byPlayerID) {
-        console.log("no byPlayerID", line.byPlayerID);
+//     if (!line.byPlayerID) {
+//         console.log("no byPlayerID", line.byPlayerID);
 
-        return false;
-    }
+//         return false;
+//     }
 
-    if (line?.byPlayer?.color) {
-        lineE.setAttribute("stroke", line.byPlayer.color);
-    } else {
-        console.log("color not found");
-    }
+//     if (line?.byPlayer?.color) {
+//         lineE.setAttribute("stroke", line.byPlayer.color);
+//     } else {
+//         console.log("color not found");
+//     }
 
-    lineE.setAttribute("byPlayer", line.byPlayerID);
+//     lineE.setAttribute("byPlayer", line.byPlayerID);
 
-    line.dot1.row && lineE.setAttribute("data-dot1-row", line.dot1.row);
-    line.dot1.col && lineE.setAttribute("data-dot1-col", line.dot1.col);
-    line.dot2.row && lineE.setAttribute("data-dot2-row", line.dot2.row);
-    line.dot2.col && lineE.setAttribute("data-dot2-col", line.dot2.col);
+//     line.dot1.row && lineE.setAttribute("data-dot1-row", line.dot1.row);
+//     line.dot1.col && lineE.setAttribute("data-dot1-col", line.dot1.col);
+//     line.dot2.row && lineE.setAttribute("data-dot2-row", line.dot2.row);
+//     line.dot2.col && lineE.setAttribute("data-dot2-col", line.dot2.col);
 
-    return lineE;
-}
+//     return lineE;
+// }
 
 function playBoard_resize() {
     let dotRadius = getDotRadius();

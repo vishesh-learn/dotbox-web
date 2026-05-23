@@ -168,7 +168,7 @@ function prevLineMaker(line) {
 
     line.byPlayerID = Game.currentGame.currPlayerId;
     line.prev = true;
-    document.querySelector(".lineSVG").appendChild(getSVGLine(line) as Node);
+    document.querySelector(".lineSVG").appendChild(line.svg as Node);
 }
 
 function removePrevLines() {
@@ -179,7 +179,7 @@ function updateLinesAndBoxesUI() {
     const lineSVG = document.querySelector(".lineSVG");
     const boxesContainer = document.querySelector('.boxG');
 
-    const lineUIs = Game.currentGame.lines.map(line => getSVGLine(line));
+    const lineUIs = Game.currentGame.lines.map(line => line.svg);
 
     lineSVG.append(...lineUIs as Node[]);
 
@@ -212,7 +212,7 @@ function addLine(line: Line) {
 function drawLine(line: Line) {
     const lineSVG = document.querySelector(".lineSVG");
 
-    let lineUI = getSVGLine(line);
+    let lineUI = line.svg;
 
     lineSVG.appendChild(lineUI as Node);
 
