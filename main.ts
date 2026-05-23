@@ -13,19 +13,21 @@ window.addEventListener("load", () => {
 });
 
 function shareApp() {
-  try {
+  if (typeof Android !== "undefined") {
     Android.shareApp(shareTitle, shareText);
-  } catch (error) {
-    if (navigator.share) {
-      navigator.share({
-        title: shareTitle,
-        text: shareText,
-        url: shareUrl
-      });
-    }
-    else {
-      window.open(shareUrl);
-    }
+
+    return;
+  }
+
+  if (navigator.share) {
+    navigator.share({
+      title: shareTitle,
+      text: shareText,
+      url: shareUrl
+    });
+  }
+  else {
+    window.open(shareUrl);
   }
 }
 
