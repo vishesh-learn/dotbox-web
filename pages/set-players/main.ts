@@ -302,15 +302,3 @@ function createPlayerUI(player) {
 
   return playerUI;
 }
-
-function keyOnElement(element) {
-  element.addEventListener("keypress", event => {
-    if (event.keyCode === 13) {
-      if (element.click) {
-        element.click();
-      } else {
-        element.dispatchEvent(new Event("click"));
-      }
-    }
-  });
-}

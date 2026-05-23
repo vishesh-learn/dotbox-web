@@ -63,7 +63,7 @@ class Game {
     Game.games = localStorage.games ? JSON.parse(localStorage.games) : [];
 
     Game.games = Game.games.map(this.parseGame)
-      .sort((a, b) => b.meta_updatedAt - a.meta_updatedAt);
+      .sort((a, b) => b.meta_updatedAt.valueOf() - a.meta_updatedAt.valueOf());
 
     console.log('load -> parsed games', Game.games);
 
