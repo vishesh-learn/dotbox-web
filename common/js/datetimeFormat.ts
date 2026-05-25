@@ -35,7 +35,9 @@ function formatOrdinalDateTime12hEn(date) {
   const hh = String(h12).padStart(2, "0");
   const mm = String(minutes).padStart(2, "0");
 
-  return `${day}<sup>${ordinalSuffix(day)}</sup> ${month}, ${year} at ${hh}:${mm} ${ampm}`;
+  const isSameYear = year == new Date().getFullYear();
+
+  return `${day}<sup>${ordinalSuffix(day)}</sup> ${month}${!isSameYear ? `, ${year}` : ""} - ${hh}:${mm} ${ampm}`;
 }
 
 function formatRelativePastEn(date, nowDate = new Date()) {

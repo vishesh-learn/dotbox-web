@@ -155,6 +155,9 @@ class Game {
   }
 
   get listItemUI() {
+    const createdAtFormatted = formatDateTimeWithRelativeEn(this.meta_createdAt);
+    const updatedAtFormatted = formatDateTimeWithRelativeEn(this.meta_updatedAt);
+
     const gameUI = document.createElement("div");
     gameUI.classList = "saved-game";
 
@@ -163,36 +166,37 @@ class Game {
 
     const nameUI = document.createElement("div");
     nameUI.classList = "name";
-
     nameUI.innerHTML = `<span class="label">ID:</span> ${this.id}`;
 
-    detailsContainer.append(nameUI);
+    // const sizeUI = document.createElement("div");
+    // sizeUI.classList = "size";
+    // sizeUI.innerHTML = `
+    // <span class="label">Size:</span>
+    // <span class="column-count">${this.gameBoard.col}</span>
+    // x
+    // <span class="row-count">${this.gameBoard.row}</span>
+    // `;
 
     const createdDateUI = document.createElement("div");
     createdDateUI.classList = "date";
-
-    const createdAtFormatted = formatDateTimeWithRelativeEn(this.meta_createdAt);
-
     createdDateUI.innerHTML = `
     <span class="label">Created at:</span>
     <span class="absolute">${createdAtFormatted.absolute}</span>
     <span class="relative">(${createdAtFormatted.relative})</span>
     `;
 
-    detailsContainer.append(createdDateUI);
-
     const updatedDateUI = document.createElement("div");
     updatedDateUI.classList = "date";
-
-    const updatedAtFormatted = formatDateTimeWithRelativeEn(this.meta_updatedAt);
-
     updatedDateUI.innerHTML = `
     <span class="label">Updated at:</span>
     <span class="absolute">${updatedAtFormatted.absolute}</span>
     <span class="relative">(${updatedAtFormatted.relative})</span>
     `;
 
-    detailsContainer.append(updatedDateUI);
+    detailsContainer.append(
+      nameUI,
+      //  sizeUI,
+      createdDateUI, updatedDateUI);
 
     const actionBar = document.createElement("div");
     actionBar.classList = "action-bar";
@@ -430,7 +434,7 @@ class Line {
     lineE.classList = "line";
 
     if (this.prev) {
-        lineE.classList.add("preview");
+      lineE.classList.add("preview");
     }
 
     lineE.setAttribute("x1", this.x1);
@@ -439,15 +443,15 @@ class Line {
     lineE.setAttribute("y2", this.y2);
 
     if (!this.byPlayerID) {
-        console.log("no byPlayerID", this.byPlayerID);
+      console.log("no byPlayerID", this.byPlayerID);
 
-        return false;
+      return false;
     }
 
     if (this?.byPlayer?.color) {
-        lineE.setAttribute("stroke", this.byPlayer.color);
+      lineE.setAttribute("stroke", this.byPlayer.color);
     } else {
-        console.log("color not found");
+      console.log("color not found");
     }
 
     lineE.setAttribute("byPlayer", this.byPlayerID.toString());
