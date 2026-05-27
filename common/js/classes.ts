@@ -168,14 +168,26 @@ class Game {
     nameUI.classList = "name";
     nameUI.innerHTML = `<span class="label">ID:</span> ${this.id}`;
 
+    const statsUI = document.createElement("div");
+    statsUI.classList = "stats";
+
     const sizeUI = document.createElement("div");
-    sizeUI.classList = "size";
+    sizeUI.classList = "stat size";
     sizeUI.innerHTML = `
     <image class="icon-label" src="/assets/images/dots.svg" />
     <span class="column-count">${this.gameBoard.col}</span>
     x
     <span class="row-count">${this.gameBoard.row}</span>
     `;
+
+    const playerCountUI = document.createElement("div");
+    playerCountUI.classList = "stat player-count";
+    playerCountUI.innerHTML = `
+    <image class="icon-label" src="/assets/images/player.svg" />
+    <span class="column-count">${this.players.length}</span>
+    `;
+
+    statsUI.append(sizeUI, playerCountUI);
 
     const createdDateUI = document.createElement("div");
     createdDateUI.classList = "date";
@@ -193,10 +205,7 @@ class Game {
     <span class="relative">(${updatedAtFormatted.relative})</span>
     `;
 
-    detailsContainer.append(
-      nameUI,
-       sizeUI,
-      createdDateUI, updatedDateUI);
+    detailsContainer.append(nameUI, statsUI, createdDateUI, updatedDateUI);
 
     const actionBar = document.createElement("div");
     actionBar.classList = "action-bar";

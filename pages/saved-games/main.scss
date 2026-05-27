@@ -82,23 +82,40 @@ body {
               font-weight: 800;
             }
 
-            .icon-label {
-              width: 14px;
-              display: inline;
-              margin-right: 0.1em;
-            }
-
             .name {
               font-size: 0.7em;
               font-weight: 800;
             }
 
-            .size {
+            .stats {
+              text-box: trim-both;
+              display: flex;
+              margin-bottom: 0.1em;
+            }
+
+            .stat {
               font-size: 0.6em;
               margin-top: 0.4em;
-              margin-bottom: 0.2em;
-              display: flex;
+              margin-right: 0.6em;
+              display: inline-flex;
               gap: 0.2em;
+
+              .icon-label {
+                display: inline;
+                margin-right: 0.1em;
+              }
+
+              &.size {
+                .icon-label {
+                  width: 0.7em;
+                }
+              }
+
+              &.player-count {
+                .icon-label {
+                  width: 0.5em;
+                }
+              }
             }
 
             .date {
