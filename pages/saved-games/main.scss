@@ -116,6 +116,12 @@ body {
                   width: 0.5em;
                 }
               }
+
+              &.moves-count {
+                .icon-label {
+                  width: 0.7em;
+                }
+              }
             }
 
             .date {

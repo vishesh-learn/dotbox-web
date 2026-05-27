@@ -187,7 +187,15 @@ class Game {
     <span class="column-count">${this.players.length}</span>
     `;
 
-    statsUI.append(sizeUI, playerCountUI);
+    const movesCountUI = document.createElement("div");
+    movesCountUI.classList = "stat moves-count";
+    movesCountUI.innerHTML = `
+    <image class="icon-label" src="/assets/images/move.svg" />
+    <span class="column-count">${this.lines.length}</span>
+    moves
+    `;
+
+    statsUI.append(sizeUI, playerCountUI, movesCountUI);
 
     const createdDateUI = document.createElement("div");
     createdDateUI.classList = "date";
