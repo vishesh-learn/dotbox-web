@@ -168,14 +168,14 @@ class Game {
     nameUI.classList = "name";
     nameUI.innerHTML = `<span class="label">ID:</span> ${this.id}`;
 
-    // const sizeUI = document.createElement("div");
-    // sizeUI.classList = "size";
-    // sizeUI.innerHTML = `
-    // <span class="label">Size:</span>
-    // <span class="column-count">${this.gameBoard.col}</span>
-    // x
-    // <span class="row-count">${this.gameBoard.row}</span>
-    // `;
+    const sizeUI = document.createElement("div");
+    sizeUI.classList = "size";
+    sizeUI.innerHTML = `
+    <image class="icon-label" src="/assets/images/dots.svg" />
+    <span class="column-count">${this.gameBoard.col}</span>
+    x
+    <span class="row-count">${this.gameBoard.row}</span>
+    `;
 
     const createdDateUI = document.createElement("div");
     createdDateUI.classList = "date";
@@ -195,7 +195,7 @@ class Game {
 
     detailsContainer.append(
       nameUI,
-      //  sizeUI,
+       sizeUI,
       createdDateUI, updatedDateUI);
 
     const actionBar = document.createElement("div");

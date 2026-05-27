@@ -82,6 +82,12 @@ body {
               font-weight: 800;
             }
 
+            .icon-label {
+              width: 14px;
+              display: inline;
+              margin-right: 0.1em;
+            }
+
             .name {
               font-size: 0.7em;
               font-weight: 800;
@@ -89,6 +95,10 @@ body {
 
             .size {
               font-size: 0.6em;
+              margin-top: 0.4em;
+              margin-bottom: 0.2em;
+              display: flex;
+              gap: 0.2em;
             }
 
             .date {
