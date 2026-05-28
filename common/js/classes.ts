@@ -187,7 +187,44 @@ class Game {
     <span class="column-count">${this.players.length}</span>
     `;
 
-    statsUI.append(sizeUI, playerCountUI);
+    const movesCountUI = document.createElement("div");
+    movesCountUI.classList = "stat moves-count";
+    movesCountUI.innerHTML = `
+    <image class="icon-label" src="/assets/images/move.svg" />
+    <span class="column-count">${this.lines.length}</span>
+    moves
+    `;
+
+    statsUI.append(sizeUI, playerCountUI, movesCountUI);
+
+    const playersListUI = document.createElement("div");
+    playersListUI.classList = "list";
+
+    const playerUIs = this.players
+      .map(player => {
+        const playerUI = document.createElement("div");
+        playerUI.classList = "player";
+
+        const dotUI = document.createElement("span");
+        dotUI.classList = "dot";
+        dotUI.style.backgroundColor = player.color;
+
+        const playerNameUI = document.createElement("span");
+        playerNameUI.classList = "name";
+        playerNameUI.innerText = player.name || player.placeholderName;
+
+        playerUI.append(dotUI, playerNameUI);
+
+        return playerUI;
+      });
+
+    playersListUI.append(...playerUIs);
+
+    const playersUI = document.createElement("div");
+    playersUI.classList = "players";
+    playersUI.innerHTML = `<span class="label">Players:</span>`;
+
+    playersUI.append(playersListUI);
 
     const createdDateUI = document.createElement("div");
     createdDateUI.classList = "date";
@@ -205,7 +242,7 @@ class Game {
     <span class="relative">(${updatedAtFormatted.relative})</span>
     `;
 
-    detailsContainer.append(nameUI, statsUI, createdDateUI, updatedDateUI);
+    detailsContainer.append(nameUI, statsUI, playersUI, createdDateUI, updatedDateUI);
 
     const actionBar = document.createElement("div");
     actionBar.classList = "action-bar";

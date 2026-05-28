@@ -11,12 +11,12 @@
     "build:static": "node scripts/build-static.js",
     "watch:css": "sass --watch common/css:dist/common/css pages:dist/pages main.scss:dist/main.css",
     "watch:js": "tsc --watch",
-    "dev": "concurrently \"npm run watch:css\" \"npm run watch:js\" \"browser-sync start --server . --files 'dist/**,pages/**/*.html,*.html' --no-notify --no-open\"",
+    "dev": "concurrently \"npm run watch:css\" \"npm run watch:js\" \"live-server --no-browser --port=3000 --watch=dist,pages,index.html\"",
     "preview": "npx serve dist"
   },
   "devDependencies": {
-    "browser-sync": "^3.0.4",
     "concurrently": "^9.2.1",
+    "live-server": "^1.2.2",
     "sass": "^1.77.0",
     "typescript": "^5.5.0"
   }

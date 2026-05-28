@@ -82,7 +82,7 @@ body {
               font-weight: 800;
             }
 
-            .name {
+            >.name {
               font-size: 0.7em;
               font-weight: 800;
             }
@@ -114,6 +114,37 @@ body {
               &.player-count {
                 .icon-label {
                   width: 0.5em;
+                }
+              }
+
+              &.moves-count {
+                .icon-label {
+                  width: 1em;
+                }
+              }
+            }
+
+            .players {
+              font-size: 0.5em;
+              display: flex;
+              gap: 0.3rem;
+
+              .list {
+                display: flex;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+              }
+
+              .player {
+                display: inline-flex;
+                gap: 0.2rem;
+                align-items: center;
+
+                .dot {
+                  display: inline-block;
+                  width: 0.6rem;
+                  height: 0.6rem;
+                  border: 1px solid rgba(0, 0, 0, 0.5);
                 }
               }
             }
