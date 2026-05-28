@@ -197,6 +197,35 @@ class Game {
 
     statsUI.append(sizeUI, playerCountUI, movesCountUI);
 
+    const playersListUI = document.createElement("div");
+    playersListUI.classList = "list";
+
+    const playerUIs = this.players
+      .map(player => {
+        const playerUI = document.createElement("div");
+        playerUI.classList = "player";
+
+        const dotUI = document.createElement("span");
+        dotUI.classList = "dot";
+        dotUI.style.backgroundColor = player.color;
+
+        const playerNameUI = document.createElement("span");
+        playerNameUI.classList = "name";
+        playerNameUI.innerText = player.name || player.placeholderName;
+
+        playerUI.append(dotUI, playerNameUI);
+
+        return playerUI;
+      });
+
+    playersListUI.append(...playerUIs);
+
+    const playersUI = document.createElement("div");
+    playersUI.classList = "players";
+    playersUI.innerHTML = `<span class="label">Players:</span>`;
+
+    playersUI.append(playersListUI);
+
     const createdDateUI = document.createElement("div");
     createdDateUI.classList = "date";
     createdDateUI.innerHTML = `
@@ -213,7 +242,7 @@ class Game {
     <span class="relative">(${updatedAtFormatted.relative})</span>
     `;
 
-    detailsContainer.append(nameUI, statsUI, createdDateUI, updatedDateUI);
+    detailsContainer.append(nameUI, statsUI, playersUI, createdDateUI, updatedDateUI);
 
     const actionBar = document.createElement("div");
     actionBar.classList = "action-bar";
