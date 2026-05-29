@@ -180,13 +180,6 @@ class Game {
     <span class="row-count">${this.gameBoard.row}</span>
     `;
 
-    const playerCountUI = document.createElement("div");
-    playerCountUI.classList = "stat player-count";
-    playerCountUI.innerHTML = `
-    <image class="icon-label" src="/assets/images/player.svg" />
-    <span class="column-count">${this.players.length}</span>
-    `;
-
     const movesCountUI = document.createElement("div");
     movesCountUI.classList = "stat moves-count";
     movesCountUI.innerHTML = `
@@ -195,7 +188,7 @@ class Game {
     moves
     `;
 
-    statsUI.append(sizeUI, playerCountUI, movesCountUI);
+    statsUI.append(sizeUI, movesCountUI);
 
     const playersListUI = document.createElement("div");
     playersListUI.classList = "list";
