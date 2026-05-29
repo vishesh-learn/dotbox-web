@@ -72,7 +72,7 @@ body {
           .details-container {
             flex: 1;
             cursor: pointer;
-            padding: 1em;
+            padding: 1.2rem;
 
             &:active {
               scale: 0.98;
@@ -90,7 +90,7 @@ body {
             .stats {
               text-box: trim-both;
               display: flex;
-              margin-bottom: 0.1em;
+              margin-bottom: 0.4rem;
             }
 
             .stat {
@@ -128,6 +128,7 @@ body {
               font-size: 0.5em;
               display: flex;
               gap: 0.3rem;
+              margin-bottom: 0.4rem;
 
               .list {
                 display: flex;

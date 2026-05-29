@@ -200,14 +200,17 @@ class Game {
     const playersListUI = document.createElement("div");
     playersListUI.classList = "list";
 
+    const playersMaxDisplayCount = 6;
+
     const playerUIs = this.players
+      .slice(0, playersMaxDisplayCount)
       .map(player => {
         const playerUI = document.createElement("div");
         playerUI.classList = "player";
 
         const dotUI = document.createElement("span");
         dotUI.classList = "dot";
-        dotUI.style.backgroundColor = player.color;
+        dotUI.style.background = toRadialGradientCSSValue(player.color);
 
         const playerNameUI = document.createElement("span");
         playerNameUI.classList = "name";
@@ -219,6 +222,16 @@ class Game {
       });
 
     playersListUI.append(...playerUIs);
+
+    if (this.players.length > playersMaxDisplayCount) {
+      const morePlayersCount = this.players.length - playersMaxDisplayCount;
+
+      const morePlayersText = document.createElement("span");
+      morePlayersText.classList = "more-players-text";
+      morePlayersText.innerText = `+ ${morePlayersCount} players`;
+
+      playersListUI.append(morePlayersText);
+    }
 
     const playersUI = document.createElement("div");
     playersUI.classList = "players";
