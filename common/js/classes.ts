@@ -168,7 +168,7 @@ class Game {
 
     const nameUI = document.createElement("div");
     nameUI.classList = "name";
-    nameUI.innerHTML = `<span class="label">ID:</span> ${idText}`;
+    nameUI.innerHTML = `<span class="label">ID:</span> ${idText} ...`;
 
     const deleteButton = document.createElement("button");
     deleteButton.classList = "button deleteButton";
