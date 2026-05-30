@@ -35,7 +35,7 @@ onload = function () {
 function setCurrentPageInCurrentGame() {
   Game.load();
 
-  Game.currentGame.currPage = pages.setPlayers;
+  Game.currentGame.currPage = "setPlayers";
 
   Game.currentGame.save();
 }

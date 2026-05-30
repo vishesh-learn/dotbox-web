@@ -141,7 +141,10 @@ class Game {
   static continue() {
     Game.load();
 
-    window.location.href = Game.currentGame.currPage ?? pages.setBoard;
+    // currPage holds a logical key into `pages` (e.g. "play"); pageUrlFor
+    // resolves it relative to the current page's depth (and migrates legacy
+    // stored paths) so Continue lands on the correct page from any depth.
+    window.location.href = pageUrlFor(Game.currentGame.currPage);
   }
 
   reset() {
@@ -172,7 +175,7 @@ class Game {
 
     const deleteButton = document.createElement("button");
     deleteButton.classList = "button deleteButton";
-    deleteButton.style.background = "url(/assets/images/x.svg)";
+    deleteButton.style.background = `url(${root}assets/images/x.svg)`;
     headerUI.append(nameUI, deleteButton);
 
     const detailsContainer = document.createElement("div");
@@ -184,7 +187,7 @@ class Game {
     const sizeUI = document.createElement("div");
     sizeUI.classList = "stat size";
     sizeUI.innerHTML = `
-    <image class="icon-label" src="/assets/images/dots.svg" />
+    <image class="icon-label" src="${root}assets/images/dots.svg" />
     <span class="column-count">${this.gameBoard.col}</span>
     x
     <span class="row-count">${this.gameBoard.row}</span>
@@ -193,7 +196,7 @@ class Game {
     const movesCountUI = document.createElement("div");
     movesCountUI.classList = "stat moves-count";
     movesCountUI.innerHTML = `
-    <image class="icon-label" src="/assets/images/move.svg" />
+    <image class="icon-label" src="${root}assets/images/move.svg" />
     <span class="column-count">${this.lines.length}</span>
     moves
     `;

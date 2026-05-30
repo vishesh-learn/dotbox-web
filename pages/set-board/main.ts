@@ -9,7 +9,7 @@ window.onload = () => {
 
   Game.load();
 
-  Game.currentGame.currPage = pages.setBoard;
+  Game.currentGame.currPage = "setBoard";
 
   setupGameBoard();
 

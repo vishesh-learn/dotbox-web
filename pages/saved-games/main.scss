@@ -94,6 +94,7 @@ body {
           .details-container {
             flex: 1;
             cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
 
             &:active {
               scale: 0.98;

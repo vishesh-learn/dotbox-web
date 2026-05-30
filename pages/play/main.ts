@@ -9,7 +9,7 @@ window.onload = () => {
 
     footerInfo();
 
-    Game.currentGame.currPage = pages.play;
+    Game.currentGame.currPage = "play";
 
     gameBoardBuilder();
 
