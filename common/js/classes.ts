@@ -161,12 +161,22 @@ class Game {
     const gameUI = document.createElement("div");
     gameUI.classList = "saved-game";
 
-    const detailsContainer = document.createElement("div");
-    detailsContainer.classList = "details-container";
+    const headerUI = document.createElement("div");
+    headerUI.classList = "header";
+
+    const idText = this.id.split("-")[0];
 
     const nameUI = document.createElement("div");
     nameUI.classList = "name";
-    nameUI.innerHTML = `<span class="label">ID:</span> ${this.id}`;
+    nameUI.innerHTML = `<span class="label">ID:</span> ${idText}`;
+
+    const deleteButton = document.createElement("button");
+    deleteButton.classList = "button deleteButton";
+    deleteButton.style.background = "url(/assets/images/x.svg)";
+    headerUI.append(nameUI, deleteButton);
+
+    const detailsContainer = document.createElement("div");
+    detailsContainer.classList = "details-container";
 
     const statsUI = document.createElement("div");
     statsUI.classList = "stats";
@@ -248,17 +258,9 @@ class Game {
     <span class="relative">(${updatedAtFormatted.relative})</span>
     `;
 
-    detailsContainer.append(nameUI, statsUI, playersUI, createdDateUI, updatedDateUI);
+    detailsContainer.append(statsUI, playersUI, createdDateUI, updatedDateUI);
 
-    const actionBar = document.createElement("div");
-    actionBar.classList = "action-bar";
-
-    const deleteButton = document.createElement("button");
-    deleteButton.classList = "button deleteButton";
-    deleteButton.innerHTML = "&#10005;";
-    actionBar.append(deleteButton);
-
-    gameUI.append(detailsContainer, actionBar);
+    gameUI.append(headerUI, detailsContainer);
 
     detailsContainer.addEventListener('click', () => {
       this.save();
