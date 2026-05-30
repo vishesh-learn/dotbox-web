@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 40" >
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 124 40" >
 
-    <circle r="20" cx="20" cy="20" fill="brown" />
+    <circle r="24" cx="24" cy="20" fill="brown" />
 
-    <line x1="20" y1="20" x2="80" y2="20" stroke-width="20" stroke-linecap="round" stroke="brown" />
+    <line x1="20" y1="20" x2="100" y2="20" stroke-width="20" stroke-linecap="round" stroke="brown" />
 
-    <circle r="20" cx="80" cy="20" fill="brown" />
+    <circle r="24" cx="100" cy="20" fill="brown" />
 </svg>

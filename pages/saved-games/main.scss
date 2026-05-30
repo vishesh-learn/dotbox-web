@@ -55,24 +55,45 @@ body {
       }
 
       .saved-games {
-        padding: 1em;
+        padding: 0.8rem;
 
         * {
           font-family: Nunito;
         }
 
         .saved-game {
+          display: flex;
+          flex-direction: column;
+          gap: 0.2rem;
+
           border: 2px solid var(--brown);
-          margin-bottom: 1em;
+          margin-bottom: 0.8rem;
           border-radius: 0.5em;
           background: hsl(15, 100%, 83%);
+          padding: 1rem;
 
-          display: flex;
+          .header {
+            display: flex;
+            justify-content: space-between;
+
+            >.name {
+              font-size: 0.7em;
+              font-weight: 800;
+            }
+
+            .deleteButton {
+              width: 1rem;
+              height: 1rem;
+
+              &:active {
+                scale: 0.9;
+              }
+            }
+          }
 
           .details-container {
             flex: 1;
             cursor: pointer;
-            padding: 1em;
 
             &:active {
               scale: 0.98;
@@ -82,15 +103,10 @@ body {
               font-weight: 800;
             }
 
-            >.name {
-              font-size: 0.7em;
-              font-weight: 800;
-            }
-
             .stats {
               text-box: trim-both;
               display: flex;
-              margin-bottom: 0.1em;
+              margin-bottom: 0.4rem;
             }
 
             .stat {
@@ -128,6 +144,7 @@ body {
               font-size: 0.5em;
               display: flex;
               gap: 0.3rem;
+              margin-bottom: 0.6rem;
 
               .list {
                 display: flex;
@@ -154,16 +171,6 @@ body {
 
               .relative {
                 font-size: 0.8em;
-              }
-            }
-          }
-
-          .action-bar {
-            padding: 0.4em 0.6em;
-
-            .deleteButton {
-              &:active {
-                scale: 0.9;
               }
             }
           }
