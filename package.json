@@ -15,7 +15,7 @@
     "preview": "npx serve dist"
   },
   "devDependencies": {
-    "concurrently": "^9.2.1",
+    "concurrently": "^9.2.4",
     "live-server": "^1.2.0",
     "sass": "^1.77.0",
     "typescript": "^5.5.0"
