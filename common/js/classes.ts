@@ -421,7 +421,7 @@ class Dot {
   col: number;
   row: number;
 
-  constructor(col = 0, row = 0, _direction?: string) {
+  constructor(col = 0, row = 0) {
     this.meta_type = 'dot';
     this.meta_version = '2.0';
     this.meta_createdAt = new Date();
@@ -521,7 +521,7 @@ class Line {
     return lineE;
   }
 
-  isValid() {
+  get isValid() {
     const deltaCol = Math.abs(this.dot1.col - this.dot2.col);
     const deltaRow = Math.abs(this.dot1.row - this.dot2.row);
 
@@ -612,6 +612,24 @@ class Line {
     const lineInOtherWay = document.querySelector(`.line${selector2Part1}${selector2Part2}`);
 
     return lineInOneWay || lineInOtherWay;
+  }
+
+  addToBoard() {
+    if (!this.isValid) {
+      console.error('line invalid');
+
+      return false;
+    }
+
+    if (this.findHTMLElement()) {
+      console.error('line exists');
+
+      return false;
+    }
+
+    Game.currentGame.lines.push(this);
+
+    drawLine(this);
   }
 }
 

@@ -63,7 +63,7 @@ function pointerUp(event) {
     var finalDot = nearDot(x, y);
 
     if (
-      new Line(state.initDot, finalDot).isValid()
+      new Line(state.initDot, finalDot).isValid
       && Math.abs(x - finalDot.x) <= Game.currentGame.gameBoard.gap / 2
       && Math.abs(y - finalDot.y) <= Game.currentGame.gameBoard.gap / 2
     ) {

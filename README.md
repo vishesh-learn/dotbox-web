@@ -5,6 +5,7 @@
 **DotBox** is an Android gaming application, a digitally advanced version of the traditional game ‘Dots and Boxes’.
 
 **Features:**
+
 * Choose any number of rows and columns based on the screen size (minimum of 3 rows and 3 columns).
 * Choose any number of players (minimum of 2).
 * Set custom color for each player.

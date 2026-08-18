@@ -199,13 +199,7 @@ function updateBoxesUI(boxList) {
 }
 
 function addLine(line: Line) {
-    if (!line.findHTMLElement()) {
-        Game.currentGame.lines.push(line);
-
-        drawLine(line);
-    } else {
-        console.log('line exists');
-    }
+    line.addToBoard();
 
     state.initDot = undefined;
     state.selectedDot = null;

@@ -17,7 +17,6 @@ function getDotAtTop(dot) {
     var dotAtTop = new Dot(
         dot.col,
         dot.row - 1,
-        'top'
     );
 
     return findDotE(dotAtTop) ? dotAtTop : false;
@@ -27,7 +26,6 @@ function getDotAtRight(dot) {
     var dotAtRight = new Dot(
         dot.col + 1,
         dot.row,
-        "right",
     );
 
     return findDotE(dotAtRight) ? dotAtRight : false;
@@ -37,7 +35,6 @@ function getDotAtBottom(dot) {
     var dotAtBottom = new Dot(
         dot.col,
         dot.row + 1,
-        "bottom",
     );
 
     return findDotE(dotAtBottom) ? dotAtBottom : false;
@@ -47,7 +44,6 @@ function getDotAtLeft(dot) {
     var dotAtLeft = new Dot(
         dot.col - 1,
         dot.row,
-        'left',
     );
 
     return findDotE(dotAtLeft) ? dotAtLeft : false;
