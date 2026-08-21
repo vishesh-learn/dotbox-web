@@ -393,6 +393,15 @@ footer {
   opacity: 1;
 }
 
+.displayNone {
+  display: none;
+}
+
+.svgC,
+svg {
+  overflow: visible;
+}
+
 @font-face {
   font-family: Nunito;
   src: url(../../assets/fonts/Nunito/Nunito-VariableFont_wght.ttf);
@@ -401,13 +410,4 @@ footer {
 @font-face {
   font-family: Itim;
   src: url(../../assets/fonts/Itim-Regular.ttf);
-}
-
-.displayNone {
-  display: none;
-}
-
-.svgC,
-svg {
-  overflow: visible;
 }
