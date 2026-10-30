@@ -1,6 +1,6 @@
 # DotBox Web
 
-**Application preview:** https://dotbox-web-visheshlearns-projects.vercel.app/
+**Application preview:** https://dotbox-web-vishesh-learn.vercel.app
 
 **DotBox** is an Android gaming application, a digitally advanced version of the traditional game ‘Dots and Boxes’.
 
